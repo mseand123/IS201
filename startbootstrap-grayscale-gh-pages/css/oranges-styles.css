@@ -1,0 +1,139 @@
+/* Body and overall layout adjustments */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(45deg, #FFA500, #FFD700); /* Gradient background from orange to yellow */
+    color: #333333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Header styles */
+header {
+    background-color: rgba(230, 92, 0, 0.9);
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+/* Main content area */
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+/* Section styling */
+section {
+    background-color: rgba(255, 255, 255, 0.8);
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    width: 80%;
+    transition: transform 0.3s ease-in-out;
+}
+
+section:hover {
+    transform: scale(1.03);
+}
+
+/* Styling for headings */
+h2 {
+    color: #E65C00;
+    text-shadow: 1px 1px 0px #fff;
+}
+
+/* List styling */
+ol, ul {
+    text-align: left;
+    display: inline-block;
+}
+
+li {
+    line-height: 1.75;
+}
+
+/* Image styling */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* Embedding content */
+iframe {
+    width: 80%;
+    height: 450px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* Link styling */
+a {
+    color: #E65C00;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Footer styles */
+footer {
+    background-color: #333333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+#facts {
+    background: #FFF8DC; /* A lighter shade for the background */
+    border: 1px solid #FFA500; /* Orange border to match the theme */
+    padding: 20px;
+    margin: 20px auto; /* Center the section */
+    border-radius: 8px; /* Rounded corners */
+    max-width: 800px; /* Maximum width for the content area */
+}
+
+#facts h2 {
+    text-align: center;
+    color: #D2691E; /* Chocolate color for the heading */
+}
+
+#facts ol {
+    padding-left: 40px; /* Space for the ordered list */
+    counter-reset: item; /* Reset counter for the list */
+}
+
+#facts li {
+    counter-increment: item; /* Increment counter for each list item */
+    margin-bottom: 15px; /* Space between list items */
+}
+
+#facts li:before {
+    content: counter(item) ". "; /* Add counter before content */
+    font-weight: bold; /* Make the numbers bold */
+    color: #FFA500; /* Orange color for the numbers */
+}
+
+#facts ul {
+    list-style-type: circle; /* Circle bullets for the unordered list */
+    padding-left: 20px; /* Indent for the unordered list */
+}
+
+#facts ul li {
+    line-height: 1.5; /* Line height for list items */
+}
