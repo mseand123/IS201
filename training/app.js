@@ -161,6 +161,81 @@ function copenDose(d) {
   const c = copenWeekFor(new Date());
   return c ? c.d + ' (' + c.f + ') · ladder week ' + c.w : d;
 }
+/* ---------- how long will this actually take ----------
+   The player's own timing, plus a read of the dose text for hand-timed sets.
+   Everything the user sees as a duration comes from here, so the header, the
+   buttons, the routine cards and the selection bar can never disagree.      */
+const REP_SECONDS = { strength: 4, plyo: 3, throw: 5, armor: 3.5, mobility: 3, tissue: 3, iso: 4, speed: 5, cond: 4, breath: 4 };
+const SET_REST = { strength: 90, plyo: 90, speed: 150, throw: 60, armor: 45, cond: 60, mobility: 20, tissue: 15, iso: 60, breath: 0 };
+
+function parseRestSeconds(dose) {
+  if (/walk-?back/i.test(dose)) return 50;
+  const m = dose.match(/(\d+)(?:\s*[–-]\s*(\d+))?\s*(s|sec|seconds?|min|minutes?)\s*(?:rest|recovery|between)/i);
+  if (!m) return null;
+  const lo = +m[1], hi = m[2] ? +m[2] : lo, v = (lo + hi) / 2;
+  return /min/i.test(m[3]) ? v * 60 : v;
+}
+
+// Seconds of actual work for a set the athlete times themselves.
+function manualSeconds(x, dose) {
+  const e = EX[x], cat = e.cat;
+  if (e.est) return e.est;
+  const d = dose || e.dose || '';
+  const perSide = /per (side|leg|foot|arm|hand)|each (side|leg|foot|arm|hand)|each direction/i.test(d);
+  const sideMult = perSide ? 2 : 1;
+  const rest = parseRestSeconds(d);
+
+  // "5 × 20 m" / "4 × (30 m build + 20 m fly)" — sprint work, dominated by rest
+  const dist = d.match(/(\d+)\s*[×x]\s*\(?\s*(\d+)\s*m/i);
+  if (dist) {
+    const reps = +dist[1], metres = +dist[2];
+    const effort = metres / 5.5 + 3;
+    return reps * effort + (reps - 1) * (rest != null ? rest : SET_REST.speed);
+  }
+  // "3 sets × 4 × 100 m" — sets of reps
+  const setsReps = d.match(/(\d+)\s*sets?\s*[×x]\s*(\d+)\s*[×x]\s*(\d+)\s*m/i);
+  if (setsReps) {
+    const sets = +setsReps[1], reps = +setsReps[2], metres = +setsReps[3];
+    return sets * reps * (metres / 5.5 + 3 + 50) + (sets - 1) * 90;
+  }
+  // "5 min", "2 × 2 min"
+  const mins = d.match(/(\d+)\s*min/i);
+  if (mins && !/rest|recovery/i.test(d)) {
+    const sets = (d.match(/(\d+)\s*[×x]\s*\d+\s*min/i) || [])[1];
+    return (sets ? +sets : 1) * (+mins[1]) * 60;
+  }
+  // "3 × 8", "4 × 6–8 per side", "2 × 15–20"
+  const sr = d.match(/(\d+)(?:\s*[–-]\s*(\d+))?\s*[×x]\s*(\d+)(?:\s*[–-]\s*(\d+))?/);
+  if (sr) {
+    const sets = sr[2] ? (+sr[1] + +sr[2]) / 2 : +sr[1];
+    const reps = sr[4] ? (+sr[3] + +sr[4]) / 2 : +sr[3];
+    const secPerRep = REP_SECONDS[cat] != null ? REP_SECONDS[cat] : 3.5;
+    const work = sets * reps * secPerRep * sideMult;
+    return work + (sets - 1) * (rest != null ? rest : (SET_REST[cat] != null ? SET_REST[cat] : 60));
+  }
+  return 60;
+}
+
+const COUNT_IN = 4;
+function stepSeconds(st) {
+  if (st.mode === 'timed') {
+    const sw = switchInfo(st);
+    const rest = Math.max(st.rest, sw ? 8 : 0);
+    return COUNT_IN + st.work * st.rounds + rest * Math.max(0, st.rounds - 1);
+  }
+  return COUNT_IN + manualSeconds(st.x, st.dose) + (st.restAfter || 0);
+}
+const runSeconds = steps => steps.reduce((a, st) => a + stepSeconds(st), 0);
+function sessionSeconds(session, date, opts) {
+  if (session && session.fixed) return session.dur * 60;
+  return runSeconds(buildSteps(session, date, opts || {}));
+}
+const fmtMins = secs => {
+  if (secs < 90) return Math.round(secs) + ' s';
+  const m = Math.round(secs / 60);
+  return m < 100 ? m + ' min' : Math.floor(m / 60) + ' h ' + (m % 60) + ' min';
+};
+
 // Alternating steps: a rest between rounds means "change something", and the
 // player should say what, out loud, because your eyes are usually elsewhere.
 const SWITCH_WORDS = [
@@ -193,10 +268,36 @@ function sideLabel(st, round) {
   return round % 2 === 1 ? 'Left' : 'Right';
 }
 
+const SIDE_MULT = d => {
+  let m = 1;
+  if (/\b(per|each)\s+(side|leg|foot|arm|hand)s?\b/i.test(d)) m *= 2;
+  if (/\beach\s+(direction|way)\b/i.test(d)) m *= 2;
+  return m;
+};
+// "3 × 25 s per side" -> 6 rounds of 25 s. "90 s per foot" -> 2 rounds of 90 s.
+function timerFromDose(dose, base) {
+  if (!base || !dose) return base;
+  const mult = SIDE_MULT(dose);
+  let work = null, sets = null;
+  const a = dose.match(/(\d+)\s*[×x]\s*(\d+)(?:\s*[–-]\s*(\d+))?\s*s\b/i);
+  if (a) { sets = +a[1]; work = a[3] ? Math.round((+a[2] + +a[3]) / 2) : +a[2]; }
+  else {
+    const b = dose.match(/^(\d+)(?:\s*[–-]\s*(\d+))?\s*s\b/i);
+    if (b) { sets = 1; work = b[2] ? Math.round((+b[1] + +b[2]) / 2) : +b[1]; }
+  }
+  if (work == null) {
+    const m = dose.match(/^(\d+)\s*min\b/i);
+    if (m) { work = +m[1] * 60; sets = 1; }
+  }
+  if (work == null) return base;
+  const rounds = Math.max(1, sets * mult);
+  return { w: work, r: base.r, rounds: rounds, label: base.label };
+}
+
 function makeStep(it, blockName, key, ii) {
   const r = resolve(it), e = EX[r.x];
   if (!e) return null;
-  const t = e.timer;
+  const t = timerFromDose(r.d, it.t && e.timer ? Object.assign({}, e.timer, it.t) : e.timer);
   return {
     ii: ii, key: key, block: blockName,
     x: r.x, dose: r.d, note: r.note || (isHome() && e.home) || e.flag || '',
@@ -459,14 +560,15 @@ function buildRun() {
     el('div', { class: 'run-bar' }, [bar]),
     el('div', { class: 'run-meta' }, [
       el('span', null, st.block),
-      el('span', { class: 'num' }, (RUN.i + 1) + ' / ' + RUN.steps.length),
+      el('span', { class: 'num', id: 'runLeft' }, ''),
+      el('span', { class: 'num', id: 'runStep' }, (RUN.i + 1) + ' / ' + RUN.steps.length),
       el('button', { class: 'btn btn-ghost btn-sm', onclick: () => RUN.close(false), 'aria-label': 'Exit session' }, [ico(ICONS.x, 'nav-ico')])
     ])
   ]));
 
   const time = el('span', { class: 'run-time num' }, '0');
   const cue = el('p', { class: 'run-cue', 'aria-live': 'polite' }, '');
-  RUN.ui.time = time; RUN.ui.cue = cue;
+  RUN.ui.time = time; RUN.ui.cue = cue; RUN.ui.left = runEl.querySelector('#runLeft');
 
   const between = RUN.phase === 'restAfter' && nextStep;
   const sw = switchInfo(st);
@@ -532,6 +634,11 @@ function tickRun() {
     RUN.ui.prog.setAttribute('stroke-dashoffset', (RUN.ui.C * (1 - frac)).toFixed(1));
   }
 
+  if (RUN.ui.left) {
+    const rest = RUN.steps.slice(RUN.i + 1).reduce((a, x) => a + stepSeconds(x), 0);
+    const here = isManual ? 0 : Math.max(0, RUN.left / 1000);
+    RUN.ui.left.textContent = '~' + fmtMins(rest + here) + ' left';
+  }
   const t = isManual ? fmtClock(-RUN.left)
     : RUN.left >= 60000 ? fmtClock(RUN.left)
     : Math.max(0, RUN.left / 1000).toFixed(RUN.left < 10000 ? 1 : 0);
@@ -796,7 +903,8 @@ function viewToday() {
       el('h1', { class: 'display today-title' }, s.n),
       el('div', { class: 'today-meta', style: 'margin-top:.5rem' }, [
         typeChip(s.type),
-        el('span', { class: 'chip' }, '≈ ' + s.dur + ' MIN'),
+        el('span', { class: 'chip', title: s.fixed ? 'Dominated by the activity itself' : 'Estimated from the actual work, rests and rounds' },
+          '≈ ' + fmtMins(sessionSeconds(s, date)) + (s.fixed ? '' : '')),
         el('span', { class: 'chip' }, pl.phase.tag + ' · WK ' + pl.week + '/' + pl.totalWeeks)
       ])
     ]),
@@ -810,11 +918,13 @@ function viewToday() {
   const done = S.done[d] || {};
   const total = s.blocks.reduce((a, b) => a + b.items.length, 0);
   const doneN = Object.keys(done).length;
+  const armorSecs = runSeconds(buildSteps(null, date, { armor: true }));
+  const wholeSecs = sessionSeconds(s, date, { armor: true }) + (s.fixed ? armorSecs : 0);
   const startRow = el('div', { class: 'start-row' }, [
     el('button', { class: 'btn btn-hi btn-start', onclick: () => startRun(date, null, { armor: true }) },
-      [ico(ICONS.play, 'nav-ico'), 'Start session']),
-    el('button', { class: 'btn btn-start-alt', onclick: () => startArmorRun(date) }, 'Armor only'),
-    el('span', { class: 'xs muted' }, 'Or tick any boxes below to run just those.')
+      [ico(ICONS.play, 'nav-ico'), 'Start session · ' + fmtMins(wholeSecs)]),
+    el('button', { class: 'btn btn-start-alt', onclick: () => startArmorRun(date) }, 'Armor only · ' + fmtMins(armorSecs)),
+    el('span', { class: 'xs muted' }, 'Session plus armor. Tick any boxes below to run just those.')
   ]);
 
   return el('div', { class: 'stack stack-lg' }, [
@@ -843,7 +953,7 @@ function viewToday() {
         const r = ROUTINES.find(x => x.id === 'desk-reset');
         return el('button', {
           class: 'btn btn-sm', onclick: () => RUN.open(stepsFromItems(r.items, r.n), date, 0, { routine: r.id })
-        }, [ico(ICONS.play, 'nav-ico'), r.n + ' · ' + r.min + ' min']);
+        }, [ico(ICONS.play, 'nav-ico'), r.n + ' · ' + fmtMins(runSeconds(stepsFromItems(r.items, r.n)))]);
       })(),
       el('button', { class: 'btn btn-ghost btn-sm', onclick: () => go('desk') }, 'All desk routines →')
     ]),
@@ -860,18 +970,15 @@ function viewToday() {
 /* ===========================================================
    VIEW: PROGRAM
    =========================================================== */
-function selMinutes(date) {
-  const steps = buildSteps(planFor(date).session, date, { armor: true })
-    .filter(st => PICK.keys.has(st.key + ':' + st.ii));
-  const secs = steps.reduce((a, st) => a + (st.mode === 'timed'
-    ? st.work * st.rounds + st.rest * (st.rounds - 1) : 45) + 6, 0);
-  return Math.max(1, Math.round(secs / 60));
+function selSeconds(date) {
+  return runSeconds(buildSteps(planFor(date).session, date, { armor: true })
+    .filter(st => PICK.keys.has(st.key + ':' + st.ii)));
 }
 function pickBar(date) {
   const n = PICK.keys.size;
   if (!n) return null;
   return el('div', { class: 'pick-bar' }, [
-    el('span', { class: 'num small' }, n + ' selected · ≈ ' + selMinutes(date) + ' min'),
+    el('span', { class: 'num small' }, n + ' selected · ≈ ' + fmtMins(selSeconds(date))),
     el('button', { class: 'btn btn-sm btn-ghost', onclick: () => { PICK.keys.clear(); render(); } }, 'Clear'),
     el('button', {
       class: 'btn btn-hi',
@@ -902,7 +1009,8 @@ function viewProgram() {
         el('span', { class: 'load ' + (pl.session.type === 'HIGH' ? 'l3' : pl.session.type === 'MED' ? 'l2' : 'l1') }, [el('i'), el('i'), el('i')])
       ]),
       el('span', { class: 'nm' }, pl.session.n),
-      el('span', { class: 'xs muted num dt' }, fmtShort(dt) + (dn ? ' · ' + dn + ' done' : '')),
+      el('span', { class: 'xs muted num dt' }, fmtShort(dt) + ' · ' + fmtMins(sessionSeconds(pl.session, dt))
+        + (dn ? ' · ' + dn + ' done' : '')),
     ]);
   }));
 
@@ -1052,7 +1160,7 @@ function routineCard(r, date) {
         cov ? el('span', { class: 'chip ' + cov.k, title: cov.d }, cov.l) : null,
         timesToday ? el('span', { class: 'chip good' }, '✓ ' + (timesToday > 1 ? timesToday + '×' : '') + ' today') : null
       ]),
-      el('span', { class: 'num xs muted' }, r.min + ' min')
+      el('span', { class: 'num xs muted' }, '≈ ' + fmtMins(runSeconds(stepsFromItems(chosen, r.n))))
     ]),
     el('p', { class: 'small muted' }, r.sub),
     el('p', { class: 'small' }, r.why),
@@ -1151,7 +1259,8 @@ function viewBuild() {
         ]);
       })),
       picked.length ? el('div', { class: 'pick-bar' }, [
-        el('span', { class: 'num small' }, picked.length + ' selected'),
+        el('span', { class: 'num small' }, picked.length + ' selected · ≈ '
+        + fmtMins(runSeconds(stepsFromItems(picked.map(x => ({ x: x, d: EX[x].dose })), 'CUSTOM')))),
         el('button', { class: 'btn btn-sm btn-ghost', onclick: () => { BUILD.keys.clear(); render(); } }, 'Clear'),
         el('button', {
           class: 'btn btn-hi',

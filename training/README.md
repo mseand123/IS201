@@ -49,6 +49,20 @@ session — every block, then the Daily Armor — one exercise at a time:
 - **Back**, **Pause**, **Done early** / **Skip**, and **Show how-to** without losing your place — mid-session the dialog leads with the steps and cues and folds the rationale away
 - Screen wake lock while it runs; completed exercises tick themselves off on the Today screen
 
+## Durations
+
+Every duration in the app comes from one estimator that mirrors what the player actually does:
+a 4-second count-in per exercise, work × rounds plus the rests between them for timed work, and
+for hand-timed sets a read of the dose text (sets × reps at a per-category tempo, sprint
+distances with their stated rest, explicit minutes). Sessions dominated by an activity the app
+can't time — a game, a team practice, pickleball — carry `fixed: true` and use their authored
+duration instead; a few exercises carry an explicit `est` for the same reason.
+
+**The written dose drives the timer.** `timerFromDose` turns "3 × 25 s per side" into 6 rounds of
+25 seconds, so the row, the countdown and the estimate can never describe three different
+workouts. An item can pass `t: { r: 15 }` to tighten a rest for its context (a daily circuit
+versus a dedicated block).
+
 Every item has a checkbox — tick any of them and a floating bar offers to run just those, with
 a time estimate. No mode to enter. The same checkboxes appear inside every routine card (open
 `N exercises` to pick from a routine) and in the library's builder. There is one timer in the

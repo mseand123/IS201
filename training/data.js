@@ -176,7 +176,7 @@ const EX = {
 /* ============ THE HAMSTRING TRACK ============ */
 'ham-iso-long': {
   n: 'Long-Length Hamstring Isometric', cat: 'iso', tags: ['hamstring','iso','daily','armor'],
-  why: 'Over 80% of hamstring injuries happen in late swing during sprinting, when the muscle is long, lengthening fast, and contracting hard. Biceps femoris long head produces its highest force at roughly 45° hip flexion with 10–30° knee flexion — so that is where you train it. Isometric hip-extension protocols raise isometric knee-flexion torque ~10% and hip-extension force ~12%. This is your single best daily insurance policy, and it is a timed hold, which you like.',
+  why: 'Over 80% of hamstring injuries happen in late swing during sprinting, when the muscle is long, lengthening fast, and contracting hard. Biceps femoris long head produces its highest force at roughly 45° hip flexion with 10–30° knee flexion — so that is where you train it. Isometric hip-extension protocols raise isometric knee-flexion torque ~10% and hip-extension force ~12%. Your hamstring is healed; this is what keeps it that way, and it is a timed hold, which you like.',
   home: "Heels on a couch, a dining chair, a low table or the bottom step of a staircase. Knee-height is what matters, not what the furniture is.",
   setup: 'Lie on your back, heels on a bench or box roughly knee-height, knees bent to about 20°, hips flexed to about 45°.',
   steps: [
@@ -194,7 +194,7 @@ const EX = {
 },
 'askling-extender': {
   n: 'Askling Extender', coach: 'L-protocol 1 of 3', cat: 'armor', tags: ['hamstring','rehab','mobility'],
-  why: 'The L-protocol — Extender, Diver, Glider — returned athletes to sport in a mean 28 days versus 52 for conventional rehab, with lower reinjury at 2, 6 and 12 months. All three load the hamstring at long lengths rather than short ones. Even fully healed, running this weekly is the cheapest reinjury insurance there is.',
+  why: 'The L-protocol — Extender, Diver, Glider — returned injured athletes to sport in a mean 28 days versus 52 for conventional rehab, with lower reinjury at 2, 6 and 12 months. What makes it work is that all three load the hamstring at long lengths rather than short ones, and that is just as useful on a healed hamstring as an injured one. Weekly, as maintenance, is the cheapest insurance in the program.',
   setup: 'Lie on your back. Hold the injured-side thigh at ~90° hip flexion with both hands.',
   steps: [
     'Hold the thigh still at 90°.',
@@ -769,6 +769,7 @@ const EX = {
   cues: ['Bounce, do not squat and jump.','Arms drive the rhythm.'],
   faults: ['Pausing between hurdles.','Deep knee bend on landing.','Hurdles too high, forcing a tuck.'],
   dose: '4 × 5 hurdles, 90 s rest.',
+  est: 400,
   prog: 'Higher hurdles, then single-leg.',
   regr: 'Lower hurdles or line hops.'
 },
@@ -927,6 +928,7 @@ const EX = {
   cues: ['Max effort on every rep, including the last.','The fatigue is the training stimulus — do not pace it.'],
   faults: ['Pacing to survive the set.','Doing this in a phase where speed development is the priority — it interferes.'],
   dose: '3 sets of 6 × 40 m. Once weekly in Phase 4 and in-season prep.',
+  est: 1150,   // the built-in timer runs one set; this is all three
   prog: 'Reduce recovery to 20 s, or add a fourth set.',
   regr: '4 reps per set, 30 s recovery.',
   timer: { w: 6, r: 25, rounds: 6, label: 'RSA — sprint then walk back' }
@@ -971,6 +973,7 @@ const EX = {
   cues: ['Legs and hips generate the throw. If your shoulder is doing the work, your mechanics failed first.','Count the hard ones — hard throws are the load, easy ones are not.'],
   faults: ['Going straight to full-power hucks without a build.','Unlimited hammers.','Throwing hard the day after a heavy pulling session.'],
   dose: 'Hucks: cap at 30 per session, 90 per week early in a build. Track it.',
+  est: 1500,   // a structured throwing session, warm-up to cool-down
   prog: 'Add 10% weekly to the hard-throw count, no more.',
   regr: 'Reduce hard throws, keep the short game.',
   flag: 'Overhead throws are the highest-stress pattern for any shoulder. Treat them like a heavy lift, not like a warm-up — and count them.'
@@ -1113,23 +1116,26 @@ const EX = {
 };
 
 /* -----------------------------------------------------------
-   THE DAILY ARMOR — 14 minutes, every single day, no exceptions
+   THE DAILY ARMOR — ~15 minutes, every single day, no exceptions
    ----------------------------------------------------------- */
 const ARMOR = {
   n: 'The Daily Armor',
-  sub: '14 minutes · every day · the thing that actually keeps you on the field',
-  why: 'Four histories, four protocols, one block. The adductor, the hamstring and the hip labrum all need frequency far more than intensity — the Copenhagen literature is explicit that accumulated volume drives the result, and isometric hip strength is one of the measures that tracks with better non-operative labral outcomes. Doing this daily at 60% beats doing it twice a week at 100%.',
+  sub: '~15 minutes · every day · the thing that actually keeps you on the field',
+  why: 'Four weak links, one block. The adductor, the hamstring and the hip labrum all need frequency far more than intensity — the Copenhagen literature is explicit that accumulated volume drives the result, and isometric hip strength is one of the measures that tracks with better non-operative labral outcomes. Doing this daily at 60% beats doing it twice a week at 100%.',
   items: [
     { x: 'ball-roll-foot', d: '60 s per foot', note: 'Toe-touch test before and after. This also primes the whole posterior chain.' },
-    { x: 'adductor-squeeze-iso', d: '3 ladders (0°/45°/90°, 10 s each)', note: 'Log the pain score. This is the weak link — it gets fed daily.' },
-    { x: 'ham-iso-long', d: '3 × 25 s per side', note: 'Shallow knee bend. Long lengths only.' },
-    { x: 'hip-rot-iso', d: '3 × 25 s each direction, per side', note: 'Neutral hip angle — nowhere near the position that pinches.' },
-    { x: 'glute-med-iso', d: '3 × 35 s per side', note: 'Toes down. The muscle that stops the femur falling into the impingement position.' },
-    { x: 'cuff-iso-er', d: '2 × 25 s ER + IR', note: 'Elbow pinned, submaximal. Throwing maintenance.' },
-    { x: 'short-foot', d: '3 × 10 s per foot', note: 'Do it while brushing your teeth.' },
-    { x: 'deep-squat-hold', d: '5 min accumulated across the day', note: 'Not part of the 14 minutes — this is a lifestyle target. Read the hip rule before you sit into it.' }
+    { x: 'adductor-squeeze-iso', d: '9 × 10 s', note: 'Three ladders of 0° / 45° / 90°. Log the pain score — this is the weak link, fed daily.' },
+    { x: 'ham-iso-long', d: '2 × 25 s per side', t: { r: 15 }, note: 'Shallow knee bend, long lengths only. Prevention, not rehab.' },
+    { x: 'hip-rot-iso', d: '20 s each direction, per side', t: { r: 8 }, note: 'Neutral hip angle — nowhere near the position that pinches.' },
+    { x: 'glute-med-iso', d: '30 s per side', t: { r: 12 }, note: 'Toes down. The muscle that stops the femur falling into the impingement position.' },
+    { x: 'cuff-iso-er', d: '2 × 20 s each direction', t: { r: 10 }, note: 'Elbow pinned, submaximal. Throwing maintenance.' },
+    { x: 'short-foot', d: '2 × 10 s per foot', t: { r: 8 }, note: 'Do it while brushing your teeth.' },
+    { x: 'deep-squat-hold', d: '60 s to start', note: 'The other four minutes happen across your day. Read the hip rule before you sit into it.' }
   ]
 };
+
+/* The full-dose versions of all of the above live in the weak-link blocks —
+   Hip Block, Groin Block, Hamstring Insurance — on the Program screen.        */
 
 /* -----------------------------------------------------------
    SESSION TEMPLATES
@@ -1302,7 +1308,9 @@ const SESSIONS = {
       { x: 'razor-curl', d: '3 × 6' },
       { x: 'calf-raise-loaded', d: '3 × 10 straight-knee + 3 × 14 bent-knee' },
       { x: 'suitcase-carry', d: '3 × 30 m per side' },
-      { x: 'pallof-press', d: '3 × 5 with 5 s holds per side' }
+      { x: 'pallof-press', d: '3 × 5 with 5 s holds per side' },
+      { x: 'hollow-hold', d: '3 × 25 s' },
+      { x: 'side-plank-iso', d: '3 × 35 s per side' }
     ]}
   ]
 },
@@ -1319,11 +1327,19 @@ const SESSIONS = {
     ]},
     { n: 'PULL', why: '3:1 pull to push for a throwing shoulder', items: [
       { x: 'weighted-pullup', d: '4 × 4–6' },
+      { x: 'chest-supported-row', d: '3 × 8–12' },
       { x: 'prone-ytw', d: '2 × 8 each' },
       { x: 'bottoms-up-carry', d: '3 × 25 m per side' }
     ]},
-    { n: 'PUSH', why: 'Scapular-plane pressing only', items: [
-      { x: 'landmine-press', d: '3 × 7 per side' }
+    { n: 'PUSH', why: 'Mass matters at 150 lb', items: [
+      { x: 'overhead-press', d: '3 × 5–8' },
+      { x: 'db-incline-press', d: '3 × 8–10' },
+      { x: 'landmine-press', d: '3 × 7 per side', note: 'Or skip if the overhead press already covered pressing today.' }
+    ]},
+    { n: 'TRUNK', why: 'A rotational sport needs a trunk that resists rotation', items: [
+      { x: 'pallof-press', d: '3 × 5 with 5 s holds per side' },
+      { x: 'hollow-hold', d: '3 × 25 s' },
+      { x: 'side-plank-iso', d: '3 × 35 s per side' }
     ]},
     { n: 'ROTATE + THROW', why: 'Hip-led rotation, then the disc', items: [
       { x: 'medball-rotational', d: '4 × 5 per side, max intent' },
@@ -1356,10 +1372,12 @@ const SESSIONS = {
       { x: 'rfess', d: '3 × 5 per side, heavy' },
       { x: 'hip-thrust', d: '4 × 5' }
     ]},
-    { n: 'ARMOR', why: '', items: [
+    { n: 'TRUNK + ARMOR', why: '', items: [
       { x: 'nordic-curl', d: '3 × 6' },
       { x: 'ham-iso-long', d: '3 × 25 s per side' },
-      { x: 'copenhagen-adduction', d: 'Per your current Copenhagen week' }
+      { x: 'copenhagen-adduction', d: 'Per your current Copenhagen week' },
+      { x: 'pallof-press', d: '3 × 5 with 5 s holds per side' },
+      { x: 'hollow-hold', d: '3 × 25 s' }
     ]}
   ]
 },
@@ -1439,6 +1457,13 @@ const SESSIONS = {
       { x: 'curve-sprint', d: '4 × 30 m, both directions' },
       { x: 'skater-bound', d: '3 × 6 per side, continuous' }
     ]},
+    { n: 'UPPER + TRUNK', why: 'The only upper day in this phase — do not skip it', items: [
+      { x: 'weighted-pullup', d: '4 × 4–6' },
+      { x: 'db-incline-press', d: '3 × 8–10' },
+      { x: 'chest-supported-row', d: '3 × 8–12' },
+      { x: 'hollow-hold', d: '3 × 25 s' },
+      { x: 'pallof-press', d: '3 × 5 with 5 s holds per side' }
+    ]},
     { n: 'ARMOR', why: '', items: [
       { x: 'ham-iso-long', d: '3 × 25 s per side' },
       { x: 'copenhagen-hold', d: '3 × 20 s per side', note: 'Holds today, not full Copenhagens — the cutting already taxed the groin.' }
@@ -1493,7 +1518,9 @@ const SESSIONS = {
       { x: 'hip-thrust', d: '4 × 5, explosive' },
       { x: 'broad-jump', d: '5 singles' }
     ]},
-    { n: 'ARMOR', why: '', items: [
+    { n: 'TRUNK + ARMOR', why: '', items: [
+      { x: 'hollow-hold', d: '3 × 25 s' },
+      { x: 'suitcase-carry', d: '3 × 30 m per side' },
       { x: 'ham-iso-long', d: '3 × 25 s per side' },
       { x: 'copenhagen-hold', d: '3 × 20 s per side' }
     ]}
@@ -1559,7 +1586,10 @@ const SESSIONS = {
       { x: 'rfess', d: '2 × 6 per side' },
       { x: 'weighted-pullup', d: '3 × 5' }
     ]},
-    { n: 'ARMOR', why: '', items: [
+    { n: 'TRUNK + ARMOR', why: '', items: [
+      { x: 'pallof-press', d: '3 × 5 with 5 s holds per side' },
+      { x: 'hollow-hold', d: '3 × 25 s' },
+      { x: 'side-plank-iso', d: '3 × 35 s per side' },
       { x: 'copenhagen-hold', d: '3 × 20 s per side' },
       { x: 'ham-iso-long', d: '3 × 25 s per side' },
       { x: 'cuff-iso-er', d: '2 × 25 s each way' }
@@ -1585,7 +1615,9 @@ const SESSIONS = {
       { x: 'iso-nordic-hold', d: '3 × 15 s', note: 'Most of the Nordic tension, a fraction of the soreness. The right in-season choice.' },
       { x: 'calf-iso-soleus', d: '3 × 35 s' }
     ]},
-    { n: 'ARMOR', why: '', items: [
+    { n: 'TRUNK + ARMOR', why: '', items: [
+      { x: 'hollow-hold', d: '3 × 25 s' },
+      { x: 'side-plank-iso', d: '3 × 35 s per side' },
       { x: 'ham-iso-long', d: '3 × 25 s per side' },
       { x: 'copenhagen-hold', d: '3 × 20 s per side' }
     ]}
@@ -1594,6 +1626,7 @@ const SESSIONS = {
 
 'practice-throw': {
   n: 'Team Practice / Throwing', type: 'MED', dur: 90,
+  fixed: true,   // dominated by a game, a practice or pickleball
   purpose: 'Sport practice is training load. Warm up like it is a session, manage the throwing count like it is a lift, and finish with the shoulder work you would otherwise skip.',
   blocks: [
     { n: 'PRIME', why: 'Do this before team warm-up, not instead of it', items: [
@@ -1658,6 +1691,7 @@ const SESSIONS = {
 
 'game': {
   n: 'Game Day', type: 'HIGH', dur: 180,
+  fixed: true,   // dominated by a game, a practice or pickleball
   purpose: 'Roughly 6,940 m total, 592 m of high-speed running, 16 sprints, 46 accelerations and 47 decelerations. Your warm-up decides whether you meet that fresh or cold.',
   blocks: [
     { n: 'PRE (T-60)', why: 'The shoulder and the groin get prepared before the team warm-up', items: [
@@ -1705,6 +1739,7 @@ const SESSIONS = {
 
 'play': {
   n: 'Play', type: 'MED', dur: 90,
+  fixed: true,   // dominated by a game, a practice or pickleball
   purpose: 'Pickleball, a hike, a pickup game. Play is not a break from training — it is the reason for it, and varied movement is genuinely good for connective tissue. Just warm up the groin and the shoulder first, because pickleball is a lateral-lunge sport and your groin is the weak link.',
   blocks: [
     { n: 'PRE', why: 'Five minutes so pickleball does not cost you a groin', items: [
@@ -1744,7 +1779,7 @@ const SESSIONS = {
 const PHASES = [
   { id:'p0', n:'Restoration', tag:'PHASE 0', start:'2026-08-31', end:'2026-09-13',
     focus:'Decompress from the season. Re-earn range, feed the injured tissues, run the full test battery so every later phase has a baseline.',
-    keys:['No max efforts of any kind','Test battery in week 2','Daily Armor becomes automatic here or it never will'],
+    keys:['No max efforts of any kind','Test battery in week 2 — including a Nordic break angle, which is your hamstring confidence number','Daily Armor becomes automatic here or it never will'],
     micro:['restore','tempo-tissue','restore','found-lift','tempo-tissue','play','off'] },
 
   { id:'p1', n:'Tendon & Tissue Foundation', tag:'PHASE 1', start:'2026-09-14', end:'2026-10-25',
@@ -1880,8 +1915,8 @@ const READINESS = {
     { id:'shoulder',n:'Shoulder',        lo:'Achy / clicking', hi:'Quiet' }
   ],
   verdict(score, flags) {
-    if (flags.ham <= 2) return { k:'red', t:'Hamstring flag — no sprinting today',
-      d:'The rule is absolute: a hamstring that feels grabby in the warm-up cancels max-velocity work. Not reduced — cancelled. Swap today for Tempo + Tissue, run the Askling protocol, and reassess tomorrow. Over 80% of hamstring injuries happen at high speed, and the warning almost always arrives before the tear.' };
+    if (flags.ham <= 2) return { k:'red', t:'Hamstring flag — move the speed work',
+      d:'Grabby is different from tight. If it is genuinely grabby, move the max-velocity work to another day and run Tempo + Tissue instead — there is no version of this where pushing through that sensation is the higher-value choice. Run the Askling protocol, and reassess tomorrow. If it is just tight, roll a ball under your foot, retest your toe-touch, and get on with the session.' };
     if (flags.groin <= 2) return { k:'red', t:'Groin flag — cutting and Copenhagens are off',
       d:'Drop all change-of-direction work and full Copenhagen reps. Keep the squeeze isometrics at 50–60% effort — loading a cranky adductor submaximally is treatment, loading it maximally is an injury. Reassess in 48 h.' };
     if (flags.hip <= 2) return { k:'red', t:'Hip flag — out of deep flexion today',
@@ -1975,20 +2010,33 @@ const ARTICLES = [
   ]}
 ]},
 
-{ id:'ham', n:'Dossier: The Hamstring', sub:'Where it tears, and the two things that change that', body:[
-  {p:'More than 80% of hamstring injuries in sport happen during sprinting — specifically in late swing, when the hamstring is long, lengthening fast, and contracting hard to decelerate the shin before foot strike. That single fact determines everything sensible you can do about it.'},
-  {h:'Long, not short'},
-  {p:'Training the hamstring in a shortened position — seated leg curls, short-range bridges — trains it where it does not fail. The biceps femoris long head produces its peak force at roughly 45° of hip flexion with only 10–30° of knee flexion. Nearly straight leg, hip flexed. That is the position in this program\'s daily long-length isometric, and it is why the knee stays nearly straight in it.'},
-  {h:'Isometrics and eccentrics do different jobs'},
-  {p:'This distinction matters and is usually blurred. An isometric hip-extension intervention raised isometric knee-flexion torque about 10% and hip extension force about 12%, and grew semitendinosus volume 15%. But eccentric — not isometric — hip extension work is what actually lengthened biceps femoris fascicles. Longer fascicles mean the muscle reaches its critical length later in the stride.'},
-  {p:'So: isometrics build torque and are safe to do daily. Eccentrics build architecture and must be dosed carefully. You need both, which is why the Daily Armor holds the isometric and the strength days carry the Nordics — low volume, high quality, never more than twice a week.'},
-  {h:'The Askling L-protocol'},
-  {p:'Three exercises — Extender, Diver, Glider — all loading the hamstring at long lengths. Athletes on this protocol returned to sport in a mean 28 days versus 52 on conventional rehab, with lower reinjury at 2, 6 and 12 months. Even fully healed, running it weekly as maintenance is close to free.'},
+{ id:'ham', n:'The Hamstring You Already Healed', sub:'Prevention, and what to do about the wrap', body:[
+  {p:'This is not a rehab page. You run, you sprint, it holds. What follows is how to keep it that way, and one honest paragraph about the wrap.'},
+  {h:'Why it still gets its own page'},
+  {p:'A previous hamstring strain is the single strongest predictor of a future one — that is true across every sport that has been studied, and it stays true long after the tissue has healed. Not because something is still torn, but because the architecture that let it happen usually does not change on its own. Short fascicles stay short. A strength deficit at long lengths stays. That is exactly what the work in this program alters, and why it is permanent furniture rather than a course of treatment.'},
+  {h:'Where it fails, so you train where it fails'},
+  {p:'More than 80% of hamstring injuries in sport happen during sprinting, in late swing, when the muscle is long, lengthening fast, and contracting hard to decelerate the shin. The biceps femoris long head makes its peak force at roughly 45° of hip flexion with only 10–30° of knee flexion — nearly straight leg, hip flexed. Every hamstring exercise in this program is chosen to load that position, which is why the daily isometric keeps the knee almost straight and why nothing here is a seated leg curl.'},
+  {h:'Two ingredients, doing different jobs'},
+  {p:'Isometrics build torque and are safe to do daily — an isometric hip-extension protocol raised isometric knee-flexion torque about 10% and grew semitendinosus volume 15%. But eccentric work is what lengthened biceps femoris fascicles, and longer fascicles mean the muscle reaches its critical length later in the stride. Torque and architecture are not the same adaptation. The daily armor holds the isometric; the Nordics on strength days build the architecture, twice a week, low volume, high quality.'},
+  {h:'And speed itself is protective'},
+  {p:'This is the part that matters most for you. Regular exposure to very high speed reduces hamstring injury risk when the base is there — the tissue adapts to the thing it has to survive. The caveat is dose: eccentric hamstring strength drops when athletes exceed roughly seven to eight weekly efforts above 90% of max velocity. So the plan is 1–2 max-velocity exposures a week, three or four quality reps, never on tired legs. Under-exposure and over-exposure both raise risk; the middle is where you want to live.'},
+  {h:'About the wrap'},
+  {p:'Straight answer: there is no good evidence that a wrap or a compression sleeve changes hamstring strain risk mechanically. It cannot meaningfully resist the forces involved in late swing at 8.6 m/s. Compression may help perceived soreness afterwards, which is a different claim.'},
+  {p:'That does not make it worthless. If wearing it is what lets you run freely instead of tentatively, it is buying you something real — and running freely is genuinely protective, where guarding is not. But treat it as a confidence aid you are working to not need, rather than protective equipment. The thing to watch is whether the fear itself is changing how you move.'},
+  {h:'The fear is worth taking as seriously as the tissue'},
+  {p:'Athletes with high fear of reinjury adopt measurable movement strategies: stiffer movement, restricted range, more co-contraction. In the ACL literature — where this has been studied most — higher fear is associated with greater risk of a second injury, and it is the most common single reason athletes never return to their previous level. The hamstring-specific evidence is thinner and largely extrapolated from that work, so hold it loosely. But the mechanism is not exotic: a leg you are protecting is a leg that moves differently, and moving differently at speed is its own risk.'},
+  {p:'The fix is not reassurance, it is evidence you collect yourself. Graded exposure — planned, progressive, tracked — is what converts "I think it is fine" into "I have run four flying 30s at 95% this month and nothing happened". That is what the speed work in this program is for, and it is why the plan deliberately keeps max-velocity exposure in rather than being cautious with it.'},
+  {h:'Your objective markers, instead of a feeling'},
+  {ul:[
+    'Nordic break angle: measure it monthly. Getting past 30° from vertical is strong. A number moving in the right direction is worth more reassurance than any wrap.',
+    'Left-to-right symmetry on the single-leg RDL and the Nordic. Asymmetry, not absolute strength, is what tends to predict trouble.',
+    'Peak speed. If it is climbing, you are not protecting it.',
+    'Morning stiffness the day after a speed session: a little is normal; a specific point of tenderness in the muscle belly is not.'
+  ]},
   {h:'"Tight" is often not tight'},
-  {p:'A meaningful share of chronic hamstring tightness is neural rather than muscular. The test takes ten seconds: sit, straighten one knee to your range, then tuck your chin to your chest and try again. If range drops noticeably, the limiter is neural tension and stretching harder makes it worse. Use nerve glides instead. And test your toe-touch before and after plantar ball rolling — if 90 seconds under your foot buys you range, the hamstring was never the problem in the first place.'},
-  {callout:{k:'hard', h:'The one absolute rule', p:'If the hamstring feels grabby, tight or "not right" during a warm-up, max-velocity sprinting is cancelled that day. Not reduced. Cancelled. Do tempo instead. The warning sensation almost always arrives before the tear, and almost nobody listens to it.'}}
+  {p:'A lot of chronic hamstring tightness is neural rather than muscular. Ten-second test: sit, straighten one knee to your range, then tuck your chin to your chest and repeat. If range drops noticeably, the limiter is neural tension and stretching harder makes it worse — use the nerve glides instead. And test your toe-touch before and after rolling a ball under your foot; if 90 seconds under the arch buys you range, the hamstring was never the restriction.'},
+  {callout:{k:'warnc', h:'The one rule worth keeping', p:'If it feels grabby or genuinely not right during a warm-up, move the max-velocity work to another day and run tempo instead. Not because a tear is imminent — because there is no version of this where pushing through that sensation is the higher-value choice. Tight-but-fine is different from grabby, and after a couple of months of paying attention you will know the difference. That is the judgement the wrap is currently standing in for.'}}
 ]},
-
 { id:'hip', n:'Dossier: The Hip Labrum', sub:'The one that changes how you train, not just what you rehab', body:[
   {p:'An acetabular labral tear is a different animal from the shoulder version, and it reaches much further into a training program — because the positions that provoke it are positions you actively like. This page is the honest version.'},
   {h:'The good news first'},
@@ -2123,6 +2171,7 @@ const ARTICLES = [
     'Effects of plyometric and isometric training on muscle and tendon stiffness in vivo — PMC5555899.',
     'Alex Natera on rate of force development, and on short vs long-duration isometrics and tendon stress relaxation.',
     'Effects of Plyometric Jump Training on the Reactive Strength Index — systematic review with meta-analysis, PMC10115703; RSI banding for plyometric progression.',
+    'Kinesiophobia and reinjury risk — largely ACL literature (fear as the most common barrier to return; guarded movement strategies and second-injury risk); the hamstring-specific evidence is thinner and extrapolated.',
     'Sprint dosage and the high-low system — including the finding that eccentric hamstring strength falls when athletes exceed 7–8 weekly efforts above 90% of max velocity.',
     'The impact of intrinsic foot muscle strengthening exercises in asymptomatic athletes — systematic review, 2024; and Frontiers, How to Evaluate and Improve Foot Strength in Athletes.'
   ]},
@@ -2717,7 +2766,7 @@ Object.assign(EX, {
    ROUTINES — short, runnable, purpose-built
    ----------------------------------------------------------- */
 const ROUTINES = [
-  { id:'desk-armor', n:'Desk Armor', min:6, tag:'DESK', covert:'invisible',
+  { id:'desk-armor', n:'Desk Armor', tag:'DESK', covert:'invisible',
     sub:'Your weak links, in a chair, in a meeting',
     why:'The adductor, hip, hamstring and cuff work from the Daily Armor, in the versions nobody can see you doing. Both the Copenhagen and the non-operative hip labrum literature point the same way — accumulated frequency beats intensity — so running this twice in a workday genuinely matches the armor volume of a gym session.',
     items:[
@@ -2727,7 +2776,7 @@ const ROUTINES = [
       { x:'desk-cuff-iso', d:'3 × 25 s each direction' },
       { x:'desk-glute-squeeze', d:'5 × 15 s' }
     ]},
-  { id:'desk-foot', n:'Desk Feet', min:6, tag:'DESK', covert:'invisible',
+  { id:'desk-foot', n:'Desk Feet', tag:'DESK', covert:'invisible',
     sub:'Shoe off, ball under the arch, keep working',
     why:'The highest-evidence item in the program plus intrinsic foot work, done under a desk. Retest your toe-touch before and after — the change is usually obvious.',
     items:[
@@ -2736,7 +2785,7 @@ const ROUTINES = [
       { x:'desk-tib-raise', d:'3 × 30 s hold' },
       { x:'desk-calf-iso', d:'3 × 30 s' }
     ]},
-  { id:'desk-posture', n:'Desk Unwind', min:6, tag:'DESK', covert:'subtle',
+  { id:'desk-posture', n:'Desk Unwind', tag:'DESK', covert:'subtle',
     sub:'Undo six hours of sitting',
     why:'Sitting shortens the hip flexors, rounds the mid-back and drags the shoulder blade forward — which makes the shoulder hunt for range it does not have. This is the direct counter, and most of it looks like ordinary fidgeting.',
     items:[
@@ -2746,7 +2795,7 @@ const ROUTINES = [
       { x:'desk-figure-four', d:'2 × 50 s per side' },
       { x:'desk-squat-break', d:'2 min' }
     ]},
-  { id:'desk-speed', n:'Desk Speed Bank', min:5, tag:'DESK', covert:'invisible',
+  { id:'desk-speed', n:'Desk Speed Bank', tag:'DESK', covert:'invisible',
     sub:'Hip flexors and calves — the two sprint muscles you can train sitting down',
     why:'Hip flexion above 90° drives knee lift and stride frequency; the soleus drives propulsion. Both can be loaded hard under a desk with nothing visible above the surface.',
     items:[
@@ -2755,7 +2804,7 @@ const ROUTINES = [
       { x:'desk-quad-iso', d:'3 × 25 s per side' },
       { x:'desk-grip-iso', d:'5 × 10 s per hand' }
     ]},
-  { id:'desk-reset', n:'Two-Minute Reset', min:2, tag:'DESK', covert:'invisible',
+  { id:'desk-reset', n:'Two-Minute Reset', tag:'DESK', covert:'invisible',
     sub:'The one you will actually do, hourly',
     why:'Short enough that there is no excuse. Set a recurring alarm and run it every ninety minutes.',
     items:[
@@ -2763,14 +2812,14 @@ const ROUTINES = [
       { x:'desk-glute-squeeze', d:'3 × 15 s' },
       { x:'desk-scap-set', d:'3 × 18 s' }
     ]},
-  { id:'desk-calm', n:'Down-Regulate', min:5, tag:'DESK', covert:'invisible',
+  { id:'desk-calm', n:'Down-Regulate', tag:'DESK', covert:'invisible',
     sub:'Five minutes of quiet nasal breathing',
     why:'Time spent in a sympathetic state between sessions is the real limit on how often you can train hard. This is the cheapest lever on it, and it works in a meeting.',
     items:[ { x:'desk-breath', d:'5 min' } ]},
 
-  { id:'ham-insurance', n:'Hamstring Insurance', min:8, tag:'ARMOR',
-    sub:'The full L-protocol plus the long-length isometric',
-    why:'Over 80% of hamstring injuries happen at speed, in late swing, at long muscle lengths. Every exercise here loads that position. Run it weekly forever, not just when something hurts.',
+  { id:'ham-insurance', n:'Hamstring Insurance', tag:'ARMOR',
+    sub:'Prevention, not rehab — the L-protocol plus the long-length isometric',
+    why:'A previous strain is the strongest predictor of a future one, and it stays true long after the tissue has healed — because short fascicles and a long-length strength deficit do not fix themselves. Every exercise here loads the position where hamstrings actually fail. Weekly, forever, whether or not anything hurts.',
     items:[
       { x:'ham-iso-long', d:'3 × 25 s per side' },
       { x:'askling-extender', d:'2 × 12 per side' },
@@ -2778,7 +2827,7 @@ const ROUTINES = [
       { x:'askling-glider', d:'3 × 4 per side' },
       { x:'nerve-glide-sciatic', d:'2 × 10 per side' }
     ]},
-  { id:'groin-block', n:'Groin Block', min:9, tag:'ARMOR',
+  { id:'groin-block', n:'Groin Block', tag:'ARMOR',
     sub:'Squeeze ladder, Copenhagen, long-length loading',
     why:'Squeezing strength, absorbing strength and end-range strength are three different qualities and the groin needs all three. Twice a week alongside the daily ladder.',
     items:[
@@ -2788,7 +2837,7 @@ const ROUTINES = [
       { x:'cossack-squat', d:'3 × 5 per side' },
       { x:'skater-bound', d:'3 × 5 per side' }
     ]},
-  { id:'hip-block', n:'Hip Block', min:9, tag:'ARMOR',
+  { id:'hip-block', n:'Hip Block', tag:'ARMOR',
     sub:'Loading a labral hip without provoking it',
     why:'Everything here loads the hip away from flexion-adduction-internal-rotation. Rotation isometrics at a neutral angle, gluteus medius so the femur stops drifting into the position that pinches, lumbopelvic control so the pelvis stops closing the front of the joint, and CARs to map the arc you own. Three times a week, and daily during a flare.',
     items:[
@@ -2799,7 +2848,7 @@ const ROUTINES = [
       { x:'deadbug', d:'3 × 6 per side, slow' },
       { x:'banded-hip-distraction', d:'2 min per side, if you have a band' }
     ]},
-  { id:'shoulder-block', n:'Throwing Shoulder Block', min:8, tag:'ARMOR',
+  { id:'shoulder-block', n:'Throwing Shoulder Block', tag:'ARMOR',
     sub:'Cuff, scap, capsule — before you huck',
     why:'Maintenance for an arm that throws a lot: cuff strength, scapular control, and posterior capsule length if — and only if — you have measured a deficit. Before any throwing session, and on any day the shoulder feels off.',
     items:[
@@ -2809,8 +2858,8 @@ const ROUTINES = [
       { x:'thoracic-opener', d:'4 positions × 5 breaths' },
       { x:'sleeper-stretch', d:'3 × 30 s — only if your IR difference is over 15°' }
     ]},
-  { id:'micro-elastic', n:'Ten-Minute Elastic', min:10, tag:'SHORT',
-    sub:'When you have ten minutes and a patch of grass',
+  { id:'micro-elastic', n:'Elastic Primer', tag:'SHORT',
+    sub:'When the full session is not happening but a patch of grass is',
     why:'If the whole session is not happening, this is the part with the highest return: fascial priming, ankle stiffness and a handful of maximal jumps. Low volume, full intent.',
     items:[
       { x:'ball-roll-foot', d:'60 s per foot' },
@@ -2819,8 +2868,8 @@ const ROUTINES = [
       { x:'broad-jump', d:'4 singles, stick every landing' },
       { x:'skater-bound', d:'3 × 5 per side' }
     ]},
-  { id:'micro-iso', n:'Fifteen-Minute Isometric', min:15, tag:'SHORT',
-    sub:'Maximum force, no equipment, no soreness tomorrow',
+  { id:'micro-iso', n:'Overcoming Isometrics', tag:'SHORT',
+    sub:'Maximum force, no equipment, no soreness tomorrow — but the rests are long',
     why:'Overcoming isometrics give you an enormous neural stimulus with no eccentric damage, so this can go the day before a game. Yielding holds afterwards for tendon capacity.',
     items:[
       { x:'iso-strap-pull', d:'5 × 5 s max intent' },
@@ -2829,7 +2878,7 @@ const ROUTINES = [
       { x:'calf-iso-soleus', d:'3 × 40 s' },
       { x:'ham-iso-long', d:'3 × 25 s per side' }
     ]},
-  { id:'travel', n:'Hotel Room', min:14, tag:'SHORT',
+  { id:'travel', n:'Hotel Room', tag:'SHORT',
     sub:'No equipment, no space, a road trip or a tournament weekend',
     why:'Travel is where programs die. This keeps the tissue loaded and the positions available in a space the size of a bed.',
     items:[
@@ -2842,7 +2891,7 @@ const ROUTINES = [
       { x:'side-plank-iso', d:'3 × 35 s per side' },
       { x:'deep-squat-hold', d:'2 × 2 min' }
     ]},
-  { id:'pregame', n:'Game-Day Warm-Up', min:12, tag:'SHORT',
+  { id:'pregame', n:'Game-Day Warm-Up', tag:'SHORT',
     sub:'Run this before the team warm-up, not instead of it',
     why:'Your specific tissues get prepared before the generic warm-up starts. Pre-activating the hamstring at length before sprinting on it is the cheapest insurance in the whole program.',
     items:[
@@ -2853,7 +2902,7 @@ const ROUTINES = [
       { x:'elastic-rebound-flow', d:'4 min' },
       { x:'pogo-jumps', d:'2 × 15 contacts' }
     ]},
-  { id:'flush-short', n:'Post-Game Flush', min:9, tag:'SHORT',
+  { id:'flush-short', n:'Post-Game Flush', tag:'SHORT',
     sub:'The ten minutes that decide how tomorrow feels',
     why:'Down-regulation and tissue work immediately after a game shortens the time you spend sympathetic and gets range back before it stiffens overnight.',
     items:[
@@ -3120,7 +3169,7 @@ Object.assign(EX, {
 });
 
 ROUTINES.unshift(
-  { id:'desk-full', n:'The Full Desk Session', min:22, tag:'DESK', covert:'invisible',
+  { id:'desk-full', n:'The Full Desk Session', tag:'DESK', covert:'invisible',
     sub:'A real session, done entirely in a chair',
     why:'Not a snack — a complete session. Every weak link gets a genuine dose: hip rotation and glute control, the adductor at two lever lengths, the hamstring at both joints, feet, shoulder, posture, and a down-regulation to finish. Twenty-two minutes, no equipment beyond a ball and a chair, and nothing that draws attention. On a travel day or a day the session is not happening, this is not a consolation prize.',
     items:[
@@ -3141,7 +3190,7 @@ ROUTINES.unshift(
       { x:'desk-figure-four', d:'2 × 50 s per side' },
       { x:'desk-breath', d:'5 min' }
     ]},
-  { id:'desk-hip', n:'Desk Hip', min:7, tag:'DESK', covert:'invisible',
+  { id:'desk-hip', n:'Desk Hip', tag:'DESK', covert:'invisible',
     sub:'The labral hip, loaded away from the position that pinches',
     why:'Rotation isometrics at a neutral angle, glute control, and a CARs arc to map. Nothing here goes near flexion-adduction-internal-rotation. A labral hip responds to frequency, and this is the version you can run three times in a workday.',
     items:[
@@ -3153,7 +3202,7 @@ ROUTINES.unshift(
     ]}
 );
 ROUTINES.push(
-  { id:'desk-strong', n:'Standing Desk Strength', min:9, tag:'DESK', covert:'subtle',
+  { id:'desk-strong', n:'Standing Desk Strength', tag:'DESK', covert:'subtle',
     sub:'If you have a standing desk, this is real training',
     why:'Single-leg calf holds and single-leg balance are genuinely loaded work at bodyweight, and a wall sit is the hardest thing you can do in an office. Not covert, but not conspicuous either.',
     items:[
@@ -3162,6 +3211,101 @@ ROUTINES.push(
       { x:'standing-abduction-iso', d:'3 × 25 s per side' },
       { x:'desk-wall-sit', d:'3 × 75 s' },
       { x:'desk-pec-doorway', d:'2 × 30 s per side' }
+    ]}
+);
+
+
+/* --- upper body and trunk: the thin parts of the program --- */
+Object.assign(EX, {
+
+'db-incline-press': {
+  n: 'Incline Dumbbell Press', cat: 'strength', tags: ['upper','press','mass'],
+  why: 'At 6\'1" and 150 lb, upper-body mass is one of the largest untapped performance levers you have — for holding a cut through contact, for winning a contested disc, and for durability. Dumbbells beat a barbell here: independent arms, a natural path, and a range you control. The incline biases the upper chest and front delt, which is where a light frame looks and feels thin.',
+  setup: 'Bench at 30–45°, dumbbells at the shoulders, feet planted, shoulder blades set down and back into the bench.',
+  steps: [
+    'Set the blades before the first rep and keep them set — the bench is your anchor.',
+    'Lower under control over 3 seconds until the dumbbells are level with the chest.',
+    'Press up and slightly together, stopping just short of clashing them.',
+    'Do not let the shoulders roll forward at the top; that is where the range stops being useful.'
+  ],
+  cues: ['Blades set, ribs down.','Elbows about 45° from the ribs, not flared to 90°.','Control the eccentric — that is where the growth is.'],
+  faults: ['Bouncing off the chest.','Shoulders rolling forward at lockout.','Arching the low back to press more weight.'],
+  dose: '3 × 8–10, 90 s rest.',
+  prog: 'Add weight when you hit 10 clean reps on all three sets.',
+  regr: 'Lighter dumbbells, or a flat press.'
+},
+'overhead-press': {
+  n: 'Standing Overhead Press', cat: 'strength', tags: ['upper','press','trunk'],
+  why: 'The best single upper-body strength builder, and the trunk has to work to keep the ribs down while you press — so it is a core exercise disguised as a shoulder one. Available to you: your labral tear is in the hip, so nothing here needs avoiding, provided the shoulder itself stays quiet.',
+  setup: 'Bar at collarbone height, hands just outside shoulder width, feet hip width, glutes squeezed.',
+  steps: [
+    'Big brace, ribs pulled down, glutes tight — the trunk stops the low back arching.',
+    'Press the bar in a straight line, moving your head back out of the way rather than the bar around it.',
+    'Finish with the bar over the mid-foot, biceps beside the ears, shoulder blades rotated up.',
+    'Lower under control to the collarbone.'
+  ],
+  cues: ['Ribs down, glutes on. If the low back arches, the weight is too heavy.','Head back, then through.','Full lockout overhead — that end range is worth owning.'],
+  faults: ['Layback: arching the spine to turn it into an incline press.','Pressing around the head instead of moving the head.','Stopping short of a real lockout.'],
+  dose: '3 × 5–8, 2 min rest.',
+  prog: 'Add 2.5 kg when all sets are clean, or move to single-arm.',
+  regr: 'Seated, or half-kneeling landmine press.',
+  flag: 'If the shoulder itself objects at the top, use the landmine press instead — the arc is friendlier and it trains the same thing.'
+},
+'chest-supported-row': {
+  n: 'Chest-Supported Row', cat: 'strength', tags: ['upper','pull','scap','mass'],
+  why: 'Rowing with the chest supported takes the low back and the cheat out of it, so the mid-back actually does the work. For a throwing athlete who needs a 2:1 pull-to-push ratio, this is the cleanest way to bank pulling volume.',
+  setup: 'Chest on an incline bench, dumbbells hanging, feet braced.',
+  steps: [
+    'Let the shoulder blades fully protract at the bottom — a real stretch.',
+    'Pull by retracting the blades first, then bending the elbows.',
+    'Elbows finish close to the ribs, not flared.',
+    'Two-second squeeze at the top, three seconds down.'
+  ],
+  cues: ['Blades first, arms second.','Squeeze the top; do not just move the weight.','Chest stays on the bench the whole set.'],
+  faults: ['Heaving the chest off the bench.','Pulling with the arms and never moving the shoulder blades.','No stretch at the bottom.'],
+  dose: '3 × 8–12, 90 s rest.',
+  prog: 'Heavier, or a longer pause at the top.',
+  regr: 'Lighter, higher bench angle.'
+},
+'hollow-hold': {
+  n: 'Hollow Hold', cat: 'iso', tags: ['core','trunk','iso'],
+  why: 'Anti-extension at long lever — the trunk position that stops force leaking between your hips and your shoulders when you throw or sprint. It is also the safest hard core exercise for your hip, because unlike hanging knee raises or sit-ups it never drives the hip into deep flexion, which is the position an acetabular labrum objects to.',
+  setup: 'On your back, low back pressed flat into the floor.',
+  steps: [
+    'Press the low back down first. That contact is the whole exercise — everything else is a lever.',
+    'Lift the shoulder blades and the legs just off the floor, arms overhead or by your sides.',
+    'Lower the legs only as far as you can go while the low back stays down.',
+    'Hold 20–30 seconds, breathing shallow but continuous.'
+  ],
+  cues: ['Low back glued to the floor. The moment it lifts, raise the legs.','Ribs pulled down toward the hips.','Breathe — do not hold your breath to brace.'],
+  faults: ['Low back arching off the floor (the only real fault).','Straining the neck — look at your knees, not the ceiling.','Legs so low the position collapses.'],
+  dose: '3 × 20–30 s.',
+  prog: 'Arms overhead, legs lower, then a rocking hollow.',
+  regr: 'Knees bent, or one leg at a time.',
+  timer: { w: 25, r: 40, rounds: 3, label: 'Hollow hold' }
+}
+});
+
+Object.assign(HOME_SUB, {
+  'db-incline-press':    { x: 'pushup-scap',      d: '3 × 10–15 push-up plus, feet elevated' },
+  'overhead-press':      { x: 'pushup-scap',      d: '3 × 10 slow push-up plus' },
+  'chest-supported-row': { x: 'table-row-iso',    d: '4 × 8–10 with 3 s holds, feet elevated' }
+});
+
+ROUTINES.push(
+  { id:'upper-core', n:'Upper & Trunk', tag:'ARMOR',
+    sub:'The part of the program most likely to be skipped',
+    why:'At 6\'1" and 150 lb, upper-body mass is one of the largest untapped levers you have, and a rotational sport needs a trunk that resists rotation rather than one that produces it. Pull-dominant, labrum-irrelevant (yours is the hip), and it fits on any day that is not already a high day.',
+    items:[
+      { x:'band-pull-apart', d:'2 × 15 as a warm-up' },
+      { x:'weighted-pullup', d:'4 × 4–6' },
+      { x:'db-incline-press', d:'3 × 8–10' },
+      { x:'chest-supported-row', d:'3 × 8–12' },
+      { x:'overhead-press', d:'3 × 5–8' },
+      { x:'pallof-press', d:'3 × 5 with 5 s holds per side' },
+      { x:'side-plank-iso', d:'3 × 35 s per side' },
+      { x:'hollow-hold', d:'3 × 25 s' },
+      { x:'suitcase-carry', d:'3 × 30 m per side' }
     ]}
 );
 
