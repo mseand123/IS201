@@ -1328,18 +1328,15 @@ const SESSIONS = {
     { n: 'PULL', why: '3:1 pull to push for a throwing shoulder', items: [
       { x: 'weighted-pullup', d: '4 × 4–6' },
       { x: 'chest-supported-row', d: '3 × 8–12' },
-      { x: 'prone-ytw', d: '2 × 8 each' },
-      { x: 'bottoms-up-carry', d: '3 × 25 m per side' }
+      { x: 'prone-ytw', d: '2 × 8 each' }
     ]},
     { n: 'PUSH', why: 'Mass matters at 150 lb', items: [
       { x: 'overhead-press', d: '3 × 5–8' },
-      { x: 'db-incline-press', d: '3 × 8–10' },
-      { x: 'landmine-press', d: '3 × 7 per side', note: 'Or skip if the overhead press already covered pressing today.' }
+      { x: 'db-incline-press', d: '3 × 8–10', note: 'Swap for the landmine press if the shoulder wants a friendlier arc.' }
     ]},
     { n: 'TRUNK', why: 'A rotational sport needs a trunk that resists rotation', items: [
       { x: 'pallof-press', d: '3 × 5 with 5 s holds per side' },
-      { x: 'hollow-hold', d: '3 × 25 s' },
-      { x: 'side-plank-iso', d: '3 × 35 s per side' }
+      { x: 'hollow-hold', d: '3 × 25 s' }
     ]},
     { n: 'ROTATE + THROW', why: 'Hip-led rotation, then the disc', items: [
       { x: 'medball-rotational', d: '4 × 5 per side, max intent' },
@@ -1454,15 +1451,12 @@ const SESSIONS = {
     ]},
     { n: 'CHANGE OF DIRECTION', why: 'The actual sport skill', items: [
       { x: 'cut-decel', d: '8 reps: 2 × stop, 2 × 45°, 2 × 90°, 2 × 180°' },
-      { x: 'curve-sprint', d: '4 × 30 m, both directions' },
-      { x: 'skater-bound', d: '3 × 6 per side, continuous' }
+      { x: 'curve-sprint', d: '4 × 30 m, both directions' }
     ]},
-    { n: 'UPPER + TRUNK', why: 'The only upper day in this phase — do not skip it', items: [
-      { x: 'weighted-pullup', d: '4 × 4–6' },
-      { x: 'db-incline-press', d: '3 × 8–10' },
-      { x: 'chest-supported-row', d: '3 × 8–12' },
-      { x: 'hollow-hold', d: '3 × 25 s' },
-      { x: 'pallof-press', d: '3 × 5 with 5 s holds per side' }
+    { n: 'UPPER + TRUNK', why: 'The only upper exposure in this phase — do not skip it', items: [
+      { x: 'weighted-pullup', d: '3 × 5' },
+      { x: 'db-incline-press', d: '3 × 8' },
+      { x: 'hollow-hold', d: '3 × 25 s' }
     ]},
     { n: 'ARMOR', why: '', items: [
       { x: 'ham-iso-long', d: '3 × 25 s per side' },
@@ -1669,7 +1663,7 @@ const SESSIONS = {
 
 'primer': {
   n: 'Game-Day-Minus-One Primer', type: 'LOW', dur: 25,
-  purpose: 'The day before a game you want the nervous system switched on and the body completely unfatigued. Overcoming isometrics are perfect here: maximal force, zero muscle damage, no soreness tomorrow.',
+  purpose: 'The day before a game you want the nervous system switched on and the body completely unfatigued. Overcoming isometrics are perfect here: maximal force, zero muscle damage, no soreness tomorrow. If you can add a 20-minute nap later in the day, do — it is the highest-value thing on the calendar.',
   blocks: [
     { n: 'PRIME', why: '', items: [
       { x: 'ball-roll-foot', d: '60 s per foot' },
@@ -1683,8 +1677,7 @@ const SESSIONS = {
     ]},
     { n: 'DOWN', why: '', items: [
       { x: 'deep-squat-hold', d: '2 min' },
-      { x: 'box-breathing', d: '5 min' },
-      { x: 'nsdr', d: '20 min if you can' }
+      { x: 'box-breathing', d: '5 min' }
     ]}
   ]
 },

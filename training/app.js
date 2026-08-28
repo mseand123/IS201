@@ -75,9 +75,13 @@ function planFor(date) {
   const weeksIn = Math.max(0, Math.floor(daysBetween(start, date) / 7));
   const totalWeeks = Math.ceil((daysBetween(start, parse(p.end)) + 1) / 7);
   const di = dayIdx(date);
-  const sid = p.micro[di];
-  return { phase: p, week: Math.min(weeksIn + 1, totalWeeks), totalWeeks, di, sid, session: SESSIONS[sid] };
+  const planned = p.micro[di];
+  const over = (S.override || {})[iso(date)];
+  const sid = over && SESSIONS[over] ? over : planned;
+  return { phase: p, week: Math.min(weeksIn + 1, totalWeeks), totalWeeks, di,
+    sid: sid, planned: planned, swapped: sid !== planned, session: SESSIONS[sid] };
 }
+const typeOf = date => planFor(date).session.type;
 function copenWeekFor(date) {
   // The Copenhagen ladder starts with Phase 1 and runs 10 weeks, then holds at maintenance.
   const p1 = PHASES.find(p => p.id === 'p1');
@@ -88,7 +92,7 @@ function copenWeekFor(date) {
 
 /* ---------- persistence ---------- */
 const KEY = 'groundcontact.v1';
-let S = { done: {}, armor: {}, readiness: {}, tests: [], notes: {}, settings: { theme: 'auto', mode: 'gym' } };
+let S = { done: {}, armor: {}, readiness: {}, tests: [], notes: {}, override: {}, settings: { theme: 'auto', mode: 'gym' } };
 function load() {
   try { const r = localStorage.getItem(KEY); if (r) S = Object.assign(S, JSON.parse(r)); } catch (e) { /* private mode */ }
 }
@@ -321,15 +325,94 @@ function stepsFromItems(items, blockName) {
   return items.map((it, i) => makeStep(it, blockName, null, i)).filter(Boolean);
 }
 
+/* ---------- voice ----------
+   Browsers ship a spread of voices from robotic to genuinely good. Pick the
+   best available rather than whatever the default is, and let it be changed. */
+let VOICES = [];
+function loadVoices() {
+  try { VOICES = (window.speechSynthesis && window.speechSynthesis.getVoices()) || []; } catch (e) { VOICES = []; }
+}
+function voiceRank(v) {
+  let r = 0;
+  if (/^en[-_]/i.test(v.lang)) r += 10;
+  if (/^en[-_](us|gb|au)/i.test(v.lang)) r += 2;
+  if (/premium|enhanced|neural|natural|siri/i.test(v.name)) r += 9;
+  if (/^(samantha|ava|allison|serena|daniel|karen|zoe|nathan|joelle|evan|nicky|aaron)\b/i.test(v.name)) r += 5;
+  if (/google/i.test(v.name)) r += 4;
+  if (v.localService) r += 2;
+  if (/compact|espeak|novelty|whisper|bells|bubbles|organ|trinoids|zarvox|albert|bad news|good news|jester|wobble/i.test(v.name)) r -= 20;
+  return r;
+}
+function englishVoices() { return VOICES.filter(v => /^en/i.test(v.lang)).sort((a, b) => voiceRank(b) - voiceRank(a)); }
+function pickVoice() {
+  if (!VOICES.length) loadVoices();
+  const want = S.settings.voiceName;
+  if (want) { const hit = VOICES.find(v => v.name === want); if (hit) return hit; }
+  return englishVoices()[0] || null;
+}
 function say(text) {
   if (S.settings.voice === false) return;
   try {
     if (!window.speechSynthesis) return;
     const u = new SpeechSynthesisUtterance(text);
-    u.rate = 1.02; u.pitch = 1; u.volume = .9;
+    const v = pickVoice();
+    if (v) { u.voice = v; u.lang = v.lang; }
+    u.rate = S.settings.voiceRate || 1; u.pitch = 1; u.volume = 1;
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(u);
-  } catch (e) { /* no speech available — beeps still carry the session */ }
+  } catch (e) { /* no speech available — the beeps still carry the session */ }
+}
+try {
+  loadVoices();
+  if (window.speechSynthesis) window.speechSynthesis.addEventListener('voiceschanged', loadVoices);
+} catch (e) { /* not available */ }
+
+function voiceDialog() {
+  loadVoices();
+  const list = englishVoices();
+  const cur = pickVoice();
+  const rateRow = el('div', { class: 'row' }, [
+    el('span', { class: 'eyebrow' }, 'Speed'),
+    ...[['0.9', 'Slower'], ['1', 'Normal'], ['1.15', 'Quicker']].map(([v, label]) =>
+      el('button', {
+        class: 'btn btn-sm', 'aria-pressed': String(S.settings.voiceRate || 1) === v ? 'true' : 'false',
+        onclick: () => { S.settings.voiceRate = +v; save(); say('Switch feet. Right side.'); voiceDialog(); }
+      }, label))
+  ]);
+  showModal(el('div', { class: 'howto' }, [
+    el('div', { class: 'stack stack-xs' }, [
+      el('div', { class: 'eyebrow' }, 'Coaching voice'),
+      el('h2', { class: 'display', style: 'font-size:var(--t-xl)' }, 'Pick a voice'),
+      el('p', { class: 'small muted', style: 'max-width:60ch' }, list.length
+        ? 'Tap one to hear it. The app picks the best available by default. On an iPhone the really good ones are a free download — Settings › Accessibility › Spoken Content › Voices › English, then choose an Enhanced or Premium voice and it will appear here.'
+        : 'Your browser has not reported any voices. On iPhone, open Settings › Accessibility › Spoken Content › Voices and download an English voice, then reopen this page.')
+    ]),
+    rateRow,
+    el('div', { class: 'swap-list' }, [
+      el('button', {
+        class: 'swap-row' + (S.settings.voice === false ? ' current' : ''),
+        onclick: () => { S.settings.voice = false; save(); voiceDialog(); }
+      }, [el('div', { class: 'swap-main' }, [
+        el('span', { class: 'swap-name' }, 'Off'),
+        el('span', { class: 'swap-sub' }, 'Beeps only — the switch chime still plays.')])]),
+      ...list.map(v => el('button', {
+        class: 'swap-row' + (S.settings.voice !== false && cur && v.name === cur.name ? ' current' : ''),
+        onclick: () => {
+          S.settings.voice = true; S.settings.voiceName = v.name; save();
+          say('Switch feet. Right side.'); voiceDialog();
+        }
+      }, [
+        el('div', { class: 'swap-main' }, [
+          el('span', { class: 'swap-name' }, v.name),
+          el('span', { class: 'swap-sub' }, v.lang + (v.localService ? ' · on device' : ' · online'))
+        ]),
+        el('div', { class: 'swap-meta' }, [
+          /premium|enhanced|neural|natural/i.test(v.name) ? el('span', { class: 'chip good' }, 'High quality') : null,
+          el('span', { class: 'chip' }, 'Tap to hear')
+        ])
+      ]))
+    ])
+  ]));
 }
 
 const RUN = {
@@ -615,7 +698,8 @@ function buildRun() {
       el('button', {
         class: 'btn btn-ghost btn-sm',
         onclick: () => { S.settings.voice = S.settings.voice === false; save(); buildRun(); }
-      }, S.settings.voice === false ? 'Voice off' : 'Voice on')
+      }, S.settings.voice === false ? 'Voice off' : 'Voice on'),
+      el('button', { class: 'btn btn-ghost btn-sm', onclick: () => voiceDialog() }, 'Change voice')
     ]),
     el('div', { class: 'run-hint' }, between ? '' : hint)
   ]));
@@ -754,6 +838,57 @@ document.addEventListener('keydown', e => {
   if (!modalBg.hidden) return closeModal();
   if (RUN.active) RUN.close(false);
 });
+
+/* ---------- swapping a day ----------
+   The plan's job is to keep the week's structure honest, not to dictate
+   which day is which. Swap freely; the app just flags the one rule that
+   actually matters — two CNS-expensive days back to back.               */
+function swapDialog(date) {
+  const pl = planFor(date);
+  const prev = typeOf(addDays(date, -1)), next = typeOf(addDays(date, 1));
+  const order = { HIGH: 0, MED: 1, LOW: 2 };
+  const ids = Object.keys(SESSIONS).sort((a, b) =>
+    (order[SESSIONS[a].type] - order[SESSIONS[b].type]) || SESSIONS[a].n.localeCompare(SESSIONS[b].n));
+
+  const row = id => {
+    const sn = SESSIONS[id];
+    const clash = sn.type === 'HIGH' && (prev === 'HIGH' || next === 'HIGH');
+    return el('button', {
+      class: 'swap-row' + (id === pl.sid ? ' current' : ''),
+      onclick: () => {
+        S.override = S.override || {};
+        if (id === pl.planned) delete S.override[iso(date)]; else S.override[iso(date)] = id;
+        save(); closeModal(); render();
+      }
+    }, [
+      el('div', { class: 'swap-main' }, [
+        el('span', { class: 'swap-name' }, sn.n),
+        el('span', { class: 'swap-sub' }, sn.purpose.split('. ')[0] + '.')
+      ]),
+      el('div', { class: 'swap-meta' }, [
+        typeChip(sn.type),
+        el('span', { class: 'num xs muted' }, '≈ ' + fmtMins(sessionSeconds(sn, date))),
+        clash ? el('span', { class: 'chip hard', title: 'The day before or after is already a high day' }, 'Back to back') : null,
+        id === pl.planned ? el('span', { class: 'chip' }, 'Planned') : null
+      ])
+    ]);
+  };
+
+  showModal(el('div', { class: 'howto' }, [
+    el('div', { class: 'stack stack-xs' }, [
+      el('div', { class: 'eyebrow' }, fmtLong(date)),
+      el('h2', { class: 'display', style: 'font-size:var(--t-xl)' }, 'Train something else'),
+      el('p', { class: 'small muted', style: 'max-width:60ch' },
+        'Swap the day for anything below. The only rule worth protecting is the high-low structure: '
+        + 'two CNS-expensive days back to back gives you the fatigue of both and the adaptation of neither. '
+        + 'Anything flagged "back to back" would do that against the day before or after.')
+    ]),
+    pl.swapped ? el('button', {
+      class: 'btn btn-sm', onclick: () => { delete S.override[iso(date)]; save(); closeModal(); render(); }
+    }, 'Back to the planned day (' + SESSIONS[pl.planned].n + ')') : null,
+    el('div', { class: 'swap-list' }, ids.map(row))
+  ]));
+}
 
 /* ===========================================================
    VIEW: TODAY
@@ -905,7 +1040,9 @@ function viewToday() {
         typeChip(s.type),
         el('span', { class: 'chip', title: s.fixed ? 'Dominated by the activity itself' : 'Estimated from the actual work, rests and rounds' },
           '≈ ' + fmtMins(sessionSeconds(s, date)) + (s.fixed ? '' : '')),
-        el('span', { class: 'chip' }, pl.phase.tag + ' · WK ' + pl.week + '/' + pl.totalWeeks)
+        el('span', { class: 'chip' }, pl.phase.tag + ' · WK ' + pl.week + '/' + pl.totalWeeks),
+        pl.swapped ? el('button', { class: 'chip warn', onclick: () => swapDialog(date) },
+          'SWAPPED FROM ' + SESSIONS[pl.planned].n.toUpperCase()) : null
       ])
     ]),
     el('div', { class: 'row' }, [
@@ -924,6 +1061,7 @@ function viewToday() {
     el('button', { class: 'btn btn-hi btn-start', onclick: () => startRun(date, null, { armor: true }) },
       [ico(ICONS.play, 'nav-ico'), 'Start session · ' + fmtMins(wholeSecs)]),
     el('button', { class: 'btn btn-start-alt', onclick: () => startArmorRun(date) }, 'Armor only · ' + fmtMins(armorSecs)),
+    el('button', { class: 'btn btn-start-alt', onclick: () => swapDialog(date) }, 'Train something else'),
     el('span', { class: 'xs muted' }, 'Session plus armor. Tick any boxes below to run just those.')
   ]);
 
@@ -991,6 +1129,45 @@ function pickBar(date) {
   ]);
 }
 
+// What the week actually contains, so swapping days stays honest.
+const WEEK_RULES = [
+  { k: 'high',  n: 'High days',        lo: 2, hi: 3, why: 'CNS-expensive days. More than three and recovery loses.' },
+  { k: 'maxv',  n: 'Max-velocity',     lo: 1, hi: 2, why: 'Eccentric hamstring strength falls past ~7–8 weekly efforts above 90%.' },
+  { k: 'copen', n: 'Copenhagen',       lo: 2, hi: 2, why: 'Adductor outcomes track accumulated volume.' },
+  { k: 'nordic', n: 'Nordic',          lo: 1, hi: 2, why: 'Potent and sore. Twice a week is the ceiling.' }
+];
+function weekBalance(monday) {
+  const c = { high: 0, maxv: 0, copen: 0, nordic: 0 }, types = [];
+  for (let i = 0; i < 7; i++) {
+    const d = addDays(monday, i), pl = planFor(d), items = pl.session.blocks.flatMap(b => b.items).map(it => it.x);
+    types.push(pl.session.type);
+    if (pl.session.type === 'HIGH') c.high++;
+    if (items.includes('flying-30') || items.includes('curve-sprint')) c.maxv++;
+    if (items.includes('copenhagen-adduction')) c.copen++;
+    if (items.includes('nordic-curl')) c.nordic++;
+  }
+  const clashes = [];
+  for (let i = 0; i < 7; i++) if (types[i] === 'HIGH' && types[(i + 1) % 7] === 'HIGH') clashes.push(DOW[i] + '→' + DOW[(i + 1) % 7]);
+  return { c: c, clashes: clashes };
+}
+function balancePanel(monday) {
+  const b = weekBalance(monday);
+  return el('div', { class: 'balance' }, [
+    ...WEEK_RULES.map(r => {
+      const v = b.c[r.k];
+      const state = v > r.hi ? 'hard' : v < r.lo ? 'warn' : 'good';
+      return el('div', { class: 'bal-item', title: r.why }, [
+        el('span', { class: 'l' }, r.n),
+        el('span', { class: 'v num chip ' + state }, v + (r.lo === r.hi ? ' / ' + r.hi : ' · ' + r.lo + '–' + r.hi))
+      ]);
+    }),
+    b.clashes.length ? el('div', { class: 'bal-warn' }, [
+      el('span', { class: 'chip hard' }, 'Back to back'),
+      el('span', { class: 'small' }, b.clashes.join(', ') + ' — two high days in a row. Move one.')
+    ]) : null
+  ]);
+}
+
 function viewProgram() {
   const today = new Date();
   const mon = mondayOf(viewDate);
@@ -1009,6 +1186,7 @@ function viewProgram() {
         el('span', { class: 'load ' + (pl.session.type === 'HIGH' ? 'l3' : pl.session.type === 'MED' ? 'l2' : 'l1') }, [el('i'), el('i'), el('i')])
       ]),
       el('span', { class: 'nm' }, pl.session.n),
+      pl.swapped ? el('span', { class: 'chip warn' }, 'swapped') : null,
       el('span', { class: 'xs muted num dt' }, fmtShort(dt) + ' · ' + fmtMins(sessionSeconds(pl.session, dt))
         + (dn ? ' · ' + dn + ' done' : '')),
     ]);
@@ -1035,6 +1213,7 @@ function viewProgram() {
         el('div', { class: 'trace' }),
         el('p', { class: 'small muted' }, 'Week of ' + fmtShort(mon) + ' · ' + cur.n + '. Bars show CNS cost: one bar is a low day, three is a high day. Never two threes back to back.')
       ]),
+      balancePanel(mon),
       el('div', { class: 'row', style: 'margin-bottom:.6rem' }, [
         el('button', { class: 'btn btn-sm', onclick: () => { viewDate = addDays(mon, -7); render(); } }, '‹ Previous week'),
         el('button', { class: 'btn btn-sm', onclick: () => { viewDate = new Date(); render(); } }, 'This week'),
@@ -1602,6 +1781,7 @@ function buildShell() {
       'data-route': r, onclick: () => go(r)
     }, [ico(icon), label, el('span', { class: 'k' }, k)]))),
     el('div', { class: 'rail-foot' }, [
+      el('button', { class: 'btn btn-sm', onclick: () => voiceDialog() }, 'Coaching voice'),
       el('button', { class: 'btn btn-sm', onclick: exportData }, 'Copy backup'),
       el('button', { class: 'btn btn-sm', onclick: importData }, 'Restore backup'),
       el('span', { class: 'xs muted' }, 'Saved on this device only.')
@@ -1627,7 +1807,7 @@ function exportData() {
 function importData() {
   const t = window.prompt('Paste a backup here. This replaces everything currently saved.');
   if (!t) return;
-  try { S = Object.assign({ done: {}, armor: {}, readiness: {}, tests: [], notes: {}, settings: {} }, JSON.parse(t)); save(); render(); }
+  try { S = Object.assign({ done: {}, armor: {}, readiness: {}, tests: [], notes: {}, override: {}, settings: {} }, JSON.parse(t)); save(); render(); }
   catch (e) { alert('That did not parse as a backup.'); }
 }
 

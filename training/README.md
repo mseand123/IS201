@@ -49,6 +49,26 @@ session — every block, then the Daily Armor — one exercise at a time:
 - **Back**, **Pause**, **Done early** / **Skip**, and **Show how-to** without losing your place — mid-session the dialog leads with the steps and cues and folds the rationale away
 - Screen wake lock while it runs; completed exercises tick themselves off on the Today screen
 
+## Not following the plan
+
+Any day can be swapped: **Train something else** on the Today screen lists every session with its
+type and computed length, marks the planned one, and flags any choice that would put two
+CNS-expensive days back to back against the day before or after. The override is stored per date
+in `S.override`, so the week grid, estimates and weekly balance all follow it.
+
+The Program screen carries a **weekly balance** panel — high days, max-velocity exposures,
+Copenhagen sessions, Nordic sessions — against their target ranges, plus a warning naming any
+back-to-back high days. That is the check that keeps improvisation honest: day order is
+flexible, weekly structure is not.
+
+## Voice
+
+The player speaks each exercise, each rest and every side switch. It ranks the browser's
+available voices and picks the best English one rather than the default, preferring enhanced /
+premium / neural voices and demoting the novelty ones. **Change voice** (in the player, or in the
+sidebar) lists them with a tap-to-hear preview, three speeds, and an off switch. On iOS the best
+voices are a free download under Settings › Accessibility › Spoken Content › Voices.
+
 ## Durations
 
 Every duration in the app comes from one estimator that mirrors what the player actually does:
