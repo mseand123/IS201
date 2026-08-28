@@ -98,18 +98,19 @@ function save() {
 
 /* ---------- audio cues ---------- */
 let actx = null;
-function beep(freq, dur, vol) {
+function beep(freq, dur, vol, delay) {
   try {
     if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
     if (actx.state === 'suspended') actx.resume();
+    const t0 = actx.currentTime + (delay || 0), d = dur || .12;
     const o = actx.createOscillator(), g = actx.createGain();
     o.type = 'sine'; o.frequency.value = freq;
-    g.gain.setValueAtTime(0, actx.currentTime);
-    g.gain.linearRampToValueAtTime(vol || .18, actx.currentTime + .01);
-    g.gain.exponentialRampToValueAtTime(.0001, actx.currentTime + (dur || .12));
+    g.gain.setValueAtTime(0, t0);
+    g.gain.linearRampToValueAtTime(vol || .18, t0 + .01);
+    g.gain.exponentialRampToValueAtTime(.0001, t0 + d);
     o.connect(g); g.connect(actx.destination);
-    o.start(); o.stop(actx.currentTime + (dur || .12) + .02);
-  } catch (e) { /* audio unavailable — timer still runs */ }
+    o.start(t0); o.stop(t0 + d + .02);
+  } catch (e) { /* audio unavailable — the session still runs */ }
 }
 
 /* ---------- selection: always on, no mode to enter ---------- */
@@ -160,6 +161,38 @@ function copenDose(d) {
   const c = copenWeekFor(new Date());
   return c ? c.d + ' (' + c.f + ') · ladder week ' + c.w : d;
 }
+// Alternating steps: a rest between rounds means "change something", and the
+// player should say what, out loud, because your eyes are usually elsewhere.
+const SWITCH_WORDS = [
+  [/\b(per|each)\s+side\b/i,  'Switch sides',     true],
+  [/\b(per|each)\s+leg\b/i,   'Switch legs',      true],
+  [/\b(per|each)\s+foot\b/i,  'Switch feet',      true],
+  [/\b(per|each)\s+arm\b/i,   'Switch arms',      true],
+  [/\b(per|each)\s+hand\b/i,  'Switch hands',     true],
+  [/\beach\s+direction\b/i,   'Change direction', false],
+  [/\beach\s+way\b/i,         'Change direction', false]
+];
+function switchInfo(st) {
+  if (!st || st.rounds < 2 || !st.rest) return null;
+  const lbl = st.label || '';
+  const dash = lbl.indexOf('—');
+  if (dash >= 0) {
+    const said = lbl.slice(dash + 1).trim();
+    const sided = /\b(side|leg|feet|foot|arm|hand)s?\b/i.test(said);
+    return { text: said.charAt(0).toUpperCase() + said.slice(1), sided: sided };
+  }
+  for (const [re, text, sided] of SWITCH_WORDS) {
+    if (re.test(st.dose || '')) return { text: text, sided: sided };
+  }
+  return null;
+}
+// Which side you are on right now, so it is never a guess mid-set.
+function sideLabel(st, round) {
+  const sw = switchInfo(st);
+  if (!sw || !sw.sided) return null;
+  return round % 2 === 1 ? 'Left' : 'Right';
+}
+
 function makeStep(it, blockName, key, ii) {
   const r = resolve(it), e = EX[r.x];
   if (!e) return null;
@@ -238,10 +271,22 @@ const RUN = {
     } else if (phase === 'work') {
       this.left = st.work * 1000; this.running = true;
       beep(880, .14, .2);
-      if (st.rounds > 1) say(this.round === st.rounds ? 'Last round' : 'Go');
+      if (st.rounds > 1) {
+        const side = sideLabel(st, this.round);
+        const last = this.round === st.rounds;
+        say(side ? side + (last ? '. Last one.' : '') : (last ? 'Last round' : 'Go'));
+      }
     } else if (phase === 'rest') {
-      this.left = st.rest * 1000; this.running = true;
-      beep(440, .2, .16); say('Rest');
+      const sw = switchInfo(st);
+      this.left = Math.max(st.rest, sw ? 8 : 0) * 1000; this.running = true;
+      if (sw) {
+        // three rising tones — unmistakably different from a plain rest
+        beep(660, .12, .2); beep(880, .12, .2, .14); beep(1170, .2, .22, .29);
+        const next = sideLabel(st, this.round + 1);
+        say(sw.text + (next ? '. ' + next + '.' : ''));
+      } else {
+        beep(440, .2, .16); say('Rest');
+      }
     } else if (phase === 'manual') {
       this.left = 0; this.running = true;   // counts up
       this.startManual = Date.now();
@@ -424,13 +469,21 @@ function buildRun() {
   RUN.ui.time = time; RUN.ui.cue = cue;
 
   const between = RUN.phase === 'restAfter' && nextStep;
-  runEl.appendChild(el('div', { class: 'run-body' }, [
-    el('h2', { class: 'display run-name' }, between ? 'Rest' : e.n),
-    el('div', { class: 'run-dose num' }, between
+  const sw = switchInfo(st);
+  const switching = RUN.phase === 'rest' && sw;
+  const sideNow = sideLabel(st, RUN.round);
+  const sideNext = sideLabel(st, RUN.round + 1);
+  runEl.appendChild(el('div', { class: 'run-body' + (switching ? ' switching' : '') }, [
+    el('h2', { class: 'display run-name' + (switching ? ' switch-name' : '') },
+      switching ? sw.text : between ? 'Rest' : e.n),
+    el('div', { class: 'run-dose num' }, switching
+      ? [e.n, sideNext ? el('span', { class: 'run-round side' }, sideNext + ' next') : null]
+      : between
       ? ['Up next · ' + EX[nextStep.x].n]
       : [
         st.dose,
-        st.rounds > 1 && !isReady ? el('span', { class: 'run-round' }, 'Round ' + RUN.round + ' / ' + st.rounds) : null
+        st.rounds > 1 && !isReady ? el('span', { class: 'run-round' }, 'Round ' + RUN.round + ' / ' + st.rounds) : null,
+        sideNow && !isReady ? el('span', { class: 'run-round side' }, sideNow) : null
       ]),
     el('div', { class: 'run-ring' + (isRest ? ' rest' : '') }, [
       svg,
@@ -486,10 +539,13 @@ function tickRun() {
 
   const cues = e.cues || [];
   const nx = RUN.steps[RUN.i + 1];
-  const switchCue = st.label && st.label.indexOf('—') >= 0 ? st.label.slice(st.label.indexOf('—') + 1).trim() : '';
-  const text = RUN.phase === 'rest' ? (switchCue ? switchCue.charAt(0).toUpperCase() + switchCue.slice(1) : 'Rest — next round coming')
+  const sw2 = switchInfo(st);
+  const nextSide = sideLabel(st, RUN.round + 1);
+  const text = RUN.phase === 'rest' ? (sw2
+      ? (nextSide ? 'Now the ' + nextSide.toLowerCase() + ' side' : 'Change over, then straight back in')
+      : 'Rest — next round coming')
     : RUN.phase === 'restAfter' ? (nx ? EX[nx.x].n + ' · ' + nx.dose : 'Rest')
-    : RUN.phase === 'ready' ? 'Get ready'
+    : RUN.phase === 'ready' ? (sideLabel(st, 1) ? 'Get ready — left side first' : 'Get ready')
     : isManual ? 'Tap done when the set is finished'
     : (cues[RUN.cueIdx] || st.dose);
   if (RUN.ui.cue.textContent !== text) RUN.ui.cue.textContent = text;

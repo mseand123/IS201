@@ -665,3 +665,13 @@ body.running { overflow: hidden; }
 .pick-dose { font-size: var(--t-xs); color: var(--muted); }
 .routine-pick .tick { width: 18px; height: 18px; margin-top: 1px; }
 .routine-pick .tick svg { width: 11px; height: 11px; }
+
+/* ---------- side switches, made unmissable ---------- */
+.run-name.switch-name { color: var(--hi); }
+.run-round.side {
+  border-color: color-mix(in srgb, var(--hi-fill) 55%, transparent);
+  color: var(--hi); background: color-mix(in srgb, var(--hi-fill) 12%, transparent);
+}
+.run-body.switching .run-ring svg { animation: switchpulse 1s ease-in-out 2; }
+@keyframes switchpulse { 0%, 100% { opacity: 1 } 50% { opacity: .55 } }
+@media (prefers-reduced-motion: reduce) { .run-body.switching .run-ring svg { animation: none; } }

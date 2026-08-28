@@ -46,7 +46,7 @@ const EX = {
   dose: '60–90 s per foot. Daily, and always before any session with sprinting or hamstring loading.',
   prog: 'Add the toe-extended version: prop the toes up the wall, roll the now-tensioned fascia.',
   regr: 'Softer ball, seated instead of standing.',
-  timer: { w: 75, r: 5, rounds: 2, label: 'Plantar roll — switch feet' }
+  timer: { w: 75, r: 10, rounds: 2, label: 'Plantar roll — switch feet' }
 },
 'short-foot': {
   n: 'Short Foot (Arch Doming)', cat: 'tissue', tags: ['foot','daily','iso'],
@@ -79,7 +79,7 @@ const EX = {
   dose: '5 × 10 s per foot, 2–4× per week.',
   prog: 'Standing single-leg version, then loaded (hold a dumbbell).',
   regr: 'Seated, no towel, lighter intent.',
-  timer: { w: 10, r: 20, rounds: 5, label: 'Big toe iso' }
+  timer: { w: 10, r: 20, rounds: 10, label: 'Big toe iso' }
 },
 'toe-yoga': {
   n: 'Toe Yoga', cat: 'tissue', tags: ['foot','daily'],
@@ -152,7 +152,7 @@ const EX = {
   dose: '3 × 20–30 contacts, full recovery between.',
   prog: 'Single-leg pogos → lateral pogos → pogos for max height with same contact time.',
   regr: 'Shoes on, lower amplitude, hold a rail.',
-  timer: { w: 12, r: 60, rounds: 4, label: 'Pogo set' }
+  timer: { w: 12, r: 60, rounds: 3, label: 'Pogo set' }
 },
 'foam-roll-post': {
   n: 'Roll & Reset Circuit', cat: 'tissue', tags: ['fascia','recovery'],
@@ -170,7 +170,7 @@ const EX = {
   dose: '5–8 minutes total.',
   prog: 'Add movement while compressed (flex/extend the knee while on a dense spot).',
   regr: 'Softer roller, less bodyweight.',
-  timer: { w: 45, r: 5, rounds: 8, label: 'Roll — change position' }
+  timer: { w: 45, r: 8, rounds: 8, label: 'Roll — change position' }
 },
 
 /* ============ THE HAMSTRING TRACK ============ */
@@ -339,7 +339,7 @@ const EX = {
   dose: '3–5 ladders daily. Effort: start at 50–60% and add ~10% per week as pain allows.',
   prog: 'Add intent (up to max) → move to Copenhagen holds → full Copenhagen adduction.',
   regr: 'Fewer angles, submaximal effort, longer rests.',
-  timer: { w: 10, r: 5, rounds: 6, label: 'Squeeze ladder — change angle' }
+  timer: { w: 10, r: 8, rounds: 6, label: 'Squeeze ladder — change angle' }
 },
 'copenhagen-hold': {
   n: 'Copenhagen Hold (Short Lever)', cat: 'iso', tags: ['adductor','iso','armor'],
@@ -560,7 +560,7 @@ const EX = {
   dose: '5 × 5–6 s per side, 90 s rest. Twice weekly max.',
   prog: 'Change the joint angle (weakest position), not the duration.',
   regr: 'Push against a immovable band or a wall in a lunge position.',
-  timer: { w: 6, r: 90, rounds: 5, label: 'Max intent push' }
+  timer: { w: 6, r: 90, rounds: 10, label: 'Max intent push' }
 },
 'iso-trap-bar-pull': {
   n: 'Overcoming Trap Bar Pull', cat: 'iso', tags: ['iso','rfd','power'],
@@ -2172,7 +2172,7 @@ Object.assign(EX, {
   dose: '5 × 6 s per side, 90 s rest.',
   prog: 'Change the knee angle: a deeper position trains a weaker range.',
   regr: 'Push into a wall from a shallower split.',
-  timer: { w: 6, r: 90, rounds: 5, label: 'Doorway push' }
+  timer: { w: 6, r: 90, rounds: 10, label: 'Doorway push' }
 },
 'stair-calf-iso': {
   n: 'Stair Calf Isometric', cat: 'iso', tags: ['iso','home','tendon','foot'],
@@ -2189,7 +2189,7 @@ Object.assign(EX, {
   dose: '3 × 30–45 s bent-knee + 2 × 30 s straight-knee, per side.',
   prog: 'Add a loaded backpack, 10 lb at a time.',
   regr: 'Two legs, or a shorter hold.',
-  timer: { w: 40, r: 90, rounds: 4, label: 'Calf iso — switch legs' }
+  timer: { w: 40, r: 90, rounds: 6, label: 'Calf iso — switch legs' }
 },
 'table-row-iso': {
   n: 'Table Row & Row Hold', cat: 'strength', tags: ['upper','pull','home','shoulder'],
@@ -2505,7 +2505,7 @@ Object.assign(EX, {
   dose: '5 × 15 s, a few times a day.',
   prog: 'One side at a time.',
   regr: 'Shorter holds.',
-  timer: { w: 15, r: 10, rounds: 6, label: 'Glute squeeze' }
+  timer: { w: 15, r: 10, rounds: 5, label: 'Glute squeeze' }
 },
 'desk-hip-flexor-press': {
   n: 'Under-Desk Knee Press', cat: 'iso', tags: ['hip','desk','iso','speed'], covert: 'invisible',
@@ -2522,7 +2522,7 @@ Object.assign(EX, {
   dose: '5 × 8–10 s per side.',
   prog: 'Higher effort, or hold with the thigh higher.',
   regr: 'Lower effort, shorter holds.',
-  timer: { w: 9, r: 8, rounds: 6, label: 'Knee press — switch legs' }
+  timer: { w: 9, r: 8, rounds: 10, label: 'Knee press — switch legs' }
 },
 'desk-calf-iso': {
   n: 'Seated Calf Press', cat: 'iso', tags: ['calf','desk','iso','tendon'], covert: 'invisible',
@@ -2539,7 +2539,7 @@ Object.assign(EX, {
   dose: '3 × 30 s, or continuous heel raises for 60 s.',
   prog: 'One leg at a time, more hand pressure.',
   regr: 'No hand load.',
-  timer: { w: 30, r: 25, rounds: 4, label: 'Calf press' }
+  timer: { w: 30, r: 25, rounds: 3, label: 'Calf press' }
 },
 'desk-tib-raise': {
   n: 'Seated Toe Raise', cat: 'strength', tags: ['foot','desk','decel'], covert: 'invisible',
@@ -2568,7 +2568,7 @@ Object.assign(EX, {
   dose: '90 s per foot, once or twice a day.',
   prog: 'Firmer ball, or toes propped up on a book to pre-tension the fascia.',
   regr: 'Softer ball, less pressure.',
-  timer: { w: 90, r: 5, rounds: 2, label: 'Ball roll — switch feet' }
+  timer: { w: 90, r: 10, rounds: 2, label: 'Ball roll — switch feet' }
 },
 'desk-short-foot': {
   n: 'Seated Short Foot', cat: 'tissue', tags: ['foot','desk','iso'], covert: 'invisible',
@@ -2580,7 +2580,7 @@ Object.assign(EX, {
   dose: '5 × 10 s per foot.',
   prog: 'Standing, then single-leg standing.',
   regr: 'Hand-assisted to learn the feel.',
-  timer: { w: 10, r: 8, rounds: 6, label: 'Short foot — switch feet' }
+  timer: { w: 10, r: 8, rounds: 10, label: 'Short foot — switch feet' }
 },
 'desk-scap-set': {
   n: 'Chair-Back Scap Set', cat: 'iso', tags: ['shoulder','scap','desk','labrum'], covert: 'invisible',
@@ -2614,7 +2614,7 @@ Object.assign(EX, {
   dose: '3 × 25 s each direction, each arm. Daily.',
   prog: 'Add a 45° abduction version once the low angle is clean.',
   regr: 'Lighter effort.',
-  timer: { w: 25, r: 12, rounds: 4, label: 'Cuff iso — change direction' }
+  timer: { w: 25, r: 12, rounds: 12, label: 'Cuff iso — change direction' }
 },
 'desk-chin-tuck': {
   n: 'Chin Tuck Hold', cat: 'iso', tags: ['neck','desk','posture','shoulder'], covert: 'invisible',
@@ -2673,7 +2673,7 @@ Object.assign(EX, {
   dose: '5 × 10 s per hand.',
   prog: 'Firmer object.',
   regr: 'Softer object.',
-  timer: { w: 10, r: 10, rounds: 5, label: 'Crush grip' }
+  timer: { w: 10, r: 10, rounds: 10, label: 'Crush grip' }
 },
 'desk-breath': {
   n: 'Desk Down-Regulation', cat: 'breath', tags: ['recovery','desk','cns'], covert: 'invisible',
@@ -2888,7 +2888,7 @@ Object.assign(EX, {
   prog: 'Higher effort, then longer holds, then the same at a slightly greater flexion angle — only if it stays pain-free.',
   regr: 'Lower effort, less flexion.',
   flag: 'A deep pinch at the front of the hip or in the groin is the joint telling you the angle is wrong, not that you should push through. Back off the flexion angle.',
-  timer: { w: 25, r: 12, rounds: 4, label: 'Hip rotation — change direction' }
+  timer: { w: 25, r: 12, rounds: 12, label: 'Hip rotation — change direction' }
 },
 'glute-med-iso': {
   n: 'Side-Lying Abduction Hold', cat: 'iso', tags: ['hip','labrum','glute','iso','armor'],
@@ -2988,7 +2988,7 @@ Object.assign(EX, {
   dose: '4 × 18 s each direction, a few times a day.',
   prog: 'Longer holds.',
   regr: 'Lighter effort.',
-  timer: { w: 18, r: 10, rounds: 6, label: 'Hip rotation — change direction' }
+  timer: { w: 18, r: 10, rounds: 8, label: 'Hip rotation — change direction' }
 }
 });
 
@@ -3086,7 +3086,7 @@ Object.assign(EX, {
   dose: '2 rounds of all four directions per arm.',
   prog: 'Higher effort, longer holds.',
   regr: 'Lighter effort.',
-  timer: { w: 12, r: 6, rounds: 8, label: 'Wrist iso — change direction' }
+  timer: { w: 12, r: 8, rounds: 8, label: 'Wrist iso — change direction' }
 },
 'desk-balance': {
   n: 'Single-Leg Stand', cat: 'iso', tags: ['foot','hip','desk','balance'], covert: 'subtle',

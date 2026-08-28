@@ -38,8 +38,13 @@ session — every block, then the Daily Armor — one exercise at a time:
 - A four-second count-in per exercise, then the timer, with beeps on the last three seconds
 - Timed exercises run their prescribed work / rest / rounds; rep-based sets count up and wait
   for you to tap **Done**
-- Coaching cues rotate every six seconds inside the exercise; between-round rests show the
-  switch instruction ("Switch feet"), between-exercise rests announce what's next
+- Coaching cues rotate every six seconds inside the exercise; between-exercise rests announce
+  what's next
+- **Side switches are alerted, not implied**: a between-rounds rest on a per-side exercise takes
+  over the screen with the instruction ("SWITCH FEET"), plays a three-tone rise instead of the
+  plain rest tone, says it out loud with the side coming up, and pulses the ring. During work,
+  a Left/Right chip shows which side you're on, so it's never a guess mid-set. Switch rests get
+  a minimum of 8 seconds regardless of the configured rest
 - Speech announces each exercise and each rest — toggle it with **Voice on / off**
 - **Back**, **Pause**, **Done early** / **Skip**, and **Show how-to** without losing your place — mid-session the dialog leads with the steps and cues and folds the rationale away
 - Screen wake lock while it runs; completed exercises tick themselves off on the Today screen
