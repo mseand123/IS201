@@ -1120,7 +1120,7 @@ const ARMOR = {
 const SESSIONS = {
 
 'restore': {
-  n: 'Restore', type: 'LOW', dur: 35,
+  n: 'Restore', type: 'LOW', dur: 45,
   purpose: 'A low day is not a wasted day — it is what makes the next high day possible. Blood flow, tissue quality, range, parasympathetic tone. Nothing here should raise your heart rate above conversational.',
   blocks: [
     { n: 'TISSUE', why: 'Range without cost', items: [
@@ -1132,6 +1132,8 @@ const SESSIONS = {
       { x: 'ninety-ninety', d: '10 switches + 5 knee lifts/side' },
       { x: 'couch-stretch', d: '2 × 60 s per side', note: 'Tuck the pelvis first, squeeze the glute the whole time.' },
       { x: 'adductor-rockback', d: '10 rocks + 30 s hold' },
+      { x: 'pancake-sit', d: '3 × 40 s, active' },
+      { x: 'jefferson-curl', d: '3 × 5, very light', note: 'Absurdly light. This is articulation practice, not a lift.' },
       { x: 'deep-squat-hold', d: '3 × 100 s', note: 'The good stuff. Breathe in the bottom.' }
     ]},
     { n: 'FLOW', why: 'Movement, not exercise', items: [
@@ -1142,11 +1144,12 @@ const SESSIONS = {
 },
 
 'tempo-tissue': {
-  n: 'Tempo + Tissue', type: 'LOW', dur: 55,
+  n: 'Tempo + Tissue', type: 'LOW', dur: 65,
   purpose: 'The workhorse low day. Extensive tempo builds the aerobic base ultimate demands — 82% of max HR for the whole game — while actively speeding recovery from the high days on either side. Run it too fast and you have turned a low day into a mediocre high day and ruined both.',
   blocks: [
     { n: 'PRIME', why: 'Wake up the feet before you run on them', items: [
       { x: 'ball-roll-foot', d: '60 s per foot' },
+      { x: 'toe-yoga', d: '10 alternations per foot' },
       { x: 'a-skip', d: '2 × 20 m' },
       { x: 'barefoot-pogo-grass', d: '2 × 20 contacts', note: 'Barefoot on grass if you can.' }
     ]},
@@ -1155,6 +1158,7 @@ const SESSIONS = {
     ]},
     { n: 'ARMOR+', why: 'The rehab tracks fit best on low days', items: [
       { x: 'askling-extender', d: '2 × 12 per side' },
+      { x: 'askling-diver', d: '3 × 6 per side' },
       { x: 'askling-glider', d: '3 × 4 per side' },
       { x: 'copenhagen-hold', d: '3 × 20 s per side' },
       { x: 'tib-raise', d: '3 × 25' }
@@ -1167,7 +1171,7 @@ const SESSIONS = {
 },
 
 'found-lift': {
-  n: 'Foundation Lift', type: 'MED', dur: 60,
+  n: 'Foundation Lift', type: 'MED', dur: 70,
   purpose: 'Movement quality and connective tissue before load. In a restoration block you are re-earning positions, not chasing numbers. Everything is slow, everything is full range, nothing is near failure.',
   blocks: [
     { n: 'PRIME', why: '', items: [
@@ -1178,7 +1182,9 @@ const SESSIONS = {
     { n: 'MAIN', why: 'Positions under light load, long ranges', items: [
       { x: 'atg-split-squat', d: '3 × 6 per side, bodyweight or light' },
       { x: 'single-leg-rdl', d: '3 × 8 per side, light' },
-      { x: 'iso-split-squat-yield', d: '3 × 45 s per side', note: 'Bodyweight or light DBs. Learn the hold before you load it.' }
+      { x: 'iso-split-squat-yield', d: '3 × 45 s per side', note: 'Bodyweight or light DBs. Learn the hold before you load it.' },
+      { x: 'wall-sit-iso', d: '3 × 60 s', note: 'Pure accumulation. Thighs actually parallel.' },
+      { x: 'slider-leg-curl', d: '3 × 8 with a 4-second slide out' }
     ]},
     { n: 'ARMOR', why: 'Rebuild the weak links first', items: [
       { x: 'copenhagen-hold', d: '3 × 15 s per side' },
@@ -1194,7 +1200,7 @@ const SESSIONS = {
 },
 
 'accel-plyo': {
-  n: 'Acceleration + Low Plyos', type: 'HIGH', dur: 70,
+  n: 'Acceleration + Low Plyos', type: 'HIGH', dur: 80,
   purpose: 'The first speed day of a build. Acceleration mechanics at submaximal-to-high intensity, plus the low-intensity plyometrics that build ankle stiffness. Total sprint volume stays small and quality stays absolute.',
   blocks: [
     { n: 'PRIME', why: 'Feet, then fascia, then mechanics', items: [
@@ -1205,6 +1211,8 @@ const SESSIONS = {
     ]},
     { n: 'ELASTIC', why: 'Stiffness before speed — pogos prime the ankles for the sprint', items: [
       { x: 'pogo-jumps', d: '3 × 25 contacts' },
+      { x: 'big-toe-iso', d: '4 × 10 s per foot', note: 'The hallux is the last thing to leave the ground on every step.' },
+      { x: 'iso-hip-flexor', d: '3 × 18 s per side' },
       { x: 'broad-jump', d: '4 singles, stick every landing' }
     ]},
     { n: 'SPEED', why: 'Quality over quantity — 120 m of real sprinting', items: [
@@ -1254,7 +1262,7 @@ const SESSIONS = {
 },
 
 'strength-b': {
-  n: 'Strength B — Unilateral + Groin', type: 'HIGH', dur: 70,
+  n: 'Strength B — Unilateral + Groin', type: 'HIGH', dur: 75,
   purpose: 'Single-leg strength is where asymmetries live, and asymmetries are what tear. This is also the day the adductor gets its heaviest dose of the week, because it is your weakest link and the one with the clearest evidence behind the fix.',
   blocks: [
     { n: 'PRIME', why: '', items: [
@@ -1274,6 +1282,7 @@ const SESSIONS = {
     ]},
     { n: 'ARMOR', why: '', items: [
       { x: 'razor-curl', d: '3 × 6' },
+      { x: 'calf-raise-loaded', d: '3 × 10 straight-knee + 3 × 14 bent-knee' },
       { x: 'suitcase-carry', d: '3 × 30 m per side' },
       { x: 'pallof-press', d: '3 × 5 with 5 s holds per side' }
     ]}
@@ -1541,7 +1550,7 @@ const SESSIONS = {
 },
 
 'power-lift': {
-  n: 'In-Season Power Lift', type: 'HIGH', dur: 45,
+  n: 'In-Season Power Lift', type: 'HIGH', dur: 50,
   purpose: 'Short, heavy, fast, done. In-season the goal is to preserve force output without accumulating fatigue — high intensity, minimal volume, no soreness. Never chase a pump in July.',
   blocks: [
     { n: 'PRIME', why: '', items: [
@@ -1555,6 +1564,7 @@ const SESSIONS = {
     ]},
     { n: 'ISO', why: 'Force without fatigue — the in-season cheat code', items: [
       { x: 'iso-trap-bar-pull', d: '4 × 5 s max intent' },
+      { x: 'iso-nordic-hold', d: '3 × 15 s', note: 'Most of the Nordic tension, a fraction of the soreness. The right in-season choice.' },
       { x: 'calf-iso-soleus', d: '3 × 35 s' }
     ]},
     { n: 'ARMOR', why: '', items: [
@@ -1655,7 +1665,7 @@ const SESSIONS = {
 },
 
 'flush': {
-  n: 'Flush', type: 'LOW', dur: 40,
+  n: 'Flush', type: 'LOW', dur: 45,
   purpose: 'Day after a game. Move blood, restore range, downregulate. Nothing hard, nothing new, nothing that produces soreness.',
   blocks: [
     { n: 'MOVE', why: 'Blood flow, not training', items: [
@@ -1668,6 +1678,7 @@ const SESSIONS = {
       { x: 'deep-squat-hold', d: '3 × 100 s' }
     ]},
     { n: 'DOWN', why: '', items: [
+      { x: 'co2-tolerance', d: 'One measurement — log it in Tests', note: 'Same time of day each week. A sharp drop usually shows up before you feel run down.' },
       { x: 'box-breathing', d: '5 min' },
       { x: 'contrast-shower', d: '6 min' }
     ]}
