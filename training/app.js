@@ -112,84 +112,37 @@ function beep(freq, dur, vol) {
   } catch (e) { /* audio unavailable — timer still runs */ }
 }
 
-/* ---------- timer engine ---------- */
-const T = {
-  cfg: null, phase: 'idle', round: 1, endsAt: 0, left: 0, running: false, raf: 0, lastTick: -1,
-  start(cfg) {
-    this.cfg = Object.assign({ w: 30, r: 30, rounds: 3, label: 'Hold' }, cfg);
-    this.round = 1; this.phase = 'work'; this.left = this.cfg.w * 1000;
-    this.endsAt = performance.now() + this.left; this.running = true; this.lastTick = -1;
-    dock.hidden = false; beep(880, .1); this.loop();
-    if (navigator.wakeLock) navigator.wakeLock.request('screen').then(l => this._lock = l).catch(() => {});
-  },
-  toggle() {
-    if (!this.cfg) return;
-    if (this.running) { this.running = false; this.left = Math.max(0, this.endsAt - performance.now()); cancelAnimationFrame(this.raf); }
-    else { this.running = true; this.endsAt = performance.now() + this.left; this.loop(); }
-    this.render();
-  },
-  stop() {
-    this.running = false; this.cfg = null; this.phase = 'idle';
-    cancelAnimationFrame(this.raf); dock.hidden = true;
-    if (this._lock) { this._lock.release().catch(() => {}); this._lock = null; }
-  },
-  loop() {
-    const step = () => {
-      if (!this.running) return;
-      this.left = this.endsAt - performance.now();
-      const secs = Math.ceil(this.left / 1000);
-      if (secs !== this.lastTick) {
-        this.lastTick = secs;
-        if (secs <= 3 && secs > 0) beep(this.phase === 'work' ? 660 : 520, .07, .12);
-      }
-      if (this.left <= 0) this.advance();
-      this.render();
-      this.raf = requestAnimationFrame(step);
-    };
-    this.raf = requestAnimationFrame(step);
-  },
-  advance() {
-    const c = this.cfg;
-    if (this.phase === 'work') {
-      if (this.round >= c.rounds && !c.r) { beep(1180, .34, .22); return this.stop(); }
-      if (!c.r) { this.round++; this.phase = 'work'; this.left = c.w * 1000; }
-      else { this.phase = 'rest'; this.left = c.r * 1000; beep(440, .18, .16); }
-    } else {
-      if (this.round >= c.rounds) { beep(1180, .34, .22); return this.stop(); }
-      this.round++; this.phase = 'work'; this.left = c.w * 1000; beep(880, .18, .18);
-    }
-    this.endsAt = performance.now() + this.left; this.lastTick = -1;
-  },
-  render() {
-    if (!this.cfg) return;
-    const total = (this.phase === 'work' ? this.cfg.w : this.cfg.r) * 1000;
-    const frac = Math.max(0, Math.min(1, this.left / total));
-    const C = 2 * Math.PI * 42;
-    $('#ringProg').setAttribute('stroke-dasharray', C);
-    $('#ringProg').setAttribute('stroke-dashoffset', C * (1 - frac));
-    $('#ring').className = 'ring' + (this.phase === 'rest' ? ' rest' : '');
-    const s = Math.max(0, this.left / 1000);
-    $('#ringBig').textContent = s >= 60 ? Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0') : s.toFixed(1);
-    $('#ringSub').textContent = this.phase === 'work' ? 'work' : 'rest';
-    $('#dockPhase').textContent = this.phase === 'work' ? 'WORK' : 'REST';
-    $('#dockRounds').textContent = 'Round ' + this.round + ' / ' + this.cfg.rounds;
-    $('#dockTitle').textContent = this.cfg.label;
-    $('#dockPlay').innerHTML = '';
-    $('#dockPlay').appendChild(ico(this.running ? ICONS.pause : ICONS.play, 'nav-ico'));
-  }
-};
-
-/* ---------- pick & run ---------- */
-const PICK = { on: false, keys: new Set() };
+/* ---------- selection: always on, no mode to enter ---------- */
+const PICK = { keys: new Set() };
 function pickToggle(k) { PICK.keys.has(k) ? PICK.keys.delete(k) : PICK.keys.add(k); render(); }
+
+// Marking an exercise done from its dialog, by locating it in today's plan.
+function findKeys(date, exId) {
+  return buildSteps(planFor(date).session, date, { armor: true })
+    .filter(st => st.x === exId).map(st => ({ key: st.key, ii: st.ii }));
+}
+function isDoneToday(exId) {
+  const d = iso(new Date());
+  return findKeys(new Date(), exId).some(k => k.key === 'armor'
+    ? (S.armor[d] || {})[k.ii] : (S.done[d] || {})[k.key + ':' + k.ii]);
+}
+function toggleDone(date, exId) {
+  const d = iso(date), on = isDoneToday(exId);
+  findKeys(date, exId).forEach(k => {
+    if (k.key === 'armor') { const a = S.armor[d] || (S.armor[d] = {}); on ? delete a[k.ii] : a[k.ii] = 1; }
+    else { const m = S.done[d] || (S.done[d] = {}); on ? delete m[k.key + ':' + k.ii] : m[k.key + ':' + k.ii] = 1; }
+  });
+  save(); render();
+}
 
 /* ---------- gym / home resolution ---------- */
 const isHome = () => S.settings.mode === 'home';
 function resolve(it) {
+  const dose = /Copenhagen week/i.test(it.d || '') ? copenDose(it.d) : it.d;
   const sb = isHome() && HOME_SUB[it.x];
-  if (!sb) return { x: it.x, d: it.d, note: it.note, swapped: false };
+  if (!sb) return { x: it.x, d: dose, note: it.note, swapped: false };
   // the gym item's note belongs to the gym exercise — a swap only carries a note the map supplies
-  return { x: sb.x, d: sb.d || it.d, note: sb.note, swapped: true, from: it.x };
+  return { x: sb.x, d: sb.d || dose, note: sb.note, swapped: true, from: it.x };
 }
 
 /* ===========================================================
@@ -202,6 +155,11 @@ function resolve(it) {
 const REST_BY_CAT = { strength: 90, plyo: 90, speed: 150, iso: 75, cond: 60, throw: 60,
   armor: 45, tissue: 20, mobility: 20, breath: 15 };
 
+// "Per your current Copenhagen week" resolves to the actual dose for this date.
+function copenDose(d) {
+  const c = copenWeekFor(new Date());
+  return c ? c.d + ' (' + c.f + ') · ladder week ' + c.w : d;
+}
 function makeStep(it, blockName, key, ii) {
   const r = resolve(it), e = EX[r.x];
   if (!e) return null;
@@ -248,7 +206,6 @@ const RUN = {
   open(steps, date, startAt, meta) {
     if (!steps.length) return;
     this.meta = meta || null;
-    T.stop();
     this.steps = steps; this.i = Math.max(0, Math.min(startAt || 0, steps.length - 1));
     this.active = true; this.startedAt = Date.now(); this.date = date;
     document.body.classList.add('running');
@@ -553,13 +510,30 @@ function exLink(id, label) {
 /* ---------- exercise modal ---------- */
 function openEx(id) {
   const e = EX[id]; if (!e) return;
+  const stepsBlock = () => el('div', { class: 'stack stack-xs' }, [
+    el('div', { class: 'eyebrow' }, 'Execution'),
+    el('ol', { class: 'small' }, e.steps.map(st => el('li', null, st)))
+  ]);
+  const cuesBlock = () => el('div', { style: 'display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))' }, [
+    el('div', { class: 'stack stack-xs' }, [
+      el('div', { class: 'eyebrow' }, 'Cues'),
+      el('ul', { class: 'cue-list' }, (e.cues || []).map(c => el('li', null, [el('span', { class: 'm' }, '›'), el('span', null, c)])))
+    ]),
+    el('div', { class: 'stack stack-xs' }, [
+      el('div', { class: 'eyebrow' }, 'Common faults'),
+      el('ul', { class: 'cue-list fault-list' }, (e.faults || []).map(c => el('li', null, [el('span', { class: 'm' }, '×'), el('span', null, c)])))
+    ])
+  ]);
   const body = el('div', { class: 'howto' }, [
     el('div', { class: 'stack stack-xs' }, [
       el('div', { class: 'eyebrow' }, e.cat.toUpperCase() + (e.coach ? ' · ' + e.coach : '')),
       el('h2', { class: 'display', style: 'font-size:var(--t-xl)' }, e.n),
       el('div', { class: 'row', style: 'margin-top:.35rem' }, (e.tags || []).map(t => el('span', { class: 'chip' }, t)))
     ]),
-    el('p', { style: 'max-width:64ch;color:var(--ink-2)' }, e.why),
+    RUN.active
+      ? el('details', { class: 'why-fold' }, [el('summary', { class: 'xs muted' }, 'Why this is here'),
+          el('p', { style: 'max-width:64ch;color:var(--ink-2);margin-top:.4rem' }, e.why)])
+      : el('p', { style: 'max-width:64ch;color:var(--ink-2)' }, e.why),
     e.flag ? el('div', { class: 'callout hard' }, [el('div', { class: 'h' }, 'For you specifically'), el('p', { class: 'small' }, e.flag)]) : null,
     e.home ? el('div', { class: 'callout' }, [el('div', { class: 'h' }, 'At home'), el('p', { class: 'small' }, e.home)]) : null,
     e.covert ? el('div', { class: 'callout' }, [
@@ -572,35 +546,28 @@ function openEx(id) {
         'In Home mode this is swapped for ', el('strong', null, EX[HOME_SUB[id].x].n), ' — ' + HOME_SUB[id].d + '.'
       ])
     ]) : null,
+    RUN.active ? stepsBlock() : null,
+    RUN.active ? cuesBlock() : null,
     el('div', { class: 'stack stack-xs' }, [
       el('div', { class: 'eyebrow' }, 'Set-up'),
       el('p', { class: 'small' }, e.setup)
     ]),
-    el('div', { class: 'stack stack-xs' }, [
-      el('div', { class: 'eyebrow' }, 'Execution'),
-      el('ol', { class: 'small' }, e.steps.map(s => el('li', null, s)))
-    ]),
-    el('div', { style: 'display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))' }, [
-      el('div', { class: 'stack stack-xs' }, [
-        el('div', { class: 'eyebrow' }, 'Cues'),
-        el('ul', { class: 'cue-list' }, (e.cues || []).map(c => el('li', null, [el('span', { class: 'm' }, '›'), el('span', null, c)])))
-      ]),
-      el('div', { class: 'stack stack-xs' }, [
-        el('div', { class: 'eyebrow' }, 'Common faults'),
-        el('ul', { class: 'cue-list fault-list' }, (e.faults || []).map(c => el('li', null, [el('span', { class: 'm' }, '×'), el('span', null, c)])))
-      ])
-    ]),
+    RUN.active ? null : stepsBlock(),
+    RUN.active ? null : cuesBlock(),
     el('dl', { class: 'kv' }, [
       el('dt', null, 'Dose'), el('dd', null, e.dose),
       el('dt', null, 'Progress'), el('dd', null, e.prog),
       el('dt', null, 'Regress'), el('dd', null, e.regr)
     ]),
-    e.timer ? el('div', { class: 'row' }, [
+    RUN.active ? null : el('div', { class: 'row' }, [
       el('button', {
-        class: 'btn btn-hi', onclick: () => { T.start(e.timer); closeModal(); }
-      }, [ico(ICONS.clock, 'nav-ico'), 'Start timer · ' + e.timer.w + 's × ' + e.timer.rounds]),
-      el('span', { class: 'xs muted' }, e.timer.r ? e.timer.r + 's rest between' : 'continuous')
-    ]) : null
+        class: 'btn btn-hi',
+        onclick: () => { closeModal(); RUN.open(stepsFromItems([{ x: id, d: e.dose }], e.n.toUpperCase()), new Date(), 0); }
+      }, [ico(ICONS.play, 'nav-ico'), 'Run this exercise']),
+      el('button', {
+        class: 'btn btn-sm', onclick: () => { toggleDone(new Date(), id); closeModal(); }
+      }, isDoneToday(id) ? 'Mark not done' : 'Mark done today')
+    ])
   ]);
   showModal(body);
 }
@@ -634,20 +601,10 @@ function itemRow(date, key, it, i) {
   const doneMap = S.done[d] || (S.done[d] = {});
   const id = key + ':' + i;
   const picked = PICK.keys.has(id);
-  const row = el('div', {
-    class: 'item' + (doneMap[id] && !PICK.on ? ' done' : '') + (PICK.on ? ' pickable' : '') + (picked ? ' picked' : ''),
-    onclick: PICK.on ? (ev) => { if (!ev.target.closest('.item-actions')) pickToggle(id); } : null
-  });
+  const row = el('div', { class: 'item' + (doneMap[id] ? ' done' : '') + (picked ? ' picked' : '') });
   const tick = el('button', {
-    class: 'tick' + (PICK.on ? ' pick' : ''),
-    'aria-pressed': (PICK.on ? picked : !!doneMap[id]) ? 'true' : 'false',
-    'aria-label': (PICK.on ? 'Select ' : 'Mark ') + e.n,
-    onclick: (ev) => {
-      ev.stopPropagation();
-      if (PICK.on) return pickToggle(id);
-      if (doneMap[id]) delete doneMap[id]; else { doneMap[id] = 1; beep(760, .06, .09); }
-      save(); render();
-    }
+    class: 'tick pick', 'aria-pressed': picked ? 'true' : 'false', 'aria-label': 'Select ' + e.n,
+    onclick: () => pickToggle(id)
   }, [svgEl('svg', { viewBox: '0 0 24 24' })]);
   tick.querySelector('svg').appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' }));
   row.appendChild(tick);
@@ -655,10 +612,12 @@ function itemRow(date, key, it, i) {
     exLink(r.x),
     r.swapped ? el('span', { class: 'chip swap', title: 'Swapped in for ' + EX[r.from].n }, 'HOME') : null
   ]));
-  row.appendChild(el('div', { class: 'item-dose' }, r.d));
-  const note = r.note || e.flag;
-  if (note) row.appendChild(el('div', { class: 'item-note' }, note));
-  if (isHome() && e.home) row.appendChild(el('div', { class: 'item-note home-note' }, e.home));
+  row.appendChild(el('div', { class: 'item-dose' }, [
+    r.d,
+    e.flag && /HIP LABRUM RULE/.test(e.flag)
+      ? el('button', { class: 'chip warn flagchip', onclick: () => openEx(r.x) }, 'Hip rule') : null
+  ]));
+  if (r.note) row.appendChild(el('div', { class: 'item-note' }, r.note));
   const acts = el('div', { class: 'item-actions' });
   acts.appendChild(el('button', {
     class: 'btn btn-sm', title: 'Start the guided session here',
@@ -712,10 +671,10 @@ function readinessCard(date) {
     ]);
   }
   const vals = {};
-  const card = el('div', { class: 'card-flat stack stack-sm' }, [
-    el('div', { class: 'spread' }, [
-      el('div', { class: 'eyebrow' }, 'Morning check-in · 20 seconds'),
-      el('span', { class: 'xs muted' }, '1 = bad · 5 = great')
+  const card = el('details', { class: 'card-flat stack stack-sm readiness' }, [
+    el('summary', null, [
+      el('span', { class: 'eyebrow' }, 'Morning check-in'),
+      el('span', { class: 'xs muted' }, '20 seconds · 1 = bad, 5 = great')
     ]),
     ...READINESS.q.map(q => {
       const wrap = el('div', { class: 'row', style: 'justify-content:space-between' }, [
@@ -755,18 +714,10 @@ function armorCard(date) {
     ...ARMOR.items.map((it, i) => {
       const r = resolve(it), e = EX[r.x];
       const aid = 'armor:' + i, apicked = PICK.keys.has(aid);
-      const row = el('div', {
-        class: 'item' + (a[i] && !PICK.on ? ' done' : '') + (PICK.on ? ' pickable' : '') + (apicked ? ' picked' : ''),
-        onclick: PICK.on ? (ev) => { if (!ev.target.closest('.item-actions')) pickToggle(aid); } : null
-      });
+      const row = el('div', { class: 'item' + (a[i] ? ' done' : '') + (apicked ? ' picked' : '') });
       const tick = el('button', {
-        class: 'tick' + (PICK.on ? ' pick' : ''),
-        'aria-pressed': (PICK.on ? apicked : !!a[i]) ? 'true' : 'false', 'aria-label': 'Mark ' + e.n,
-        onclick: (ev) => {
-          ev.stopPropagation();
-          if (PICK.on) return pickToggle(aid);
-          if (a[i]) delete a[i]; else { a[i] = 1; beep(760, .06, .09); } save(); render();
-        }
+        class: 'tick pick', 'aria-pressed': apicked ? 'true' : 'false', 'aria-label': 'Select ' + e.n,
+        onclick: () => pickToggle(aid)
       }, [svgEl('svg', { viewBox: '0 0 24 24' })]);
       tick.querySelector('svg').appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' }));
       row.appendChild(tick);
@@ -792,7 +743,6 @@ function viewToday() {
   const s = pl.session;
   const d = iso(date);
   const isToday = d === iso(new Date());
-  const cw = copenWeekFor(date);
 
   const head = el('div', { class: 'today-head' }, [
     el('div', { class: 'stack stack-xs' }, [
@@ -816,36 +766,16 @@ function viewToday() {
   const doneN = Object.keys(done).length;
   const startRow = el('div', { class: 'start-row' }, [
     el('button', { class: 'btn btn-hi btn-start', onclick: () => startRun(date, null, { armor: true }) },
-      [ico(ICONS.play, 'nav-ico'), 'Start guided session']),
-    el('button', { class: 'btn btn-start-alt', onclick: () => startRun(date, null, { armor: false }) }, 'Session only'),
-    el('button', { class: 'btn btn-start-alt', onclick: () => startArmorRun(date) }, 'Armor only · 12 min'),
-    el('button', {
-      class: 'btn btn-start-alt', 'aria-pressed': PICK.on ? 'true' : 'false',
-      onclick: () => { PICK.on = !PICK.on; if (!PICK.on) PICK.keys.clear(); render(); }
-    }, PICK.on ? 'Cancel picking' : 'Pick & run'),
-    el('span', { class: 'xs muted' }, PICK.on
-      ? 'Tap the exercises you want, then run just those.'
-      : 'Full screen, counts you in and out, talks you through it.')
+      [ico(ICONS.play, 'nav-ico'), 'Start session']),
+    el('button', { class: 'btn btn-start-alt', onclick: () => startArmorRun(date) }, 'Armor only'),
+    el('span', { class: 'xs muted' }, 'Or tick any boxes below to run just those.')
   ]);
 
-  const swaps = s.blocks.reduce((a, b) => a + b.items.filter(it => isHome() && HOME_SUB[it.x]).length, 0);
   return el('div', { class: 'stack stack-lg' }, [
     head,
     el('p', { class: 'session-purpose' }, s.purpose),
     startRow,
-    isHome() ? el('div', { class: 'callout' }, [
-      el('div', { class: 'h' }, 'Home mode' + (swaps ? ' · ' + swaps + (swaps === 1 ? ' swap' : ' swaps') + ' today' : '')),
-      el('p', { class: 'small' }, swaps
-        ? 'Every lift that needs a gym has been swapped for a bodyweight, doorway or backpack equivalent, marked HOME below. Sprinting and jumping are unchanged — they never needed a gym.'
-        : 'Nothing in today\'s session needs a gym. Run it exactly as written.')
-    ]) : null,
     readinessCard(date),
-    cw && ['strength-a', 'strength-b', 'accel-strength-max', 'maxv-strength-iso', 'maxv-contrast', 'accel-depth'].includes(pl.sid)
-      ? el('div', { class: 'callout' }, [
-        el('div', { class: 'h' }, 'Copenhagen ladder · week ' + cw.w + ' of 10'),
-        el('p', { class: 'small' }, [el('strong', null, EX[cw.ex].n), ' — ' + cw.d + ' · ' + cw.f]),
-        cw.note ? el('p', { class: 'small muted' }, cw.note) : null
-      ]) : null,
     el('div', { class: 'stack stack-md' }, [
       el('div', { class: 'sec-head' }, [
         el('div', { class: 'spread' }, [
@@ -863,12 +793,12 @@ function viewToday() {
     pickBar(date),
     el('div', { class: 'shortcut' }, [
       el('span', { class: 'eyebrow' }, 'At your desk'),
-      ...['desk-reset', 'desk-armor', 'desk-foot'].map(id => {
-        const r = ROUTINES.find(x => x.id === id);
-        return r ? el('button', {
+      (() => {
+        const r = ROUTINES.find(x => x.id === 'desk-reset');
+        return el('button', {
           class: 'btn btn-sm', onclick: () => RUN.open(stepsFromItems(r.items, r.n), date, 0, { routine: r.id })
-        }, [ico(ICONS.play, 'nav-ico'), r.n + ' · ' + r.min + ' min']) : null;
-      }).filter(Boolean),
+        }, [ico(ICONS.play, 'nav-ico'), r.n + ' · ' + r.min + ' min']);
+      })(),
       el('button', { class: 'btn btn-ghost btn-sm', onclick: () => go('desk') }, 'All desk routines →')
     ]),
     el('div', { class: 'stack stack-sm' }, [
@@ -884,27 +814,27 @@ function viewToday() {
 /* ===========================================================
    VIEW: PROGRAM
    =========================================================== */
+function selMinutes(date) {
+  const steps = buildSteps(planFor(date).session, date, { armor: true })
+    .filter(st => PICK.keys.has(st.key + ':' + st.ii));
+  const secs = steps.reduce((a, st) => a + (st.mode === 'timed'
+    ? st.work * st.rounds + st.rest * (st.rounds - 1) : 45) + 6, 0);
+  return Math.max(1, Math.round(secs / 60));
+}
 function pickBar(date) {
-  if (!PICK.on) return null;
   const n = PICK.keys.size;
-  const est = (() => {
-    const steps = buildSteps(planFor(date).session, date, { armor: true })
-      .filter(st => PICK.keys.has(st.key + ':' + st.ii));
-    const secs = steps.reduce((a, st) => a + (st.mode === 'timed'
-      ? st.work * st.rounds + st.rest * (st.rounds - 1) : 45) + 6, 0);
-    return Math.max(1, Math.round(secs / 60));
-  })();
+  if (!n) return null;
   return el('div', { class: 'pick-bar' }, [
-    el('span', { class: 'num small' }, n ? n + ' selected · ≈ ' + est + ' min' : 'Tap exercises to select'),
+    el('span', { class: 'num small' }, n + ' selected · ≈ ' + selMinutes(date) + ' min'),
     el('button', { class: 'btn btn-sm btn-ghost', onclick: () => { PICK.keys.clear(); render(); } }, 'Clear'),
     el('button', {
-      class: 'btn btn-hi', disabled: n ? null : 'disabled',
+      class: 'btn btn-hi',
       onclick: () => {
         const steps = buildSteps(planFor(date).session, date, { armor: true })
           .filter(st => PICK.keys.has(st.key + ':' + st.ii));
-        if (steps.length) { PICK.on = false; RUN.open(steps, date, 0); }
+        if (steps.length) { PICK.keys.clear(); RUN.open(steps, date, 0); }
       }
-    }, [ico(ICONS.play, 'nav-ico'), 'Run ' + (n || '') ])
+    }, [ico(ICONS.play, 'nav-ico'), 'Run ' + n])
   ]);
 }
 
@@ -1408,36 +1338,6 @@ const NAV = [
 let route = 'today';
 function go(r) { route = r; window.scrollTo(0, 0); render(); }
 
-const dock = el('aside', { class: 'dock', hidden: true, 'aria-live': 'off' }, [
-  el('div', { class: 'dock-head' }, [
-    ico(ICONS.clock, 'nav-ico'),
-    el('span', { class: 't', id: 'dockTitle' }, 'Timer'),
-    el('button', { class: 'btn btn-ghost btn-sm', style: 'margin-left:auto', onclick: () => T.stop(), 'aria-label': 'Stop timer' }, [ico(ICONS.x, 'nav-ico')])
-  ]),
-  el('div', { class: 'dock-body' }, [
-    (() => {
-      const r = el('div', { class: 'ring', id: 'ring' });
-      const s = svgEl('svg', { viewBox: '0 0 96 96', width: 96, height: 96 });
-      s.appendChild(svgEl('circle', { class: 'track', cx: 48, cy: 48, r: 42, fill: 'none', 'stroke-width': 6 }));
-      s.appendChild(svgEl('circle', { class: 'prog', id: 'ringProg', cx: 48, cy: 48, r: 42, fill: 'none', 'stroke-width': 6 }));
-      r.appendChild(s);
-      r.appendChild(el('div', { class: 'ring-label' }, [
-        el('span', { class: 'big', id: 'ringBig' }, '0.0'),
-        el('span', { class: 'sub', id: 'ringSub' }, 'work')
-      ]));
-      return r;
-    })(),
-    el('div', { class: 'dock-ctl' }, [
-      el('span', { class: 'dock-phase', id: 'dockPhase' }, 'WORK'),
-      el('span', { class: 'dock-rounds', id: 'dockRounds' }, 'Round 1 / 1'),
-      el('div', { class: 'row', style: 'gap:.35rem' }, [
-        el('button', { class: 'btn btn-hi', id: 'dockPlay', onclick: () => T.toggle(), 'aria-label': 'Play or pause' }, [ico(ICONS.pause, 'nav-ico')]),
-        el('button', { class: 'btn btn-sm', onclick: () => { if (T.cfg) T.start(T.cfg); }, 'aria-label': 'Restart' }, [ico(ICONS.reset, 'nav-ico')])
-      ])
-    ])
-  ])
-]);
-
 function strip() {
   const pl = planFor(new Date());
   const d = iso(new Date());
@@ -1500,7 +1400,6 @@ function render() {
   document.querySelectorAll('[data-route]').forEach(b => {
     b.setAttribute('aria-current', b.dataset.route === route ? 'page' : 'false');
   });
-  if (T.cfg) T.render();
 }
 
 function buildShell() {
@@ -1524,7 +1423,6 @@ function buildShell() {
   }, [ico(icon, 'nav-ico'), label])));
   document.body.appendChild(el('div', { class: 'shell' }, [rail, main]));
   document.body.appendChild(tabs);
-  document.body.appendChild(dock);
   document.body.appendChild(runEl);
   document.body.appendChild(modalBg);
 }
@@ -1553,7 +1451,6 @@ document.addEventListener('keydown', e => {
   }
   const n = NAV.find(x => x[3] === e.key);
   if (n) go(n[0]);
-  if (e.key === ' ' && T.cfg) { e.preventDefault(); T.toggle(); }
 });
 
 load();

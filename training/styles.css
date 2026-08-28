@@ -342,7 +342,7 @@ textarea { width: 100%; resize: vertical; font-size: var(--t-sm); }
 .session-purpose {
   border-left: 2px solid var(--hi-fill);
   padding-left: .85rem;
-  font-size: var(--t-md);
+  font-size: var(--t-base);
   line-height: 1.45;
   max-width: 62ch;
 }
@@ -420,7 +420,7 @@ textarea { width: 100%; resize: vertical; font-size: var(--t-sm); }
 .lib-card .d { font-family: var(--mono); font-size: var(--t-xs); color: var(--muted); }
 
 /* modal */
-.modal-bg { position: fixed; inset: 0; background: rgba(6,11,9,.55); z-index: 100; display: grid; place-items: end center; padding: 0; }
+.modal-bg { position: fixed; inset: 0; background: rgba(6,11,9,.62); z-index: 300; display: grid; place-items: end center; padding: 0; }
 .modal-bg[hidden] { display: none; }
 .modal {
   background: var(--paper); width: min(720px, 100%); max-height: 92vh; overflow-y: auto;
@@ -612,14 +612,15 @@ body.running { overflow: hidden; }
 .tick.pick[aria-pressed="true"] svg { stroke: var(--on-hi); }
 
 .pick-bar {
-  position: sticky; bottom: 1rem; z-index: 50;
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: 1.25rem; z-index: 90;
+  width: min(520px, calc(100vw - 2rem));
   display: flex; align-items: center; gap: .6rem; flex-wrap: wrap;
   background: var(--raised); border: 1px solid var(--line-2); border-radius: 5px;
   padding: .6rem .8rem; box-shadow: var(--shadow);
 }
 .pick-bar .btn-hi { margin-left: auto; }
 .pick-bar .btn-hi svg { width: 13px; height: 13px; fill: currentColor; stroke: currentColor; }
-@media (max-width: 860px) { .pick-bar { bottom: calc(4.2rem + env(safe-area-inset-bottom)); } }
+@media (max-width: 860px) { .pick-bar { bottom: calc(4.4rem + env(safe-area-inset-bottom)); } }
 
 /* ---------- routines ---------- */
 .routine-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: .7rem; align-items: start; }
@@ -646,3 +647,32 @@ body.running { overflow: hidden; }
 }
 .shortcut .eyebrow { margin-right: .2rem; }
 .shortcut .btn-sm svg { width: 11px; height: 11px; fill: currentColor; stroke: currentColor; }
+
+
+/* ---------- simplified Today ---------- */
+.start-row { gap: .6rem; }
+.readiness { padding: 0; }
+.readiness > summary {
+  display: flex; align-items: baseline; gap: .6rem; cursor: pointer;
+  padding: .7rem .9rem; list-style: none;
+}
+.readiness > summary::-webkit-details-marker { display: none; }
+.readiness > summary::after { content: "›"; margin-left: auto; color: var(--muted); transform: rotate(90deg); }
+.readiness[open] > summary::after { transform: rotate(-90deg); }
+.readiness > *:not(summary) { padding-left: .9rem; padding-right: .9rem; }
+.readiness > *:last-child { margin-bottom: .9rem; }
+
+/* selection is the default state of the left control */
+.tick.pick { border-radius: 4px; }
+.tick.pick[aria-pressed="true"] { background: var(--hi-fill); border-color: var(--hi-fill); }
+.tick.pick[aria-pressed="true"] svg { stroke: var(--on-hi); }
+.item.picked { background: color-mix(in srgb, var(--hi-fill) 9%, transparent); }
+.item.done .item-dose { color: var(--faint); }
+
+.flagchip { margin-left: .45rem; cursor: pointer; vertical-align: 1px; }
+.flagchip:hover { filter: brightness(1.08); }
+
+.why-fold > summary { cursor: pointer; list-style: none; }
+.why-fold > summary::-webkit-details-marker { display: none; }
+.why-fold > summary::before { content: "▸ "; }
+.why-fold[open] > summary::before { content: "▾ "; }

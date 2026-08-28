@@ -3000,4 +3000,169 @@ Object.assign(EX, {
   });
 })();
 
+
+/* --- more desk work, so a desk session can be a real session --- */
+Object.assign(EX, {
+
+'desk-adductor-long': {
+  n: 'Long-Lever Adductor Squeeze', cat: 'iso', tags: ['adductor','desk','iso','armor'], covert: 'invisible',
+  why: 'The same squeeze, done with the legs extended. A longer lever means the adductor works at a longer muscle length, which is where it actually fails during a wide plant. Two angles beat one, and this is the harder of the two.',
+  setup: 'Seated, legs extended forward, heels on the floor, a rolled sweater or a bag between the ankles.',
+  steps: [
+    'Sit tall — a slumped pelvis closes the front of the hip.',
+    'Squeeze the ankles together, ramping over 2 seconds.',
+    'Hold 12 seconds at 60–70%. You should feel it high in the inner thigh.',
+    'Relax fully for 8 seconds. Five of those.'
+  ],
+  cues: ['Sit tall first, then squeeze.','Long legs — that is the whole point of this version.','Breathe.'],
+  faults: ['Slumping, which tips the pelvis and closes the hip.','Bending the knees, which turns it back into the short-lever version.'],
+  dose: '5 × 12 s.',
+  prog: 'Higher effort, longer hold, feet further out.',
+  regr: 'Bend the knees slightly.',
+  timer: { w: 12, r: 8, rounds: 5, label: 'Long-lever squeeze' }
+},
+'desk-ham-curl-iso': {
+  n: 'Chair-Leg Hamstring Curl', cat: 'iso', tags: ['hamstring','desk','iso','armor'], covert: 'invisible',
+  why: 'A knee-flexion isometric to sit alongside the heel dig, which is a hip-extension one. The hamstring crosses two joints and does two jobs; a complete desk dose trains both.',
+  setup: 'Seated, one heel hooked back behind a chair leg or a desk leg.',
+  steps: [
+    'Pull the heel backward into the obstacle as if trying to curl it under the chair.',
+    'Hold 15 seconds at 60–70%. It should be clearly in the back of the thigh.',
+    'Relax and switch legs.',
+    'Sit reasonably upright throughout.'
+  ],
+  cues: ['Pull back, not down.','Back of the thigh, not the calf.'],
+  faults: ['Pressing down instead of pulling back.','Cramping — reduce the effort and build up.'],
+  dose: '4 × 15 s per leg.',
+  prog: 'Higher effort, longer hold.',
+  regr: 'Lighter effort.',
+  timer: { w: 15, r: 8, rounds: 8, label: 'Curl — switch legs' }
+},
+'desk-thoracic-ext': {
+  n: 'Chair-Back Extension', cat: 'mobility', tags: ['spine','desk','shoulder'], covert: 'subtle',
+  why: 'The mid-back loses extension faster than anything else in a chair, and a stiff thoracic spine makes the shoulder hunt for range it does not have. Your chair back is already a fulcrum.',
+  setup: 'Seated, mid-back against the top edge of the chair back, hands supporting the head.',
+  steps: [
+    'Keep the ribs down and the low back neutral — the extension happens above the chair edge.',
+    'Exhale and drape backward over the edge, letting the mid-back extend.',
+    'Hold 3 breaths, then slide up or down one segment and repeat.',
+    'Four positions covers the whole thoracic spine.'
+  ],
+  cues: ['Extend over the edge, not from the low back.','Exhale into it.'],
+  faults: ['Arching the lumbar spine.','Cranking the neck with the hands.'],
+  dose: '4 positions × 3 breaths.',
+  prog: 'Deeper drape, arms overhead.',
+  regr: 'Smaller range.'
+},
+'desk-pec-doorway': {
+  n: 'Doorway Pec Opener', cat: 'mobility', tags: ['shoulder','desk','posture'], covert: 'subtle',
+  why: 'Hours of typing shortens the front of the shoulder and pulls the blade forward, which is the position a throwing shoulder least wants to start from. Thirty seconds in a doorway on the way to the kitchen resets it.',
+  setup: 'Forearm on a door frame, elbow at about shoulder height.',
+  steps: [
+    'Set the shoulder blade down and back FIRST.',
+    'Step through gently until you feel it across the front of the chest and shoulder.',
+    'Hold 30 seconds, breathing. Do not push into the front of the joint.',
+    'Repeat at a lower and a higher elbow angle to cover the different fibres.'
+  ],
+  cues: ['Blade set before you step.','Stretch across the chest, not pinching in the joint.'],
+  faults: ['Leading with the shoulder, which jams the front of the joint.','Pushing to end range.'],
+  dose: '2 × 30 s per side at two angles.',
+  prog: 'Slightly deeper step.',
+  regr: 'Less step-through.',
+  timer: { w: 30, r: 8, rounds: 4, label: 'Pec opener — switch sides' }
+},
+'desk-forearm-iso': {
+  n: 'Wrist Isometrics', cat: 'iso', tags: ['grip','desk','shoulder'], covert: 'invisible',
+  why: 'Flicks, hammers and a pickleball paddle all load the wrist and forearm hard, and it is the one link nobody trains until it complains. Isometrics against your own hand cost nothing.',
+  setup: 'Seated, forearm resting on the desk, hand off the edge.',
+  steps: [
+    'Extension: press the back of the hand up into your other hand. Hold 12 s.',
+    'Flexion: turn the palm up and press up into the other hand. Hold 12 s.',
+    'Radial and ulnar deviation: press the hand sideways each way. 10 s each.',
+    'Both arms.'
+  ],
+  cues: ['Forearm stays flat on the desk.','60–70%, smooth ramp.'],
+  faults: ['Lifting the whole arm.','Snapping into max effort.'],
+  dose: '2 rounds of all four directions per arm.',
+  prog: 'Higher effort, longer holds.',
+  regr: 'Lighter effort.',
+  timer: { w: 12, r: 6, rounds: 8, label: 'Wrist iso — change direction' }
+},
+'desk-balance': {
+  n: 'Single-Leg Stand', cat: 'iso', tags: ['foot','hip','desk','balance'], covert: 'subtle',
+  why: 'Free foot and hip stability work at a standing desk. Standing on one leg loads the intrinsic foot muscles, the ankle stabilisers and the side of the hip all at once — and the side of the hip is what stops the femur drifting into the position your labrum objects to.',
+  setup: 'Standing desk, fingertips resting on it. Shoe off if you can.',
+  steps: [
+    'Shift onto one leg, other foot lightly off the floor.',
+    'Set a short foot — arch domed, toes long, big toe pressed down.',
+    'Hold 45–60 seconds. Keep the standing hip level and stacked over the foot.',
+    'Progress by taking the fingertips off, then closing your eyes.'
+  ],
+  cues: ['Standing hip level — do not let it drop or shove sideways.','Tripod foot: big toe, little toe, heel.'],
+  faults: ['Leaning on the desk.','Hip collapsing inward.'],
+  dose: '2 × 45–60 s per side.',
+  prog: 'Hands off, then eyes closed, then on a folded towel.',
+  regr: 'More fingertip support.',
+  timer: { w: 50, r: 15, rounds: 4, label: 'Balance — switch legs' }
+},
+'desk-wall-sit': {
+  n: 'Corridor Wall Sit', cat: 'iso', tags: ['legs','desk','iso'], covert: 'private',
+  why: 'The one genuinely hard leg exercise you can do in an office, and it needs a wall and nothing else. Also the most honest measure of quadriceps endurance there is.',
+  setup: 'Back flat against a wall, thighs parallel, knees at 90°.',
+  steps: ['Slide down until the thighs are parallel — most people stop high.','Weight through the heels, back flat.','Hold 60–90 seconds, breathing normally.','No hands on the thighs.'],
+  cues: ['Thighs actually parallel.','Push the back into the wall.'],
+  faults: ['Sitting above parallel.','Hands on the knees.'],
+  dose: '3 × 60–90 s.',
+  prog: 'Single leg, or hold a bag on the lap.',
+  regr: 'Higher position.',
+  timer: { w: 75, r: 45, rounds: 3, label: 'Wall sit' }
+}
+});
+
+ROUTINES.unshift(
+  { id:'desk-full', n:'The Full Desk Session', min:22, tag:'DESK', covert:'invisible',
+    sub:'A real session, done entirely in a chair',
+    why:'Not a snack — a complete session. Every weak link gets a genuine dose: hip rotation and glute control, the adductor at two lever lengths, the hamstring at both joints, feet, shoulder, posture, and a down-regulation to finish. Twenty-two minutes, no equipment beyond a ball and a chair, and nothing that draws attention. On a travel day or a day the session is not happening, this is not a consolation prize.',
+    items:[
+      { x:'desk-ball-roll', d:'90 s per foot' },
+      { x:'hip-cars', d:'3 circles each direction per side', note:'Seated or standing beside the desk. Note where it pinches.' },
+      { x:'desk-hip-rot-iso', d:'4 × 18 s each direction' },
+      { x:'desk-adductor-squeeze', d:'5 × 10 s' },
+      { x:'desk-adductor-long', d:'5 × 12 s' },
+      { x:'desk-ham-heel-dig', d:'3 × 18 s per leg' },
+      { x:'desk-ham-curl-iso', d:'4 × 15 s per leg' },
+      { x:'desk-glute-squeeze', d:'5 × 15 s' },
+      { x:'desk-hip-flexor-press', d:'5 × 9 s per side' },
+      { x:'desk-calf-iso', d:'3 × 30 s' },
+      { x:'desk-short-foot', d:'5 × 10 s per foot' },
+      { x:'desk-scap-set', d:'5 × 18 s' },
+      { x:'desk-cuff-iso', d:'3 × 25 s each direction' },
+      { x:'desk-thoracic-ext', d:'4 positions × 3 breaths' },
+      { x:'desk-figure-four', d:'2 × 50 s per side' },
+      { x:'desk-breath', d:'5 min' }
+    ]},
+  { id:'desk-hip', n:'Desk Hip', min:7, tag:'DESK', covert:'invisible',
+    sub:'The labral hip, loaded away from the position that pinches',
+    why:'Rotation isometrics at a neutral angle, glute control, and a CARs arc to map. Nothing here goes near flexion-adduction-internal-rotation. A labral hip responds to frequency, and this is the version you can run three times in a workday.',
+    items:[
+      { x:'hip-cars', d:'3 circles each direction per side' },
+      { x:'desk-hip-rot-iso', d:'4 × 18 s each direction' },
+      { x:'desk-glute-squeeze', d:'5 × 15 s' },
+      { x:'standing-abduction-iso', d:'3 × 25 s per side' },
+      { x:'desk-figure-four', d:'2 × 50 s per side' }
+    ]}
+);
+ROUTINES.push(
+  { id:'desk-strong', n:'Standing Desk Strength', min:9, tag:'DESK', covert:'subtle',
+    sub:'If you have a standing desk, this is real training',
+    why:'Single-leg calf holds and single-leg balance are genuinely loaded work at bodyweight, and a wall sit is the hardest thing you can do in an office. Not covert, but not conspicuous either.',
+    items:[
+      { x:'desk-standing-calf', d:'3 × 35 s per side, bent and straight knee' },
+      { x:'desk-balance', d:'2 × 50 s per side' },
+      { x:'standing-abduction-iso', d:'3 × 25 s per side' },
+      { x:'desk-wall-sit', d:'3 × 75 s' },
+      { x:'desk-pec-doorway', d:'2 × 30 s per side' }
+    ]}
+);
+
 if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB, ROUTINES }; }

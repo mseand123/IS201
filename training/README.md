@@ -41,12 +41,13 @@ session — every block, then the Daily Armor — one exercise at a time:
 - Coaching cues rotate every six seconds inside the exercise; between-round rests show the
   switch instruction ("Switch feet"), between-exercise rests announce what's next
 - Speech announces each exercise and each rest — toggle it with **Voice on / off**
-- **Back**, **Pause**, **Done early** / **Skip**, and **Show how-to** without losing your place
+- **Back**, **Pause**, **Done early** / **Skip**, and **Show how-to** without losing your place — mid-session the dialog leads with the steps and cues and folds the rationale away
 - Screen wake lock while it runs; completed exercises tick themselves off on the Today screen
 
-**Pick & run** on the Today screen turns the session into a selector: tap the exercises you
-have time for, see the running time estimate, and run only those. The `▶` on any item starts
-the player from that exercise instead. A separate quick timer for a single
+Every item has a checkbox — tick any of them and a floating bar offers to run just those, with
+a time estimate. No mode to enter. The `▶` on an item starts the player from that exercise
+instead. There is one timer in the app: the player. Marking something done by hand lives in the
+exercise dialog. A separate quick timer for a single
 exercise lives in the exercise detail dialog and floats in a dock.
 
 ## Injury context
@@ -62,10 +63,11 @@ rather than labral rehab.
 
 ## Desk track
 
-19 exercises tagged `desk`, each labelled by how visible it is — `invisible` (nobody can tell),
-`subtle` (reads as fidgeting), `private` (fine alone, not in an open-plan office). Six desk
-routines in the Desk view run them as guided circuits, from a two-minute hourly reset to a
-five-minute adductor / hamstring / cuff block. The rationale: the armor protocols respond to
+27 exercises tagged `desk`, each labelled by how visible it is — `invisible` (nobody can tell),
+`subtle` (reads as fidgeting), `private` (fine alone, not in an open-plan office). Nine desk
+routines in the Desk view run them as guided circuits, from a two-minute hourly reset to
+**The Full Desk Session** — 22 minutes covering hip, groin, hamstring, foot, shoulder, posture
+and breathing without leaving a chair. The rationale: the armor protocols respond to
 frequency more than intensity, and a workday is the largest unused training window available.
 
 Keyboard — app: `1`–`6` switch views. Player: `Space` pause/done, `←` `→` step, `Esc` exit.
