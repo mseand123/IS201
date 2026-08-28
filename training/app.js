@@ -368,6 +368,7 @@ try {
 } catch (e) { /* not available */ }
 
 function voiceDialog() {
+  const refresh = () => { voiceDialog(); if (RUN.active) buildRun(); };
   loadVoices();
   const list = englishVoices();
   const cur = pickVoice();
@@ -376,7 +377,7 @@ function voiceDialog() {
     ...[['0.9', 'Slower'], ['1', 'Normal'], ['1.15', 'Quicker']].map(([v, label]) =>
       el('button', {
         class: 'btn btn-sm', 'aria-pressed': String(S.settings.voiceRate || 1) === v ? 'true' : 'false',
-        onclick: () => { S.settings.voiceRate = +v; save(); say('Switch feet. Right side.'); voiceDialog(); }
+        onclick: () => { S.settings.voiceRate = +v; save(); say('Switch feet. Right side.'); refresh(); }
       }, label))
   ]);
   showModal(el('div', { class: 'howto' }, [
@@ -391,7 +392,7 @@ function voiceDialog() {
     el('div', { class: 'swap-list' }, [
       el('button', {
         class: 'swap-row' + (S.settings.voice === false ? ' current' : ''),
-        onclick: () => { S.settings.voice = false; save(); voiceDialog(); }
+        onclick: () => { S.settings.voice = false; save(); refresh(); }
       }, [el('div', { class: 'swap-main' }, [
         el('span', { class: 'swap-name' }, 'Off'),
         el('span', { class: 'swap-sub' }, 'Beeps only — the switch chime still plays.')])]),
@@ -399,7 +400,7 @@ function voiceDialog() {
         class: 'swap-row' + (S.settings.voice !== false && cur && v.name === cur.name ? ' current' : ''),
         onclick: () => {
           S.settings.voice = true; S.settings.voiceName = v.name; save();
-          say('Switch feet. Right side.'); voiceDialog();
+          say('Switch feet. Right side.'); refresh();
         }
       }, [
         el('div', { class: 'swap-main' }, [
@@ -522,7 +523,16 @@ const RUN = {
     if (this.phase === 'rest') { this.round++; return this.enter('work'); }
     if (this.phase === 'restAfter') return this.next();
   },
-  doneEarly() { this.next(); },              // finish it now, count it done
+  // End this round early and carry on with the exercise.
+  nextRound() {
+    const st = this.step();
+    if (this.phase === 'work' && this.round < st.rounds) {
+      if (st.rest) return this.enter('rest');
+      this.round++; return this.enter('work');
+    }
+    return this.next();                      // last round: the exercise is finished
+  },
+  doneEarly() { this.next(); },              // done with the whole exercise, count it
   skip() {                                   // move on without counting it
     if (this.i >= this.steps.length - 1) return this.enter('done');
     this.i++; this.enter('ready');
@@ -655,6 +665,7 @@ function buildRun() {
 
   const between = RUN.phase === 'restAfter' && nextStep;
   const sw = switchInfo(st);
+  const moreRounds = RUN.phase === 'work' && st.rounds > 1 && RUN.round < st.rounds;
   const switching = RUN.phase === 'rest' && sw;
   const sideNow = sideLabel(st, RUN.round);
   const sideNext = sideLabel(st, RUN.round + 1);
@@ -689,17 +700,20 @@ function buildRun() {
         : el('button', { class: 'btn btn-hi run-btn run-btn-main', onclick: () => RUN.toggle() }, RUN.running ? 'Pause' : 'Resume'),
       el('button', {
         class: 'btn run-btn',
-        onclick: () => (isRest ? RUN.doneEarly() : isManual ? RUN.skip() : RUN.doneEarly())
-      }, isRest ? 'Skip rest' : isManual ? 'Skip' : 'Done early')
+        onclick: () => (isRest ? RUN.advance() : isManual ? RUN.skip() : RUN.nextRound())
+      }, isRest ? 'Skip rest'
+         : isManual ? 'Skip'
+         : moreRounds ? (sw ? 'Next side' : 'Next round')
+         : 'Done early')
     ]),
     el('div', { class: 'row', style: 'gap:.4rem' }, [
       el('button', { class: 'btn btn-ghost btn-sm', onclick: () => openEx(between ? nextStep.x : st.x) },
-        between ? 'How-to · next' : 'Show how-to'),
-      el('button', {
-        class: 'btn btn-ghost btn-sm',
-        onclick: () => { S.settings.voice = S.settings.voice === false; save(); buildRun(); }
-      }, S.settings.voice === false ? 'Voice off' : 'Voice on'),
-      el('button', { class: 'btn btn-ghost btn-sm', onclick: () => voiceDialog() }, 'Change voice')
+        between ? 'How-to · next' : 'How-to'),
+      moreRounds && !isRest && !isManual
+        ? el('button', { class: 'btn btn-ghost btn-sm', onclick: () => RUN.doneEarly() }, 'Finish exercise')
+        : null,
+      el('button', { class: 'btn btn-ghost btn-sm', onclick: () => voiceDialog() },
+        S.settings.voice === false ? 'Voice off' : 'Voice')
     ]),
     el('div', { class: 'run-hint' }, between ? '' : hint)
   ]));
@@ -1815,7 +1829,9 @@ document.addEventListener('keydown', e => {
   if (e.target.matches('input, textarea')) return;
   if (RUN.active) {
     if (e.key === ' ') { e.preventDefault(); RUN.phase === 'manual' ? st_manualDone() : RUN.toggle(); }
-    if (e.key === 'ArrowRight') RUN.phase === 'manual' ? RUN.skip() : RUN.doneEarly();
+    if (e.key === 'ArrowRight') RUN.phase === 'manual' ? RUN.skip()
+      : RUN.phase === 'rest' || RUN.phase === 'restAfter' ? RUN.advance()
+      : RUN.nextRound();
     if (e.key === 'ArrowLeft') RUN.prev();
     return;
   }

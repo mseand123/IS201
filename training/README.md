@@ -46,7 +46,10 @@ session — every block, then the Daily Armor — one exercise at a time:
   a Left/Right chip shows which side you're on, so it's never a guess mid-set. Switch rests get
   a minimum of 8 seconds regardless of the configured rest
 - Speech announces each exercise and each rest — toggle it with **Voice on / off**
-- **Back**, **Pause**, **Done early** / **Skip**, and **Show how-to** without losing your place — mid-session the dialog leads with the steps and cues and folds the rationale away
+- The right-hand button means one thing per phase: **Next round** / **Next side** while rounds
+  remain, **Done early** on the last one, **Skip rest** during a rest, **Skip** on a hand-timed
+  set. Ending a round never leaves the exercise; **Finish exercise** in the link row does that
+- **Back**, **Pause**, and **How-to** without losing your place — mid-session the dialog leads with the steps and cues and folds the rationale away
 - Screen wake lock while it runs; completed exercises tick themselves off on the Today screen
 
 ## Not following the plan
