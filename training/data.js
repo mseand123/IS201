@@ -2410,4 +2410,404 @@ const HOME_SUB = {
   'foam-roll-post':           { x: 'ball-roll-foot',            d: '90 s per foot, then a ball on the glutes and quads for 45 s each', note: 'A lacrosse ball against a wall covers most of what a roller does.' }
 };
 
-if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB }; }
+
+/* ===========================================================
+   THE DESK TRACK
+   Training you can do in a chair, in a meeting, on a call.
+   covert: 'invisible' — nobody can tell. 'subtle' — reads as fidgeting or
+   stretching. 'private' — fine alone, not in an open-plan office.
+   =========================================================== */
+Object.assign(EX, {
+
+'desk-adductor-squeeze': {
+  n: 'Desk Adductor Squeeze', cat: 'iso', tags: ['adductor','desk','iso','armor'], covert: 'invisible',
+  why: 'Your single weakest link, trained at your desk, and genuinely nobody can tell. The adductor squeeze responds to frequency more than intensity — the Copenhagen literature is explicit that accumulated volume drives the outcome. Three ladders here, three there, across a workday, and you have quietly doubled your weekly adductor volume without a single trip to a gym.',
+  setup: 'Seated, feet flat. Put a fist, a rolled sweater, a water bottle or a small ball between your knees.',
+  steps: [
+    'Knees at about 90°. Ramp the squeeze up over 2 seconds — never snap into it.',
+    'Hold 10 seconds at roughly 60–70% effort, breathing normally.',
+    'Release for 5 seconds. Five of those is one ladder.',
+    'Vary the angle across the day: feet tucked back under the chair biases one part of the group, feet pushed forward biases another.'
+  ],
+  cues: ['Breathe through it — holding your breath is what makes it visible.','60–70%, not maximal. This is volume, not a max effort.','Keep your face and shoulders completely relaxed.'],
+  faults: ['Going maximal and grimacing.','Bracing the whole trunk so your posture visibly changes.','Doing it once and forgetting — the point is three or four times a day.'],
+  dose: '3–5 × 10 s, two to four times across a workday.',
+  prog: 'Higher effort, longer holds, or a firmer object.',
+  regr: 'Lower effort, shorter holds.',
+  timer: { w: 10, r: 5, rounds: 5, label: 'Squeeze — relax between' }
+},
+'desk-ham-heel-dig': {
+  n: 'Seated Heel Dig', cat: 'iso', tags: ['hamstring','desk','iso','armor'], covert: 'invisible',
+  why: 'A hamstring isometric under a desk. Not the long-length position that matters most for sprinting, but real contractile work at a frequency you could never get in the gym — and isometric hamstring protocols raise knee-flexion torque about 10% on their own. Push the heel further forward and it gets closer to the long-length position that actually protects you.',
+  setup: 'Seated, one heel on the floor, leg extended further forward than a normal sitting position — the further out, the longer the hamstring.',
+  steps: [
+    'Dig the heel down and back into the floor, as if trying to drag the floor toward you.',
+    'You should feel it under the back of the thigh, not in the calf or the low back.',
+    'Hold 15–20 seconds at 60–70%. Swap legs.',
+    'Do it with the leg progressively straighter as it gets easy — that is where the value is.'
+  ],
+  cues: ['Back and down, not just down.','Straighter leg means longer hamstring means more relevant.','Keep the torso still so it stays invisible.'],
+  faults: ['Pressing straight down, which is a quad and calf exercise.','Leaning back and turning it into a low back brace.','Bent knee only — that trains the position that never fails.'],
+  dose: '3 × 15–20 s per leg, twice a day.',
+  prog: 'Straighter leg, longer hold, higher effort.',
+  regr: 'Knee more bent, less effort.',
+  timer: { w: 18, r: 10, rounds: 6, label: 'Heel dig — switch legs' }
+},
+'desk-glute-squeeze': {
+  n: 'Seated Glute Isometric', cat: 'iso', tags: ['glute','desk','iso'], covert: 'invisible',
+  why: 'Eight hours of sitting is eight hours of the glutes doing nothing while the hip flexors sit short. This is the cheapest possible counter, and it directly feeds the hip extension that acceleration comes from.',
+  setup: 'Seated, feet flat, sitting reasonably upright.',
+  steps: ['Squeeze both glutes hard enough that you feel yourself rise very slightly in the seat.','Hold 15–20 seconds, breathing normally.','Relax completely for 10 seconds.','Single-side version: squeeze one at a time — harder than it sounds.'],
+  cues: ['Squeeze the glutes, not the abs or the low back.','Nothing above the waist should move.'],
+  faults: ['Arching the low back.','Holding your breath.'],
+  dose: '5 × 15 s, a few times a day.',
+  prog: 'One side at a time.',
+  regr: 'Shorter holds.',
+  timer: { w: 15, r: 10, rounds: 6, label: 'Glute squeeze' }
+},
+'desk-hip-flexor-press': {
+  n: 'Under-Desk Knee Press', cat: 'iso', tags: ['hip','desk','iso','speed'], covert: 'invisible',
+  why: 'Hip flexor strength above 90° drives sprint knee lift and stride frequency, and virtually nobody trains it there because it is awkward to load. The underside of your desk is a perfectly good immovable object. This is an overcoming isometric — max force, no movement, nothing visible above the desk.',
+  setup: 'Seated close to the desk, one knee raised so the top of the thigh contacts the underside of the desk.',
+  steps: [
+    'Take up the slack — thigh in contact, foot off the floor.',
+    'Drive the knee up into the desk hard for 8–10 seconds.',
+    'Relax fully. Switch legs.',
+    'Sit tall throughout; do not lean back to get more leverage.'
+  ],
+  cues: ['Straight up, not forward.','Sit tall — leaning back turns it into a trunk exercise.','Hard effort; this one can be near-maximal without showing.'],
+  faults: ['Leaning back.','Lifting the whole desk (check it is heavy enough first).','Cramping the hip flexor — build the duration gradually.'],
+  dose: '5 × 8–10 s per side.',
+  prog: 'Higher effort, or hold with the thigh higher.',
+  regr: 'Lower effort, shorter holds.',
+  timer: { w: 9, r: 8, rounds: 6, label: 'Knee press — switch legs' }
+},
+'desk-calf-iso': {
+  n: 'Seated Calf Press', cat: 'iso', tags: ['calf','desk','iso','tendon'], covert: 'invisible',
+  why: 'The soleus is the biggest single contributor to propulsion in running and it takes 6–8× bodyweight per stride. A bent knee is exactly the position that biases it, and a seated press with your hands driving down on your knees loads it far more than you would expect.',
+  setup: 'Seated, feet flat, knees at 90°. Hands resting on top of the knees.',
+  steps: [
+    'Press the balls of the feet into the floor, lifting the heels to mid-range.',
+    'Push down through your hands on your knees to add load.',
+    'Hold 25–40 seconds. It should be burning by 20.',
+    'Lower slowly, do not drop.'
+  ],
+  cues: ['Mid-range, not the very top.','Hands add the load — press down hard.','Bent knee is the point; this is soleus work.'],
+  faults: ['Bouncing the heels, which is visible and useless.','Top-range holds where the joint locks and the tendon unloads.'],
+  dose: '3 × 30 s, or continuous heel raises for 60 s.',
+  prog: 'One leg at a time, more hand pressure.',
+  regr: 'No hand load.',
+  timer: { w: 30, r: 25, rounds: 4, label: 'Calf press' }
+},
+'desk-tib-raise': {
+  n: 'Seated Toe Raise', cat: 'strength', tags: ['foot','desk','decel'], covert: 'invisible',
+  why: 'Anterior tibialis is a primary brake for the shin over the foot, you decelerate 47 times a game, and almost nobody trains it. Under a desk it costs nothing.',
+  setup: 'Seated, heels on the floor, knees at 90°.',
+  steps: ['Pull the toes and forefoot up toward the shins as far as they will go.','Hold 2 seconds at the top.','Lower slowly over 3 seconds.','Or hold at the top for 30 s straight as an isometric.'],
+  cues: ['Full range — get the toes really up.','Slow on the way down.'],
+  faults: ['Tiny half-reps.','Letting the heel lift.'],
+  dose: '3 × 20 reps, or 3 × 30 s holds.',
+  prog: 'One leg, or rest the other foot on top for resistance.',
+  regr: 'Fewer reps.',
+  timer: { w: 30, r: 20, rounds: 3, label: 'Toe raise hold' }
+},
+'desk-ball-roll': {
+  n: 'Under-Desk Ball Roll', cat: 'tissue', tags: ['fascia','foot','desk','daily','hamstring'], covert: 'invisible',
+  why: 'Keep a lacrosse ball under your desk permanently. This is the highest-evidence item in the entire program — plantar rolling produces a large-effect improvement in hamstring and lumbar flexibility — and doing it while you answer email is completely free. Shoe off, ball under the arch, keep working.',
+  setup: 'Shoe off. Lacrosse or tennis ball under one foot. Sit normally.',
+  steps: [
+    'Roll slowly heel to forefoot, about 3–4 seconds each direction.',
+    'Park on dense spots for 20–30 seconds and breathe.',
+    'Add toe curls and toe extensions while parked to shear rather than just compress.',
+    'Do 90 seconds a side. Nobody above the desk has any idea.'
+  ],
+  cues: ['Slow. Sustained shear, not speed.','Pressure you can work through, not pressure you fight.'],
+  faults: ['Rolling fast.','Doing it for ten seconds and calling it done.'],
+  dose: '90 s per foot, once or twice a day.',
+  prog: 'Firmer ball, or toes propped up on a book to pre-tension the fascia.',
+  regr: 'Softer ball, less pressure.',
+  timer: { w: 90, r: 5, rounds: 2, label: 'Ball roll — switch feet' }
+},
+'desk-short-foot': {
+  n: 'Seated Short Foot', cat: 'tissue', tags: ['foot','desk','iso'], covert: 'invisible',
+  why: 'Intrinsic foot strengthening raises vertical propulsive force in running, and the arch is the first spring in the chain. Seated is where you learn it; standing is where it counts.',
+  setup: 'Seated, foot flat, shoe off if you can.',
+  steps: ['Toes stay long and flat — this is not a toe curl.','Draw the ball of the foot toward the heel so the arch domes.','Hold 10 seconds. You should feel a cramp-adjacent burn under the arch.','Relax fully between.'],
+  cues: ['Toes long. If they claw, you are cheating.','Big toe stays pressed down.'],
+  faults: ['Toe curling.','Rolling the ankle out to fake an arch.'],
+  dose: '5 × 10 s per foot.',
+  prog: 'Standing, then single-leg standing.',
+  regr: 'Hand-assisted to learn the feel.',
+  timer: { w: 10, r: 8, rounds: 6, label: 'Short foot — switch feet' }
+},
+'desk-scap-set': {
+  n: 'Chair-Back Scap Set', cat: 'iso', tags: ['shoulder','scap','desk','labrum'], covert: 'invisible',
+  why: 'Scapular control is one of the three things SLAP rehab has to fix — if the shoulder blade does not move on time, the labrum takes the load. Eight hours of rounded desk posture is the exact opposite of what you want, and this is a direct, invisible counter.',
+  setup: 'Seated against a chair back, arms relaxed at your sides.',
+  steps: [
+    'Draw both shoulder blades down and back — think "into your back pockets", not "squeeze together and up".',
+    'Press them lightly into the chair back and hold 15–20 seconds.',
+    'Neck long, no shrugging. The traps should be quiet.',
+    'Release completely between reps.'
+  ],
+  cues: ['Down first, back second. Down is the part people skip.','Quiet upper traps — if they light up, you are shrugging.'],
+  faults: ['Shrugging up.','Arching the low back and calling it posture.'],
+  dose: '5 × 15–20 s, several times a day.',
+  prog: 'Add a light isometric row against the desk edge.',
+  regr: 'Shorter holds.',
+  timer: { w: 18, r: 10, rounds: 5, label: 'Scap set' }
+},
+'desk-cuff-iso': {
+  n: 'Desk-Edge Cuff Isometric', cat: 'iso', tags: ['shoulder','labrum','desk','iso','armor'], covert: 'invisible',
+  why: 'The daily cuff work your labrum needs, done at a desk. Low abduction angles load the cuff without the compression and torsion a superior labral lesion objects to, and non-operative management built on exactly this kind of work returns most throwers to sport.',
+  setup: 'Seated, elbow at 90° and pinned to your ribs, forearm across your body.',
+  steps: [
+    'External rotation: press the back of the wrist outward into the side of the desk, a wall, or a chair arm. Ramp to 60–70%, hold 20–30 s.',
+    'Internal rotation: turn the hand over and press the palm into the same surface. Same effort, same hold.',
+    'Keep the elbow glued to the ribs the whole time — if it drifts, the lat has taken over.',
+    'Both arms, even though only one has history.'
+  ],
+  cues: ['Elbow pinned. That is the whole exercise.','Submaximal and pain-free beats maximal and provocative.','Shoulder blade set down and back first.'],
+  faults: ['Elbow drifting away from the body.','Going to maximum effort.','Shrugging.'],
+  dose: '3 × 25 s each direction, each arm. Daily.',
+  prog: 'Add a 45° abduction version once the low angle is clean.',
+  regr: 'Lighter effort.',
+  timer: { w: 25, r: 12, rounds: 4, label: 'Cuff iso — change direction' }
+},
+'desk-chin-tuck': {
+  n: 'Chin Tuck Hold', cat: 'iso', tags: ['neck','desk','posture','shoulder'], covert: 'invisible',
+  why: 'Deep neck flexor endurance is what stops the head drifting forward over a keyboard, and a forward head position drags the shoulder blade with it — which is the same mechanical problem that makes the labrum work harder. Boring, invisible, worth it.',
+  setup: 'Seated or standing, looking straight ahead.',
+  steps: ['Glide the head straight back — make a double chin, without tilting the head down.','Hold 10 seconds, breathing.','Relax fully.','Add a light back-of-head press into a headrest or wall if you have one.'],
+  cues: ['Back, not down. Eyes stay level.','Long back of the neck.'],
+  faults: ['Nodding the chin down instead of gliding back.','Jaw clenching.'],
+  dose: '5 × 10 s, several times a day.',
+  prog: 'Press the back of the head into a wall for resistance.',
+  regr: 'Smaller range.',
+  timer: { w: 10, r: 8, rounds: 5, label: 'Chin tuck' }
+},
+'desk-quad-iso': {
+  n: 'Seated Knee Extension Hold', cat: 'iso', tags: ['quad','desk','iso','knee'], covert: 'subtle',
+  why: 'Quadriceps isometrics at a long lever, under a desk. Useful load for the knee extensors and, done at the top position, a genuine quad burn. The only visible part is a straightened leg.',
+  setup: 'Seated, one leg straightened out in front, foot off the floor.',
+  steps: ['Straighten the knee fully and pull the toes up toward you.','Squeeze the quad hard and hold 20–30 seconds.','Lower slowly. Switch legs.','Cross the other ankle over the top for extra resistance.'],
+  cues: ['Fully straight — the last few degrees are the ones that matter.','Toes pulled up.'],
+  faults: ['Soft knee.','Leaning back to lift the leg.'],
+  dose: '3 × 25 s per side.',
+  prog: 'Cross the other leg over for resistance.',
+  regr: 'Shorter hold.',
+  timer: { w: 25, r: 15, rounds: 6, label: 'Knee extension — switch legs' }
+},
+'desk-figure-four': {
+  n: 'Seated Figure-Four', cat: 'mobility', tags: ['hip','desk','glute'], covert: 'subtle',
+  why: 'Hip external rotation and posterior hip range, in a position that just looks like sitting. Sitting for hours costs you hip range in both directions, and losing it pushes load into the adductor and the low back — your two weak points.',
+  setup: 'Seated, one ankle crossed on the opposite knee.',
+  steps: ['Sit tall, do not slump.','Let the crossed knee drop toward the floor.','Hinge forward from the hips — spine long, not rounded — until you feel it in the outer hip.','Hold 45–60 s, breathing. Switch.'],
+  cues: ['Hinge at the hip; the back stays long.','Sit tall before you lean.'],
+  faults: ['Rounding the spine to reach further.','Pushing hard on the knee if it complains.'],
+  dose: '2 × 45 s per side.',
+  prog: 'Deeper hinge.',
+  regr: 'Sit tall only, no hinge.',
+  timer: { w: 50, r: 10, rounds: 4, label: 'Figure four — switch sides' }
+},
+'desk-thoracic-twist': {
+  n: 'Seated Thoracic Rotation', cat: 'mobility', tags: ['spine','desk','shoulder'], covert: 'subtle',
+  why: 'A stiff mid-back forces the shoulder to find range it does not have — precisely how a labrum gets irritated. Rotation is the range that disappears fastest in a chair.',
+  setup: 'Seated upright, feet flat, hands crossed on the chest or lightly on the chair arm.',
+  steps: ['Sit tall and lengthen through the crown of the head first.','Rotate the ribcage — not the hips — as far as it goes.','Exhale at end range and gain another inch.','Hold 3 seconds, return, alternate. 8 per side.'],
+  cues: ['Hips stay square; the rotation is above the belt.','Exhale into end range.'],
+  faults: ['Yanking with the arms on the chair.','Rotating from the low back.'],
+  dose: '8 per side, a few times a day.',
+  prog: 'Add a small side-bend at end range.',
+  regr: 'Smaller range.'
+},
+'desk-grip-iso': {
+  n: 'Grip Squeeze', cat: 'iso', tags: ['grip','desk','shoulder'], covert: 'invisible',
+  why: 'Grip drives cuff co-contraction through irradiation — squeezing hard makes the rotator cuff switch on and helps centre the humeral head. It is also the cheapest possible forearm and grip work for a thrower.',
+  setup: 'A stress ball, a rolled towel, or just your own fist.',
+  steps: ['Crush as hard as you can for 10 seconds.','Notice the shoulder tighten — that is the irradiation.','Relax fully for 10 seconds.','Both hands.'],
+  cues: ['Maximum crush.','Wrist straight and stacked.'],
+  faults: ['Half-hearted squeezing.','Shrugging.'],
+  dose: '5 × 10 s per hand.',
+  prog: 'Firmer object.',
+  regr: 'Softer object.',
+  timer: { w: 10, r: 10, rounds: 5, label: 'Crush grip' }
+},
+'desk-breath': {
+  n: 'Desk Down-Regulation', cat: 'breath', tags: ['recovery','desk','cns'], covert: 'invisible',
+  why: 'Five minutes of extended-exhale nasal breathing shifts you out of a sympathetic state, and the time you spend sympathetic between sessions is the real bottleneck on how often you can train hard. Also, it works during a meeting.',
+  setup: 'Seated, feet flat, hands in your lap. Eyes open is fine.',
+  steps: ['Inhale quietly through the nose for 4 seconds.','Exhale through the nose for 6–8 seconds — the long exhale is the active ingredient.','Let the belly and lower ribs move, not the chest and shoulders.','Repeat for 5 minutes.'],
+  cues: ['Exhale always longer than the inhale.','Nose only. Silent.'],
+  faults: ['Chest breathing.','Straining for a longer hold.'],
+  dose: '5 minutes, once or twice a day, and after any hard session.',
+  prog: 'Extend the exhale to 10 s.',
+  regr: '4 in, 6 out.',
+  timer: { w: 300, r: 0, rounds: 1, label: 'Quiet nasal breathing' }
+},
+'desk-squat-break': {
+  n: 'Deep Squat Break', cat: 'iso', tags: ['mobility','desk','favourite'], covert: 'private',
+  why: 'Your five daily minutes of deep squat have to come from somewhere, and a workday is where the time is. Two minutes every couple of hours gets you there without ever scheduling it — and it is the single most effective antidote to a day in a chair.',
+  setup: 'Any spare floor — an empty meeting room, a corner, the space behind your desk.',
+  steps: ['Feet shoulder width, toes out 10–20°. Sit all the way down, heels flat.','Elbows inside the knees, gently pushing them out.','Chest up, long spine. Breathe into the belly and the back of the ribs.','Two minutes. Rock side to side, rotate, lift one heel then the other.'],
+  cues: ['Heels down. Use a book or a wedge if they lift.','If you cannot breathe in the position, you are fighting it rather than sitting in it.'],
+  faults: ['Slumping into the low back and calling it mobility.','Only doing it in a workout.'],
+  dose: '2 minutes, two or three times a day. Five minutes total is the target.',
+  prog: 'Longer unbroken holds, a plate or a bag held at the chest.',
+  regr: 'Hold a doorframe, or a wedge under the heels.',
+  timer: { w: 120, r: 0, rounds: 1, label: 'Deep squat hold' }
+},
+'desk-standing-calf': {
+  n: 'Standing Desk Calf Hold', cat: 'iso', tags: ['calf','desk','iso','tendon'], covert: 'subtle',
+  why: 'If you have a standing desk, a single-leg heel raise hold is real soleus and Achilles loading at zero cost. Bodyweight on one leg is genuinely heavy for a calf.',
+  setup: 'Standing desk, fingertips resting on the desk for balance.',
+  steps: ['Shift onto one leg, other foot lightly off the floor.','Rise to a mid-range heel position — not all the way up.','Hold 30–40 seconds. Bent knee biases soleus, straight knee biases gastroc.','Lower slowly, switch.'],
+  cues: ['Mid-range, not top range.','Fingertips for balance only, no leaning.'],
+  faults: ['Leaning on the desk to unload.','Top-range holds.'],
+  dose: '3 × 30 s per side, bent knee and straight knee.',
+  prog: 'Forefoot on a book for extra range.',
+  regr: 'Two legs.',
+  timer: { w: 35, r: 20, rounds: 6, label: 'Calf hold — switch legs' }
+}
+});
+
+/* -----------------------------------------------------------
+   ROUTINES — short, runnable, purpose-built
+   ----------------------------------------------------------- */
+const ROUTINES = [
+  { id:'desk-armor', n:'Desk Armor', min:5, tag:'DESK', covert:'invisible',
+    sub:'Your three weak links, in a chair, in a meeting',
+    why:'The adductor, hamstring and cuff work from the Daily Armor, in the versions nobody can see you doing. Run this twice in a workday and you have matched the armor volume of a gym session without leaving your seat.',
+    items:[
+      { x:'desk-adductor-squeeze', d:'5 × 10 s' },
+      { x:'desk-ham-heel-dig', d:'3 × 18 s per leg' },
+      { x:'desk-cuff-iso', d:'3 × 25 s each direction' },
+      { x:'desk-glute-squeeze', d:'5 × 15 s' }
+    ]},
+  { id:'desk-foot', n:'Desk Feet', min:6, tag:'DESK', covert:'invisible',
+    sub:'Shoe off, ball under the arch, keep working',
+    why:'The highest-evidence item in the program plus intrinsic foot work, done under a desk. Retest your toe-touch before and after — the change is usually obvious.',
+    items:[
+      { x:'desk-ball-roll', d:'90 s per foot' },
+      { x:'desk-short-foot', d:'5 × 10 s per foot' },
+      { x:'desk-tib-raise', d:'3 × 30 s hold' },
+      { x:'desk-calf-iso', d:'3 × 30 s' }
+    ]},
+  { id:'desk-posture', n:'Desk Unwind', min:6, tag:'DESK', covert:'subtle',
+    sub:'Undo six hours of sitting',
+    why:'Sitting shortens the hip flexors, rounds the mid-back and drags the shoulder blade forward — which makes the shoulder hunt for range it does not have. This is the direct counter, and most of it looks like ordinary fidgeting.',
+    items:[
+      { x:'desk-scap-set', d:'5 × 18 s' },
+      { x:'desk-chin-tuck', d:'5 × 10 s' },
+      { x:'desk-thoracic-twist', d:'8 per side' },
+      { x:'desk-figure-four', d:'2 × 50 s per side' },
+      { x:'desk-squat-break', d:'2 min' }
+    ]},
+  { id:'desk-speed', n:'Desk Speed Bank', min:5, tag:'DESK', covert:'invisible',
+    sub:'Hip flexors and calves — the two sprint muscles you can train sitting down',
+    why:'Hip flexion above 90° drives knee lift and stride frequency; the soleus drives propulsion. Both can be loaded hard under a desk with nothing visible above the surface.',
+    items:[
+      { x:'desk-hip-flexor-press', d:'5 × 9 s per side' },
+      { x:'desk-calf-iso', d:'4 × 30 s' },
+      { x:'desk-quad-iso', d:'3 × 25 s per side' },
+      { x:'desk-grip-iso', d:'5 × 10 s per hand' }
+    ]},
+  { id:'desk-reset', n:'Two-Minute Reset', min:2, tag:'DESK', covert:'invisible',
+    sub:'The one you will actually do, hourly',
+    why:'Short enough that there is no excuse. Set a recurring alarm and run it every ninety minutes.',
+    items:[
+      { x:'desk-adductor-squeeze', d:'3 × 10 s' },
+      { x:'desk-glute-squeeze', d:'3 × 15 s' },
+      { x:'desk-scap-set', d:'3 × 18 s' }
+    ]},
+  { id:'desk-calm', n:'Down-Regulate', min:5, tag:'DESK', covert:'invisible',
+    sub:'Five minutes of quiet nasal breathing',
+    why:'Time spent in a sympathetic state between sessions is the real limit on how often you can train hard. This is the cheapest lever on it, and it works in a meeting.',
+    items:[ { x:'desk-breath', d:'5 min' } ]},
+
+  { id:'ham-insurance', n:'Hamstring Insurance', min:8, tag:'ARMOR',
+    sub:'The full L-protocol plus the long-length isometric',
+    why:'Over 80% of hamstring injuries happen at speed, in late swing, at long muscle lengths. Every exercise here loads that position. Run it weekly forever, not just when something hurts.',
+    items:[
+      { x:'ham-iso-long', d:'3 × 25 s per side' },
+      { x:'askling-extender', d:'2 × 12 per side' },
+      { x:'askling-diver', d:'3 × 6 per side' },
+      { x:'askling-glider', d:'3 × 4 per side' },
+      { x:'nerve-glide-sciatic', d:'2 × 10 per side' }
+    ]},
+  { id:'groin-block', n:'Groin Block', min:9, tag:'ARMOR',
+    sub:'Squeeze ladder, Copenhagen, long-length loading',
+    why:'Squeezing strength, absorbing strength and end-range strength are three different qualities and the groin needs all three. Twice a week alongside the daily ladder.',
+    items:[
+      { x:'adductor-squeeze-iso', d:'3 ladders' },
+      { x:'adductor-rockback', d:'10 rocks + 30 s hold' },
+      { x:'copenhagen-hold', d:'3 × 20 s per side' },
+      { x:'cossack-squat', d:'3 × 5 per side' },
+      { x:'skater-bound', d:'3 × 5 per side' }
+    ]},
+  { id:'shoulder-block', n:'Shoulder Block', min:8, tag:'ARMOR',
+    sub:'Labrum-safe: cuff, scap, capsule',
+    why:'The three things SLAP rehab has to address — cuff strength, scapular control and posterior capsule length — in one block. Before any throwing session, and on any day the shoulder feels off.',
+    items:[
+      { x:'cuff-iso-er', d:'3 × 25 s each direction' },
+      { x:'band-pull-apart', d:'3 × 15 + 15 face pulls' },
+      { x:'prone-ytw', d:'2 × 8 each position' },
+      { x:'thoracic-opener', d:'4 positions × 5 breaths' },
+      { x:'sleeper-stretch', d:'3 × 30 s — only if your IR difference is over 15°' }
+    ]},
+  { id:'micro-elastic', n:'Ten-Minute Elastic', min:10, tag:'SHORT',
+    sub:'When you have ten minutes and a patch of grass',
+    why:'If the whole session is not happening, this is the part with the highest return: fascial priming, ankle stiffness and a handful of maximal jumps. Low volume, full intent.',
+    items:[
+      { x:'ball-roll-foot', d:'60 s per foot' },
+      { x:'elastic-rebound-flow', d:'3 min' },
+      { x:'pogo-jumps', d:'3 × 20 contacts' },
+      { x:'broad-jump', d:'4 singles, stick every landing' },
+      { x:'skater-bound', d:'3 × 5 per side' }
+    ]},
+  { id:'micro-iso', n:'Fifteen-Minute Isometric', min:15, tag:'SHORT',
+    sub:'Maximum force, no equipment, no soreness tomorrow',
+    why:'Overcoming isometrics give you an enormous neural stimulus with no eccentric damage, so this can go the day before a game. Yielding holds afterwards for tendon capacity.',
+    items:[
+      { x:'iso-strap-pull', d:'5 × 5 s max intent' },
+      { x:'iso-doorframe-split-push', d:'5 × 6 s per side' },
+      { x:'iso-split-squat-yield', d:'3 × 60 s per side' },
+      { x:'calf-iso-soleus', d:'3 × 40 s' },
+      { x:'ham-iso-long', d:'3 × 25 s per side' }
+    ]},
+  { id:'travel', n:'Hotel Room', min:14, tag:'SHORT',
+    sub:'No equipment, no space, a road trip or a tournament weekend',
+    why:'Travel is where programs die. This keeps the tissue loaded and the positions available in a space the size of a bed.',
+    items:[
+      { x:'ball-roll-foot', d:'60 s per foot' },
+      { x:'ninety-ninety', d:'10 switches' },
+      { x:'couch-stretch', d:'2 × 60 s per side' },
+      { x:'backpack-rfess', d:'3 × 10 per side, bodyweight' },
+      { x:'reverse-nordic', d:'3 × 6' },
+      { x:'copenhagen-hold', d:'3 × 20 s per side' },
+      { x:'side-plank-iso', d:'3 × 35 s per side' },
+      { x:'deep-squat-hold', d:'2 × 2 min' }
+    ]},
+  { id:'pregame', n:'Game-Day Warm-Up', min:12, tag:'SHORT',
+    sub:'Run this before the team warm-up, not instead of it',
+    why:'Your specific tissues get prepared before the generic warm-up starts. Pre-activating the hamstring at length before sprinting on it is the cheapest insurance in the whole program.',
+    items:[
+      { x:'ball-roll-foot', d:'60 s per foot' },
+      { x:'adductor-squeeze-iso', d:'2 ladders, submaximal' },
+      { x:'cuff-iso-er', d:'2 × 20 s each direction' },
+      { x:'ham-iso-long', d:'2 × 20 s per side' },
+      { x:'elastic-rebound-flow', d:'4 min' },
+      { x:'pogo-jumps', d:'2 × 15 contacts' }
+    ]},
+  { id:'flush-short', n:'Post-Game Flush', min:9, tag:'SHORT',
+    sub:'The ten minutes that decide how tomorrow feels',
+    why:'Down-regulation and tissue work immediately after a game shortens the time you spend sympathetic and gets range back before it stiffens overnight.',
+    items:[
+      { x:'ball-roll-foot', d:'90 s per foot' },
+      { x:'nerve-glide-sciatic', d:'2 × 10 per side' },
+      { x:'deep-squat-hold', d:'2 × 2 min' },
+      { x:'box-breathing', d:'5 min' }
+    ]}
+];
+
+if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB, ROUTINES }; }

@@ -43,7 +43,9 @@ const ICONS = {
   pause: 'M7 4h4v16H7z|M13 4h4v16h-4z',
   reset: 'M3 12a9 9 0 1 0 3-6.7|M3 4v5h5',
   x: 'M6 6l12 12|M18 6L6 18',
-  clock: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18|M12 7v5l3 2'
+  clock: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18|M12 7v5l3 2',
+  quick: 'M13 2L4 14h7l-1 8 9-12h-7z',
+  check: 'M4 12l6 6L20 6'
 };
 
 /* ---------- date utilities ---------- */
@@ -177,6 +179,10 @@ const T = {
   }
 };
 
+/* ---------- pick & run ---------- */
+const PICK = { on: false, keys: new Set() };
+function pickToggle(k) { PICK.keys.has(k) ? PICK.keys.delete(k) : PICK.keys.add(k); render(); }
+
 /* ---------- gym / home resolution ---------- */
 const isHome = () => S.settings.mode === 'home';
 function resolve(it) {
@@ -196,24 +202,31 @@ function resolve(it) {
 const REST_BY_CAT = { strength: 90, plyo: 90, speed: 150, iso: 75, cond: 60, throw: 60,
   armor: 45, tissue: 20, mobility: 20, breath: 15 };
 
+function makeStep(it, blockName, key, ii) {
+  const r = resolve(it), e = EX[r.x];
+  if (!e) return null;
+  const t = e.timer;
+  return {
+    ii: ii, key: key, block: blockName,
+    x: r.x, dose: r.d, note: r.note || (isHome() && e.home) || e.flag || '',
+    mode: t ? 'timed' : 'manual',
+    work: t ? t.w : 0, rest: t ? t.r : 0, rounds: t ? t.rounds : 1,
+    label: t ? t.label : '',
+    restAfter: REST_BY_CAT[e.cat] != null ? REST_BY_CAT[e.cat] : 60
+  };
+}
 function buildSteps(session, date, opts) {
   const steps = [];
-  const push = (bi, ii, blockName, it) => {
-    const r = resolve(it), e = EX[r.x];
-    if (!e) return;
-    const t = e.timer;
-    steps.push({
-      bi: bi, ii: ii, key: bi === -1 ? 'armor' : 'b' + bi, block: blockName,
-      x: r.x, dose: r.d, note: r.note || (isHome() && e.home) || e.flag || '',
-      mode: t ? 'timed' : 'manual',
-      work: t ? t.w : 0, rest: t ? t.r : 0, rounds: t ? t.rounds : 1,
-      label: t ? t.label : '',
-      restAfter: REST_BY_CAT[e.cat] != null ? REST_BY_CAT[e.cat] : 60
-    });
-  };
-  (session ? session.blocks : []).forEach((b, bi) => b.items.forEach((it, ii) => push(bi, ii, b.n, it)));
-  if (opts && opts.armor) ARMOR.items.forEach((it, ii) => push(-1, ii, 'DAILY ARMOR', it));
+  (session ? session.blocks : []).forEach((b, bi) =>
+    b.items.forEach((it, ii) => { const st = makeStep(it, b.n, 'b' + bi, ii); if (st) steps.push(st); }));
+  if (opts && opts.armor) ARMOR.items.forEach((it, ii) => {
+    const st = makeStep(it, 'DAILY ARMOR', 'armor', ii); if (st) steps.push(st);
+  });
   return steps;
+}
+// A routine or a hand-picked set: steps that do not belong to today's checklist.
+function stepsFromItems(items, blockName) {
+  return items.map((it, i) => makeStep(it, blockName, null, i)).filter(Boolean);
 }
 
 function say(text) {
@@ -232,8 +245,9 @@ const RUN = {
   left: 0, endsAt: 0, running: false, raf: 0, lastTick: -1,
   startedAt: 0, elapsed: 0, date: null, cueIdx: 0, cueAt: 0,
 
-  open(steps, date, startAt) {
+  open(steps, date, startAt, meta) {
     if (!steps.length) return;
+    this.meta = meta || null;
     T.stop();
     this.steps = steps; this.i = Math.max(0, Math.min(startAt || 0, steps.length - 1));
     this.active = true; this.startedAt = Date.now(); this.date = date;
@@ -281,6 +295,10 @@ const RUN = {
       say(nx ? 'Rest. Next, ' + EX[nx.x].n : 'Rest');
     } else if (phase === 'done') {
       this.running = false; this.elapsed = Date.now() - this.startedAt;
+      if (this.meta && this.meta.routine) {
+        (S.routineLog || (S.routineLog = [])).push({ d: iso(this.date || new Date()), id: this.meta.routine });
+        save();
+      }
       beep(1180, .4, .24); say('Session complete');
       this.build(); return;
     }
@@ -289,7 +307,7 @@ const RUN = {
   },
 
   markDone() {
-    const st = this.step(); if (!st || !this.date) return;
+    const st = this.step(); if (!st || !this.date || !st.key) return;
     const d = iso(this.date);
     if (st.key === 'armor') { const a = S.armor[d] || (S.armor[d] = {}); a[st.ii] = 1; }
     else { const m = S.done[d] || (S.done[d] = {}); m[st.key + ':' + st.ii] = 1; }
@@ -544,6 +562,10 @@ function openEx(id) {
     el('p', { style: 'max-width:64ch;color:var(--ink-2)' }, e.why),
     e.flag ? el('div', { class: 'callout hard' }, [el('div', { class: 'h' }, 'For you specifically'), el('p', { class: 'small' }, e.flag)]) : null,
     e.home ? el('div', { class: 'callout' }, [el('div', { class: 'h' }, 'At home'), el('p', { class: 'small' }, e.home)]) : null,
+    e.covert ? el('div', { class: 'callout' }, [
+      el('div', { class: 'h' }, 'At a desk · ' + COVERT[e.covert].l),
+      el('p', { class: 'small' }, COVERT[e.covert].d)
+    ]) : null,
     HOME_SUB[id] ? el('div', { class: 'callout' }, [
       el('div', { class: 'h' }, 'Needs a gym'),
       el('p', { class: 'small' }, [
@@ -611,10 +633,18 @@ function itemRow(date, key, it, i) {
   const d = iso(date);
   const doneMap = S.done[d] || (S.done[d] = {});
   const id = key + ':' + i;
-  const row = el('div', { class: 'item' + (doneMap[id] ? ' done' : '') });
+  const picked = PICK.keys.has(id);
+  const row = el('div', {
+    class: 'item' + (doneMap[id] && !PICK.on ? ' done' : '') + (PICK.on ? ' pickable' : '') + (picked ? ' picked' : ''),
+    onclick: PICK.on ? (ev) => { if (!ev.target.closest('.item-actions')) pickToggle(id); } : null
+  });
   const tick = el('button', {
-    class: 'tick', 'aria-pressed': doneMap[id] ? 'true' : 'false', 'aria-label': 'Mark ' + e.n + ' complete',
-    onclick: () => {
+    class: 'tick' + (PICK.on ? ' pick' : ''),
+    'aria-pressed': (PICK.on ? picked : !!doneMap[id]) ? 'true' : 'false',
+    'aria-label': (PICK.on ? 'Select ' : 'Mark ') + e.n,
+    onclick: (ev) => {
+      ev.stopPropagation();
+      if (PICK.on) return pickToggle(id);
       if (doneMap[id]) delete doneMap[id]; else { doneMap[id] = 1; beep(760, .06, .09); }
       save(); render();
     }
@@ -724,10 +754,19 @@ function armorCard(date) {
     ]),
     ...ARMOR.items.map((it, i) => {
       const r = resolve(it), e = EX[r.x];
-      const row = el('div', { class: 'item' + (a[i] ? ' done' : '') });
+      const aid = 'armor:' + i, apicked = PICK.keys.has(aid);
+      const row = el('div', {
+        class: 'item' + (a[i] && !PICK.on ? ' done' : '') + (PICK.on ? ' pickable' : '') + (apicked ? ' picked' : ''),
+        onclick: PICK.on ? (ev) => { if (!ev.target.closest('.item-actions')) pickToggle(aid); } : null
+      });
       const tick = el('button', {
-        class: 'tick', 'aria-pressed': a[i] ? 'true' : 'false', 'aria-label': 'Mark ' + e.n,
-        onclick: () => { if (a[i]) delete a[i]; else { a[i] = 1; beep(760, .06, .09); } save(); render(); }
+        class: 'tick' + (PICK.on ? ' pick' : ''),
+        'aria-pressed': (PICK.on ? apicked : !!a[i]) ? 'true' : 'false', 'aria-label': 'Mark ' + e.n,
+        onclick: (ev) => {
+          ev.stopPropagation();
+          if (PICK.on) return pickToggle(aid);
+          if (a[i]) delete a[i]; else { a[i] = 1; beep(760, .06, .09); } save(); render();
+        }
       }, [svgEl('svg', { viewBox: '0 0 24 24' })]);
       tick.querySelector('svg').appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' }));
       row.appendChild(tick);
@@ -780,7 +819,13 @@ function viewToday() {
       [ico(ICONS.play, 'nav-ico'), 'Start guided session']),
     el('button', { class: 'btn btn-start-alt', onclick: () => startRun(date, null, { armor: false }) }, 'Session only'),
     el('button', { class: 'btn btn-start-alt', onclick: () => startArmorRun(date) }, 'Armor only · 12 min'),
-    el('span', { class: 'xs muted' }, 'Full screen, counts you in and out, talks you through it.')
+    el('button', {
+      class: 'btn btn-start-alt', 'aria-pressed': PICK.on ? 'true' : 'false',
+      onclick: () => { PICK.on = !PICK.on; if (!PICK.on) PICK.keys.clear(); render(); }
+    }, PICK.on ? 'Cancel picking' : 'Pick & run'),
+    el('span', { class: 'xs muted' }, PICK.on
+      ? 'Tap the exercises you want, then run just those.'
+      : 'Full screen, counts you in and out, talks you through it.')
   ]);
 
   const swaps = s.blocks.reduce((a, b) => a + b.items.filter(it => isHome() && HOME_SUB[it.x]).length, 0);
@@ -815,6 +860,7 @@ function viewToday() {
       el('div', { class: 'sec-head' }, [el('h2', null, 'Armor'), el('div', { class: 'trace' })]),
       armorCard(date)
     ]),
+    pickBar(date),
     el('div', { class: 'stack stack-sm' }, [
       el('div', { class: 'eyebrow' }, 'Session notes'),
       el('textarea', {
@@ -828,6 +874,30 @@ function viewToday() {
 /* ===========================================================
    VIEW: PROGRAM
    =========================================================== */
+function pickBar(date) {
+  if (!PICK.on) return null;
+  const n = PICK.keys.size;
+  const est = (() => {
+    const steps = buildSteps(planFor(date).session, date, { armor: true })
+      .filter(st => PICK.keys.has(st.key + ':' + st.ii));
+    const secs = steps.reduce((a, st) => a + (st.mode === 'timed'
+      ? st.work * st.rounds + st.rest * (st.rounds - 1) : 45) + 6, 0);
+    return Math.max(1, Math.round(secs / 60));
+  })();
+  return el('div', { class: 'pick-bar' }, [
+    el('span', { class: 'num small' }, n ? n + ' selected · ≈ ' + est + ' min' : 'Tap exercises to select'),
+    el('button', { class: 'btn btn-sm btn-ghost', onclick: () => { PICK.keys.clear(); render(); } }, 'Clear'),
+    el('button', {
+      class: 'btn btn-hi', disabled: n ? null : 'disabled',
+      onclick: () => {
+        const steps = buildSteps(planFor(date).session, date, { armor: true })
+          .filter(st => PICK.keys.has(st.key + ':' + st.ii));
+        if (steps.length) { PICK.on = false; RUN.open(steps, date, 0); }
+      }
+    }, [ico(ICONS.play, 'nav-ico'), 'Run ' + (n || '') ])
+  ]);
+}
+
 function viewProgram() {
   const today = new Date();
   const mon = mondayOf(viewDate);
@@ -925,11 +995,119 @@ function viewProgram() {
 }
 
 /* ===========================================================
+   VIEW: QUICK — routines and a build-your-own picker
+   =========================================================== */
+const COVERT = {
+  invisible: { l: 'Invisible', d: 'Nobody can tell you are doing this.', k: 'good' },
+  subtle:    { l: 'Subtle', d: 'Reads as fidgeting or a stretch.', k: 'warn' },
+  private:   { l: 'Needs a moment', d: 'Fine alone; not in an open-plan office.', k: 'hard' }
+};
+const BUILD = { keys: new Set(), q: '', cat: 'all' };
+
+function routineCard(r, date) {
+  const log = S.routineLog || [];
+  const today = iso(new Date());
+  const timesToday = log.filter(x => x.d === today && x.id === r.id).length;
+  const cov = r.covert ? COVERT[r.covert] : null;
+  return el('div', { class: 'card routine' }, [
+    el('div', { class: 'spread' }, [
+      el('div', { class: 'row', style: 'gap:.4rem' }, [
+        el('h3', { style: 'font-size:var(--t-md);font-weight:600' }, r.n),
+        cov ? el('span', { class: 'chip ' + cov.k, title: cov.d }, cov.l) : null,
+        timesToday ? el('span', { class: 'chip good' }, '✓ ' + (timesToday > 1 ? timesToday + '×' : '') + ' today') : null
+      ]),
+      el('span', { class: 'num xs muted' }, r.min + ' min')
+    ]),
+    el('p', { class: 'small muted' }, r.sub),
+    el('p', { class: 'small' }, r.why),
+    el('div', { class: 'routine-list' }, r.items.map(it =>
+      el('button', { class: 'mini', onclick: () => openEx(it.x) }, EX[it.x].n))),
+    el('button', {
+      class: 'btn btn-primary btn-run', onclick: () => RUN.open(stepsFromItems(r.items, r.n), date, 0, { routine: r.id })
+    }, [ico(ICONS.play, 'nav-ico'), 'Run · ' + r.items.length + (r.items.length === 1 ? ' exercise' : ' exercises')])
+  ]);
+}
+
+function viewQuick() {
+  const date = new Date();
+  const groups = [
+    ['DESK', 'At your desk', 'Isometrics and tissue work you can run in a chair, in a meeting, on a call. Each one is labelled by how visible it is. The adductor and cuff work in particular responds to frequency more than intensity — a workday is the best training window you have and almost nobody uses it.'],
+    ['ARMOR', 'Weak-link blocks', 'The rehab tracks pulled out as standalone blocks, for when you want to hit one thing properly rather than fit it around a session.'],
+    ['SHORT', 'When time is short', 'Not the whole session — the part of it with the highest return.']
+  ];
+  const ids = Object.keys(EX).filter(id => {
+    const e = EX[id];
+    const q = BUILD.q.trim().toLowerCase();
+    const catOk = BUILD.cat === 'all' ? true
+      : BUILD.cat === '__desk' ? (e.tags || []).includes('desk')
+      : BUILD.cat === '__home' ? !HOME_SUB[id]
+      : (e.cat === BUILD.cat || (e.tags || []).includes(BUILD.cat));
+    return catOk && (!q || e.n.toLowerCase().includes(q) || (e.tags || []).join(' ').includes(q));
+  });
+  const picked = [...BUILD.keys];
+
+  return el('div', { class: 'stack stack-xl' }, [
+    ...groups.map(([tag, title, blurb]) => el('div', { class: 'stack stack-md' }, [
+      el('div', { class: 'sec-head' }, [
+        el('h2', null, title),
+        el('div', { class: 'trace' }),
+        el('p', { class: 'small muted', style: 'max-width:72ch' }, blurb)
+      ]),
+      el('div', { class: 'routine-grid' }, ROUTINES.filter(r => r.tag === tag).map(r => routineCard(r, date)))
+    ])),
+    el('div', { class: 'stack stack-md' }, [
+      el('div', { class: 'sec-head' }, [
+        el('h2', null, 'Build your own'),
+        el('div', { class: 'trace' }),
+        el('p', { class: 'small muted' }, 'Pick any exercises from the library and run them as a guided circuit. To pick from today\'s session instead, use Pick & run on the Today screen.')
+      ]),
+      el('div', { class: 'filters' }, [
+        el('input', {
+          type: 'text', placeholder: 'Search…', value: BUILD.q, style: 'min-width:170px',
+          oninput: ev => {
+            BUILD.q = ev.target.value; const pos = ev.target.selectionStart; render();
+            const n = document.querySelector('.build-search'); if (n) { n.focus(); n.setSelectionRange(pos, pos); }
+          }, class: 'build-search'
+        }),
+        ...[['all', 'All'], ['__desk', 'Desk'], ['__home', 'No gym'], ['iso', 'Isometrics'],
+            ['armor', 'Rehab'], ['tissue', 'Tissue'], ['mobility', 'Mobility'], ['plyo', 'Plyos'], ['strength', 'Strength']]
+          .map(([k, label]) => el('button', {
+            class: 'btn btn-sm', 'aria-pressed': BUILD.cat === k ? 'true' : 'false',
+            onclick: () => { BUILD.cat = k; render(); }
+          }, label))
+      ]),
+      el('div', { class: 'lib-grid' }, ids.map(id => {
+        const on = BUILD.keys.has(id);
+        return el('button', {
+          class: 'lib-card build-card' + (on ? ' picked' : ''), 'aria-pressed': on ? 'true' : 'false',
+          onclick: () => { on ? BUILD.keys.delete(id) : BUILD.keys.add(id); render(); }
+        }, [
+          el('span', { class: 'n' }, EX[id].n),
+          el('span', { class: 'd' }, EX[id].dose),
+          el('div', { class: 'row', style: 'gap:.25rem;margin-top:.15rem' }, [
+            EX[id].covert ? el('span', { class: 'chip ' + COVERT[EX[id].covert].k }, COVERT[EX[id].covert].l) : null,
+            ...(EX[id].tags || []).slice(0, 2).map(t => el('span', { class: 'chip' }, t))
+          ])
+        ]);
+      })),
+      picked.length ? el('div', { class: 'pick-bar' }, [
+        el('span', { class: 'num small' }, picked.length + ' selected'),
+        el('button', { class: 'btn btn-sm btn-ghost', onclick: () => { BUILD.keys.clear(); render(); } }, 'Clear'),
+        el('button', {
+          class: 'btn btn-hi',
+          onclick: () => RUN.open(stepsFromItems(picked.map(x => ({ x: x, d: EX[x].dose })), 'CUSTOM'), date, 0)
+        }, [ico(ICONS.play, 'nav-ico'), 'Run ' + picked.length])
+      ]) : null
+    ])
+  ]);
+}
+
+/* ===========================================================
    VIEW: LIBRARY
    =========================================================== */
 let libFilter = 'all', libQuery = '';
 const CATS = [
-  ['all', 'All'], ['__home', 'No gym needed'], ['iso', 'Isometrics'], ['speed', 'Speed'], ['plyo', 'Plyometrics'],
+  ['all', 'All'], ['__desk', 'Desk'], ['__home', 'No gym needed'], ['iso', 'Isometrics'], ['speed', 'Speed'], ['plyo', 'Plyometrics'],
   ['strength', 'Strength'], ['armor', 'Rehab'], ['tissue', 'Tissue & fascia'],
   ['mobility', 'Mobility'], ['cond', 'Conditioning'], ['throw', 'Throwing'], ['breath', 'Breath']
 ];
@@ -937,6 +1115,7 @@ function viewLibrary() {
   const ids = Object.keys(EX).filter(id => {
     const e = EX[id];
     const catOk = libFilter === 'all' ? true
+      : libFilter === '__desk' ? (e.tags || []).includes('desk')
       : libFilter === '__home' ? !HOME_SUB[id]
       : (e.cat === libFilter || (e.tags || []).includes(libFilter));
     const q = libQuery.trim().toLowerCase();
@@ -1170,9 +1349,10 @@ function viewMethod() {
 const NAV = [
   ['today', 'Today', ICONS.today, '1'],
   ['program', 'Program', ICONS.program, '2'],
-  ['library', 'Library', ICONS.library, '3'],
-  ['tests', 'Tests', ICONS.tests, '4'],
-  ['method', 'Method', ICONS.method, '5']
+  ['quick', 'Quick', ICONS.quick, '3'],
+  ['library', 'Library', ICONS.library, '4'],
+  ['tests', 'Tests', ICONS.tests, '5'],
+  ['method', 'Method', ICONS.method, '6']
 ];
 let route = 'today';
 function go(r) { route = r; window.scrollTo(0, 0); render(); }
@@ -1235,9 +1415,9 @@ function strip() {
     el('div', { class: 'strip-item' }, [el('span', { class: 'eyebrow' }, 'Today'), el('span', { class: 'v' }, pl.session.n)]),
     el('div', { class: 'strip-sep' }),
     el('div', { class: 'strip-item wide' }, [el('span', { class: 'eyebrow' }, 'Armor · 28 days'), el('div', { class: 'streak', style: 'margin-top:3px' }, cells)]),
-    el('div', { class: 'row', style: 'margin-left:auto;gap:.5rem' }, [
-      v ? el('span', { class: 'chip ' + (v.k === 'red' ? 'hard' : v.k === 'amber' ? 'warn' : 'good') }, [el('span', { class: 'dot' }), v.k.toUpperCase()])
-        : el('span', { class: 'chip' }, armorN + '/' + ARMOR.items.length + ' ARMOR'),
+    el('div', { class: 'row strip-right', style: 'margin-left:auto;gap:.5rem' }, [
+      v ? el('span', { class: 'chip chip-status ' + (v.k === 'red' ? 'hard' : v.k === 'amber' ? 'warn' : 'good') }, [el('span', { class: 'dot' }), v.k.toUpperCase()])
+        : el('span', { class: 'chip chip-status' }, armorN + '/' + ARMOR.items.length + ' ARMOR'),
       modeToggle()
     ])
   ]);
@@ -1261,6 +1441,7 @@ function render() {
   const v = el('div', { class: 'view' }, [
     route === 'today' ? viewToday() :
     route === 'program' ? viewProgram() :
+    route === 'quick' ? viewQuick() :
     route === 'library' ? viewLibrary() :
     route === 'tests' ? viewTests() : viewMethod()
   ]);

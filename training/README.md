@@ -44,10 +44,20 @@ session — every block, then the Daily Armor — one exercise at a time:
 - **Back**, **Pause**, **Done early** / **Skip**, and **Show how-to** without losing your place
 - Screen wake lock while it runs; completed exercises tick themselves off on the Today screen
 
-The `▶` on any item starts the player from that exercise. A separate quick timer for a single
+**Pick & run** on the Today screen turns the session into a selector: tap the exercises you
+have time for, see the running time estimate, and run only those. The `▶` on any item starts
+the player from that exercise instead. A separate quick timer for a single
 exercise lives in the exercise detail dialog and floats in a dock.
 
-Keyboard — app: `1`–`5` switch views. Player: `Space` pause/done, `←` `→` step, `Esc` exit.
+## Desk track
+
+18 exercises tagged `desk`, each labelled by how visible it is — `invisible` (nobody can tell),
+`subtle` (reads as fidgeting), `private` (fine alone, not in an open-plan office). Six desk
+routines in the Quick view run them as guided circuits, from a two-minute hourly reset to a
+five-minute adductor / hamstring / cuff block. The rationale: the armor protocols respond to
+frequency more than intensity, and a workday is the largest unused training window available.
+
+Keyboard — app: `1`–`6` switch views. Player: `Space` pause/done, `←` `→` step, `Esc` exit.
 
 ## Files
 
