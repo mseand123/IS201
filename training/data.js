@@ -177,6 +177,7 @@ const EX = {
 'ham-iso-long': {
   n: 'Long-Length Hamstring Isometric', cat: 'iso', tags: ['hamstring','iso','daily','armor'],
   why: 'Over 80% of hamstring injuries happen in late swing during sprinting, when the muscle is long, lengthening fast, and contracting hard. Biceps femoris long head produces its highest force at roughly 45° hip flexion with 10–30° knee flexion — so that is where you train it. Isometric hip-extension protocols raise isometric knee-flexion torque ~10% and hip-extension force ~12%. This is your single best daily insurance policy, and it is a timed hold, which you like.',
+  home: "Heels on a couch, a dining chair, a low table or the bottom step of a staircase. Knee-height is what matters, not what the furniture is.",
   setup: 'Lie on your back, heels on a bench or box roughly knee-height, knees bent to about 20°, hips flexed to about 45°.',
   steps: [
     'Dig the heels down and back into the bench — think of dragging the bench toward you.',
@@ -242,6 +243,7 @@ const EX = {
 'nordic-curl': {
   n: 'Nordic Hamstring Curl', cat: 'strength', tags: ['hamstring','eccentric','armor'],
   why: 'The most robust hamstring injury-prevention exercise in sport, and the mechanism matters: eccentric — not isometric — hip-extension work is what actually lengthens biceps femoris fascicles. Longer fascicles mean the muscle reaches its danger length later in the sprint stride. Isometrics build torque; eccentrics build architecture. You need both, so this sits alongside your isometric work rather than replacing it.',
+  home: "Hook your heels under a couch, a bed frame or a loaded backpack wedged against a door. A partner kneeling on your calves works too.",
   setup: 'Kneel on a pad, ankles anchored under a bar, by a partner, or in a Nordic bench. Hands ready to catch.',
   steps: [
     'Torso and thighs in one straight line — hips stay extended the whole way.',
@@ -259,6 +261,7 @@ const EX = {
 'razor-curl': {
   n: 'Razor Curl', cat: 'strength', tags: ['hamstring','eccentric'],
   why: 'A Nordic regression that keeps hip extension honest by adding a slight hip flexion at the top, biasing the hamstring at a longer length with less absolute load.',
+  home: "Same anchors as the Nordic — couch, bed frame, or a wedged backpack.",
   setup: 'Same as a Nordic, ankles anchored.',
   steps: ['Start with the hips flexed ~20–30°.','Lower under control while extending the hips into a straight line as you descend.','Reverse: pull back up while re-flexing the hips.'],
   cues: ['Hip angle changes are the whole trick.','Control, not speed.'],
@@ -270,6 +273,7 @@ const EX = {
 'slider-leg-curl': {
   n: 'Slider Leg Curl', cat: 'strength', tags: ['hamstring','eccentric','home'],
   why: 'Trains knee flexion under an extended hip with continuous tension and no equipment. The eccentric out-phase is the useful part.',
+  home: "Towel on a hard floor, or socks on wood. Free, and just as hard.",
   setup: 'Lie on your back, heels on sliders / towel on a smooth floor.',
   steps: ['Bridge the hips up and keep them up the entire set.','Slide the heels away slowly (3–4 s) until the legs are nearly straight.','Pull the heels back in under control.','Hips never touch the floor mid-set.'],
   cues: ['Hips stay high — the moment they drop, the hamstring unloads.','Slow out, controlled in.'],
@@ -340,6 +344,7 @@ const EX = {
 'copenhagen-hold': {
   n: 'Copenhagen Hold (Short Lever)', cat: 'iso', tags: ['adductor','iso','armor'],
   why: 'The entry point to the Copenhagen family. The Copenhagen adduction exercise consistently improves eccentric hip adduction strength, hip range of motion and dynamic balance, and reduces groin symptoms — and the effect depends on adequate volume and progressive overload, not on doing it once in a warm-up. Start with the isometric hold: it is the version you can actually recover from.',
+  home: "The \"bench\" is a couch arm, a dining chair, a bed edge or a coffee table — anything sturdy at roughly hip height. No gym version of this exists that is better than the couch version.",
   setup: 'Side plank on the forearm. Top leg\'s KNEE (not ankle) rests on a bench at about hip height. Bottom leg hangs free.',
   steps: [
     'Set the elbow directly under the shoulder.',
@@ -357,6 +362,7 @@ const EX = {
 'copenhagen-adduction': {
   n: 'Copenhagen Adduction (Full)', cat: 'strength', tags: ['adductor','eccentric','armor'],
   why: 'The full eccentric-emphasis version. This is the exercise with a randomized controlled trial behind it for improving eccentric hip adduction strength in players with groin injury. It is also brutally hard — respect the progression or it will make your groin worse, not better.',
+  home: "Couch, chair or bed edge at hip height. The ankle needs a stable surface, not a padded one — a coffee table beats a cushion.",
   setup: 'Side plank, top leg\'s ANKLE on a bench at hip height, bottom leg free below.',
   steps: [
     'From the bottom (hip on the floor), press the top ankle into the bench and lift the whole body into a straight line, bringing the bottom leg up to meet the top.',
@@ -385,6 +391,7 @@ const EX = {
 'cossack-squat': {
   n: 'Cossack Squat', cat: 'mobility', tags: ['adductor','hip','mobility','strength'],
   why: 'Loaded adductor lengthening under control. Gets the groin strong at long lengths, which is exactly the position it fails in during a wide plant or a layout.',
+  home: "Hold a backpack, a water jug or a heavy book at the chest as the counterweight — it lets you sit far deeper than empty hands.",
   setup: 'Wide stance, toes slightly out. Hold a light plate or kettlebell as a counterweight.',
   steps: ['Shift weight into one leg and sit down into it, the other leg straightening.','Keep the straight leg\'s heel down; the toe can lift.','Descend as deep as you can while keeping the chest up and the working heel down.','Push back to centre through the working heel.'],
   cues: ['Counterweight forward lets you sit deeper.','Straight leg\'s heel stays down for the adductor stretch.','Chest tall, spine long.'],
@@ -457,6 +464,7 @@ const EX = {
 'prone-ytw': {
   n: 'Prone Y-T-W', cat: 'strength', tags: ['shoulder','scap','labrum'],
   why: 'Scapular dyskinesis is one of the three things the SLAP literature says rehab must address, alongside GIRD and cuff strength. If the scapula does not upwardly rotate on time, the labrum takes the load instead.',
+  home: "Face down on the floor works fine, and the floor version is harder because you have to lift against gravity from a dead stop. Use two full water bottles or nothing at all.",
   setup: 'Face down on an incline bench or on the floor. Very light or no weight — 2–5 lb is plenty.',
   steps: [
     'Y: arms overhead at ~45°, thumbs up. Lift by first setting the shoulder blade into the back pocket, then raising the arm.',
@@ -496,6 +504,7 @@ const EX = {
 'band-pull-apart': {
   n: 'Band Pull-Apart & Face Pull', cat: 'strength', tags: ['shoulder','scap','daily'],
   why: 'High-frequency, low-cost posterior shoulder volume. For a thrower, the pull-to-push ratio should be at least 2:1 and probably 3:1.',
+  home: "A single long resistance band covers both movements and costs about ten dollars. It is the one piece of kit genuinely worth owning.",
   setup: 'Light band at chest height for pull-aparts; band or cable at eye height for face pulls.',
   steps: ['Pull-apart: arms straight, pull the band to the chest, squeezing the blades. 2 s hold.','Face pull: pull to the forehead, ending with the hands wide and the forearms vertical, external rotation at the finish.','Slow return — the eccentric is half the work.'],
   cues: ['Blades down and back, not shrugged.','Finish with the pinkies leading on the face pull.'],
@@ -521,6 +530,7 @@ const EX = {
 'iso-split-squat-yield': {
   n: 'Yielding Split Squat Isometric', cat: 'iso', tags: ['iso','tendon','legs','favourite'],
   why: 'Yielding isometrics — holding a position under load, typically 20–120 s — build tendon capacity, reinforce positions, and are the right tool in the early phase of a block. Hold type fatigues faster than push type at the same intensity, which is why these feel disproportionately hard. This is your tendon-thickening, position-owning work.',
+  home: "Load it with a backpack full of books and water bottles, on the back or hugged to the chest. Bodyweight for 90 s is already a serious hold.",
   setup: 'Split stance, back knee an inch off the floor, front shin roughly vertical. Dumbbells at the sides or a barbell on the back.',
   steps: [
     'Descend into the bottom position and stop with the back knee an inch off the floor.',
@@ -591,6 +601,7 @@ const EX = {
 'deep-squat-hold': {
   n: 'Deep Squat Hold', cat: 'iso', tags: ['mobility','iso','daily','favourite','fascia'],
   why: 'Your favourite, and it earns its place. A deep squat is the position your hips, knees and ankles need to keep access to, and accumulated time in it is the cheapest way to keep it. It also loads the adductors and the posterior hip capsule at end range under bodyweight, which is loaded stretching — the kind of exposure animal work associates with real tissue adaptation. Treat it as a daily accumulation target, not a workout.',
+  home: "Requires nothing at all, anywhere, forever. Hold a doorframe if the balance is not there yet.",
   setup: 'Feet roughly shoulder width, toes out 10–20°, barefoot ideally.',
   steps: [
     'Sit all the way down, heels flat. If the heels lift, put a 1–2 cm wedge or a book under them to start.',
@@ -633,6 +644,7 @@ const EX = {
 'pallof-press': {
   n: 'Pallof Press & Hold', cat: 'iso', tags: ['core','anti-rotation','iso'],
   why: 'Anti-rotation strength is what lets a thrower generate hip-shoulder separation without the low back or the shoulder paying for it. Directly relevant to hucking.',
+  home: "Needs a band anchored in a door. With no band, use the Bird Dog Hold instead — same anti-rotation job.",
   setup: 'Cable or band at chest height, stand side-on, feet shoulder width.',
   steps: ['Hold the handle at the sternum, brace.','Press straight out. The band will try to rotate you; do not let it.','Hold at full extension for 5–10 s.','Return slowly.'],
   cues: ['Ribs down, glutes on.','Fight the rotation, do not just move the arms.'],
@@ -692,6 +704,7 @@ const EX = {
 'reverse-lunge-slider': {
   n: 'Slider Reverse Lunge', cat: 'strength', tags: ['legs','control','decel'],
   why: 'Continuous tension, no impact, and a strong eccentric control demand. Great in-season when you need leg work without adding pounding.',
+  home: "Sliders are a towel on a hard floor, or socks on wood. That is genuinely all they are.",
   setup: 'One foot on a slider on a smooth floor.',
   steps: ['Slide one foot back into a lunge, front shin near vertical.','Descend slowly, back knee toward the floor.','Pull the slider back in using the front leg — do not push with the back.'],
   cues: ['Front leg does 100% of the work.','Slow slide out.'],
@@ -923,6 +936,7 @@ const EX = {
 'medball-rotational': {
   n: 'Rotational Scoop Throw', cat: 'throw', tags: ['power','rotation','ultimate'],
   why: 'Hucking is a rotational power expression starting from the ground. A med ball scoop throw trains the same hip-to-shoulder sequencing at a load your shoulder can tolerate — no overhead position, no labral compression.',
+  home: "A backpack held in both hands, swung with control, or a band anchored low in a door. Do not throw the backpack.",
   setup: 'Side-on to a solid wall, 2–3 m away, 3–6 kg med ball.',
   steps: ['Load into the back hip, ball low and outside the back thigh.','Drive the back hip through, then the torso, then the arms — in that order.','Release across the body into the wall.','Catch or let it drop; reset each rep.'],
   cues: ['Hips lead, arms finish.','Push the back foot into the ground to start the throw.','Maximum intent every rep — this is a power drill, not a conditioning drill.'],
@@ -1001,6 +1015,7 @@ const EX = {
 'jefferson-curl': {
   n: 'Jefferson Curl', cat: 'mobility', tags: ['posterior','spine','hamstring'],
   why: 'Loaded spinal flexion, done light and slow, builds tolerance and range through the whole posterior chain — hamstrings, erectors and the thoracolumbar fascia. It is the controlled version of the thing that scares people about bending over, and it is very good for a chronically "tight" posterior chain.',
+  home: "A backpack with a few books is the right load. If it feels heavy, it is far too heavy.",
   setup: 'Stand on a box, very light weight (start with 5–10 lb, seriously).',
   steps: ['Tuck the chin, then roll down one vertebra at a time — head, neck, upper back, mid, low.','Legs stay straight but not locked.','Reach the bottom, pause 2 s.','Roll back up in reverse order, low back last.','Six seconds down, six seconds up.'],
   cues: ['Segmental — you are trying to articulate, not just fold.','Absurdly light weight. This is a mobility drill, not a lift.','Breathe out on the way down.'],
@@ -1013,6 +1028,7 @@ const EX = {
 'thoracic-opener': {
   n: 'Thoracic Extension & Rotation', cat: 'mobility', tags: ['spine','shoulder','daily'],
   why: 'A stiff thoracic spine forces the shoulder to find range it does not have — which is exactly how a labrum gets irritated. Give the mid-back back its extension and rotation and the shoulder stops compensating.',
+  home: "A tightly rolled bath towel or a water bottle on its side does the same job as a foam roller. Two tennis balls taped together is better than either.",
   setup: 'Foam roller across the mid-back, or on all fours for rotation.',
   steps: ['Roller: hands behind head, extend over the roller at one segment for 5 breaths, then move up 2 cm. Cover 4 positions.','Rotation: on all fours, one hand behind the head, rotate the elbow up toward the ceiling, follow it with the eyes. 8 per side.','Exhale into the extension.'],
   cues: ['Extend at the mid-back, not the low back — ribs stay down.','Follow the elbow with your eyes.'],
@@ -1979,6 +1995,37 @@ const ARTICLES = [
   {callout:{k:'hard', h:'When to stop and get it looked at', p:'Deep clicking, catching, or a sensation of the shoulder shifting at the front of the joint during a throw is labral, not muscular. Persistent night pain, or a sudden loss of throwing velocity you cannot warm out of, is the same. Those are physio or orthopaedic questions, not training questions, and no amount of cuff work is the right answer to them.'}}
 ]},
 
+{ id:'home', n:'Training Without a Gym', sub:'What a home track really costs you, and what it does not', body:[
+  {p:'Flip the Gym / Home switch at the top of any screen and every lift that needs equipment is swapped for a bodyweight, doorway or backpack version, marked HOME. Nothing else changes: same phases, same sessions, same order of operations. Here is the honest accounting of what that costs.'},
+  {h:'What you lose almost nothing on'},
+  {ul:[
+    'Every sprint, jump, bound, cut and pogo. These were never gym work. Speed and elastic quality — the two things that most determine whether you win a cut — are trained outdoors with nothing.',
+    'Overcoming isometrics. This is the big one. Maximum force against an immovable object does not care whether the object is a 500 lb bar or a towel under your feet, and the towel is exactly as immovable. Same high-threshold recruitment, same rate-of-force-development stimulus, no equipment. It is why your preference for isometrics makes you unusually well suited to training at home.',
+    'The entire Daily Armor. A ball, a chair and a doorway. It was already a home protocol.',
+    'All tissue, mobility, fascia and breathing work.',
+    'Single-leg strength. At 150 lb, one leg carrying your bodyweight through a full range is a real stimulus, and a loaded backpack adds another 30–50% on top.'
+  ]},
+  {h:'What you genuinely lose'},
+  {p:'Progressive absolute strength in the bilateral pull and squat. A trap bar lets you add 5 lb a week for a year; a backpack tops out somewhere around 50 lb before it becomes awkward rather than heavy. Over a full off-season that is a real gap, and it is the honest reason gyms exist.'},
+  {p:'Two things narrow it. First, overcoming isometrics train maximal force output without needing a load at all — they cannot replace the hypertrophy a heavy pull drives, but they hold and even build the neural side. Second, single-leg work halves the load requirement: a backpack split squat asks one leg to move bodyweight plus 40 lb, which is not far off what a moderate bilateral squat asks of each leg.'},
+  {p:'If you are chasing the +8–12 lb of lean mass that would most change your ultimate, that is the one goal where a gym is meaningfully better and worth finding for a couple of months. Everything else in this program runs at close to full value from your living room.'},
+  {h:'The kit, in priority order'},
+  {ul:[
+    'A lacrosse ball — $5, and it drives the highest-evidence item in the whole program.',
+    'A long resistance band with a door anchor — $10–15. Covers pull-aparts, face pulls, chops and Pallof presses.',
+    'A backpack you do not mind loading. Books and full water bottles stack well; four litres is about 9 lb. This is your entire weight room.',
+    'A towel — sliders, strap pulls, and a foam roller substitute all in one.',
+    'A sturdy chair, couch or coffee table at roughly knee-to-hip height. Copenhagens, split squats, hamstring isometrics, rows and hip thrusts all key off it.',
+    'Stairs or a curb. Depth jumps, calf isometrics and resisted acceleration.'
+  ]},
+  {p:'That is under $30 plus furniture you already own, and it runs every session in this program.'},
+  {h:'Two things to be careful about'},
+  {ul:[
+    'Anchoring. Test whatever you hook your heels under before you load it. A Nordic that comes loose at the break point is how people land on their face.',
+    'Volume creep. Bodyweight work is easy to do too much of because no single rep feels heavy. The high-low rule still applies: a home high day is still a high day, and two of them back to back still costs you.'
+  ]},
+  {callout:{k:'', h:'The one-sentence version', p:'You can run about 90% of this program with a ball, a band, a backpack and a doorway — and the 10% you cannot is bilateral absolute strength, which matters most only while you are chasing bodyweight.'}}
+]},
 { id:'fuel', n:'Fuelling at 150 lb', sub:'The largest untapped lever you have', body:[
   {p:'At 6\'1" and 150 lb your BMI is about 19.8. You are running an elite engine on a light chassis. A Garmin fitness age of 18 tells you the aerobic system is excellent; it says nothing about force production, and force is what a cut is made of. Adding 8–12 lb of lean mass over an off-season would very likely do more for your ultimate than any single training block in this program.'},
   {h:'The numbers'},
@@ -2041,4 +2088,326 @@ const ARTICLES = [
 ]}
 ];
 
-if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE }; }
+
+/* ===========================================================
+   THE HOME TRACK
+   Everything below needs, at most: a wall, a doorway, a chair or couch,
+   a stair or curb, a towel, a lacrosse ball, a resistance band, and a
+   backpack you can load with books or water bottles.
+   =========================================================== */
+Object.assign(EX, {
+
+'iso-strap-pull': {
+  n: 'Overcoming Strap Pull', cat: 'iso', tags: ['iso','rfd','home','power'],
+  why: 'This is the exercise that makes a gym optional. An overcoming isometric produces maximum force against an immovable object — and the object does not need to be heavy, it needs to be immovable. A towel under your feet is exactly as immovable as a 500 lb barbell. You get the same high-threshold motor unit recruitment and the same rate-of-force-development stimulus, at zero cost and with no equipment. It is the single best answer to "how do I train max strength at home".',
+  setup: 'Stand on the middle of a strong towel, a strap or a folded bedsheet, feet hip width. Grip both ends at mid-shin height with the slack taken out. Set your exact deadlift position: hips between a squat and a hinge, chest up, lats engaged.',
+  steps: [
+    'Take up every bit of slack. Nothing should move when you begin.',
+    'Pull as hard and as FAST as you can — maximum intent from the first millisecond, as though trying to rip the floor open.',
+    'Hold maximum for 5–6 seconds, then release completely.',
+    'Rest 90 seconds. Five reps. When your intent visibly drops, the set is finished.',
+    'Second position: shorten your grip so the pull happens just below the knee, and repeat. Two joint angles cover the range.'
+  ],
+  cues: ['Explode into it — the intent is "move it", even though nothing will.','Maximum from rep one. There is no ramping in a rate-of-force set.','Same setup as a real deadlift, or you are training a position you never use.'],
+  faults: ['Building tension slowly — that trains max strength, not RFD.','Holding longer than about six seconds; past that you are training something else.','Rounding the back and grinding.','Using a towel that can tear. Test it before you pull maximally.'],
+  dose: '5 × 5–6 s per position, 90 s rest. Twice weekly maximum.',
+  prog: 'Add the second joint angle, then a third. Never add duration.',
+  regr: 'Submaximal effort at 70% while you learn the position.',
+  timer: { w: 6, r: 90, rounds: 5, label: 'Max intent pull' }
+},
+'iso-doorframe-split-push': {
+  n: 'Doorway Split-Squat Push', cat: 'iso', tags: ['iso','rfd','home','legs'],
+  why: 'The home version of an overcoming split squat push. You cannot load a bar, but you can put your shoulders under a doorframe and try to lift the house. Same maximal recruitment, no equipment, and it is a five-second effort, which is exactly what a rate-of-force-development stimulus should be.',
+  setup: 'Stand in a doorway in a split stance, back knee an inch off the floor, front shin vertical. Reach up and place both palms flat against the top of the doorframe, or hook your hands over the frame if you can reach it.',
+  steps: [
+    'Take the slack out — arms locked, body braced, front foot loaded.',
+    'Drive the front foot into the floor and push up into the frame as hard and fast as possible.',
+    'Hold maximum for 6 seconds, then release fully.',
+    'Rest 90 s, switch legs. Five efforts per side.'
+  ],
+  cues: ['Push the FLOOR away — the arms are just the anchor.','Torso tall, ribs down.','Explosive intent, not a slow squeeze.'],
+  faults: ['Pushing with the arms and forgetting the leg.','Letting the front knee cave in.','Ramping slowly.'],
+  dose: '5 × 6 s per side, 90 s rest.',
+  prog: 'Change the knee angle: a deeper position trains a weaker range.',
+  regr: 'Push into a wall from a shallower split.',
+  timer: { w: 6, r: 90, rounds: 5, label: 'Doorway push' }
+},
+'stair-calf-iso': {
+  n: 'Stair Calf Isometric', cat: 'iso', tags: ['iso','home','tendon','foot'],
+  why: 'The soleus takes 6–8× bodyweight during running, so a single-leg bodyweight hold is genuinely heavy — you do not need a machine, you need one leg and a stair. Bent knee biases soleus, straight knee biases gastrocnemius; you want both.',
+  setup: 'Forefoot on the edge of a stair, heel hanging free, one hand on the rail. Load a backpack if bodyweight gets easy.',
+  steps: [
+    'Bent-knee version: knee bent ~30°, rise to a mid-range position — heel roughly level with the forefoot, not fully up.',
+    'Hold with hard intent for 30–45 s. It should be shaking by 25 s.',
+    'Straight-knee version: same hold, leg locked long.',
+    'Rest 90 s between holds.'
+  ],
+  cues: ['Mid-range, not top-range — that is where tendon load peaks.','Push up into the hold, do not just balance there.','Single leg. Two legs is not enough load.'],
+  faults: ['Holding at the very top where the joint locks out and the tendon unloads.','Hanging on the rail.','Bouncing.'],
+  dose: '3 × 30–45 s bent-knee + 2 × 30 s straight-knee, per side.',
+  prog: 'Add a loaded backpack, 10 lb at a time.',
+  regr: 'Two legs, or a shorter hold.',
+  timer: { w: 40, r: 90, rounds: 4, label: 'Calf iso — switch legs' }
+},
+'table-row-iso': {
+  n: 'Table Row & Row Hold', cat: 'strength', tags: ['upper','pull','home','shoulder'],
+  why: 'Your home pull. A horizontal row is also the safest pulling pattern for a labrum — no overhead position, no end-range compression — and the pull-to-push ratio matters more than the absolute load for a throwing shoulder. Add the isometric hold at the top and it becomes a serious exercise without a single plate.',
+  setup: 'Lie under a sturdy table, a desk, or a bar set low. Grip the edge, body in a straight line, heels on the floor.',
+  steps: [
+    'Set the shoulder blades down and back BEFORE the arms do anything.',
+    'Pull the chest to the edge, elbows tracking close to the ribs.',
+    'Hold the top for 3 seconds, squeezing the blades together.',
+    'Lower over 3 seconds to a full stretch at the bottom.',
+    'To make it harder: elevate the feet on a chair until the body is horizontal.'
+  ],
+  cues: ['Scapula first, arms second.','Straight line from heel to head — no sagging hips.','Full stretch at the bottom is half the exercise.'],
+  faults: ['Hips dropping.','Yanking with the arms and never moving the shoulder blades.','Short range at the top.'],
+  dose: '4 × 6–10 with 3 s holds. Or 3 × 20 s pure isometric holds at the top.',
+  prog: 'Feet elevated → one leg lifted → a backpack on the chest → single-arm.',
+  regr: 'Knees bent, feet flat, torso more upright.',
+  timer: { w: 20, r: 60, rounds: 3, label: 'Row hold' }
+},
+'backpack-hinge': {
+  n: 'Backpack RDL', cat: 'strength', tags: ['hamstring','home','posterior'],
+  why: 'A backpack loaded with books or water bottles is a perfectly good 30–60 lb load, and a hip hinge is one of the few patterns where that is genuinely enough — especially on one leg. Hold it against the chest or by the top handle; the hamstring does not know what brand the weight is.',
+  setup: 'Backpack loaded and held against the chest with both arms, or hanging from one hand for the single-leg version. Books and full water bottles stack well; 4 litres is about 9 lb.',
+  steps: [
+    'Soft knee, roughly 15° and locked there.',
+    'Hinge at the hip, pushing the hips back, chest staying long.',
+    'Descend until you feel the hamstring at end range — not until you round.',
+    'Drive the hips forward to stand, squeezing the glutes at the top.',
+    'Single-leg version: free leg extends back as a counterweight, hips stay level.'
+  ],
+  cues: ['Hips back, not down — this is a hinge, not a squat.','Long spine; the back does not round to add range.','Slow on the way down, 3 seconds.'],
+  faults: ['Squatting instead of hinging.','Pelvis rotating open on the single-leg version.','Load drifting away from the body.'],
+  dose: '3 × 8–10 double-leg, or 3 × 6–8 per side single-leg with a 3 s lower.',
+  prog: 'Single leg → add a 3 s pause at the bottom → stand on a book for extra range.',
+  regr: 'Bodyweight only, fingertips on a wall.'
+},
+'backpack-rfess': {
+  n: 'Couch-Elevated Split Squat', cat: 'strength', tags: ['legs','unilateral','home'],
+  why: 'The best home leg exercise there is. One leg carrying your bodyweight through a full range is a real training stimulus at 150 lb, and a loaded backpack adds another 30–50%. It also exposes side-to-side differences, which is exactly what you want given a groin and a hamstring history.',
+  setup: 'Rear foot on a couch, chair or bed at about knee height. Front foot far enough forward that the shin stays near vertical at the bottom. Backpack on your back or hugged to the chest.',
+  steps: [
+    'Torso upright, ribs down.',
+    'Lower until the back knee is just above the floor.',
+    'Pause a beat at the bottom — no bouncing off the stretch.',
+    'Drive through the whole front foot, heel included.'
+  ],
+  cues: ['Front knee tracks over the second and third toes.','Rear leg is a kickstand, not an engine.','A pause at the bottom kills the bounce and doubles the difficulty.'],
+  faults: ['Front foot too close, so the knee jams forward.','Pushing off the back leg.','Rushing the eccentric.'],
+  dose: '3–4 × 8–10 per side. Add the backpack when 10 clean reps is easy.',
+  prog: 'Load the pack → 3 s eccentric → 2 s pause at the bottom → front foot on a book for extra depth.',
+  regr: 'Rear foot on a lower surface, or a standing split squat, fingertips on a wall.'
+},
+'shrimp-squat': {
+  n: 'Shrimp Squat', cat: 'strength', tags: ['legs','unilateral','home','knee'],
+  why: 'A single-leg squat that keeps the torso upright and loads the quad and glute through a huge range with no equipment at all. Harder than a pistol for most people and much kinder to the lower back. This is your home replacement for a heavy squat.',
+  setup: 'Stand on one leg. Bend the other knee and hold that foot behind you with the same-side hand.',
+  steps: [
+    'Descend under control until the rear knee touches the floor — put a cushion there.',
+    'Torso stays as upright as you can hold it.',
+    'Touch, do not crash. Then drive back up through the standing heel.',
+    'Free arm out in front for balance.'
+  ],
+  cues: ['Slow down. The eccentric is where the strength is.','Standing heel stays flat on the floor.','Knee tracks over the foot, not inward.'],
+  faults: ['Falling into the bottom.','Heel lifting.','Torso pitching forward so it becomes a hinge.'],
+  dose: '3 × 4–8 per side.',
+  prog: 'Hands free (no counterbalance) → rear knee to a lower surface → add a backpack.',
+  regr: 'Assisted with fingertips on a wall, or a reverse lunge to a cushion.'
+},
+'reverse-nordic': {
+  n: 'Reverse Nordic', cat: 'strength', tags: ['quad','eccentric','home','knee'],
+  why: 'The mirror of the Nordic, and just as valuable: it loads the quadriceps — especially rectus femoris, which crosses both the hip and the knee — eccentrically at long lengths, with no equipment. Long-length quad strength protects the knee during deceleration, and you decelerate 47 times a game.',
+  setup: 'Tall kneeling on a cushion, feet pointed, glutes squeezed, body in a straight line from knee to head.',
+  steps: [
+    'Squeeze the glutes and keep the hips extended — this is the whole exercise.',
+    'Lean back slowly, hinging only at the knees, until you feel a strong stretch through the front of the thighs.',
+    'Go only as far as you can control, then return under tension.',
+    'Four seconds down, two seconds back.'
+  ],
+  cues: ['Hips stay forward. The moment you sit back toward the heels, it is over.','Ribs down, no arching the low back.','Control every degree.'],
+  faults: ['Breaking at the hip and sitting toward the heels.','Arching the lumbar spine to fake range.','Dropping fast and using momentum to come back.'],
+  dose: '3 × 5–8, slow.',
+  prog: 'Greater lean, then arms crossed on the chest, then a backpack.',
+  regr: 'Small range, hands on a chair in front for assistance.',
+  flag: 'Expect real soreness the first two times. Keep the volume low.'
+},
+'couch-hip-thrust-iso': {
+  n: 'Couch Hip Thrust & Hold', cat: 'iso', tags: ['glute','home','iso','accel'],
+  why: 'Horizontal force production is what acceleration is made of, and the glute is the engine. Single-leg on a couch with an isometric hold at the top is a real stimulus without a barbell — and the timed hold suits how you like to train.',
+  setup: 'Upper back on a couch or bed edge, feet flat, shins vertical at the top. One foot for the single-leg version; backpack across the hips to load it.',
+  steps: [
+    'Chin tucked, ribs down.',
+    'Drive through the heel to full hip extension.',
+    'Hold the top for 20–30 seconds — posterior pelvic tilt, no lumbar arch.',
+    'The hamstring should be quiet and the glute should be screaming. If it is the other way round, tuck the pelvis harder.'
+  ],
+  cues: ['Ribs down — range comes from the hip, not the low back.','Shin vertical at lockout.','Squeeze as though trying to crack a walnut.'],
+  faults: ['Hyperextending the low back to fake lockout.','Foot too close, turning it into a quad exercise.','Cramping the hamstring — that means the pelvis is not tucked.'],
+  dose: '3 × 20–30 s per side, or 3 × 12 reps with a 3 s hold each.',
+  prog: 'Single leg → loaded backpack → longer holds.',
+  regr: 'Two legs, floor glute bridge.',
+  timer: { w: 25, r: 45, rounds: 6, label: 'Thrust hold — switch legs' }
+},
+'pushup-scap': {
+  n: 'Scapular Push-Up & Push-Up Plus', cat: 'strength', tags: ['shoulder','home','labrum','scap'],
+  why: 'Your labrum-safe home pressing. Serratus anterior is what upwardly rotates and protracts the scapula, and scapular dyskinesis is one of the three things SLAP rehab must address — if the blade does not move on time, the labrum takes the load. The "plus" at the top is the part that actually trains it, and almost nobody does it.',
+  setup: 'Push-up position, hands under the shoulders. Knees down if the full position breaks your line.',
+  steps: [
+    'Scapular push-up: arms stay straight. Let the chest sink between the shoulder blades, then push the floor away so the upper back rounds. 10 slow reps. That range is the whole drill.',
+    'Push-up plus: perform a normal push-up, and at the top keep pushing after the elbows lock — protracting the shoulder blades an extra couple of inches.',
+    'Hold the "plus" position for 2 seconds on every rep.',
+    'Three seconds down, no collapsing at the bottom.'
+  ],
+  cues: ['Push the floor away, do not just lift your body.','Ribs down and glutes on — the body is a plank throughout.','The extra push at the top is the exercise.'],
+  faults: ['Skipping the "plus".','Hips sagging.','Elbows flaring to 90° — keep them at about 45° to the ribs.'],
+  dose: '2 × 10 scapular push-ups + 3 × 8–12 push-up plus.',
+  prog: 'Feet elevated → single-arm eccentric → a loaded backpack.',
+  regr: 'Hands on a chair or a wall.',
+  flag: 'Stop short of the very bottom if the front of the shoulder pinches. Depth is not the point here; scapular control is.'
+},
+'rotational-chop': {
+  n: 'Rotational Chop', cat: 'throw', tags: ['rotation','home','power','core'],
+  why: 'The home stand-in for a med ball throw. A band anchored in a door — or a loaded backpack swung under control — trains the same hip-leads-then-torso-then-arms sequence that generates a huck, without any overhead loading for the shoulder to object to.',
+  setup: 'Resistance band anchored low in a door on one side, or a backpack held in both hands. Stand side-on, athletic stance.',
+  steps: [
+    'Load into the back hip, hands low and outside the back thigh.',
+    'Drive the back hip through FIRST, then let the torso follow, then the arms.',
+    'Finish high and across the body, back heel spinning off the floor.',
+    'Control the return slowly — resisting the rotation back is half the value.'
+  ],
+  cues: ['Hips lead, arms finish. If the arms start it, you have lost the point.','Push the back foot into the ground to begin.','Maximum intent on the way up, controlled on the way back.'],
+  faults: ['Arms-only chopping.','Rotating as one rigid block with no hip-shoulder separation.','Band so heavy the movement becomes slow.'],
+  dose: '4 × 6 per side, fast and intentional, 60 s rest.',
+  prog: 'Add a step into it, then a shuffle.',
+  regr: 'Half-kneeling, lighter band.'
+},
+'superman-iso': {
+  n: 'Superman Hold', cat: 'iso', tags: ['posterior','home','iso','trunk'],
+  why: 'Posterior chain endurance with nothing but a floor. Ultimate makes you hinge, brake and reach thousands of times a game — the erectors and glutes need endurance, not just peak force.',
+  setup: 'Face down on the floor, arms overhead or out to the sides.',
+  steps: [
+    'Squeeze the glutes FIRST, then lift the chest and legs a few inches.',
+    'Reach long through the fingers and toes — length, not height.',
+    'Hold 30–45 s, breathing normally.',
+    'Neck stays long; look at the floor, not forward.'
+  ],
+  cues: ['Glutes lead, low back follows.','Long, not high. Height comes from crunching the low back.','Breathe — no holding your breath.'],
+  faults: ['Cranking the low back for height.','Craning the neck up.','Holding the breath.'],
+  dose: '3 × 30–45 s.',
+  prog: 'Alternate single-arm/single-leg reaches during the hold.',
+  regr: 'Lift the upper body only, or the legs only.',
+  timer: { w: 40, r: 45, rounds: 3, label: 'Superman hold' }
+},
+'side-plank-iso': {
+  n: 'Side Plank & Reach', cat: 'iso', tags: ['core','home','iso','lateral'],
+  why: 'Anti-lateral-flexion strength — the exact demand of sprinting with one arm extended for a disc, and of holding a line through a hard cut. It is also the position that trains the lateral hip, which is the other half of a groin that keeps failing.',
+  setup: 'Side plank on the forearm, elbow directly under the shoulder, feet stacked or staggered.',
+  steps: [
+    'Lift the hips into a straight line from ear to ankle.',
+    'Hold 30 s per side, breathing normally.',
+    'Add the reach: thread the top arm under the body, then reach it to the ceiling. 8 slow reps.',
+    'Hips must not drop during the reaches.'
+  ],
+  cues: ['Straight line, no sagging or piking.','Push the floor away with the bottom shoulder — do not sink into it.','Squeeze the bottom glute.'],
+  faults: ['Hips dropping.','Rolling forward or back out of the plane.','Holding for time with a broken position.'],
+  dose: '3 × 30–40 s per side, or 3 × 8 reaches per side.',
+  prog: 'Top leg lifted → feet on a chair → a backpack on the hip.',
+  regr: 'Knees down.',
+  timer: { w: 35, r: 20, rounds: 6, label: 'Side plank — switch sides' }
+},
+'bird-dog-iso': {
+  n: 'Bird Dog Hold', cat: 'iso', tags: ['core','anti-rotation','home','iso'],
+  why: 'Anti-rotation strength with no band and no cable. Hip-shoulder separation is where a throw comes from, and the trunk\'s job is to stop force leaking between the two. A slow bird dog with a genuine hold is a much harder exercise than its reputation suggests.',
+  setup: 'On hands and knees, hands under shoulders, knees under hips. Neutral spine.',
+  steps: [
+    'Brace the trunk, then extend one arm and the opposite leg to full length.',
+    'Hold 15–20 s. The pelvis must not rotate — imagine balancing a glass of water on your lower back.',
+    'Reach long rather than lifting high; the leg does not need to go above hip height.',
+    'Switch diagonals.'
+  ],
+  cues: ['Reach long, not high.','Hips stay square to the floor — that is the anti-rotation part.','Ribs down, neck long.'],
+  faults: ['Hips rotating open.','Arching the low back to lift the leg higher.','Rushing the switch.'],
+  dose: '3 × 15–20 s per side.',
+  prog: 'Add a slow "crunch" (elbow to knee) between holds, or lift the opposite knee an inch off the floor and hold.',
+  regr: 'Arm only, or leg only.',
+  timer: { w: 18, r: 12, rounds: 6, label: 'Bird dog — switch diagonals' }
+},
+'heels-elevated-squat': {
+  n: 'Heels-Elevated Squat', cat: 'strength', tags: ['legs','home','knee','mobility'],
+  why: 'Elevating the heels borrows ankle range, which lets you sit into a genuinely deep, upright squat and load the quad through its full length. It is also the friendliest way into the deep positions you like, and a loaded backpack turns it into real strength work.',
+  setup: 'Heels on a 2–5 cm book, plate or wedge. Feet shoulder width, toes slightly out. Backpack hugged to the chest to load it.',
+  steps: [
+    'Descend as deep as you can with a long spine — aim for hamstring on calf.',
+    'Knees travel forward over the toes; that is allowed and it is the point.',
+    'Pause 1 s at the bottom without collapsing.',
+    'Drive up, keeping the chest tall.'
+  ],
+  cues: ['Chest tall, long spine — depth without a rounded low back.','Knees forward and out.','Pause at the bottom, every rep.'],
+  faults: ['Rounding at the bottom to get lower.','Bouncing off the bottom.','Heels lifting off the elevation.'],
+  dose: '3–4 × 8–12, loaded backpack.',
+  prog: 'More load → 3 s eccentric → lower the elevation over months as ankle range improves.',
+  regr: 'Higher elevation, reduced depth, hold a doorframe.'
+},
+'curb-depth-jump': {
+  n: 'Curb / Stair Depth Jump', cat: 'plyo', tags: ['elastic','home','power'],
+  why: 'Depth jumps do not need a plyo box — they need a fixed drop height, and a stair or a curb gives you one. The intensity comes from the ground contact, not from the equipment. Standard stair rises are about 18 cm, so two or three stairs lands you in the 35–55 cm range where most athletes find their optimal reactive strength height.',
+  setup: 'A stair, a curb or a low wall. Landing area with a little give — grass or a gym floor, not concrete if you can avoid it.',
+  steps: [
+    'Step OFF — do not jump off and do not step down.',
+    'Land on the balls of the feet with pre-tensioned ankles.',
+    'Minimise ground contact — target under 0.25 s — and jump as high as possible.',
+    'Full recovery: 90 s between reps.'
+  ],
+  cues: ['Touch and go. The floor is hot.','Land tall and stiff, not deep and soft.','Squishy, slow contact means the height is too high.'],
+  faults: ['Jumping off the step, which changes the drop height.','Sinking into a deep countermovement on landing.','Doing lots of them — this is a shock method, not conditioning.'],
+  dose: '3–4 × 4–5 reps, 90 s rest. Once a week, Phase 3 only.',
+  prog: 'Test 2, 3 and 4 stairs to find the height that maximises your RSI, then stay there.',
+  regr: 'One stair, or plain broad jumps.',
+  flag: 'Prerequisite is an RSI of at least 1.5 and a solid strength base. Skip entirely while the hamstring or groin is symptomatic.'
+},
+'stair-sprint': {
+  n: 'Stair / Hill Sprint', cat: 'speed', tags: ['speed','accel','home','conditioning'],
+  why: 'A hill or a staircase is resisted acceleration that coaches itself: the incline forces the forward lean and the pushing action you want in the first three steps, and makes it almost impossible to over-stride. It is also far gentler on the hamstring than flat max-velocity work, which makes it the right speed option when the hamstring is not 100%.',
+  setup: 'A hill of 5–10% grade, or a flight of 15–25 stairs.',
+  steps: [
+    'Warm up thoroughly — this is still a high-intensity effort.',
+    'Drive up for 6–10 seconds, pushing the ground back rather than reaching forward.',
+    'Aggressive arm action; stay in the lean, do not pop upright.',
+    'Walk all the way down as recovery. Two to three minutes between reps.'
+  ],
+  cues: ['Push, do not reach.','Attack the first three steps.','Walk down. Running down is how you tear something.'],
+  faults: ['Short rest, which turns a speed session into conditioning.','Running down the stairs.','Taking stairs two at a time before the single-step rhythm is clean.'],
+  dose: '6–8 × 6–10 s, 2–3 min rest.',
+  prog: 'Steeper grade, or a longer effort up to 12 s.',
+  regr: 'Shallower hill, submaximal effort.'
+}
+});
+
+/* Gym exercise → home equivalent. Anything not listed here already works at home. */
+const HOME_SUB = {
+  'trap-bar-deadlift':        { x: 'iso-strap-pull',            d: '5 × 5 s max intent per position, 90 s rest' },
+  'iso-trap-bar-pull':        { x: 'iso-strap-pull',            d: '5 × 5 s max intent, 90 s rest' },
+  'iso-split-squat-overcome': { x: 'iso-doorframe-split-push',  d: '5 × 6 s per side, 90 s rest' },
+  'front-squat':              { x: 'heels-elevated-squat',      d: '4 × 10, backpack loaded, 1 s pause' },
+  'rfess':                    { x: 'backpack-rfess',            d: '4 × 8–10 per side, backpack loaded' },
+  'reverse-lunge-slider':     { x: 'shrimp-squat',              d: '3 × 5–8 per side' },
+  'hip-thrust':               { x: 'couch-hip-thrust-iso',      d: '3 × 25 s per side, or 3 × 12 with 3 s holds' },
+  'calf-iso-soleus':          { x: 'stair-calf-iso',            d: '3 × 40 s bent-knee per side' },
+  'calf-raise-loaded':        { x: 'stair-calf-iso',            d: '3 × 12 straight + 3 × 15 bent-knee per side' },
+  'single-leg-rdl':           { x: 'backpack-hinge',            d: '3 × 8 per side, single-leg, backpack loaded' },
+  'weighted-pullup':          { x: 'table-row-iso',             d: '4 × 8–10 with 3 s holds, feet elevated' },
+  'landmine-press':           { x: 'pushup-scap',               d: '2 × 10 scapular + 3 × 10 push-up plus' },
+  'bottoms-up-carry':         { x: 'pushup-scap',               d: '3 × 8 slow push-up plus', note: 'The closest home stand-in for reflexive cuff control is slow, scapula-led pressing.' },
+  'suitcase-carry':           { x: 'side-plank-iso',            d: '3 × 35 s per side' },
+  'pallof-press':             { x: 'bird-dog-iso',              d: '3 × 18 s per diagonal' },
+  'back-extension-iso':       { x: 'superman-iso',              d: '3 × 40 s' },
+  'medball-rotational':       { x: 'rotational-chop',           d: '4 × 6 per side, max intent' },
+  'medball-slam-rot':         { x: 'rotational-chop',           d: '3 × 8 per side' },
+  'depth-jump':               { x: 'curb-depth-jump',           d: '4 × 4 from your tested optimal stair count, 90 s rest' },
+  'hurdle-hops':              { x: 'pogo-jumps',                d: '4 × 20 contacts, maximum height, minimum ground time' },
+  'foam-roll-post':           { x: 'ball-roll-foot',            d: '90 s per foot, then a ball on the glutes and quads for 45 s each', note: 'A lacrosse ball against a wall covers most of what a roller does.' }
+};
+
+if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB }; }

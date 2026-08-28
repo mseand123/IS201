@@ -86,7 +86,7 @@ function copenWeekFor(date) {
 
 /* ---------- persistence ---------- */
 const KEY = 'groundcontact.v1';
-let S = { done: {}, armor: {}, readiness: {}, tests: [], notes: {}, settings: { theme: 'auto' } };
+let S = { done: {}, armor: {}, readiness: {}, tests: [], notes: {}, settings: { theme: 'auto', mode: 'gym' } };
 function load() {
   try { const r = localStorage.getItem(KEY); if (r) S = Object.assign(S, JSON.parse(r)); } catch (e) { /* private mode */ }
 }
@@ -177,6 +177,15 @@ const T = {
   }
 };
 
+/* ---------- gym / home resolution ---------- */
+const isHome = () => S.settings.mode === 'home';
+function resolve(it) {
+  const sb = isHome() && HOME_SUB[it.x];
+  if (!sb) return { x: it.x, d: it.d, note: it.note, swapped: false };
+  // the gym item's note belongs to the gym exercise — a swap only carries a note the map supplies
+  return { x: sb.x, d: sb.d || it.d, note: sb.note, swapped: true, from: it.x };
+}
+
 /* ---------- shared bits ---------- */
 const typeChip = t => el('span', { class: 'chip ' + (t === 'HIGH' ? 'hard' : t === 'MED' ? 'warn' : 'good') }, [
   el('span', { class: 'load ' + (t === 'HIGH' ? 'l3' : t === 'MED' ? 'l2' : 'l1'), 'aria-hidden': 'true' },
@@ -199,6 +208,13 @@ function openEx(id) {
     ]),
     el('p', { style: 'max-width:64ch;color:var(--ink-2)' }, e.why),
     e.flag ? el('div', { class: 'callout hard' }, [el('div', { class: 'h' }, 'For you specifically'), el('p', { class: 'small' }, e.flag)]) : null,
+    e.home ? el('div', { class: 'callout' }, [el('div', { class: 'h' }, 'At home'), el('p', { class: 'small' }, e.home)]) : null,
+    HOME_SUB[id] ? el('div', { class: 'callout' }, [
+      el('div', { class: 'h' }, 'Needs a gym'),
+      el('p', { class: 'small' }, [
+        'In Home mode this is swapped for ', el('strong', null, EX[HOME_SUB[id].x].n), ' — ' + HOME_SUB[id].d + '.'
+      ])
+    ]) : null,
     el('div', { class: 'stack stack-xs' }, [
       el('div', { class: 'eyebrow' }, 'Set-up'),
       el('p', { class: 'small' }, e.setup)
@@ -251,7 +267,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 let viewDate = new Date();
 
 function itemRow(date, key, it, i) {
-  const e = EX[it.x]; if (!e) return null;
+  const r = resolve(it);
+  const e = EX[r.x]; if (!e) return null;
   const d = iso(date);
   const doneMap = S.done[d] || (S.done[d] = {});
   const id = key + ':' + i;
@@ -265,9 +282,14 @@ function itemRow(date, key, it, i) {
   }, [svgEl('svg', { viewBox: '0 0 24 24' })]);
   tick.querySelector('svg').appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' }));
   row.appendChild(tick);
-  row.appendChild(el('div', { class: 'item-name' }, [exLink(it.x)]));
-  row.appendChild(el('div', { class: 'item-dose' }, it.d));
-  if (it.note || e.flag) row.appendChild(el('div', { class: 'item-note' }, it.note || e.flag));
+  row.appendChild(el('div', { class: 'item-name' }, [
+    exLink(r.x),
+    r.swapped ? el('span', { class: 'chip swap', title: 'Swapped in for ' + EX[r.from].n }, 'HOME') : null
+  ]));
+  row.appendChild(el('div', { class: 'item-dose' }, r.d));
+  const note = r.note || e.flag;
+  if (note) row.appendChild(el('div', { class: 'item-note' }, note));
+  if (isHome() && e.home) row.appendChild(el('div', { class: 'item-note home-note' }, e.home));
   const acts = el('div', { class: 'item-actions' });
   if (e.timer) acts.appendChild(el('button', {
     class: 'btn btn-sm', title: 'Start ' + e.timer.w + 's timer', onclick: () => T.start(e.timer)
@@ -343,7 +365,7 @@ function armorCard(date) {
       el('span', { class: 'why' }, doneCount + ' / ' + ARMOR.items.length + ' · every day, no exceptions')
     ]),
     ...ARMOR.items.map((it, i) => {
-      const e = EX[it.x];
+      const r = resolve(it), e = EX[r.x];
       const row = el('div', { class: 'item' + (a[i] ? ' done' : '') });
       const tick = el('button', {
         class: 'tick', 'aria-pressed': a[i] ? 'true' : 'false', 'aria-label': 'Mark ' + e.n,
@@ -351,9 +373,10 @@ function armorCard(date) {
       }, [svgEl('svg', { viewBox: '0 0 24 24' })]);
       tick.querySelector('svg').appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' }));
       row.appendChild(tick);
-      row.appendChild(el('div', { class: 'item-name' }, [exLink(it.x)]));
-      row.appendChild(el('div', { class: 'item-dose' }, it.d));
-      if (it.note) row.appendChild(el('div', { class: 'item-note' }, it.note));
+      row.appendChild(el('div', { class: 'item-name' }, [exLink(r.x)]));
+      row.appendChild(el('div', { class: 'item-dose' }, r.d));
+      if (r.note) row.appendChild(el('div', { class: 'item-note' }, r.note));
+      if (isHome() && e.home) row.appendChild(el('div', { class: 'item-note home-note' }, e.home));
       const acts = el('div', { class: 'item-actions' });
       if (e.timer) acts.appendChild(el('button', { class: 'btn btn-sm', onclick: () => T.start(e.timer), title: 'Timer' }, [ico(ICONS.clock, 'nav-ico')]));
       row.appendChild(acts);
@@ -391,9 +414,16 @@ function viewToday() {
   const total = s.blocks.reduce((a, b) => a + b.items.length, 0);
   const doneN = Object.keys(done).length;
 
+  const swaps = s.blocks.reduce((a, b) => a + b.items.filter(it => isHome() && HOME_SUB[it.x]).length, 0);
   return el('div', { class: 'stack stack-lg' }, [
     head,
     el('p', { class: 'session-purpose' }, s.purpose),
+    isHome() ? el('div', { class: 'callout' }, [
+      el('div', { class: 'h' }, 'Home mode' + (swaps ? ' · ' + swaps + (swaps === 1 ? ' swap' : ' swaps') + ' today' : '')),
+      el('p', { class: 'small' }, swaps
+        ? 'Every lift that needs a gym has been swapped for a bodyweight, doorway or backpack equivalent, marked HOME below. Sprinting and jumping are unchanged — they never needed a gym.'
+        : 'Nothing in today\'s session needs a gym. Run it exactly as written.')
+    ]) : null,
     readinessCard(date),
     cw && ['strength-a', 'strength-b', 'accel-strength-max', 'maxv-strength-iso', 'maxv-contrast', 'accel-depth'].includes(pl.sid)
       ? el('div', { class: 'callout' }, [
@@ -529,14 +559,16 @@ function viewProgram() {
    =========================================================== */
 let libFilter = 'all', libQuery = '';
 const CATS = [
-  ['all', 'All'], ['iso', 'Isometrics'], ['speed', 'Speed'], ['plyo', 'Plyometrics'],
+  ['all', 'All'], ['__home', 'No gym needed'], ['iso', 'Isometrics'], ['speed', 'Speed'], ['plyo', 'Plyometrics'],
   ['strength', 'Strength'], ['armor', 'Rehab'], ['tissue', 'Tissue & fascia'],
   ['mobility', 'Mobility'], ['cond', 'Conditioning'], ['throw', 'Throwing'], ['breath', 'Breath']
 ];
 function viewLibrary() {
   const ids = Object.keys(EX).filter(id => {
     const e = EX[id];
-    const catOk = libFilter === 'all' || e.cat === libFilter || (e.tags || []).includes(libFilter);
+    const catOk = libFilter === 'all' ? true
+      : libFilter === '__home' ? !HOME_SUB[id]
+      : (e.cat === libFilter || (e.tags || []).includes(libFilter));
     const q = libQuery.trim().toLowerCase();
     const qOk = !q || e.n.toLowerCase().includes(q) || (e.tags || []).join(' ').includes(q) || e.why.toLowerCase().includes(q);
     return catOk && qOk;
@@ -833,10 +865,22 @@ function strip() {
     el('div', { class: 'strip-item' }, [el('span', { class: 'eyebrow' }, 'Today'), el('span', { class: 'v' }, pl.session.n)]),
     el('div', { class: 'strip-sep' }),
     el('div', { class: 'strip-item wide' }, [el('span', { class: 'eyebrow' }, 'Armor · 28 days'), el('div', { class: 'streak', style: 'margin-top:3px' }, cells)]),
-    el('div', { style: 'margin-left:auto' }, [
+    el('div', { class: 'row', style: 'margin-left:auto;gap:.5rem' }, [
       v ? el('span', { class: 'chip ' + (v.k === 'red' ? 'hard' : v.k === 'amber' ? 'warn' : 'good') }, [el('span', { class: 'dot' }), v.k.toUpperCase()])
-        : el('span', { class: 'chip' }, armorN + '/' + ARMOR.items.length + ' ARMOR')
+        : el('span', { class: 'chip' }, armorN + '/' + ARMOR.items.length + ' ARMOR'),
+      modeToggle()
     ])
+  ]);
+}
+
+function modeToggle() {
+  const mk = (k, label, title) => el('button', {
+    class: 'seg-btn', 'aria-pressed': S.settings.mode === k ? 'true' : 'false', title: title,
+    onclick: () => { S.settings.mode = k; save(); render(); }
+  }, label);
+  return el('div', { class: 'seg', role: 'group', 'aria-label': 'Equipment mode' }, [
+    mk('gym', 'Gym', 'Full program as written'),
+    mk('home', 'Home', 'No weights — swaps every gym lift for a bodyweight or backpack equivalent')
   ]);
 }
 

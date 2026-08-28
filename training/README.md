@@ -14,9 +14,21 @@ fonts load.
 |---|---|
 | **Today** | Resolves the date against the annual plan and renders that session — every block, dose and coaching note — plus a readiness check-in that auto-regulates the day, the Daily Armor, and a notes field. |
 | **Program** | This week's microcycle with CNS-cost meters, the whole periodised year against the UFA calendar, and the 10-week Copenhagen ladder. |
-| **Library** | 78 exercises. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
+| **Library** | 95 exercises, filterable to the 74 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
 | **Tests** | 19-test battery on a 4-week cycle, with trend charts, targets and protocols. |
-| **Method** | Nine essays: the training model, isometric taxonomy, an honest read on fascia, injury dossiers for the adductor / hamstring / labrum, fuelling, the UFA game-model numbers, and sources. |
+| **Method** | Ten essays: the training model, isometric taxonomy, an honest read on fascia, training without a gym, injury dossiers for the adductor / hamstring / labrum, fuelling, the UFA game-model numbers, and sources. |
+
+## Gym / Home
+
+A toggle in the status strip switches equipment mode. In **Home** mode every lift that needs a
+gym is swapped in place for a bodyweight, doorway or backpack equivalent (marked `HOME` on the
+item), and exercises that work either way show their at-home adaptation. Phases, sessions and
+ordering are identical in both modes — only the implement changes. Sprinting, jumping and the
+whole Daily Armor were never gym work and are unchanged.
+
+The map lives in `HOME_SUB` in `data.js`: `gymExerciseId → { x: homeExerciseId, d: dose }`.
+Anything not in that map already works at home. The Library has a **No gym needed** filter that
+reads the same map, and the Method section has an essay on what a home track actually costs.
 
 A timer runs in a dock that persists across views: every timed exercise has a `⏱` button that
 loads its prescribed work / rest / rounds, with audio cues on the last three seconds.
