@@ -521,3 +521,81 @@ table.data td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; 
 .chip.swap { background: var(--warn-bg); color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, transparent); margin-left: .45rem; }
 .item-note.home-note { color: var(--ink-2); border-left: 2px solid var(--line-2); padding-left: .5rem; }
 .item-name { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0; }
+
+/* ===========================================================
+   Guided session player — full screen, readable at arm's length
+   =========================================================== */
+body.running { overflow: hidden; }
+
+.start-row {
+  display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+  padding: .9rem 1rem; border: 1px solid var(--line); border-radius: 4px; background: var(--surface);
+}
+.btn-start { padding: .6rem 1.1rem; font-size: var(--t-md); font-weight: 600; }
+.btn-start svg { width: 16px; height: 16px; fill: currentColor; stroke: currentColor; }
+.btn-start-alt { padding: .45rem .7rem; font-size: var(--t-sm); }
+.start-row .xs { flex-basis: 100%; }
+@media (min-width: 700px) { .start-row .xs { flex-basis: auto; margin-left: auto; text-align: right; max-width: 22ch; } }
+
+.run {
+  position: fixed; inset: 0; z-index: 200;
+  background: var(--paper); color: var(--ink);
+  display: grid; grid-template-rows: auto 1fr auto;
+  padding: max(.75rem, env(safe-area-inset-top)) 1rem calc(1rem + env(safe-area-inset-bottom));
+  overscroll-behavior: contain;
+}
+.run[hidden] { display: none; }
+
+.run-top { display: flex; flex-direction: column; gap: .5rem; }
+.run-bar { height: 3px; background: var(--sunken); border-radius: 2px; overflow: hidden; }
+.run-bar i { display: block; height: 100%; background: var(--brand); transition: width .3s ease; }
+.run-meta {
+  display: flex; align-items: center; gap: .75rem;
+  font-family: var(--mono); font-size: var(--t-xs); letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+}
+.run-meta > span:nth-child(2) { margin-left: auto; }
+
+.run-body {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: clamp(.6rem, 2.5vh, 1.4rem); text-align: center; min-height: 0; padding: .5rem 0;
+}
+.run-name {
+  font-size: clamp(1.5rem, 6.5vw, 2.6rem); line-height: 1.02; max-width: 18ch;
+}
+.run-dose {
+  font-size: var(--t-sm); color: var(--muted);
+  display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; justify-content: center;
+}
+.run-round {
+  border: 1px solid var(--line-2); border-radius: 3px; padding: .1rem .4rem;
+  letter-spacing: .08em; text-transform: uppercase; font-size: var(--t-xs); color: var(--ink-2);
+}
+.run-ring { position: relative; width: min(58vw, 34vh, 300px); aspect-ratio: 1; flex: 0 0 auto; }
+.run-ring svg { width: 100%; height: 100%; display: block; }
+.run-ring-label { position: absolute; inset: 0; display: grid; place-content: center; gap: .3rem; }
+.run-time {
+  font-size: clamp(2.6rem, 13vw, 4.6rem); font-weight: 600; line-height: 1;
+  font-variant-numeric: tabular-nums; letter-spacing: -.02em;
+}
+.run-tag {
+  font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); max-width: 14ch; margin: 0 auto; line-height: 1.3;
+}
+.run-cue { font-size: var(--t-md); color: var(--ink-2); max-width: 30ch; line-height: 1.4; min-height: 2.6em; }
+.run-note { font-size: var(--t-sm); color: var(--muted); max-width: 40ch; }
+
+.run-foot { display: flex; flex-direction: column; align-items: center; gap: .55rem; }
+.run-ctl { display: flex; gap: .5rem; align-items: stretch; width: 100%; max-width: 420px; }
+.run-btn { flex: 1 1 0; justify-content: center; padding: .85rem .5rem; font-size: var(--t-base); border-radius: 4px; }
+.run-btn-main { flex: 1.25 1 0; font-weight: 600; }
+.run-hint { font-family: var(--mono); font-size: var(--t-xs); color: var(--muted); letter-spacing: .04em; text-align: center; }
+
+.run-done {
+  grid-row: 1 / -1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: .6rem; text-align: center;
+}
+
+@media (min-height: 780px) and (min-width: 700px) {
+  .run { padding-left: 2rem; padding-right: 2rem; }
+  .run-body { gap: 1.6rem; }
+}

@@ -30,10 +30,24 @@ The map lives in `HOME_SUB` in `data.js`: `gymExerciseId → { x: homeExerciseId
 Anything not in that map already works at home. The Library has a **No gym needed** filter that
 reads the same map, and the Method section has an essay on what a home track actually costs.
 
-A timer runs in a dock that persists across views: every timed exercise has a `⏱` button that
-loads its prescribed work / rest / rounds, with audio cues on the last three seconds.
+## Guided session
 
-Keyboard: `1`–`5` switch views, `Space` pauses the timer, `Esc` closes a dialog.
+**Start guided session** on the Today screen opens a full-screen player that walks the whole
+session — every block, then the Daily Armor — one exercise at a time:
+
+- A four-second count-in per exercise, then the timer, with beeps on the last three seconds
+- Timed exercises run their prescribed work / rest / rounds; rep-based sets count up and wait
+  for you to tap **Done**
+- Coaching cues rotate every six seconds inside the exercise; between-round rests show the
+  switch instruction ("Switch feet"), between-exercise rests announce what's next
+- Speech announces each exercise and each rest — toggle it with **Voice on / off**
+- **Back**, **Pause**, **Done early** / **Skip**, and **Show how-to** without losing your place
+- Screen wake lock while it runs; completed exercises tick themselves off on the Today screen
+
+The `▶` on any item starts the player from that exercise. A separate quick timer for a single
+exercise lives in the exercise detail dialog and floats in a dock.
+
+Keyboard — app: `1`–`5` switch views. Player: `Space` pause/done, `←` `→` step, `Esc` exit.
 
 ## Files
 

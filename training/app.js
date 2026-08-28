@@ -186,6 +186,341 @@ function resolve(it) {
   return { x: sb.x, d: sb.d || it.d, note: sb.note, swapped: true, from: it.x };
 }
 
+/* ===========================================================
+   GUIDED SESSION PLAYER
+   Full-screen, hands-free: it walks you through the session
+   step by step, counts you in and out, and talks if you let it.
+   =========================================================== */
+
+// How long to rest after a set you finish by hand, by exercise category.
+const REST_BY_CAT = { strength: 90, plyo: 90, speed: 150, iso: 75, cond: 60, throw: 60,
+  armor: 45, tissue: 20, mobility: 20, breath: 15 };
+
+function buildSteps(session, date, opts) {
+  const steps = [];
+  const push = (bi, ii, blockName, it) => {
+    const r = resolve(it), e = EX[r.x];
+    if (!e) return;
+    const t = e.timer;
+    steps.push({
+      bi: bi, ii: ii, key: bi === -1 ? 'armor' : 'b' + bi, block: blockName,
+      x: r.x, dose: r.d, note: r.note || (isHome() && e.home) || e.flag || '',
+      mode: t ? 'timed' : 'manual',
+      work: t ? t.w : 0, rest: t ? t.r : 0, rounds: t ? t.rounds : 1,
+      label: t ? t.label : '',
+      restAfter: REST_BY_CAT[e.cat] != null ? REST_BY_CAT[e.cat] : 60
+    });
+  };
+  (session ? session.blocks : []).forEach((b, bi) => b.items.forEach((it, ii) => push(bi, ii, b.n, it)));
+  if (opts && opts.armor) ARMOR.items.forEach((it, ii) => push(-1, ii, 'DAILY ARMOR', it));
+  return steps;
+}
+
+function say(text) {
+  if (S.settings.voice === false) return;
+  try {
+    if (!window.speechSynthesis) return;
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 1.02; u.pitch = 1; u.volume = .9;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  } catch (e) { /* no speech available — beeps still carry the session */ }
+}
+
+const RUN = {
+  active: false, steps: [], i: 0, phase: 'ready', round: 1,
+  left: 0, endsAt: 0, running: false, raf: 0, lastTick: -1,
+  startedAt: 0, elapsed: 0, date: null, cueIdx: 0, cueAt: 0,
+
+  open(steps, date, startAt) {
+    if (!steps.length) return;
+    T.stop();
+    this.steps = steps; this.i = Math.max(0, Math.min(startAt || 0, steps.length - 1));
+    this.active = true; this.startedAt = Date.now(); this.date = date;
+    document.body.classList.add('running');
+    runEl.hidden = false;
+    this.lock();
+    this.enter('ready');
+  },
+  close(completed) {
+    this.active = false; this.running = false;
+    cancelAnimationFrame(this.raf);
+    document.body.classList.remove('running');
+    runEl.hidden = true;
+    try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
+    if (this._lock) { this._lock.release().catch(() => {}); this._lock = null; }
+    save(); render();
+  },
+  lock() {
+    if (navigator.wakeLock) navigator.wakeLock.request('screen').then(l => this._lock = l).catch(() => {});
+  },
+
+  step() { return this.steps[this.i]; },
+
+  enter(phase) {
+    const st = this.step();
+    this.phase = phase; this.lastTick = -1; this.cueIdx = 0; this.cueAt = Date.now();
+    if (phase === 'ready') {
+      this.round = 1;
+      this.left = 4000; this.running = true;
+      say(EX[st.x].n);
+    } else if (phase === 'work') {
+      this.left = st.work * 1000; this.running = true;
+      beep(880, .14, .2);
+      if (st.rounds > 1) say(this.round === st.rounds ? 'Last round' : 'Go');
+    } else if (phase === 'rest') {
+      this.left = st.rest * 1000; this.running = true;
+      beep(440, .2, .16); say('Rest');
+    } else if (phase === 'manual') {
+      this.left = 0; this.running = true;   // counts up
+      this.startManual = Date.now();
+    } else if (phase === 'restAfter') {
+      this.left = st.restAfter * 1000; this.running = true;
+      beep(440, .2, .16);
+      const nx = this.steps[this.i + 1];
+      say(nx ? 'Rest. Next, ' + EX[nx.x].n : 'Rest');
+    } else if (phase === 'done') {
+      this.running = false; this.elapsed = Date.now() - this.startedAt;
+      beep(1180, .4, .24); say('Session complete');
+      this.build(); return;
+    }
+    this.endsAt = performance.now() + this.left;
+    this.loop(); this.build();
+  },
+
+  markDone() {
+    const st = this.step(); if (!st || !this.date) return;
+    const d = iso(this.date);
+    if (st.key === 'armor') { const a = S.armor[d] || (S.armor[d] = {}); a[st.ii] = 1; }
+    else { const m = S.done[d] || (S.done[d] = {}); m[st.key + ':' + st.ii] = 1; }
+    save();
+  },
+
+  next() {
+    this.markDone();
+    if (this.i >= this.steps.length - 1) return this.enter('done');
+    this.i++; this.enter('ready');
+  },
+  prev() {
+    if (this.i === 0) return this.enter('ready');
+    this.i--; this.enter('ready');
+  },
+  advance() {              // a countdown reached zero
+    const st = this.step();
+    if (this.phase === 'ready') return this.enter(st.mode === 'timed' ? 'work' : 'manual');
+    if (this.phase === 'work') {
+      if (this.round < st.rounds) {
+        if (st.rest) return this.enter('rest');
+        this.round++; return this.enter('work');
+      }
+      return this.next();   // a timed step's own config already carries its rest
+    }
+    if (this.phase === 'rest') { this.round++; return this.enter('work'); }
+    if (this.phase === 'restAfter') return this.next();
+  },
+  doneEarly() { this.next(); },              // finish it now, count it done
+  skip() {                                   // move on without counting it
+    if (this.i >= this.steps.length - 1) return this.enter('done');
+    this.i++; this.enter('ready');
+  },
+  toggle() {
+    if (!this.active || this.phase === 'done') return;
+    if (this.running) { this.running = false; this.left = Math.max(0, this.endsAt - performance.now()); cancelAnimationFrame(this.raf); }
+    else { this.running = true; this.endsAt = performance.now() + this.left; this.loop(); }
+    this.build();
+  },
+  loop() {
+    cancelAnimationFrame(this.raf);
+    const step = () => {
+      if (!this.running || !this.active) return;
+      if (this.phase === 'manual') {
+        this.left = -(Date.now() - this.startManual);      // count up
+      } else {
+        this.left = this.endsAt - performance.now();
+        const secs = Math.ceil(this.left / 1000);
+        if (secs !== this.lastTick) {
+          this.lastTick = secs;
+          if (secs <= 3 && secs > 0 && this.phase !== 'ready') beep(this.phase === 'work' ? 660 : 520, .07, .13);
+          if (secs <= 3 && secs > 0 && this.phase === 'ready') beep(600, .06, .1);
+        }
+        if (this.left <= 0) { this.advance(); return; }
+      }
+      // rotate the coaching cue every 6 s
+      const cues = EX[this.step().x].cues || [];
+      if (cues.length > 1 && Date.now() - this.cueAt > 6000) {
+        this.cueIdx = (this.cueIdx + 1) % cues.length; this.cueAt = Date.now();
+      }
+      this.tick();
+      this.raf = requestAnimationFrame(step);
+    };
+    this.raf = requestAnimationFrame(step);
+  },
+
+  build() { buildRun(); },
+  tick() { tickRun(); }
+};
+function st_manualDone() {
+  const st = RUN.step();
+  if (st.restAfter && RUN.i < RUN.steps.length - 1) { RUN.markDone(); RUN.enter('restAfter'); }
+  else RUN.next();
+}
+
+/* ---------- the full-screen player UI ----------
+   Built once per step/phase change; the rAF loop only touches the few
+   nodes that actually change. Rebuilding on every frame detaches the
+   buttons mid-tap, which loses presses on a phone.                     */
+const runEl = el('div', { class: 'run', hidden: true, role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Guided session' });
+
+function fmtClock(ms) {
+  const s = Math.max(0, Math.round(ms / 1000));
+  return s >= 60 ? Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0') : String(s);
+}
+
+function phaseTotalMs() {
+  const st = RUN.step();
+  if (RUN.phase === 'ready') return 4000;
+  if (RUN.phase === 'rest') return st.rest * 1000;
+  if (RUN.phase === 'restAfter') return st.restAfter * 1000;
+  return st.work * 1000;
+}
+
+// Timer labels read "Plantar roll — switch feet"; only the instruction half
+// is worth putting inside the ring, since the name is already on screen.
+function ringTag(st, isRest, isReady) {
+  if (!st.label || isRest || isReady) return null;
+  const i = st.label.indexOf('—');
+  if (i < 0) return null;
+  return el('span', { class: 'run-tag' }, st.label.slice(i + 1).trim());
+}
+
+function buildRun() {
+  if (!RUN.active) return;
+  const st = RUN.step(), e = EX[st.x];
+  runEl.innerHTML = '';
+  RUN.ui = {};
+
+  if (RUN.phase === 'done') {
+    const mins = Math.max(1, Math.round(RUN.elapsed / 60000));
+    runEl.appendChild(el('div', { class: 'run-done' }, [
+      el('div', { class: 'eyebrow' }, 'Session complete'),
+      el('h2', { class: 'display', style: 'font-size:clamp(2.2rem,9vw,3.4rem)' }, 'Done'),
+      el('p', { class: 'num', style: 'font-size:var(--t-lg)' }, RUN.steps.length + ' exercises · ' + mins + ' min'),
+      el('p', { class: 'small muted', style: 'max-width:34ch;text-align:center' },
+        'Everything is ticked off on the Today screen. Log how it felt in the notes while it is fresh.'),
+      el('button', { class: 'btn btn-hi', style: 'margin-top:1rem', onclick: () => RUN.close(true) }, 'Finish')
+    ]));
+    return;
+  }
+
+  const isRest = RUN.phase === 'rest' || RUN.phase === 'restAfter';
+  const isReady = RUN.phase === 'ready';
+  const isManual = RUN.phase === 'manual';
+  const C = 2 * Math.PI * 88;
+
+  const svg = svgEl('svg', { viewBox: '0 0 200 200' });
+  svg.appendChild(svgEl('circle', { cx: 100, cy: 100, r: 88, fill: 'none', 'stroke-width': 7, stroke: 'var(--line)' }));
+  let prog = null;
+  if (!isManual) {                            // no countdown to draw on a hand-timed set
+    prog = svgEl('circle', {
+      cx: 100, cy: 100, r: 88, fill: 'none', 'stroke-width': 7,
+      stroke: isRest ? 'var(--brand)' : 'var(--hi-fill)', 'stroke-linecap': 'round',
+      'stroke-dasharray': C, 'stroke-dashoffset': 0, transform: 'rotate(-90 100 100)'
+    });
+    svg.appendChild(prog);
+  }
+  RUN.ui.prog = prog; RUN.ui.C = C;
+
+  const nextStep = RUN.steps[RUN.i + 1];
+  const hint = RUN.i === RUN.steps.length - 1 ? 'Last one — finish strong'
+    : nextStep ? 'Next: ' + EX[nextStep.x].n : '';
+
+  const bar = el('i', { style: 'width:' + (RUN.i / RUN.steps.length * 100).toFixed(1) + '%' });
+  runEl.appendChild(el('div', { class: 'run-top' }, [
+    el('div', { class: 'run-bar' }, [bar]),
+    el('div', { class: 'run-meta' }, [
+      el('span', null, st.block),
+      el('span', { class: 'num' }, (RUN.i + 1) + ' / ' + RUN.steps.length),
+      el('button', { class: 'btn btn-ghost btn-sm', onclick: () => RUN.close(false), 'aria-label': 'Exit session' }, [ico(ICONS.x, 'nav-ico')])
+    ])
+  ]));
+
+  const time = el('span', { class: 'run-time num' }, '0');
+  const cue = el('p', { class: 'run-cue', 'aria-live': 'polite' }, '');
+  RUN.ui.time = time; RUN.ui.cue = cue;
+
+  const between = RUN.phase === 'restAfter' && nextStep;
+  runEl.appendChild(el('div', { class: 'run-body' }, [
+    el('h2', { class: 'display run-name' }, between ? 'Rest' : e.n),
+    el('div', { class: 'run-dose num' }, between
+      ? ['Up next · ' + EX[nextStep.x].n]
+      : [
+        st.dose,
+        st.rounds > 1 && !isReady ? el('span', { class: 'run-round' }, 'Round ' + RUN.round + ' / ' + st.rounds) : null
+      ]),
+    el('div', { class: 'run-ring' + (isRest ? ' rest' : '') }, [
+      svg,
+      el('div', { class: 'run-ring-label' }, [
+        time,
+        ringTag(st, isRest, isReady)
+      ])
+    ]),
+    cue,
+    st.note && (isReady || isManual) ? el('p', { class: 'run-note' }, st.note) : null
+  ]));
+
+  runEl.appendChild(el('div', { class: 'run-foot' }, [
+    el('div', { class: 'run-ctl' }, [
+      el('button', { class: 'btn run-btn', onclick: () => RUN.prev(), 'aria-label': 'Previous exercise' }, '‹ Back'),
+      isManual
+        ? el('button', { class: 'btn btn-hi run-btn run-btn-main', onclick: () => st_manualDone() }, 'Done')
+        : el('button', { class: 'btn btn-hi run-btn run-btn-main', onclick: () => RUN.toggle() }, RUN.running ? 'Pause' : 'Resume'),
+      el('button', {
+        class: 'btn run-btn',
+        onclick: () => (isRest ? RUN.doneEarly() : isManual ? RUN.skip() : RUN.doneEarly())
+      }, isRest ? 'Skip rest' : isManual ? 'Skip' : 'Done early')
+    ]),
+    el('div', { class: 'row', style: 'gap:.4rem' }, [
+      el('button', { class: 'btn btn-ghost btn-sm', onclick: () => openEx(between ? nextStep.x : st.x) },
+        between ? 'How-to · next' : 'Show how-to'),
+      el('button', {
+        class: 'btn btn-ghost btn-sm',
+        onclick: () => { S.settings.voice = S.settings.voice === false; save(); buildRun(); }
+      }, S.settings.voice === false ? 'Voice off' : 'Voice on')
+    ]),
+    el('div', { class: 'run-hint' }, between ? '' : hint)
+  ]));
+
+  tickRun();
+}
+
+function tickRun() {
+  if (!RUN.active || RUN.phase === 'done' || !RUN.ui || !RUN.ui.time) return;
+  const st = RUN.step(), e = EX[st.x];
+  const isRest = RUN.phase === 'rest' || RUN.phase === 'restAfter';
+  const isManual = RUN.phase === 'manual';
+  const total = phaseTotalMs();
+
+  if (RUN.ui.prog) {
+    const frac = Math.max(0, Math.min(1, RUN.left / (total || 1)));
+    RUN.ui.prog.setAttribute('stroke-dashoffset', (RUN.ui.C * (1 - frac)).toFixed(1));
+  }
+
+  const t = isManual ? fmtClock(-RUN.left)
+    : RUN.left >= 60000 ? fmtClock(RUN.left)
+    : Math.max(0, RUN.left / 1000).toFixed(RUN.left < 10000 ? 1 : 0);
+  if (RUN.ui.time.textContent !== t) RUN.ui.time.textContent = t;
+
+  const cues = e.cues || [];
+  const nx = RUN.steps[RUN.i + 1];
+  const switchCue = st.label && st.label.indexOf('—') >= 0 ? st.label.slice(st.label.indexOf('—') + 1).trim() : '';
+  const text = RUN.phase === 'rest' ? (switchCue ? switchCue.charAt(0).toUpperCase() + switchCue.slice(1) : 'Rest — next round coming')
+    : RUN.phase === 'restAfter' ? (nx ? EX[nx.x].n + ' · ' + nx.dose : 'Rest')
+    : RUN.phase === 'ready' ? 'Get ready'
+    : isManual ? 'Tap done when the set is finished'
+    : (cues[RUN.cueIdx] || st.dose);
+  if (RUN.ui.cue.textContent !== text) RUN.ui.cue.textContent = text;
+}
+
 /* ---------- shared bits ---------- */
 const typeChip = t => el('span', { class: 'chip ' + (t === 'HIGH' ? 'hard' : t === 'MED' ? 'warn' : 'good') }, [
   el('span', { class: 'load ' + (t === 'HIGH' ? 'l3' : t === 'MED' ? 'l2' : 'l1'), 'aria-hidden': 'true' },
@@ -259,7 +594,11 @@ function showModal(content) {
   document.body.style.overflow = 'hidden';
 }
 function closeModal() { modalBg.hidden = true; document.body.style.overflow = ''; }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  if (!modalBg.hidden) return closeModal();
+  if (RUN.active) RUN.close(false);
+});
 
 /* ===========================================================
    VIEW: TODAY
@@ -291,11 +630,30 @@ function itemRow(date, key, it, i) {
   if (note) row.appendChild(el('div', { class: 'item-note' }, note));
   if (isHome() && e.home) row.appendChild(el('div', { class: 'item-note home-note' }, e.home));
   const acts = el('div', { class: 'item-actions' });
-  if (e.timer) acts.appendChild(el('button', {
-    class: 'btn btn-sm', title: 'Start ' + e.timer.w + 's timer', onclick: () => T.start(e.timer)
-  }, [ico(ICONS.clock, 'nav-ico')]));
+  acts.appendChild(el('button', {
+    class: 'btn btn-sm', title: 'Start the guided session here',
+    'aria-label': 'Start guided session at ' + e.n,
+    onclick: () => startRun(date, key + ':' + i)
+  }, [ico(ICONS.play, 'nav-ico')]));
   row.appendChild(acts);
   return row;
+}
+
+// Open the player, optionally starting at a given block:item.
+function startRun(date, at, opts) {
+  const pl = planFor(date);
+  const o = opts || { armor: true };
+  const steps = buildSteps(pl.session, date, o);
+  let idx = 0;
+  if (at) {
+    const [k, ii] = at.split(':');
+    const found = steps.findIndex(st => st.key === k && String(st.ii) === ii);
+    if (found >= 0) idx = found;
+  }
+  RUN.open(steps, date, idx);
+}
+function startArmorRun(date) {
+  RUN.open(buildSteps(null, date, { armor: true }), date, 0);
 }
 
 function blockCard(date, b, bi) {
@@ -378,7 +736,11 @@ function armorCard(date) {
       if (r.note) row.appendChild(el('div', { class: 'item-note' }, r.note));
       if (isHome() && e.home) row.appendChild(el('div', { class: 'item-note home-note' }, e.home));
       const acts = el('div', { class: 'item-actions' });
-      if (e.timer) acts.appendChild(el('button', { class: 'btn btn-sm', onclick: () => T.start(e.timer), title: 'Timer' }, [ico(ICONS.clock, 'nav-ico')]));
+      acts.appendChild(el('button', {
+        class: 'btn btn-sm', title: 'Start the armor block here',
+        'aria-label': 'Start armor at ' + e.n,
+        onclick: () => { RUN.open(buildSteps(null, date, { armor: true }), date, i); }
+      }, [ico(ICONS.play, 'nav-ico')]));
       row.appendChild(acts);
       return row;
     })
@@ -413,11 +775,19 @@ function viewToday() {
   const done = S.done[d] || {};
   const total = s.blocks.reduce((a, b) => a + b.items.length, 0);
   const doneN = Object.keys(done).length;
+  const startRow = el('div', { class: 'start-row' }, [
+    el('button', { class: 'btn btn-hi btn-start', onclick: () => startRun(date, null, { armor: true }) },
+      [ico(ICONS.play, 'nav-ico'), 'Start guided session']),
+    el('button', { class: 'btn btn-start-alt', onclick: () => startRun(date, null, { armor: false }) }, 'Session only'),
+    el('button', { class: 'btn btn-start-alt', onclick: () => startArmorRun(date) }, 'Armor only · 12 min'),
+    el('span', { class: 'xs muted' }, 'Full screen, counts you in and out, talks you through it.')
+  ]);
 
   const swaps = s.blocks.reduce((a, b) => a + b.items.filter(it => isHome() && HOME_SUB[it.x]).length, 0);
   return el('div', { class: 'stack stack-lg' }, [
     head,
     el('p', { class: 'session-purpose' }, s.purpose),
+    startRow,
     isHome() ? el('div', { class: 'callout' }, [
       el('div', { class: 'h' }, 'Home mode' + (swaps ? ' · ' + swaps + (swaps === 1 ? ' swap' : ' swaps') + ' today' : '')),
       el('p', { class: 'small' }, swaps
@@ -923,6 +1293,7 @@ function buildShell() {
   document.body.appendChild(el('div', { class: 'shell' }, [rail, main]));
   document.body.appendChild(tabs);
   document.body.appendChild(dock);
+  document.body.appendChild(runEl);
   document.body.appendChild(modalBg);
 }
 
@@ -942,6 +1313,12 @@ function importData() {
 
 document.addEventListener('keydown', e => {
   if (e.target.matches('input, textarea')) return;
+  if (RUN.active) {
+    if (e.key === ' ') { e.preventDefault(); RUN.phase === 'manual' ? st_manualDone() : RUN.toggle(); }
+    if (e.key === 'ArrowRight') RUN.phase === 'manual' ? RUN.skip() : RUN.doneEarly();
+    if (e.key === 'ArrowLeft') RUN.prev();
+    return;
+  }
   const n = NAV.find(x => x[3] === e.key);
   if (n) go(n[0]);
   if (e.key === ' ' && T.cfg) { e.preventDefault(); T.toggle(); }
