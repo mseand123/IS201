@@ -13,10 +13,10 @@ fonts load.
 | View | What it does |
 |---|---|
 | **Today** | Resolves the date against the annual plan and renders that session — every block, dose and coaching note — plus a readiness check-in that auto-regulates the day, the Daily Armor, and a notes field. |
-| **Program** | This week's microcycle with CNS-cost meters, the whole periodised year against the UFA calendar, and the 10-week Copenhagen ladder. |
+| **Program** | This week's microcycle with CNS-cost meters, the periodised year against the UFA calendar, standalone weak-link blocks, short sessions, and the 10-week Copenhagen ladder. |
 | **Library** | 95 exercises, filterable to the 74 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
-| **Tests** | 19-test battery on a 4-week cycle, with trend charts, targets and protocols. |
-| **Method** | Ten essays: the training model, isometric taxonomy, an honest read on fascia, training without a gym, injury dossiers for the adductor / hamstring / labrum, fuelling, the UFA game-model numbers, and sources. |
+| **Tests** | 22-test battery on a 4-week cycle, with trend charts, targets and protocols. Hip internal rotation and the FADIR score lead it. |
+| **Method** | Eleven essays: the training model, isometric taxonomy, an honest read on fascia, training without a gym, injury dossiers for the hip labrum / adductor / hamstring, throwing-shoulder load management, fuelling, the UFA game-model numbers, and sources. |
 
 ## Gym / Home
 
@@ -49,11 +49,22 @@ have time for, see the running time estimate, and run only those. The `▶` on a
 the player from that exercise instead. A separate quick timer for a single
 exercise lives in the exercise detail dialog and floats in a dock.
 
+## Injury context
+
+The athlete's labral tear is **acetabular (hip)**, not shoulder. That shapes the program more
+than a rehab track would: flexion + adduction + internal rotation is the provocative position,
+which puts deep squat holds, pancakes and hard cuts on the list of things to calibrate rather
+than assume. Seven deep-flexion exercises carry a `HIP LABRUM RULE` flag with the pinch test
+and the modifications; hip rotation isometrics at a neutral angle and glute medius work sit in
+the Daily Armor; the readiness check-in has its own hip flag that pulls deep flexion and
+full-speed cutting for the day. Shoulder work remains, reframed as throwing-volume maintenance
+rather than labral rehab.
+
 ## Desk track
 
-18 exercises tagged `desk`, each labelled by how visible it is — `invisible` (nobody can tell),
+19 exercises tagged `desk`, each labelled by how visible it is — `invisible` (nobody can tell),
 `subtle` (reads as fidgeting), `private` (fine alone, not in an open-plan office). Six desk
-routines in the Quick view run them as guided circuits, from a two-minute hourly reset to a
+routines in the Desk view run them as guided circuits, from a two-minute hourly reset to a
 five-minute adductor / hamstring / cuff block. The rationale: the armor protocols respond to
 frequency more than intensity, and a workday is the largest unused training window available.
 

@@ -44,7 +44,7 @@ const ICONS = {
   reset: 'M3 12a9 9 0 1 0 3-6.7|M3 4v5h5',
   x: 'M6 6l12 12|M18 6L6 18',
   clock: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18|M12 7v5l3 2',
-  quick: 'M13 2L4 14h7l-1 8 9-12h-7z',
+  desk: 'M3 4h18v11H3z|M3 19h18|M9 15v4|M15 15v4',
   check: 'M4 12l6 6L20 6'
 };
 
@@ -861,6 +861,16 @@ function viewToday() {
       armorCard(date)
     ]),
     pickBar(date),
+    el('div', { class: 'shortcut' }, [
+      el('span', { class: 'eyebrow' }, 'At your desk'),
+      ...['desk-reset', 'desk-armor', 'desk-foot'].map(id => {
+        const r = ROUTINES.find(x => x.id === id);
+        return r ? el('button', {
+          class: 'btn btn-sm', onclick: () => RUN.open(stepsFromItems(r.items, r.n), date, 0, { routine: r.id })
+        }, [ico(ICONS.play, 'nav-ico'), r.n + ' · ' + r.min + ' min']) : null;
+      }).filter(Boolean),
+      el('button', { class: 'btn btn-ghost btn-sm', onclick: () => go('desk') }, 'All desk routines →')
+    ]),
     el('div', { class: 'stack stack-sm' }, [
       el('div', { class: 'eyebrow' }, 'Session notes'),
       el('textarea', {
@@ -974,6 +984,22 @@ function viewProgram() {
     ]),
     el('div', { class: 'stack stack-md' }, [
       el('div', { class: 'sec-head' }, [
+        el('h2', null, 'Weak-link blocks'),
+        el('div', { class: 'trace' }),
+        el('p', { class: 'small muted' }, 'The rehab tracks as standalone blocks, for when you want to hit one thing properly rather than fit it around a session.')
+      ]),
+      el('div', { class: 'routine-grid' }, ROUTINES.filter(r => r.tag === 'ARMOR').map(r => routineCard(r, today)))
+    ]),
+    el('div', { class: 'stack stack-md' }, [
+      el('div', { class: 'sec-head' }, [
+        el('h2', null, 'When time is short'),
+        el('div', { class: 'trace' }),
+        el('p', { class: 'small muted' }, 'Not the whole session — the part of it with the highest return.')
+      ]),
+      el('div', { class: 'routine-grid' }, ROUTINES.filter(r => r.tag === 'SHORT').map(r => routineCard(r, today)))
+    ]),
+    el('div', { class: 'stack stack-md' }, [
+      el('div', { class: 'sec-head' }, [
         el('h2', null, 'Copenhagen ladder'),
         el('div', { class: 'trace' }),
         el('p', { class: 'small muted' }, 'Ten weeks to rebuild the adductor. Volume drives the outcome, so the jumps are deliberately small — most people who fail this exercise failed the progression, not the exercise.')
@@ -1028,13 +1054,44 @@ function routineCard(r, date) {
   ]);
 }
 
-function viewQuick() {
+function viewDesk() {
   const date = new Date();
-  const groups = [
-    ['DESK', 'At your desk', 'Isometrics and tissue work you can run in a chair, in a meeting, on a call. Each one is labelled by how visible it is. The adductor and cuff work in particular responds to frequency more than intensity — a workday is the best training window you have and almost nobody uses it.'],
-    ['ARMOR', 'Weak-link blocks', 'The rehab tracks pulled out as standalone blocks, for when you want to hit one thing properly rather than fit it around a session.'],
-    ['SHORT', 'When time is short', 'Not the whole session — the part of it with the highest return.']
-  ];
+  const deskEx = Object.keys(EX).filter(id => (EX[id].tags || []).includes('desk'));
+  const byCovert = k => deskEx.filter(id => EX[id].covert === k);
+  return el('div', { class: 'stack stack-xl' }, [
+    el('div', { class: 'stack stack-md' }, [
+      el('div', { class: 'sec-head' }, [
+        el('h2', null, 'At your desk'),
+        el('div', { class: 'trace' }),
+        el('p', { class: 'small muted', style: 'max-width:72ch' },
+          'Isometrics and tissue work you can run in a chair, in a meeting, on a call. Both the Copenhagen and the non-operative hip labrum literature point the same way: the armor protocols respond to accumulated frequency far more than to intensity. A workday is the largest unused training window you have.')
+      ]),
+      el('div', { class: 'routine-grid' }, ROUTINES.filter(r => r.tag === 'DESK').map(r => routineCard(r, date)))
+    ]),
+    el('div', { class: 'stack stack-md' }, [
+      el('div', { class: 'sec-head' }, [
+        el('h2', null, 'How visible each one is'),
+        el('div', { class: 'trace' })
+      ]),
+      ...[['invisible', 'Nobody can tell'], ['subtle', 'Reads as fidgeting or a stretch'], ['private', 'Fine alone, not in an open-plan office']]
+        .map(([k, label]) => {
+          const list = byCovert(k);
+          if (!list.length) return null;
+          return el('div', { class: 'stack stack-sm' }, [
+            el('div', { class: 'row' }, [
+              el('span', { class: 'chip ' + COVERT[k].k }, COVERT[k].l),
+              el('span', { class: 'small muted' }, label)
+            ]),
+            el('div', { class: 'row', style: 'gap:.3rem' }, list.map(id =>
+              el('button', { class: 'mini', onclick: () => openEx(id) }, EX[id].n)))
+          ]);
+        }).filter(Boolean)
+    ])
+  ]);
+}
+
+function viewBuild() {
+  const date = new Date();
   const ids = Object.keys(EX).filter(id => {
     const e = EX[id];
     const q = BUILD.q.trim().toLowerCase();
@@ -1047,14 +1104,6 @@ function viewQuick() {
   const picked = [...BUILD.keys];
 
   return el('div', { class: 'stack stack-xl' }, [
-    ...groups.map(([tag, title, blurb]) => el('div', { class: 'stack stack-md' }, [
-      el('div', { class: 'sec-head' }, [
-        el('h2', null, title),
-        el('div', { class: 'trace' }),
-        el('p', { class: 'small muted', style: 'max-width:72ch' }, blurb)
-      ]),
-      el('div', { class: 'routine-grid' }, ROUTINES.filter(r => r.tag === tag).map(r => routineCard(r, date)))
-    ])),
     el('div', { class: 'stack stack-md' }, [
       el('div', { class: 'sec-head' }, [
         el('h2', null, 'Build your own'),
@@ -1142,7 +1191,8 @@ function viewLibrary() {
       el('span', { class: 'n' }, EX[id].n),
       el('span', { class: 'd' }, EX[id].dose),
       el('div', { class: 'row', style: 'gap:.25rem;margin-top:.15rem' }, (EX[id].tags || []).slice(0, 3).map(t => el('span', { class: 'chip' }, t)))
-    ])))
+    ]))),
+    viewBuild()
   ]);
 }
 
@@ -1265,8 +1315,9 @@ function testCard(t) {
 }
 
 function viewTests() {
-  const groups = [['power', 'Power'], ['speed', 'Speed'], ['elastic', 'Elastic'], ['groin', 'Groin'],
-    ['hamstring', 'Hamstring'], ['shoulder', 'Shoulder'], ['mobility', 'Mobility'],
+  const groups = [['hip', 'Hip'], ['groin', 'Groin'], ['hamstring', 'Hamstring'],
+    ['power', 'Power'], ['speed', 'Speed'], ['elastic', 'Elastic'],
+    ['mobility', 'Mobility'], ['shoulder', 'Shoulder'],
     ['conditioning', 'Conditioning'], ['recovery', 'Recovery'], ['body', 'Body']];
   const nextTest = (() => {
     const last = S.tests.map(t => t.d).sort().pop();
@@ -1282,8 +1333,8 @@ function viewTests() {
         el('p', { class: 'small muted' }, 'Every four weeks, same day of the week, same time, same shoes, same order — fresh, not after a session. ' + nextTest + ' Untested training is guessing.')
       ]),
       el('div', { class: 'callout' }, [
-        el('div', { class: 'h' }, 'The two numbers that drive the program'),
-        el('p', { class: 'small' }, 'Your drop-jump RSI decides which plyometrics you are allowed: under 1.5 stay on pogos and hops, 1.5–2.0 unlocks moderate work, 2.0+ unlocks depth jumps. Your shoulder IR difference decides whether you do sleeper stretches at all — under 15° means you do not have GIRD and should not be stretching that capsule.')
+        el('div', { class: 'h' }, 'The three numbers that drive the program'),
+        el('p', { class: 'small' }, 'Your FADIR score and hip internal rotation gate how deep you train the hip — a rising FADIR score means something in your training has gone too deep, and it is the earliest warning you get. Your drop-jump RSI decides which plyometrics you are allowed: under 1.5 stay on pogos and hops, 1.5–2.0 unlocks moderate work, 2.0+ unlocks depth jumps. Your shoulder IR difference decides whether you do sleeper stretches at all — under 15° means you do not have GIRD and should not be stretching that capsule.')
       ])
     ]),
     ...groups.map(([g, label]) => {
@@ -1348,8 +1399,8 @@ function viewMethod() {
    =========================================================== */
 const NAV = [
   ['today', 'Today', ICONS.today, '1'],
-  ['program', 'Program', ICONS.program, '2'],
-  ['quick', 'Quick', ICONS.quick, '3'],
+  ['desk', 'Desk', ICONS.desk, '2'],
+  ['program', 'Program', ICONS.program, '3'],
   ['library', 'Library', ICONS.library, '4'],
   ['tests', 'Tests', ICONS.tests, '5'],
   ['method', 'Method', ICONS.method, '6']
@@ -1440,8 +1491,8 @@ function render() {
   main.appendChild(strip());
   const v = el('div', { class: 'view' }, [
     route === 'today' ? viewToday() :
+    route === 'desk' ? viewDesk() :
     route === 'program' ? viewProgram() :
-    route === 'quick' ? viewQuick() :
     route === 'library' ? viewLibrary() :
     route === 'tests' ? viewTests() : viewMethod()
   ]);

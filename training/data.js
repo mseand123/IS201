@@ -428,7 +428,7 @@ const EX = {
 /* ============ THE SHOULDER / LABRUM TRACK ============ */
 'cuff-iso-er': {
   n: 'Rotator Cuff Isometric — ER/IR', cat: 'iso', tags: ['shoulder','labrum','iso','daily','armor'],
-  why: 'Non-operative management of SLAP-type labral lesions succeeds in returning throwers to sport more often than surgery does — roughly 71% return to the same or better level with scapular stabilisation and posterior capsule work. Isometrics at low abduction angles load the cuff without the compression and torsion the labrum dislikes, and they are timed holds, which suits you.',
+  why: 'The cheapest insurance available for a shoulder that throws hundreds of times a week. Isometrics at low abduction angles load the rotator cuff without the end-range compression that irritates a throwing shoulder, they take two minutes, and they are timed holds, which suits you. The cuff is what keeps the humeral head centred while your hips and torso generate the throw.',
   setup: 'Stand with the affected arm at your side, elbow at 90°, a rolled towel between elbow and ribs.',
   steps: [
     'External rotation: press the back of the wrist into a wall or door frame. Ramp to ~60–70% over 2 s, hold 20–30 s.',
@@ -441,12 +441,12 @@ const EX = {
   dose: '3 × 20–30 s each direction, daily.',
   prog: '0° → 45° abduction → 90° abduction (only when fully symptom-free).',
   regr: 'Lighter effort, shorter holds.',
-  flag: 'Stop and reassess if you get a deep, clicking, catching sensation at the front of the joint. That is labral, not muscular.',
+  flag: 'Deep clicking or catching at the front of the joint is a different problem from a tired cuff. If that shows up, stop and get it looked at rather than adding volume.',
   timer: { w: 25, r: 20, rounds: 6, label: 'Cuff iso — change direction' }
 },
 'sleeper-stretch': {
   n: 'Sleeper Stretch (Posterior Capsule)', cat: 'mobility', tags: ['shoulder','labrum','gird'],
-  why: 'Athletes with GIRD — glenohumeral internal rotation deficit — are roughly twice as likely to be injured over a three-year window. Posterior capsule stretching resolves GIRD in about 90% of athletes who have it. For a thrower with a labral history, a tight posterior capsule pushes the humeral head forward and up, which is precisely what irritates the superior labrum.',
+  why: 'Athletes with GIRD — glenohumeral internal rotation deficit — are roughly twice as likely to be injured over a three-year window, and posterior capsule stretching resolves it in about 90% of athletes who have it. A tight posterior capsule pushes the humeral head forward and up, which is what makes a throwing shoulder ache. This is a conditional exercise: the right tool only if you have measured the deficit.',
   setup: 'Lie on the affected side, shoulder under you, arm out at 90° of abduction, elbow bent 90°.',
   steps: [
     'Roll back about 10–20° so you are not lying directly on the point of the shoulder.',
@@ -459,11 +459,11 @@ const EX = {
   dose: '3 × 30 s, daily if you have a side-to-side IR difference over 15°. Skip if you do not.',
   prog: 'Cross-body adduction stretch as a companion.',
   regr: 'Cross-body stretch only.',
-  flag: 'Measure first. If your IR difference is under 15°, you do not have GIRD and you do not need this. Stretching a capsule you do not need to stretch is how throwers create instability.'
+  flag: 'Measure first, every time. Under 15° of side-to-side difference means you do not have GIRD and should skip this entirely — stretching a capsule that is doing its job is how throwers create instability.'
 },
 'prone-ytw': {
   n: 'Prone Y-T-W', cat: 'strength', tags: ['shoulder','scap','labrum'],
-  why: 'Scapular dyskinesis is one of the three things the SLAP literature says rehab must address, alongside GIRD and cuff strength. If the scapula does not upwardly rotate on time, the labrum takes the load instead.',
+  why: 'If the shoulder blade does not upwardly rotate on schedule, the joint has to find range it does not have, and the soft tissue around it pays. Scapular control is the least glamorous and most reliable thing a throwing athlete can train, and it takes five minutes with almost no load.',
   home: "Face down on the floor works fine, and the floor version is harder because you have to lift against gravity from a dead stop. Use two full water bottles or nothing at all.",
   setup: 'Face down on an incline bench or on the floor. Very light or no weight — 2–5 lb is plenty.',
   steps: [
@@ -488,7 +488,7 @@ const EX = {
   dose: '3 × 6–8 per side.',
   prog: 'Heavier, then standing, then single-arm with a contralateral stance.',
   regr: 'Lighter, seated, shorter range.',
-  flag: 'Replaces overhead barbell pressing entirely while the labrum is a concern.'
+  flag: 'Not a restriction — a preference. The half-kneeling position forces ribs-down, glute-on trunk control, which is worth having. Overhead barbell pressing is fine for you.'
 },
 'bottoms-up-carry': {
   n: 'Bottoms-Up KB Carry', cat: 'strength', tags: ['shoulder','labrum','stability'],
@@ -523,7 +523,7 @@ const EX = {
   dose: '4 × 4–6 with added weight, or 3 × AMRAP-2 bodyweight.',
   prog: 'Add 5 lb when you hit 6 clean reps.',
   regr: 'Band-assisted or eccentric-only (jump up, lower 5 s).',
-  flag: 'If a full dead hang bothers the labrum, stop just short of full relaxation at the bottom and keep the blades slightly engaged.'
+  flag: 'Keep a little scapular engagement at the bottom rather than fully dumping into the hang — a better habit for a throwing shoulder, and it makes the pull cleaner.'
 },
 
 /* ============ ISOMETRIC MAIN LIFTS ============ */
@@ -959,7 +959,7 @@ const EX = {
 },
 'throw-volume': {
   n: 'Structured Throwing Session', cat: 'throw', tags: ['ultimate','skill','shoulder'],
-  why: 'Throwing volume is training load, and it is the load most ultimate players never track. With a labral history, unmanaged throwing volume — especially hammers, blades and long backhands — is the most likely thing to flare the shoulder. Structure it and it becomes an asset instead of a variable.',
+  why: 'Throwing volume is training load, and it is the load ultimate players never count. Unmanaged hard-throw volume — hammers, blades and long backhands especially — is the most common reason a throwing shoulder starts aching mid-season. Structure it and it becomes an asset instead of an untracked variable.',
   setup: 'Partner or a wall, full warm-up done.',
   steps: [
     'Warm-up: cuff isometrics, band pull-aparts, then 20 short flicks and backhands at 50%.',
@@ -973,7 +973,7 @@ const EX = {
   dose: 'Hucks: cap at 30 per session, 90 per week early in a build. Track it.',
   prog: 'Add 10% weekly to the hard-throw count, no more.',
   regr: 'Reduce hard throws, keep the short game.',
-  flag: 'Overhead throws are the highest-risk pattern for a superior labral lesion. Treat them like a heavy lift, not like a warm-up.'
+  flag: 'Overhead throws are the highest-stress pattern for any shoulder. Treat them like a heavy lift, not like a warm-up — and count them.'
 },
 
 /* ============ MOBILITY ============ */
@@ -1039,7 +1039,7 @@ const EX = {
 },
 'hanging-decompression': {
   n: 'Passive Hang', cat: 'mobility', tags: ['shoulder','spine','grip'],
-  why: 'Builds shoulder range and grip, and decompresses the spine. With a labral history, the rule is to keep a little scapular engagement rather than hanging fully dead — a completely passive hang puts the labrum and capsule at the end of their range with your whole bodyweight on them.',
+  why: 'Builds shoulder range and grip, and decompresses the spine and hips — the traction is useful for a hip that gets compressed all day. Keep a little scapular engagement rather than hanging fully dead: a completely passive hang puts the shoulder capsule at end range with your whole bodyweight on it, which is not a habit worth building for a throwing arm.',
   setup: 'Pull-up bar, feet able to touch down.',
   steps: ['Grip the bar, feet lightly on the floor at first.','Let the body lengthen but keep a slight downward pull through the shoulder blades.','Breathe. 20–30 s.','Progress to a full hang only if it is completely symptom-free.'],
   cues: ['Active-ish: shoulders not fully dumped.','Breathe into the ribs.'],
@@ -1047,7 +1047,7 @@ const EX = {
   dose: '3 × 20–30 s, daily.',
   prog: 'Full hang, then single-arm assisted.',
   regr: 'Feet supported, partial bodyweight.',
-  flag: 'Any pinching or clicking at the front of the shoulder means stop and keep the feet down.',
+  flag: 'A hang is also gentle traction for the spine and hips. Pinching or clicking at the front of the shoulder means keep the feet down and take some weight off.',
   timer: { w: 30, r: 45, rounds: 3, label: 'Hang' }
 },
 'pancake-sit': {
@@ -1117,15 +1117,17 @@ const EX = {
    ----------------------------------------------------------- */
 const ARMOR = {
   n: 'The Daily Armor',
-  sub: '12 minutes · every day · the thing that actually keeps you on the field',
-  why: 'Three injury histories, three protocols, one block. Adductor, hamstring and shoulder each need frequency more than they need intensity — the Copenhagen literature is explicit that total accumulated volume drives the result, and the SLAP literature says the same about scapular and cuff work. Doing this daily at 60% beats doing it twice a week at 100%.',
+  sub: '14 minutes · every day · the thing that actually keeps you on the field',
+  why: 'Four histories, four protocols, one block. The adductor, the hamstring and the hip labrum all need frequency far more than intensity — the Copenhagen literature is explicit that accumulated volume drives the result, and isometric hip strength is one of the measures that tracks with better non-operative labral outcomes. Doing this daily at 60% beats doing it twice a week at 100%.',
   items: [
     { x: 'ball-roll-foot', d: '60 s per foot', note: 'Toe-touch test before and after. This also primes the whole posterior chain.' },
     { x: 'adductor-squeeze-iso', d: '3 ladders (0°/45°/90°, 10 s each)', note: 'Log the pain score. This is the weak link — it gets fed daily.' },
     { x: 'ham-iso-long', d: '3 × 25 s per side', note: 'Shallow knee bend. Long lengths only.' },
-    { x: 'cuff-iso-er', d: '2 × 25 s ER + IR', note: 'Elbow pinned, submaximal, pain-free.' },
+    { x: 'hip-rot-iso', d: '3 × 25 s each direction, per side', note: 'Neutral hip angle — nowhere near the position that pinches.' },
+    { x: 'glute-med-iso', d: '3 × 35 s per side', note: 'Toes down. The muscle that stops the femur falling into the impingement position.' },
+    { x: 'cuff-iso-er', d: '2 × 25 s ER + IR', note: 'Elbow pinned, submaximal. Throwing maintenance.' },
     { x: 'short-foot', d: '3 × 10 s per foot', note: 'Do it while brushing your teeth.' },
-    { x: 'deep-squat-hold', d: '5 min accumulated across the day', note: 'Not in the 12 minutes — this is a lifestyle target.' }
+    { x: 'deep-squat-hold', d: '5 min accumulated across the day', note: 'Not part of the 14 minutes — this is a lifestyle target. Read the hip rule before you sit into it.' }
   ]
 };
 
@@ -1841,9 +1843,18 @@ const TESTS = [
   { id:'ktw_r',     n:'Knee-to-Wall — R',        u:'cm',   dir:'up',   cat:'mobility', pair:'ktw_l',
     target:11, how:'Same, other side.',
     why:'A side-to-side difference over 1.5 cm shows up as a cutting asymmetry.' },
+  { id:'hipir_l',   n:'Hip Internal Rotation — L', u:'°',  dir:'up',   cat:'hip', pair:'hipir_r',
+    target:35, how:'Lie face down, knee bent to 90°, pelvis flat and stabilised. Let the shin fall outward — that is internal rotation. Measure the shin angle from vertical with a phone inclinometer. Same position, both sides, every time.',
+    why:'The range restriction that appears first and matters most with a labral hip. Track the side-to-side difference at least as closely as the absolute number — under about 30°, or a gap over 10° between sides, is the flag.' },
+  { id:'hipir_r',   n:'Hip Internal Rotation — R', u:'°',  dir:'up',   cat:'hip', pair:'hipir_l',
+    target:35, how:'Same protocol, other side.',
+    why:'Symmetry is the metric. A hip that has lost rotation makes the adductor work harder at longer lengths, which is how a hip problem quietly becomes a groin problem.' },
+  { id:'fadir',     n:'FADIR Pain Score',        u:'/10',  dir:'down', cat:'hip',
+    target:0, how:'On your back: hip to 90° flexion, knee drawn gently across the midline, shin rotated outward into internal rotation. Rate any sharp, deep pinch at the FRONT of the hip or in the groin, 0–10. A glute or back-of-hip stretch is not what you are scoring.',
+    why:'The provocative test for labral involvement, tracked as a number. It falling over weeks is the clearest single sign the hip work is doing its job — and it climbing is the earliest sign something in your training has gone too deep.' },
   { id:'girddiff',  n:'Shoulder IR Difference',  u:'°',    dir:'down', cat:'shoulder',
     target:10, how:'Lie on your back, shoulder at 90° abduction, elbow at 90°. Stabilise the shoulder blade with your other hand and rotate the forearm toward the floor. Measure both sides with a phone inclinometer; record throwing side minus non-throwing side.',
-    why:'Over 15° of deficit is GIRD, and GIRD roughly doubles injury risk over three years. This is the number that decides whether you should be doing sleeper stretches at all.' },
+    why:'Over 15° of deficit is GIRD, and GIRD roughly doubles injury risk over three years for a throwing athlete. This number — not a feeling — decides whether you should be doing sleeper stretches at all.' },
   { id:'squat5',    n:'Deep Squat Hold',         u:'s',    dir:'up',   cat:'mobility',
     target:300, how:'Unbroken bottom-position hold, heels down, no support. One attempt.',
     why:'Your favourite position, quantified. Five unbroken minutes with heels flat is a genuinely rare standard.' },
@@ -1865,6 +1876,7 @@ const READINESS = {
     { id:'energy',  n:'Energy & mood',   lo:'Flat, unmotivated', hi:'Sharp, keen' },
     { id:'groin',   n:'Groin',           lo:'Sore / tender', hi:'Quiet' },
     { id:'ham',     n:'Hamstring',       lo:'Grabby / tight', hi:'Quiet' },
+    { id:'hip',     n:'Hip (front)',     lo:'Pinching / catching', hi:'Quiet' },
     { id:'shoulder',n:'Shoulder',        lo:'Achy / clicking', hi:'Quiet' }
   ],
   verdict(score, flags) {
@@ -1872,11 +1884,13 @@ const READINESS = {
       d:'The rule is absolute: a hamstring that feels grabby in the warm-up cancels max-velocity work. Not reduced — cancelled. Swap today for Tempo + Tissue, run the Askling protocol, and reassess tomorrow. Over 80% of hamstring injuries happen at high speed, and the warning almost always arrives before the tear.' };
     if (flags.groin <= 2) return { k:'red', t:'Groin flag — cutting and Copenhagens are off',
       d:'Drop all change-of-direction work and full Copenhagen reps. Keep the squeeze isometrics at 50–60% effort — loading a cranky adductor submaximally is treatment, loading it maximally is an injury. Reassess in 48 h.' };
+    if (flags.hip <= 2) return { k:'red', t:'Hip flag — out of deep flexion today',
+      d:'No deep squat holds, no pancakes, no bottomed-out anything, and no full-speed cutting. Keep the neutral-angle hip rotation isometrics and the glute medius work at 60% — loading a labral hip away from the provocative position is treatment, loading it into that position is the injury. Map your CARs arc and note where it pinches. Reassess in 48 h.' };
     if (flags.shoulder <= 2) return { k:'red', t:'Shoulder flag — throwing volume halved',
       d:'Cut hard throws by half, no overhead throws at all, no pressing. Keep the cuff isometrics at low angles and the scapular work — those are the treatment. Deep clicking or catching at the front of the joint means see someone.' };
-    if (score >= 24) return { k:'green', t:'Green — run the session as written',
+    if (score >= 28) return { k:'green', t:'Green — run the session as written',
       d:'Everything is available today. If it is a high day, take the full sprint volume and the full loads.' };
-    if (score >= 17) return { k:'amber', t:'Amber — keep the intensity, cut the volume',
+    if (score >= 20) return { k:'amber', t:'Amber — keep the intensity, cut the volume',
       d:'Drop one set from every main lift and take two reps off the sprint volume. Intensity is what preserves adaptation; volume is what costs recovery. Cut volume, never intensity.' };
     return { k:'red', t:'Red — convert to a low day',
       d:'Swap today for Restore or Tempo + Tissue. A high day taken on an empty tank buys fatigue at full price and adaptation at a discount. The Armor still happens.' };
@@ -1949,6 +1963,8 @@ const ARTICLES = [
     'Weekly: long-length adductor loading — Cossack squats and active pancake sits — because the groin fails at length during a wide plant, not in the middle of its range.',
     'Every session: lateral skater bounds. Squeezing strength is not the same as absorbing strength, and the plant is an absorbing problem.'
   ]},
+  {h:'It may not be a separate problem'},
+  {p:'Adductor-related groin pain and intra-articular hip pathology travel together far more often than people expect, and given your labral tear that is worth taking seriously. A hip that cannot rotate freely makes the adductor work harder at longer lengths; a weak adductor lets the femur drift into the positions the labrum objects to. Read the hip dossier alongside this one, track hip internal rotation next to your squeeze numbers, and expect them to move together.'},
   {h:'The rules'},
   {ul:[
     'Never full Copenhagens on consecutive days. The soreness lasts 48–72 hours early on.',
@@ -1973,28 +1989,50 @@ const ARTICLES = [
   {callout:{k:'hard', h:'The one absolute rule', p:'If the hamstring feels grabby, tight or "not right" during a warm-up, max-velocity sprinting is cancelled that day. Not reduced. Cancelled. Do tempo instead. The warning sensation almost always arrives before the tear, and almost nobody listens to it.'}}
 ]},
 
-{ id:'shoulder', n:'Dossier: The Labrum', sub:'Non-operative management for a throwing athlete', body:[
-  {p:'A superior labral (SLAP-type) lesion in an overhead athlete is one of the few injuries where the conservative route has a better track record than surgery. Return to overhand throwing is more common with non-operative treatment, and a program built on posterior capsule stretching and scapular correction is more successful than surgery for most throwers with SLAP lesions. Around 71% return to the same level or better with a regimen of scapular stabilisation and posterior capsular work.'},
-  {h:'The three things rehab must address'},
+{ id:'hip', n:'Dossier: The Hip Labrum', sub:'The one that changes how you train, not just what you rehab', body:[
+  {p:'An acetabular labral tear is a different animal from the shoulder version, and it reaches much further into a training program — because the positions that provoke it are positions you actively like. This page is the honest version.'},
+  {h:'The good news first'},
+  {p:'Non-operative management is genuinely first-line for labral tears: activity modification, targeted rehabilitation, and phase-based loading against objective criteria. Athletes with a labral tear who reach full hip strength symmetry and pain-free sport movement have demonstrated they can compete without a repair. Isometric hip strength — hip extension in particular — is one of the measures that tracks with better outcomes, which is convenient, because isometrics are what you already like doing.'},
+  {h:'The position that provokes it'},
+  {p:'Flexion, adduction and internal rotation, together. That combination is the FADIR position, and it is what a clinician uses to test for labral involvement, because it drives the front of the femoral neck into the rim of the socket. Anything that puts your hip deep, across the midline and rotated inward is what to be careful with.'},
+  {p:'Read that list again and notice what is on it: a bottomed-out deep squat, a knees-together pancake, a hard cut off a planted leg with the knee falling inward, a low couch. Your favourite position and your sport are both on it. That does not mean you avoid them — it means you find precisely where your own line is, and train right up to it.'},
+  {h:'The test you can run yourself, in ten seconds'},
   {ul:[
-    'GIRD — glenohumeral internal rotation deficit. Players with GIRD are roughly twice as likely to be injured over a three-year window, and posterior capsule stretching resolves it in about 90% of athletes who have it.',
-    'Scapular dyskinesis — if the shoulder blade does not upwardly rotate on schedule, the labrum absorbs load that the mechanics should have handled.',
-    'Rotator cuff and core strength — the cuff centres the humeral head; the core is where a throw actually starts.'
+    'Lie on your back. Bring one hip to 90° of flexion, draw the knee gently across the midline, then rotate the shin outward so the hip goes into internal rotation.',
+    'A sharp, deep pinch at the FRONT of the hip or in the groin is a positive sign — it is the one people describe by cupping the hip with a C-shaped hand.',
+    'A stretch in the glute or the back of the hip is a different thing and is not a problem.',
+    'Log it as a 0–10 number on the Tests page and retest monthly. That number falling is your clearest evidence the plan is working.'
   ]},
-  {h:'Measure before you stretch'},
-  {p:'This is the part people get wrong. Sleeper stretches are the right tool if — and only if — you have a genuine internal rotation deficit. Measure both shoulders at 90° of abduction with the scapula stabilised. If the difference is under 15°, you do not have GIRD and you should not be stretching a capsule that is doing its job. Throwers create anterior instability by stretching posterior capsules they did not need to stretch. Test it, log it in the Tests page, and let the number decide.'},
-  {h:'What this program changes for you'},
+  {h:'What this changes in your program'},
   {ul:[
-    'No overhead barbell pressing. Half-kneeling landmine presses instead — the arc keeps the humerus in the scapular plane and stops short of the end-range position that provokes a superior labral lesion.',
-    'At least 3:1 pull to push volume.',
-    'Cuff isometrics daily at 0° and 45° of abduction, submaximal and pain-free. Timed holds, which suits you.',
-    'Hangs stay slightly active rather than fully dead-hanging, so the labrum and capsule are not taking your whole bodyweight at end range.',
-    'Overhead throws — hammers, blades — are treated like a heavy lift: capped at 10 per session and only in a week where the shoulder is completely quiet.',
-    'Hard throws are counted. Throwing volume is the load nobody tracks and the one most likely to flare this.'
+    'Deep squat holds stay, but on a rule. Wider stance, toes turned out more, heels slightly elevated — all three open the front of the joint. Sit to the depth that is free rather than to the floor, and never past a front-of-hip pinch. A pain-free deep squat is still one of the best things you can do; a pinching one is you sanding the rim of your own socket.',
+    'Hip rotation isometrics at a NEUTRAL angle join the Daily Armor: around 45° of flexion, submaximal, both directions. That loads the joint nowhere near the provocative position.',
+    'Gluteus medius becomes a priority rather than an accessory. It is the muscle that stops the femur falling into adduction and internal rotation when you plant — which is the impingement position, produced by your own sport, forty-odd times a game.',
+    'Lumbopelvic control matters more than it looks like it should. A pelvis that tips forward under load closes the front of the hip, so dead bugs and anti-rotation work are joint protection here, not core aesthetics.',
+    'Hip CARs daily, as an assessment as much as an exercise: you are mapping the arc your hip actually controls, and watching it grow.',
+    'Cutting mechanics get a second reason to be trained properly. A knee that falls inward on a plant is the FADIR position under load at full speed.'
   ]},
-  {callout:{k:'hard', h:'When to stop and get it looked at', p:'Deep clicking, catching, or a sensation of the shoulder shifting at the front of the joint during a throw is labral, not muscular. Persistent night pain, or a sudden loss of throwing velocity you cannot warm out of, is the same. Those are physio or orthopaedic questions, not training questions, and no amount of cuff work is the right answer to them.'}}
+  {h:'The connection to your groin'},
+  {p:'This is the part worth sitting with. Adductor-related groin pain and intra-articular hip pathology very frequently travel together, and the mechanism is not mysterious: a hip that cannot rotate freely makes the adductor work harder at longer lengths, and a weak adductor lets the femur drift into the positions the labrum objects to. Your weak adductor and your labral tear may not be two separate problems. Do not treat them as unrelated, and do not be surprised if the squeeze numbers and the FADIR score improve together.'},
+  {h:'The metrics to watch'},
+  {p:'Hip internal rotation, measured on both sides — a rotation deficit is the restriction that appears first and matters most, and the side-to-side difference is easier to trust than an absolute number. Alongside it, hip abduction and adduction strength symmetry: the return-to-sport literature uses a 90% limb symmetry index as the bar, and that is a reasonable standard to hold yourself to even without surgery.'},
+  {callout:{k:'hard', h:'When to stop and see someone', p:'Clicking, catching, or a sensation of the hip giving way; groin pain that wakes you at night; pain that has not improved across six to eight weeks of sensible loading; or a sudden loss of hip range. Those are imaging-and-clinician questions, not programming questions. Non-operative management being first-line assumes someone has actually established what is there — and with a labral tear the grade genuinely predicts how well conservative work goes.'}}
 ]},
 
+{ id:'shoulder', n:'The Throwing Shoulder', sub:'Not a rehab plan — load management for an arm that hucks', body:[
+  {p:'You do not have a shoulder problem. You do have a throwing volume, and throwing volume is the training load ultimate players never count. This page is maintenance, not rehabilitation.'},
+  {h:'Count the hard throws'},
+  {p:'Easy flicks are not load. Hucks, big backhands, hammers and blades are. Cap hard throws at about 30 in a session and 90 in a week early in a build, and ramp no faster than 10% a week. Overhead throws are the highest-stress pattern for any shoulder — treat them like a heavy lift, not like a warm-up.'},
+  {h:'The three things worth doing'},
+  {ul:[
+    'Cuff isometrics at low abduction angles, daily. Cheap, timed, and they keep the humeral head centred.',
+    'At least a 2:1 pull-to-push ratio — rows, chin-ups, face pulls, band pull-aparts. Most throwers are the other way round.',
+    'Scapular control: Y-T-Ws and scap sets. A shoulder blade that upwardly rotates on time keeps the joint out of trouble.'
+  ]},
+  {h:'One number worth measuring'},
+  {p:'Internal rotation, both shoulders, at 90° of abduction with the shoulder blade stabilised. Throwers with a glenohumeral internal rotation deficit over about 15° carry roughly double the injury risk across a three-year window, and posterior capsule stretching resolves it in around 90% of athletes who have it. Measure before you stretch: under 15° you do not have a deficit, and stretching a capsule that is doing its job is how throwers create instability. That is the whole case for or against the sleeper stretch, and a number decides it, not a feeling.'},
+  {p:'Overhead pressing is fine. The landmine press stays in the program because the arc is comfortable and it pairs well with a half-kneeling position, not because you are avoiding anything.'}
+]},
 { id:'home', n:'Training Without a Gym', sub:'What a home track really costs you, and what it does not', body:[
   {p:'Flip the Gym / Home switch at the top of any screen and every lift that needs equipment is swapped for a bodyweight, doorway or backpack version, marked HOME. Nothing else changes: same phases, same sessions, same order of operations. Here is the honest accounting of what that costs.'},
   {h:'What you lose almost nothing on'},
@@ -2074,7 +2112,11 @@ const ARTICLES = [
     'The Neuromuscular Effects of the Copenhagen Adductor Exercise — systematic review, Int J Sports Phys Ther.',
     'Copenhagen adduction exercise on eccentric hip adduction strength in players with groin injury — RCT, PubMed 38376593.',
     'Can the Copenhagen Adduction Exercise Prevent Groin Injuries in Soccer Players? — critically appraised topic, PubMed 37734743 (the Grade B caveat).',
-    'Superior Labral Anterior to Posterior Tear Management in Athletes — PMC6110067 (non-operative outcomes, GIRD, scapular rehab).',
+    'The Management of Acetabular Labral Tears: A Contemporary Review — Current Reviews in Musculoskeletal Medicine (non-operative management as first line; phase-based criteria).',
+    'Standard of Care: Acetabular Labral Tears, Non-operative Treatment — Brigham and Women\'s Rehabilitation Services (isometric progression; the glute medius gate).',
+    'Short-term Outcomes of Physiotherapy for Acetabular Labral Tears — PMC8931951 (isometric hip strength and outcome; tear severity and prognosis).',
+    'A Criteria-Based Testing Protocol for Return to Sport Post Hip Arthroscopy for Impingement — Int J Sports Phys Ther (the 90% limb symmetry index).',
+    'Superior Labral Anterior to Posterior Tear Management in Athletes — PMC6110067 (GIRD and scapular rehabilitation in throwers).',
     'Grieve et al. — immediate effect of bilateral plantar self-myofascial release on hamstring and lumbar flexibility; and Self-Myofascial Release of the Superficial Back Line Improves Sit-and-Reach Distance (PubMed 30860410).',
     'Increasing Hamstring Range of Motion via Plantar Myofascial Release — critically appraised topic, IJATT 2024.',
     'Schleip — Training Principles for Fascial Connective Tissues; and work on the catapult mechanism and elastic recoil.',
@@ -2252,7 +2294,7 @@ Object.assign(EX, {
 },
 'pushup-scap': {
   n: 'Scapular Push-Up & Push-Up Plus', cat: 'strength', tags: ['shoulder','home','labrum','scap'],
-  why: 'Your labrum-safe home pressing. Serratus anterior is what upwardly rotates and protracts the scapula, and scapular dyskinesis is one of the three things SLAP rehab must address — if the blade does not move on time, the labrum takes the load. The "plus" at the top is the part that actually trains it, and almost nobody does it.',
+  why: 'Home pressing that also trains the scapula. Serratus anterior upwardly rotates and protracts the shoulder blade, and a blade that does not move on time makes the joint hunt for range. The "plus" at the top is the part that actually trains it, and almost nobody does it.',
   setup: 'Push-up position, hands under the shoulders. Knees down if the full position breaks your line.',
   steps: [
     'Scapular push-up: arms stay straight. Let the chest sink between the shoulder blades, then push the floor away so the upper back rounds. 10 slow reps. That range is the whole drill.',
@@ -2265,7 +2307,7 @@ Object.assign(EX, {
   dose: '2 × 10 scapular push-ups + 3 × 8–12 push-up plus.',
   prog: 'Feet elevated → single-arm eccentric → a loaded backpack.',
   regr: 'Hands on a chair or a wall.',
-  flag: 'Stop short of the very bottom if the front of the shoulder pinches. Depth is not the point here; scapular control is.'
+  flag: 'Stop short of the very bottom if the front of the shoulder pinches. Depth is not the point here — scapular control is.'
 },
 'rotational-chop': {
   n: 'Rotational Chop', cat: 'throw', tags: ['rotation','home','power','core'],
@@ -2542,7 +2584,7 @@ Object.assign(EX, {
 },
 'desk-scap-set': {
   n: 'Chair-Back Scap Set', cat: 'iso', tags: ['shoulder','scap','desk','labrum'], covert: 'invisible',
-  why: 'Scapular control is one of the three things SLAP rehab has to fix — if the shoulder blade does not move on time, the labrum takes the load. Eight hours of rounded desk posture is the exact opposite of what you want, and this is a direct, invisible counter.',
+  why: 'Eight hours of rounded desk posture drags the shoulder blade forward and down, which is the exact opposite of the position a throwing shoulder wants to work from. This is the direct, invisible counter, and it costs fifteen seconds at a time.',
   setup: 'Seated against a chair back, arms relaxed at your sides.',
   steps: [
     'Draw both shoulder blades down and back — think "into your back pockets", not "squeeze together and up".',
@@ -2675,11 +2717,12 @@ Object.assign(EX, {
    ROUTINES — short, runnable, purpose-built
    ----------------------------------------------------------- */
 const ROUTINES = [
-  { id:'desk-armor', n:'Desk Armor', min:5, tag:'DESK', covert:'invisible',
-    sub:'Your three weak links, in a chair, in a meeting',
-    why:'The adductor, hamstring and cuff work from the Daily Armor, in the versions nobody can see you doing. Run this twice in a workday and you have matched the armor volume of a gym session without leaving your seat.',
+  { id:'desk-armor', n:'Desk Armor', min:6, tag:'DESK', covert:'invisible',
+    sub:'Your weak links, in a chair, in a meeting',
+    why:'The adductor, hip, hamstring and cuff work from the Daily Armor, in the versions nobody can see you doing. Both the Copenhagen and the non-operative hip labrum literature point the same way — accumulated frequency beats intensity — so running this twice in a workday genuinely matches the armor volume of a gym session.',
     items:[
       { x:'desk-adductor-squeeze', d:'5 × 10 s' },
+      { x:'desk-hip-rot-iso', d:'4 × 18 s each direction' },
       { x:'desk-ham-heel-dig', d:'3 × 18 s per leg' },
       { x:'desk-cuff-iso', d:'3 × 25 s each direction' },
       { x:'desk-glute-squeeze', d:'5 × 15 s' }
@@ -2745,9 +2788,20 @@ const ROUTINES = [
       { x:'cossack-squat', d:'3 × 5 per side' },
       { x:'skater-bound', d:'3 × 5 per side' }
     ]},
-  { id:'shoulder-block', n:'Shoulder Block', min:8, tag:'ARMOR',
-    sub:'Labrum-safe: cuff, scap, capsule',
-    why:'The three things SLAP rehab has to address — cuff strength, scapular control and posterior capsule length — in one block. Before any throwing session, and on any day the shoulder feels off.',
+  { id:'hip-block', n:'Hip Block', min:9, tag:'ARMOR',
+    sub:'Loading a labral hip without provoking it',
+    why:'Everything here loads the hip away from flexion-adduction-internal-rotation. Rotation isometrics at a neutral angle, gluteus medius so the femur stops drifting into the position that pinches, lumbopelvic control so the pelvis stops closing the front of the joint, and CARs to map the arc you own. Three times a week, and daily during a flare.',
+    items:[
+      { x:'hip-cars', d:'3 circles each direction per side — note where it pinches' },
+      { x:'hip-rot-iso', d:'3 × 25 s each direction per side' },
+      { x:'glute-med-iso', d:'3 × 35 s per side' },
+      { x:'standing-abduction-iso', d:'3 × 25 s per side' },
+      { x:'deadbug', d:'3 × 6 per side, slow' },
+      { x:'banded-hip-distraction', d:'2 min per side, if you have a band' }
+    ]},
+  { id:'shoulder-block', n:'Throwing Shoulder Block', min:8, tag:'ARMOR',
+    sub:'Cuff, scap, capsule — before you huck',
+    why:'Maintenance for an arm that throws a lot: cuff strength, scapular control, and posterior capsule length if — and only if — you have measured a deficit. Before any throwing session, and on any day the shoulder feels off.',
     items:[
       { x:'cuff-iso-er', d:'3 × 25 s each direction' },
       { x:'band-pull-apart', d:'3 × 15 + 15 face pulls' },
@@ -2809,5 +2863,141 @@ const ROUTINES = [
       { x:'box-breathing', d:'5 min' }
     ]}
 ];
+
+
+/* ===========================================================
+   THE HIP TRACK — acetabular (hip) labrum
+   Non-provocative loading: strength and control without driving the
+   femoral head into the front of the socket.
+   =========================================================== */
+Object.assign(EX, {
+
+'hip-rot-iso': {
+  n: 'Hip Rotation Isometrics', cat: 'iso', tags: ['hip','labrum','iso','daily','armor'],
+  why: 'The safest way to load a hip with a labral tear: isometric rotation at a neutral hip angle, nowhere near the flexion-adduction-internal-rotation position that provokes it. Isometric hip strength — hip extension especially — correlates with better short-term outcomes in non-operative labral management, and rotation strength is what controls the femoral head inside the socket during a plant. Timed holds, which suits you, and completely pain-free by design.',
+  setup: 'Lie on your back, one knee bent to about 45° (not 90° — stay out of deep flexion), foot flat.',
+  steps: [
+    'External rotation: let the knee fall slightly outward and press it back toward the midline against your own hand. Ramp over 2 s, hold 20–30 s at 60–70%.',
+    'Internal rotation: press the knee outward against your hand as the hand resists inward. Same ramp and hold.',
+    'Neutral hip angle is the point — 45° of flexion, no adduction, no end range.',
+    'Both sides, even though only one has history.'
+  ],
+  cues: ['Submaximal. 60–70%, never a max effort into a cranky joint.','Nothing should pinch in the front of the hip or the groin. If it does, reduce the flexion angle.','Breathe through it; the pelvis stays quiet.'],
+  faults: ['Working at 90° of hip flexion, which moves you toward the impingement position.','Going to maximum effort early.','Letting the pelvis roll and turning it into a trunk exercise.'],
+  dose: '3 × 25 s each direction, each side. Daily.',
+  prog: 'Higher effort, then longer holds, then the same at a slightly greater flexion angle — only if it stays pain-free.',
+  regr: 'Lower effort, less flexion.',
+  flag: 'A deep pinch at the front of the hip or in the groin is the joint telling you the angle is wrong, not that you should push through. Back off the flexion angle.',
+  timer: { w: 25, r: 12, rounds: 4, label: 'Hip rotation — change direction' }
+},
+'glute-med-iso': {
+  n: 'Side-Lying Abduction Hold', cat: 'iso', tags: ['hip','labrum','glute','iso','armor'],
+  why: 'Gluteus medius is the muscle that stops the femur falling into adduction and internal rotation during a plant — which is the exact position that pinches a hip labrum. In non-operative labral rehab, being able to hold a side-lying straight-leg raise on glute medius is a documented gate for progressing to harder work. It is also what protects your groin, since a hip that collapses inward loads the adductor at length.',
+  setup: 'Lie on your side, bottom knee bent for stability, top leg straight and in line with the torso — or very slightly behind it.',
+  steps: [
+    'Rotate the top leg so the toes point slightly DOWN, not up. Toes-up recruits the hip flexor instead.',
+    'Lift the leg to about 30° and hold there.',
+    'Hold 30–45 seconds. It should burn in the side of the hip, not the front, and not the low back.',
+    'Keep the pelvis stacked — do not roll backward to make it easier.'
+  ],
+  cues: ['Toes slightly down, heel leading.','Long line from heel to head; the leg goes back, not forward.','Side of the hip, never the front.'],
+  faults: ['Rolling the pelvis back, which swaps in the hip flexor.','Lifting too high — above about 30° the pelvis starts hiking.','Burning in the front of the hip, which means the leg has drifted forward.'],
+  dose: '3 × 30–45 s per side.',
+  prog: 'Ankle weight, then a band above the knees, then a standing wall version.',
+  regr: 'Shorter holds, smaller lift.',
+  timer: { w: 35, r: 20, rounds: 6, label: 'Abduction hold — switch sides' }
+},
+'standing-abduction-iso': {
+  n: 'Wall Standing Abduction', cat: 'iso', tags: ['hip','glute','iso','home','desk'], covert: 'subtle',
+  why: 'Loads the standing hip\'s abductors while the moving leg pushes into a wall — so it trains the side of the hip in the position it actually works, upright and weight-bearing. Better carryover to a plant than any side-lying version.',
+  setup: 'Stand side-on to a wall, about a foot away, inside leg\'s knee bent and pressed against the wall at hip height.',
+  steps: [
+    'Stand tall on the outside leg.',
+    'Press the inside knee into the wall hard — 60–80%.',
+    'The muscle you feel working is the side of the STANDING hip. That is the target.',
+    'Hold 20–30 s. Do not let the standing hip drop or the torso lean.'
+  ],
+  cues: ['Standing hip stays level and stacked over the foot.','Push with the knee, not the foot.','Tall through the crown of the head.'],
+  faults: ['Leaning the torso away.','Standing hip dropping.','Pressing so hard the pelvis shifts.'],
+  dose: '3 × 25 s per side.',
+  prog: 'Rise onto the ball of the standing foot.',
+  regr: 'Lighter press.',
+  timer: { w: 25, r: 15, rounds: 6, label: 'Wall press — switch sides' }
+},
+'deadbug': {
+  n: 'Dead Bug', cat: 'iso', tags: ['core','hip','labrum','trunk'],
+  why: 'Lumbopelvic control is a pillar of non-operative labral management — a pelvis that tips forward under load pushes the socket rim into the femoral neck, which is the mechanical problem behind impingement. This teaches the trunk to hold the pelvis still while the hips move, which is the whole job.',
+  setup: 'On your back, knees and hips at 90°, arms straight up over the shoulders.',
+  steps: [
+    'Press the low back gently into the floor and keep it there — that is the position you are protecting.',
+    'Lower one leg and the opposite arm slowly toward the floor.',
+    'Stop the moment the low back starts to lift. That point is your current range.',
+    'Return slowly. Four seconds out, four back. Breathe out on the way down.'
+  ],
+  cues: ['Ribs down, low back flat. If it arches, you went too far.','Slow. Speed hides the fault this exercise exists to expose.','Exhale as the limbs extend.'],
+  faults: ['Low back arching off the floor.','Holding the breath.','Rushing.'],
+  dose: '3 × 6 per side, slow.',
+  prog: 'Straighter leg, longer lever, then a band overhead.',
+  regr: 'Legs only, smaller range.'
+},
+'hip-cars': {
+  n: 'Hip CARs', cat: 'mobility', tags: ['hip','labrum','mobility','daily'],
+  why: 'Controlled Articular Rotations: a slow, active circle at the outer edge of what the joint can control. For a labral hip this is a daily assessment as much as an exercise — you learn exactly where in the arc the joint objects, and you can watch that arc grow over weeks. Active and slow, so the joint is never taken somewhere the muscles cannot hold it.',
+  setup: 'On hands and knees, or standing holding a rail. Brace the trunk so only the hip moves.',
+  steps: [
+    'Lift one knee out to the side, keeping the pelvis absolutely still.',
+    'Circle the knee forward, up, across and back — slowly, taking about 20 seconds for one full circle.',
+    'Stay just inside the range where you can control it. The instant the pelvis compensates, you have left your range.',
+    'Two or three circles each direction, each side. Note where it pinches.'
+  ],
+  cues: ['Pelvis still. If the low back moves, the hip stopped moving a while ago.','Slow enough to be boring.','Own the range, do not visit it.'],
+  faults: ['Making big fast circles powered by the pelvis.','Pushing through a pinch at the front of the hip.'],
+  dose: '2–3 circles each direction per side, daily.',
+  prog: 'Larger controlled arc, then loaded with an ankle weight.',
+  regr: 'Smaller circles, more support.',
+  flag: 'Map the arc. Where it pinches is the position to keep out of in your training for now — and the arc getting bigger is your clearest sign the hip is improving.'
+},
+'banded-hip-distraction': {
+  n: 'Banded Hip Distraction', cat: 'mobility', tags: ['hip','labrum','mobility'],
+  why: 'A lateral pull on the femur creates a little space in the joint, which often makes flexion positions that pinch feel free. It does not fix anything structurally, but as a way in to hip range without provoking the labrum, it is genuinely useful — and it tells you quickly whether a position is a capsule problem or a bony one.',
+  setup: 'Heavy band anchored low, looped high around the top of the thigh — in the crease, not over the knee. Step away so the band pulls the femur outward.',
+  steps: [
+    'Get into a half-kneeling or hands-and-knees position with tension on the band.',
+    'Let the band pull the femur laterally out of the socket.',
+    'Move gently into the range that normally pinches — a rock back, a lunge, a rotation.',
+    'Two minutes per side, breathing. If a position feels dramatically better with the band on, that is useful information.'
+  ],
+  cues: ['Band high in the crease, not on the knee.','Gentle movement, no forcing.','It should feel like more room, never more pressure.'],
+  faults: ['Band too low, which pulls on the knee.','Cranking into a position the joint does not want.'],
+  dose: '2 min per side, before hip mobility work.',
+  prog: 'Heavier band, larger movements.',
+  regr: 'Lighter band, smaller range.'
+},
+'desk-hip-rot-iso': {
+  n: 'Seated Hip Rotation Isometric', cat: 'iso', tags: ['hip','labrum','desk','iso'], covert: 'invisible',
+  why: 'Your hip rotation work, done in a chair. Frequency is what a labral hip responds to, and pressing a knee outward against your own hand is completely invisible — the highest-frequency version of the most important hip exercise you have.',
+  setup: 'Seated, feet flat, knees about hip width. Hands on the outsides of the knees.',
+  steps: [
+    'Press both knees outward into your hands while your hands resist. Hold 15–20 s.',
+    'Switch: hands on the inside of the knees, press inward against them. Hold 15–20 s.',
+    'Sit tall. Do not slump forward — slumping tips the pelvis and closes the front of the hip.',
+    'Nothing should pinch at the front of the hip.'
+  ],
+  cues: ['Sit tall first. A slumped pelvis is the provocative position.','60–70% effort.','Both directions each round.'],
+  faults: ['Doing it slumped.','Maximum effort.'],
+  dose: '4 × 18 s each direction, a few times a day.',
+  prog: 'Longer holds.',
+  regr: 'Lighter effort.',
+  timer: { w: 18, r: 10, rounds: 6, label: 'Hip rotation — change direction' }
+}
+});
+
+/* Deep hip flexion positions: keep them, but on a rule. */
+(function annotateHipFlexion() {
+  const pinchRule = 'HIP LABRUM RULE: this is a deep hip flexion position, which is where an acetabular labral tear is most easily provoked. Test it — a deep pinch or catch at the FRONT of the hip or in the groin means back out until it disappears. A stretch in the inner thigh, the glute or the back of the hip is fine and expected. Widen the stance, turn the toes out more, or elevate the heels, all of which open the front of the joint. Never push through a front-of-hip pinch.';
+  ['deep-squat-hold','desk-squat-break','pancake-sit','adductor-rockback','cossack-squat','atg-split-squat','ninety-ninety','frog-rock'].forEach(id => {
+    if (EX[id]) EX[id].flag = EX[id].flag ? EX[id].flag + ' · ' + pinchRule : pinchRule;
+  });
+})();
 
 if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB, ROUTINES }; }

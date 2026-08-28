@@ -637,3 +637,12 @@ body.running { overflow: hidden; }
 
 /* six tabs need a little less room each */
 @media (max-width: 860px) { .tabbar button { font-size: 8.5px; letter-spacing: .03em; } }
+
+/* ---------- desk shortcut row on Today ---------- */
+.shortcut {
+  display: flex; align-items: center; gap: .45rem; flex-wrap: wrap;
+  border: 1px solid var(--line); border-radius: 4px; background: var(--surface);
+  padding: .6rem .8rem;
+}
+.shortcut .eyebrow { margin-right: .2rem; }
+.shortcut .btn-sm svg { width: 11px; height: 11px; fill: currentColor; stroke: currentColor; }
