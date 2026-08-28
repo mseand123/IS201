@@ -1113,7 +1113,7 @@ const EX = {
 };
 
 /* -----------------------------------------------------------
-   THE DAILY ARMOR — 12 minutes, every single day, no exceptions
+   THE DAILY ARMOR — 14 minutes, every single day, no exceptions
    ----------------------------------------------------------- */
 const ARMOR = {
   n: 'The Daily Armor',

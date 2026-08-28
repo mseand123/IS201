@@ -121,13 +121,13 @@ function findKeys(date, exId) {
   return buildSteps(planFor(date).session, date, { armor: true })
     .filter(st => st.x === exId).map(st => ({ key: st.key, ii: st.ii }));
 }
-function isDoneToday(exId) {
-  const d = iso(new Date());
-  return findKeys(new Date(), exId).some(k => k.key === 'armor'
+function isDoneToday(exId, date) {
+  const when = date || new Date(), d = iso(when);
+  return findKeys(when, exId).some(k => k.key === 'armor'
     ? (S.armor[d] || {})[k.ii] : (S.done[d] || {})[k.key + ':' + k.ii]);
 }
 function toggleDone(date, exId) {
-  const d = iso(date), on = isDoneToday(exId);
+  const d = iso(date), on = isDoneToday(exId, date);
   findKeys(date, exId).forEach(k => {
     if (k.key === 'armor') { const a = S.armor[d] || (S.armor[d] = {}); on ? delete a[k.ii] : a[k.ii] = 1; }
     else { const m = S.done[d] || (S.done[d] = {}); on ? delete m[k.key + ':' + k.ii] : m[k.key + ':' + k.ii] = 1; }
@@ -217,7 +217,7 @@ const RUN = {
     this.active = false; this.running = false;
     cancelAnimationFrame(this.raf);
     document.body.classList.remove('running');
-    runEl.hidden = true;
+    runEl.hidden = true; runEl.innerHTML = '';   // drop the finished session's DOM
     try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
     if (this._lock) { this._lock.release().catch(() => {}); this._lock = null; }
     save(); render();
@@ -471,7 +471,6 @@ function buildRun() {
 function tickRun() {
   if (!RUN.active || RUN.phase === 'done' || !RUN.ui || !RUN.ui.time) return;
   const st = RUN.step(), e = EX[st.x];
-  const isRest = RUN.phase === 'rest' || RUN.phase === 'restAfter';
   const isManual = RUN.phase === 'manual';
   const total = phaseTotalMs();
 
@@ -564,9 +563,13 @@ function openEx(id) {
         class: 'btn btn-hi',
         onclick: () => { closeModal(); RUN.open(stepsFromItems([{ x: id, d: e.dose }], e.n.toUpperCase()), new Date(), 0); }
       }, [ico(ICONS.play, 'nav-ico'), 'Run this exercise']),
-      el('button', {
-        class: 'btn btn-sm', onclick: () => { toggleDone(new Date(), id); closeModal(); }
-      }, isDoneToday(id) ? 'Mark not done' : 'Mark done today')
+      findKeys(viewDate, id).length ? el('button', {
+        class: 'btn btn-sm',
+        onclick: () => { closeModal(); startRun(viewDate, findKeys(viewDate, id)[0].key + ':' + findKeys(viewDate, id)[0].ii); }
+      }, 'Start session here') : null,
+      findKeys(viewDate, id).length ? el('button', {
+        class: 'btn btn-sm', onclick: () => { toggleDone(viewDate, id); closeModal(); }
+      }, isDoneToday(id, viewDate) ? 'Mark not done' : 'Mark done today') : null
     ])
   ]);
   showModal(body);
@@ -618,13 +621,7 @@ function itemRow(date, key, it, i) {
       ? el('button', { class: 'chip warn flagchip', onclick: () => openEx(r.x) }, 'Hip rule') : null
   ]));
   if (r.note) row.appendChild(el('div', { class: 'item-note' }, r.note));
-  const acts = el('div', { class: 'item-actions' });
-  acts.appendChild(el('button', {
-    class: 'btn btn-sm', title: 'Start the guided session here',
-    'aria-label': 'Start guided session at ' + e.n,
-    onclick: () => startRun(date, key + ':' + i)
-  }, [ico(ICONS.play, 'nav-ico')]));
-  row.appendChild(acts);
+  row.dataset.at = key + ':' + i;
   return row;
 }
 
@@ -725,13 +722,6 @@ function armorCard(date) {
       row.appendChild(el('div', { class: 'item-dose' }, r.d));
       if (r.note) row.appendChild(el('div', { class: 'item-note' }, r.note));
       if (isHome() && e.home) row.appendChild(el('div', { class: 'item-note home-note' }, e.home));
-      const acts = el('div', { class: 'item-actions' });
-      acts.appendChild(el('button', {
-        class: 'btn btn-sm', title: 'Start the armor block here',
-        'aria-label': 'Start armor at ' + e.n,
-        onclick: () => { RUN.open(buildSteps(null, date, { armor: true }), date, i); }
-      }, [ico(ICONS.play, 'nav-ico')]));
-      row.appendChild(acts);
       return row;
     })
   ]);
@@ -960,11 +950,45 @@ const COVERT = {
 };
 const BUILD = { keys: new Set(), q: '', cat: 'all' };
 
+const RSEL = {};
+const rsel = id => RSEL[id] || (RSEL[id] = new Set());
+// A re-render rebuilds the <details>, so remember which ones the user had open.
+const ROPEN = new Set();
+
 function routineCard(r, date) {
   const log = S.routineLog || [];
   const today = iso(new Date());
   const timesToday = log.filter(x => x.d === today && x.id === r.id).length;
   const cov = r.covert ? COVERT[r.covert] : null;
+  const sel = rsel(r.id);
+  const n = sel.size;
+  const chosen = n ? r.items.filter((_, i) => sel.has(i)) : r.items;
+
+  const picker = el('details', {
+    class: 'routine-pick', open: ROPEN.has(r.id) ? '' : null,
+    ontoggle: ev => { ev.target.open ? ROPEN.add(r.id) : ROPEN.delete(r.id); }
+  }, [
+    el('summary', null, [
+      el('span', { class: 'xs' }, n ? n + ' of ' + r.items.length + ' selected' : r.items.length + ' exercises'),
+      el('span', { class: 'xs muted' }, n ? 'tap to change' : 'tap to pick some')
+    ]),
+    el('div', { class: 'pick-list' }, r.items.map((it, i) => {
+      const on = sel.has(i);
+      return el('div', { class: 'pick-row' + (on ? ' on' : '') }, [
+        el('button', {
+          class: 'tick pick', 'aria-pressed': on ? 'true' : 'false', 'aria-label': 'Select ' + EX[it.x].n,
+          onclick: () => { on ? sel.delete(i) : sel.add(i); render(); }
+        }, [(() => { const g = svgEl('svg', { viewBox: '0 0 24 24' });
+              g.appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' })); return g; })()]),
+        el('div', { class: 'pick-body' }, [
+          el('button', { class: 'pick-name', onclick: () => openEx(it.x) }, EX[it.x].n),
+          el('span', { class: 'pick-dose num' }, it.d)
+        ])
+      ]);
+    })),
+    n ? el('button', { class: 'btn btn-ghost btn-sm', onclick: () => { sel.clear(); render(); } }, 'Clear selection') : null
+  ]);
+
   return el('div', { class: 'card routine' }, [
     el('div', { class: 'spread' }, [
       el('div', { class: 'row', style: 'gap:.4rem' }, [
@@ -976,11 +1000,12 @@ function routineCard(r, date) {
     ]),
     el('p', { class: 'small muted' }, r.sub),
     el('p', { class: 'small' }, r.why),
-    el('div', { class: 'routine-list' }, r.items.map(it =>
-      el('button', { class: 'mini', onclick: () => openEx(it.x) }, EX[it.x].n))),
+    picker,
     el('button', {
-      class: 'btn btn-primary btn-run', onclick: () => RUN.open(stepsFromItems(r.items, r.n), date, 0, { routine: r.id })
-    }, [ico(ICONS.play, 'nav-ico'), 'Run · ' + r.items.length + (r.items.length === 1 ? ' exercise' : ' exercises')])
+      class: 'btn btn-primary btn-run',
+      onclick: () => RUN.open(stepsFromItems(chosen, r.n), date, 0, n ? null : { routine: r.id })
+    }, [ico(ICONS.play, 'nav-ico'),
+        n ? 'Run ' + n + ' selected' : 'Run all ' + r.items.length])
   ]);
 }
 
@@ -1038,7 +1063,7 @@ function viewBuild() {
       el('div', { class: 'sec-head' }, [
         el('h2', null, 'Build your own'),
         el('div', { class: 'trace' }),
-        el('p', { class: 'small muted' }, 'Pick any exercises from the library and run them as a guided circuit. To pick from today\'s session instead, use Pick & run on the Today screen.')
+        el('p', { class: 'small muted' }, 'Tick any exercises here and run them as a guided circuit. Today\'s session and every routine have the same checkboxes.')
       ]),
       el('div', { class: 'filters' }, [
         el('input', {

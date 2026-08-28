@@ -32,7 +32,7 @@ reads the same map, and the Method section has an essay on what a home track act
 
 ## Guided session
 
-**Start guided session** on the Today screen opens a full-screen player that walks the whole
+**Start session** on the Today screen opens a full-screen player that walks the whole
 session — every block, then the Daily Armor — one exercise at a time:
 
 - A four-second count-in per exercise, then the timer, with beeps on the last three seconds
@@ -45,9 +45,10 @@ session — every block, then the Daily Armor — one exercise at a time:
 - Screen wake lock while it runs; completed exercises tick themselves off on the Today screen
 
 Every item has a checkbox — tick any of them and a floating bar offers to run just those, with
-a time estimate. No mode to enter. The `▶` on an item starts the player from that exercise
-instead. There is one timer in the app: the player. Marking something done by hand lives in the
-exercise dialog. A separate quick timer for a single
+a time estimate. No mode to enter. The same checkboxes appear inside every routine card (open
+`N exercises` to pick from a routine) and in the library's builder. There is one timer in the
+app: the player. "Start session here", "Run this exercise" and "Mark done today" live in the
+exercise dialog rather than as per-row buttons. A separate quick timer for a single
 exercise lives in the exercise detail dialog and floats in a dock.
 
 ## Injury context

@@ -370,7 +370,7 @@ textarea { width: 100%; resize: vertical; font-size: var(--t-sm); }
 .block-head .name { font-family: var(--mono); font-size: var(--t-xs); letter-spacing: .12em; text-transform: uppercase; font-weight: 500; }
 .block-head .why { font-size: var(--t-xs); color: var(--muted); margin-left: auto; text-align: right; }
 
-.item { display: grid; grid-template-columns: 26px 1fr auto; gap: .1rem .7rem; padding: .7rem .9rem; border-top: 1px solid var(--line); align-items: start; }
+.item { display: grid; grid-template-columns: 26px 1fr; gap: .1rem .7rem; padding: .65rem .9rem; border-top: 1px solid var(--line); align-items: start; }
 .item:first-child { border-top: 0; }
 .item.done .item-name { text-decoration: line-through; color: var(--muted); }
 .tick {
@@ -386,38 +386,6 @@ textarea { width: 100%; resize: vertical; font-size: var(--t-sm); }
 .item-name button:hover { color: var(--brand); border-bottom-color: var(--brand); }
 .item-dose { grid-column: 2; font-family: var(--mono); font-size: var(--t-sm); color: var(--ink-2); }
 .item-note { grid-column: 2; font-size: var(--t-sm); color: var(--muted); max-width: 68ch; }
-.item-actions { grid-row: 1 / span 3; grid-column: 3; display: flex; gap: .3rem; align-items: center; }
-
-/* ===========================================================
-   Chronograph / timer dock
-   =========================================================== */
-.dock {
-  position: fixed; right: var(--gutter); bottom: 1.25rem; z-index: 70;
-  width: min(340px, calc(100vw - 2rem));
-  background: var(--raised);
-  border: 1px solid var(--line-2);
-  border-radius: 6px;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-.dock[hidden] { display: none; }
-@media (max-width: 860px) { .dock { right: .75rem; left: .75rem; width: auto; bottom: calc(4.4rem + env(safe-area-inset-bottom)); } }
-
-.dock-head { display: flex; align-items: center; gap: .5rem; padding: .5rem .7rem; border-bottom: 1px solid var(--line); background: var(--surface); }
-.dock-head .t { font-family: var(--mono); font-size: var(--t-xs); letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.dock-body { display: flex; align-items: center; gap: 1rem; padding: .9rem 1rem; }
-.ring { width: 96px; height: 96px; flex: 0 0 96px; position: relative; }
-.ring svg { transform: rotate(-90deg); display: block; }
-.ring .track { stroke: var(--line); }
-.ring .prog { stroke: var(--hi-fill); stroke-linecap: butt; transition: stroke-dashoffset .12s linear; }
-.ring.rest .prog { stroke: var(--brand); }
-.ring-label { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
-.ring-label .big { font-family: var(--mono); font-size: 1.5rem; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1; }
-.ring-label .sub { font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
-.dock-ctl { display: flex; flex-direction: column; gap: .45rem; flex: 1 1 auto; min-width: 0; }
-.dock-phase { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: 1.05rem; font-variation-settings: "wdth" 112; }
-.dock-rounds { font-family: var(--mono); font-size: var(--t-xs); color: var(--muted); letter-spacing: .08em; }
 
 /* ===========================================================
    Library
@@ -616,8 +584,6 @@ body.running { overflow: hidden; }
 }
 
 /* ---------- pick & run ---------- */
-.item.pickable { cursor: pointer; }
-.item.pickable:hover { background: var(--surface); }
 .item.picked { background: color-mix(in srgb, var(--hi-fill) 10%, transparent); }
 .tick.pick { border-radius: 10px; }
 .tick.pick[aria-pressed="true"] { background: var(--hi-fill); border-color: var(--hi-fill); }
@@ -639,7 +605,6 @@ body.running { overflow: hidden; }
 .routine { display: flex; flex-direction: column; gap: .5rem; }
 .routine .btn-run { margin-top: auto; justify-content: center; padding: .55rem; }
 .routine .btn-run svg { width: 13px; height: 13px; fill: currentColor; stroke: currentColor; }
-.routine-list { display: flex; flex-wrap: wrap; gap: .25rem; }
 .mini {
   background: var(--surface); border: 1px solid var(--line); border-radius: 3px; cursor: pointer;
   font-family: var(--mono); font-size: var(--t-xs); color: var(--muted); padding: .15rem .4rem;
@@ -688,6 +653,30 @@ body.running { overflow: hidden; }
 .why-fold > summary::-webkit-details-marker { display: none; }
 .why-fold > summary::before { content: "▸ "; }
 .why-fold[open] > summary::before { content: "▾ "; }
+
+/* ---------- picking individual exercises inside a routine ---------- */
+.routine-pick { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.routine-pick > summary {
+  display: flex; align-items: baseline; gap: .5rem; cursor: pointer;
+  padding: .5rem 0; list-style: none;
+  font-family: var(--mono); letter-spacing: .06em; text-transform: uppercase;
+}
+.routine-pick > summary::-webkit-details-marker { display: none; }
+.routine-pick > summary::after { content: "›"; margin-left: auto; color: var(--muted); transform: rotate(90deg); }
+.routine-pick[open] > summary::after { transform: rotate(-90deg); }
+.pick-list { display: flex; flex-direction: column; padding-bottom: .4rem; }
+.pick-row { display: grid; grid-template-columns: 20px 1fr; gap: .55rem; align-items: start; padding: .3rem 0; }
+.pick-row.on .pick-name { color: var(--ink); }
+.pick-body { display: flex; flex-direction: column; gap: 0; min-width: 0; }
+.pick-name {
+  background: none; border: 0; padding: 0; cursor: pointer; text-align: left;
+  font-size: var(--t-sm); font-weight: 500; line-height: 1.25;
+  border-bottom: 1px dotted var(--line-2); align-self: flex-start;
+}
+.pick-name:hover { color: var(--brand); border-bottom-color: var(--brand); }
+.pick-dose { font-size: var(--t-xs); color: var(--muted); }
+.routine-pick .tick { width: 18px; height: 18px; margin-top: 1px; }
+.routine-pick .tick svg { width: 11px; height: 11px; }
 
 </style>
 </head>
@@ -1809,7 +1798,7 @@ const EX = {
 };
 
 /* -----------------------------------------------------------
-   THE DAILY ARMOR — 12 minutes, every single day, no exceptions
+   THE DAILY ARMOR — 14 minutes, every single day, no exceptions
    ----------------------------------------------------------- */
 const ARMOR = {
   n: 'The Daily Armor',
@@ -3987,13 +3976,13 @@ function findKeys(date, exId) {
   return buildSteps(planFor(date).session, date, { armor: true })
     .filter(st => st.x === exId).map(st => ({ key: st.key, ii: st.ii }));
 }
-function isDoneToday(exId) {
-  const d = iso(new Date());
-  return findKeys(new Date(), exId).some(k => k.key === 'armor'
+function isDoneToday(exId, date) {
+  const when = date || new Date(), d = iso(when);
+  return findKeys(when, exId).some(k => k.key === 'armor'
     ? (S.armor[d] || {})[k.ii] : (S.done[d] || {})[k.key + ':' + k.ii]);
 }
 function toggleDone(date, exId) {
-  const d = iso(date), on = isDoneToday(exId);
+  const d = iso(date), on = isDoneToday(exId, date);
   findKeys(date, exId).forEach(k => {
     if (k.key === 'armor') { const a = S.armor[d] || (S.armor[d] = {}); on ? delete a[k.ii] : a[k.ii] = 1; }
     else { const m = S.done[d] || (S.done[d] = {}); on ? delete m[k.key + ':' + k.ii] : m[k.key + ':' + k.ii] = 1; }
@@ -4083,7 +4072,7 @@ const RUN = {
     this.active = false; this.running = false;
     cancelAnimationFrame(this.raf);
     document.body.classList.remove('running');
-    runEl.hidden = true;
+    runEl.hidden = true; runEl.innerHTML = '';   // drop the finished session's DOM
     try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
     if (this._lock) { this._lock.release().catch(() => {}); this._lock = null; }
     save(); render();
@@ -4337,7 +4326,6 @@ function buildRun() {
 function tickRun() {
   if (!RUN.active || RUN.phase === 'done' || !RUN.ui || !RUN.ui.time) return;
   const st = RUN.step(), e = EX[st.x];
-  const isRest = RUN.phase === 'rest' || RUN.phase === 'restAfter';
   const isManual = RUN.phase === 'manual';
   const total = phaseTotalMs();
 
@@ -4430,9 +4418,13 @@ function openEx(id) {
         class: 'btn btn-hi',
         onclick: () => { closeModal(); RUN.open(stepsFromItems([{ x: id, d: e.dose }], e.n.toUpperCase()), new Date(), 0); }
       }, [ico(ICONS.play, 'nav-ico'), 'Run this exercise']),
-      el('button', {
-        class: 'btn btn-sm', onclick: () => { toggleDone(new Date(), id); closeModal(); }
-      }, isDoneToday(id) ? 'Mark not done' : 'Mark done today')
+      findKeys(viewDate, id).length ? el('button', {
+        class: 'btn btn-sm',
+        onclick: () => { closeModal(); startRun(viewDate, findKeys(viewDate, id)[0].key + ':' + findKeys(viewDate, id)[0].ii); }
+      }, 'Start session here') : null,
+      findKeys(viewDate, id).length ? el('button', {
+        class: 'btn btn-sm', onclick: () => { toggleDone(viewDate, id); closeModal(); }
+      }, isDoneToday(id, viewDate) ? 'Mark not done' : 'Mark done today') : null
     ])
   ]);
   showModal(body);
@@ -4484,13 +4476,7 @@ function itemRow(date, key, it, i) {
       ? el('button', { class: 'chip warn flagchip', onclick: () => openEx(r.x) }, 'Hip rule') : null
   ]));
   if (r.note) row.appendChild(el('div', { class: 'item-note' }, r.note));
-  const acts = el('div', { class: 'item-actions' });
-  acts.appendChild(el('button', {
-    class: 'btn btn-sm', title: 'Start the guided session here',
-    'aria-label': 'Start guided session at ' + e.n,
-    onclick: () => startRun(date, key + ':' + i)
-  }, [ico(ICONS.play, 'nav-ico')]));
-  row.appendChild(acts);
+  row.dataset.at = key + ':' + i;
   return row;
 }
 
@@ -4591,13 +4577,6 @@ function armorCard(date) {
       row.appendChild(el('div', { class: 'item-dose' }, r.d));
       if (r.note) row.appendChild(el('div', { class: 'item-note' }, r.note));
       if (isHome() && e.home) row.appendChild(el('div', { class: 'item-note home-note' }, e.home));
-      const acts = el('div', { class: 'item-actions' });
-      acts.appendChild(el('button', {
-        class: 'btn btn-sm', title: 'Start the armor block here',
-        'aria-label': 'Start armor at ' + e.n,
-        onclick: () => { RUN.open(buildSteps(null, date, { armor: true }), date, i); }
-      }, [ico(ICONS.play, 'nav-ico')]));
-      row.appendChild(acts);
       return row;
     })
   ]);
@@ -4826,11 +4805,45 @@ const COVERT = {
 };
 const BUILD = { keys: new Set(), q: '', cat: 'all' };
 
+const RSEL = {};
+const rsel = id => RSEL[id] || (RSEL[id] = new Set());
+// A re-render rebuilds the <details>, so remember which ones the user had open.
+const ROPEN = new Set();
+
 function routineCard(r, date) {
   const log = S.routineLog || [];
   const today = iso(new Date());
   const timesToday = log.filter(x => x.d === today && x.id === r.id).length;
   const cov = r.covert ? COVERT[r.covert] : null;
+  const sel = rsel(r.id);
+  const n = sel.size;
+  const chosen = n ? r.items.filter((_, i) => sel.has(i)) : r.items;
+
+  const picker = el('details', {
+    class: 'routine-pick', open: ROPEN.has(r.id) ? '' : null,
+    ontoggle: ev => { ev.target.open ? ROPEN.add(r.id) : ROPEN.delete(r.id); }
+  }, [
+    el('summary', null, [
+      el('span', { class: 'xs' }, n ? n + ' of ' + r.items.length + ' selected' : r.items.length + ' exercises'),
+      el('span', { class: 'xs muted' }, n ? 'tap to change' : 'tap to pick some')
+    ]),
+    el('div', { class: 'pick-list' }, r.items.map((it, i) => {
+      const on = sel.has(i);
+      return el('div', { class: 'pick-row' + (on ? ' on' : '') }, [
+        el('button', {
+          class: 'tick pick', 'aria-pressed': on ? 'true' : 'false', 'aria-label': 'Select ' + EX[it.x].n,
+          onclick: () => { on ? sel.delete(i) : sel.add(i); render(); }
+        }, [(() => { const g = svgEl('svg', { viewBox: '0 0 24 24' });
+              g.appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' })); return g; })()]),
+        el('div', { class: 'pick-body' }, [
+          el('button', { class: 'pick-name', onclick: () => openEx(it.x) }, EX[it.x].n),
+          el('span', { class: 'pick-dose num' }, it.d)
+        ])
+      ]);
+    })),
+    n ? el('button', { class: 'btn btn-ghost btn-sm', onclick: () => { sel.clear(); render(); } }, 'Clear selection') : null
+  ]);
+
   return el('div', { class: 'card routine' }, [
     el('div', { class: 'spread' }, [
       el('div', { class: 'row', style: 'gap:.4rem' }, [
@@ -4842,11 +4855,12 @@ function routineCard(r, date) {
     ]),
     el('p', { class: 'small muted' }, r.sub),
     el('p', { class: 'small' }, r.why),
-    el('div', { class: 'routine-list' }, r.items.map(it =>
-      el('button', { class: 'mini', onclick: () => openEx(it.x) }, EX[it.x].n))),
+    picker,
     el('button', {
-      class: 'btn btn-primary btn-run', onclick: () => RUN.open(stepsFromItems(r.items, r.n), date, 0, { routine: r.id })
-    }, [ico(ICONS.play, 'nav-ico'), 'Run · ' + r.items.length + (r.items.length === 1 ? ' exercise' : ' exercises')])
+      class: 'btn btn-primary btn-run',
+      onclick: () => RUN.open(stepsFromItems(chosen, r.n), date, 0, n ? null : { routine: r.id })
+    }, [ico(ICONS.play, 'nav-ico'),
+        n ? 'Run ' + n + ' selected' : 'Run all ' + r.items.length])
   ]);
 }
 
@@ -4904,7 +4918,7 @@ function viewBuild() {
       el('div', { class: 'sec-head' }, [
         el('h2', null, 'Build your own'),
         el('div', { class: 'trace' }),
-        el('p', { class: 'small muted' }, 'Pick any exercises from the library and run them as a guided circuit. To pick from today\'s session instead, use Pick & run on the Today screen.')
+        el('p', { class: 'small muted' }, 'Tick any exercises here and run them as a guided circuit. Today\'s session and every routine have the same checkboxes.')
       ]),
       el('div', { class: 'filters' }, [
         el('input', {

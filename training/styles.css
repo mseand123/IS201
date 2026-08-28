@@ -358,7 +358,7 @@ textarea { width: 100%; resize: vertical; font-size: var(--t-sm); }
 .block-head .name { font-family: var(--mono); font-size: var(--t-xs); letter-spacing: .12em; text-transform: uppercase; font-weight: 500; }
 .block-head .why { font-size: var(--t-xs); color: var(--muted); margin-left: auto; text-align: right; }
 
-.item { display: grid; grid-template-columns: 26px 1fr auto; gap: .1rem .7rem; padding: .7rem .9rem; border-top: 1px solid var(--line); align-items: start; }
+.item { display: grid; grid-template-columns: 26px 1fr; gap: .1rem .7rem; padding: .65rem .9rem; border-top: 1px solid var(--line); align-items: start; }
 .item:first-child { border-top: 0; }
 .item.done .item-name { text-decoration: line-through; color: var(--muted); }
 .tick {
@@ -374,38 +374,6 @@ textarea { width: 100%; resize: vertical; font-size: var(--t-sm); }
 .item-name button:hover { color: var(--brand); border-bottom-color: var(--brand); }
 .item-dose { grid-column: 2; font-family: var(--mono); font-size: var(--t-sm); color: var(--ink-2); }
 .item-note { grid-column: 2; font-size: var(--t-sm); color: var(--muted); max-width: 68ch; }
-.item-actions { grid-row: 1 / span 3; grid-column: 3; display: flex; gap: .3rem; align-items: center; }
-
-/* ===========================================================
-   Chronograph / timer dock
-   =========================================================== */
-.dock {
-  position: fixed; right: var(--gutter); bottom: 1.25rem; z-index: 70;
-  width: min(340px, calc(100vw - 2rem));
-  background: var(--raised);
-  border: 1px solid var(--line-2);
-  border-radius: 6px;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-.dock[hidden] { display: none; }
-@media (max-width: 860px) { .dock { right: .75rem; left: .75rem; width: auto; bottom: calc(4.4rem + env(safe-area-inset-bottom)); } }
-
-.dock-head { display: flex; align-items: center; gap: .5rem; padding: .5rem .7rem; border-bottom: 1px solid var(--line); background: var(--surface); }
-.dock-head .t { font-family: var(--mono); font-size: var(--t-xs); letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.dock-body { display: flex; align-items: center; gap: 1rem; padding: .9rem 1rem; }
-.ring { width: 96px; height: 96px; flex: 0 0 96px; position: relative; }
-.ring svg { transform: rotate(-90deg); display: block; }
-.ring .track { stroke: var(--line); }
-.ring .prog { stroke: var(--hi-fill); stroke-linecap: butt; transition: stroke-dashoffset .12s linear; }
-.ring.rest .prog { stroke: var(--brand); }
-.ring-label { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
-.ring-label .big { font-family: var(--mono); font-size: 1.5rem; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1; }
-.ring-label .sub { font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
-.dock-ctl { display: flex; flex-direction: column; gap: .45rem; flex: 1 1 auto; min-width: 0; }
-.dock-phase { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: 1.05rem; font-variation-settings: "wdth" 112; }
-.dock-rounds { font-family: var(--mono); font-size: var(--t-xs); color: var(--muted); letter-spacing: .08em; }
 
 /* ===========================================================
    Library
@@ -604,8 +572,6 @@ body.running { overflow: hidden; }
 }
 
 /* ---------- pick & run ---------- */
-.item.pickable { cursor: pointer; }
-.item.pickable:hover { background: var(--surface); }
 .item.picked { background: color-mix(in srgb, var(--hi-fill) 10%, transparent); }
 .tick.pick { border-radius: 10px; }
 .tick.pick[aria-pressed="true"] { background: var(--hi-fill); border-color: var(--hi-fill); }
@@ -627,7 +593,6 @@ body.running { overflow: hidden; }
 .routine { display: flex; flex-direction: column; gap: .5rem; }
 .routine .btn-run { margin-top: auto; justify-content: center; padding: .55rem; }
 .routine .btn-run svg { width: 13px; height: 13px; fill: currentColor; stroke: currentColor; }
-.routine-list { display: flex; flex-wrap: wrap; gap: .25rem; }
 .mini {
   background: var(--surface); border: 1px solid var(--line); border-radius: 3px; cursor: pointer;
   font-family: var(--mono); font-size: var(--t-xs); color: var(--muted); padding: .15rem .4rem;
@@ -676,3 +641,27 @@ body.running { overflow: hidden; }
 .why-fold > summary::-webkit-details-marker { display: none; }
 .why-fold > summary::before { content: "▸ "; }
 .why-fold[open] > summary::before { content: "▾ "; }
+
+/* ---------- picking individual exercises inside a routine ---------- */
+.routine-pick { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.routine-pick > summary {
+  display: flex; align-items: baseline; gap: .5rem; cursor: pointer;
+  padding: .5rem 0; list-style: none;
+  font-family: var(--mono); letter-spacing: .06em; text-transform: uppercase;
+}
+.routine-pick > summary::-webkit-details-marker { display: none; }
+.routine-pick > summary::after { content: "›"; margin-left: auto; color: var(--muted); transform: rotate(90deg); }
+.routine-pick[open] > summary::after { transform: rotate(-90deg); }
+.pick-list { display: flex; flex-direction: column; padding-bottom: .4rem; }
+.pick-row { display: grid; grid-template-columns: 20px 1fr; gap: .55rem; align-items: start; padding: .3rem 0; }
+.pick-row.on .pick-name { color: var(--ink); }
+.pick-body { display: flex; flex-direction: column; gap: 0; min-width: 0; }
+.pick-name {
+  background: none; border: 0; padding: 0; cursor: pointer; text-align: left;
+  font-size: var(--t-sm); font-weight: 500; line-height: 1.25;
+  border-bottom: 1px dotted var(--line-2); align-self: flex-start;
+}
+.pick-name:hover { color: var(--brand); border-bottom-color: var(--brand); }
+.pick-dose { font-size: var(--t-xs); color: var(--muted); }
+.routine-pick .tick { width: 18px; height: 18px; margin-top: 1px; }
+.routine-pick .tick svg { width: 11px; height: 11px; }
