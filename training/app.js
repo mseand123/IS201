@@ -1330,6 +1330,14 @@ function viewProgram() {
     ]),
     el('div', { class: 'stack stack-md' }, [
       el('div', { class: 'sec-head' }, [
+        el('h2', null, 'Getting longer'),
+        el('div', { class: 'trace' }),
+        el('p', { class: 'small muted' }, 'Static holds, kept out of the warm-up and put where they pay — after a session or on an off day. Twice a week is the dose.')
+      ]),
+      el('div', { class: 'routine-grid' }, ROUTINES.filter(r => r.tag === 'RANGE').map(r => routineCard(r, today)))
+    ]),
+    el('div', { class: 'stack stack-md' }, [
+      el('div', { class: 'sec-head' }, [
         el('h2', null, 'Copenhagen ladder'),
         el('div', { class: 'trace' }),
         el('p', { class: 'small muted' }, 'Ten weeks to rebuild the adductor. Volume drives the outcome, so the jumps are deliberately small — most people who fail this exercise failed the progression, not the exercise.')

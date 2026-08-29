@@ -65,6 +65,21 @@ block; the arm warm-up lives in the Upper + Throw session instead. Eleven new ex
 them, including 7-way hips and clamshells, a short deep squat hold placed early, and graded
 build-up runs and cutting build-ups so the first hard plant of the day is deliberate.
 
+## Stretching
+
+There is no static stretching in any of the three warm-ups — they are dynamic, activation and
+potentiation only. The reasoning is in the Method screen under **Stretching, Static and Dynamic**:
+the acute force loss is real but small and dose-dependent (meaningful past ~60 s per muscle,
+trivial below), and the more important point is that stretching has no demonstrated
+injury-prevention effect where strength training has a large one. Two athlete-specific cautions
+apply — passive end-range hip flexion/adduction/IR is the provocative position for a labral hip,
+and "tight hamstrings" in a sprinter is usually protective tone rather than short tissue.
+
+The static work moved to the **Range Block** (Program → Getting longer): ~18 minutes of loaded and
+actively-held positions run after a session or on an off day, dosed weekly (~5 min accumulated per
+muscle group per week) rather than daily. The deep squat hold is the one static position kept in
+the warm-up — short, loaded, early, and doubling as a daily read on the hip.
+
 ## Not following the plan
 
 Any day can be swapped: **Train something else** on the Today screen lists every session with its
