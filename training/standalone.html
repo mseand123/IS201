@@ -1332,6 +1332,7 @@ const EX = {
   cues: ['Heels down. If they will not stay down, that is an ankle problem — see knee-to-wall.','Breathe. If you cannot breathe in the position, you are not in the position, you are fighting it.','Long spine, not a rounded slump — a slump is rest, not training.'],
   faults: ['Slumping into the low back and calling it mobility.','Forcing depth with a wedge forever instead of building ankle range.','Doing it only in a workout instead of throughout the day.'],
   dose: '5 minutes accumulated daily. During phone calls, while reading, before bed.',
+  warmup: 'In a warm-up, keep it to 30–45 seconds and put it early. Long static holds immediately before sprinting can transiently blunt force output; short ones followed by activation and build-ups do not, and being warm is exactly when the position opens up. It also doubles as a daily read on the hip — if the bottom pinches at the front today, that is worth knowing before you play rather than during.',
   prog: 'Remove the heel wedge → hold a plate at the chest → add rotation and reaches → 5 min unbroken.',
   regr: 'Hold a doorframe, or a wedge under the heels, or box-supported.',
   timer: { w: 100, r: 30, rounds: 3, label: 'Deep squat hold' }
@@ -2038,8 +2039,9 @@ const SESSIONS = {
   n: 'Upper + Throw', type: 'MED', dur: 65,
   purpose: 'Pull-dominant upper body, labrum-safe pressing, rotational power, and structured throwing volume. Overhead barbell pressing is off the menu; the landmine arc gives you the strength without the labral compression.',
   blocks: [
-    { n: 'SHOULDER PREP', why: 'Never throw or press cold with a labral history', items: [
+    { n: 'SHOULDER PREP', why: 'Never throw or press cold', items: [
       { x: 'cuff-iso-er', d: '3 × 25 s ER + IR' },
+      { x: 'disc-ladder', d: 'Short 20 · medium 15 · long 10', note: 'The arm warm-up. On a field day this replaces the first half of the throwing block.' },
       { x: 'band-pull-apart', d: '2 × 15 + 15 face pulls' },
       { x: 'thoracic-opener', d: '4 positions × 5 breaths + 8 rotations/side' },
       { x: 'sleeper-stretch', d: '3 × 30 s', note: 'Only if your IR difference is over 15°. Measure first.' }
@@ -2413,8 +2415,7 @@ const SESSIONS = {
       { x: 'adductor-squeeze-iso', d: '6 × 8 s', note: 'Submaximal. Wake the groin before you ask it to plant.' },
       { x: 'ham-iso-long', d: '2 × 20 s per side', t: { r: 12 }, note: 'Pre-activation for the exact tissue that tears at speed.' },
       { x: 'build-ups', d: '4 × 40 m at 60 / 75 / 90 / 95%, walk back' },
-      { x: 'cut-builds', d: '3 rounds building, both directions' },
-      { x: 'disc-ladder', d: 'Short 20 · medium 15 · long 10 · hucks 5–8' }
+      { x: 'cut-builds', d: '3 rounds building, both directions' }
     ]},
     { n: 'HALF TIME', why: 'Three minutes so the second half does not start cold', items: [
       { x: 'easy-jog', d: '75 s easy' },
@@ -4222,42 +4223,38 @@ Object.assign(EX, {
 
 ROUTINES.unshift(
   { id:'warmup-full', n:'Frisbee Warm-Up', tag:'WARMUP',
-    sub:'Game day · the full thing, done properly',
-    why:'Built on RAMP — Raise, Activate, Mobilise, Potentiate — because the order matters more than the exercises do. Temperature first, then range, then the muscles that need waking, then speed, then the disc. Mobility on a cold muscle is just stretching, and sprinting before activation is how people strain things in warm-ups. Start it around 45 minutes before pull; if you finish early, keep moving rather than sitting down.',
+    sub:'Game day · everything the legs need to be ready to sprint',
+    why:'Built on RAMP — Raise, Mobilise, Activate, Potentiate — because the order carries more than the exercise choice does. Temperature first, then range, then the muscles that need waking, then speed. Mobility on a cold muscle is just stretching, and going from standing to a hard cut is how people strain things in warm-ups. Everything here is about the legs and hips arriving ready to sprint; warm your throws up separately on your own clock. Start it around 40 minutes before pull, and if you finish early keep moving rather than sitting down.',
     items:[
-      { x:'easy-jog', d:'4 min easy' },
+      { x:'easy-jog', d:'3 min easy' },
       { x:'leg-swings', d:'10 linear + 10 lateral per leg' },
-      { x:'open-close-gate', d:'5 open + 5 close per leg' },
       { x:'walking-lunge-rotation', d:'5 per side' },
-      { x:'inchworm', d:'5 reps' },
+      { x:'deep-squat-hold', d:'2 × 40 s', t:{ r: 15 }, note:'Early and short — this is opening the hips while you are warm, not accumulating time. Check whether the bottom pinches today; that is worth knowing before you play.' },
       { x:'adductor-rockback', d:'10 rocks + 20 s hold' },
       { x:'clamshell', d:'15 per side, hold the last one 15 s' },
       { x:'seven-way-hips', d:'7 positions × 8 reps per side' },
       { x:'adductor-squeeze-iso', d:'6 × 8 s', note:'Two ladders, submaximal. Wake the groin before you ask it to plant.' },
       { x:'ham-iso-long', d:'2 × 20 s per side', t:{ r: 12 }, note:'Pre-activating the hamstring at length, right before you sprint on it.' },
-      { x:'cuff-iso-er', d:'2 × 15 s each direction', t:{ r: 8 } },
       { x:'a-skip', d:'2 × 20 m, walk back' },
       { x:'carioca', d:'2 × 20 m each direction, building, walk back' },
       { x:'pogo-jumps', d:'2 × 15 contacts, 30 s rest' },
       { x:'build-ups', d:'4 × 40 m at 60 / 75 / 90 / 95%, walk back' },
-      { x:'cut-builds', d:'3 rounds building, both directions' },
-      { x:'disc-ladder', d:'Short 20 · medium 15 · long 10 · hucks 5–8' }
+      { x:'cut-builds', d:'3 rounds building, both directions' }
     ]},
   { id:'warmup-short', n:'Warm-Up · Short', tag:'WARMUP',
     sub:'Pickup, practice, or a late arrival',
-    why:'The version that survives contact with reality. Same RAMP order, half the volume, and nothing important removed — the raise, the two hip activations, the graded build-ups and the throwing ladder all stay, because those are the parts that actually protect you. Cut this further and you are just jogging.',
+    why:'The version that survives contact with reality. Same RAMP order, half the volume, and nothing load-bearing removed — the raise, the two hip activations, the hamstring pre-activation and the graded build-ups all stay, because those are the parts that actually protect you. Cut this further and you are just jogging.',
     items:[
-      { x:'easy-jog', d:'3 min easy' },
+      { x:'easy-jog', d:'150 s easy' },
       { x:'leg-swings', d:'10 linear + 10 lateral per leg' },
-      { x:'walking-lunge-rotation', d:'4 per side' },
+      { x:'deep-squat-hold', d:'40 s', note:'One hold. If the bottom pinches at the front of the hip today, stay higher and note it.' },
       { x:'clamshell', d:'15 per side' },
       { x:'seven-way-hips', d:'7 positions × 6 reps per side' },
       { x:'adductor-squeeze-iso', d:'4 × 8 s' },
       { x:'ham-iso-long', d:'2 × 20 s per side', t:{ r: 12 } },
       { x:'a-skip', d:'2 × 20 m, walk back' },
       { x:'build-ups', d:'3 × 40 m at 60 / 80 / 90%, walk back' },
-      { x:'cut-builds', d:'2 rounds building, both directions', est: 130 },
-      { x:'disc-ladder', d:'Short 15 · medium 10 · long 8', est: 300 }
+      { x:'cut-builds', d:'2 rounds building, both directions', est: 130 }
     ]},
   { id:'warmup-half', n:'Half-Time Top-Up', tag:'WARMUP',
     sub:'Three minutes so the second half does not start cold',
@@ -5081,6 +5078,9 @@ function openEx(id) {
       : el('p', { style: 'max-width:64ch;color:var(--ink-2)' }, e.why),
     e.flag ? el('div', { class: 'callout hard' }, [el('div', { class: 'h' }, 'For you specifically'), el('p', { class: 'small' }, e.flag)]) : null,
     e.home ? el('div', { class: 'callout' }, [el('div', { class: 'h' }, 'At home'), el('p', { class: 'small' }, e.home)]) : null,
+    e.warmup ? el('div', { class: 'callout' }, [
+      el('div', { class: 'h' }, 'In a warm-up'), el('p', { class: 'small' }, e.warmup)
+    ]) : null,
     e.covert ? el('div', { class: 'callout' }, [
       el('div', { class: 'h' }, 'At a desk · ' + COVERT[e.covert].l),
       el('p', { class: 'small' }, COVERT[e.covert].d)

@@ -806,6 +806,9 @@ function openEx(id) {
       : el('p', { style: 'max-width:64ch;color:var(--ink-2)' }, e.why),
     e.flag ? el('div', { class: 'callout hard' }, [el('div', { class: 'h' }, 'For you specifically'), el('p', { class: 'small' }, e.flag)]) : null,
     e.home ? el('div', { class: 'callout' }, [el('div', { class: 'h' }, 'At home'), el('p', { class: 'small' }, e.home)]) : null,
+    e.warmup ? el('div', { class: 'callout' }, [
+      el('div', { class: 'h' }, 'In a warm-up'), el('p', { class: 'small' }, e.warmup)
+    ]) : null,
     e.covert ? el('div', { class: 'callout' }, [
       el('div', { class: 'h' }, 'At a desk · ' + COVERT[e.covert].l),
       el('p', { class: 'small' }, COVERT[e.covert].d)

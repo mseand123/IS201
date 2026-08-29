@@ -55,11 +55,11 @@ session — every block, then the Daily Armor — one exercise at a time:
 ## Warm-up
 
 Three RAMP-ordered warm-ups lead the Program screen and sit on the Today quick-start row:
-**Frisbee Warm-Up** (~45 min, game day — raise, mobilise, activate, potentiate, then the disc),
-**Warm-Up · Short** (~27 min, pickup or a late arrival) and **Half-Time Top-Up** (~5 min). Eleven
-new exercises back them, including 7-way hips and clamshells for the hip, graded build-up runs
-and cutting build-ups so the first hard plant of the day is deliberate, and a throwing ladder
-that treats hucks as the load they are.
+**Frisbee Warm-Up** (~33 min, game day), **Warm-Up · Short** (~21 min) and **Half-Time Top-Up**
+(~5 min). They are legs-and-hips only — getting the body ready to sprint — with no throwing
+block; the arm warm-up lives in the Upper + Throw session instead. Eleven new exercises back
+them, including 7-way hips and clamshells, a short deep squat hold placed early, and graded
+build-up runs and cutting build-ups so the first hard plant of the day is deliberate.
 
 ## Not following the plan
 
