@@ -119,6 +119,15 @@ The reasoning, including what is theatre, is in the Method screen under **Recove
 
 ## Ball work
 
+The plantar roll now leads all four pre-play warm-ups (not Half-Time — cleats are on and it is five
+minutes), placed first so it happens sitting down while lacing up, at no cost in warm-up time. Its
+own prescription reads "always before any session with sprinting or hamstring loading", and until
+now not one warm-up contained it; the Daily Armor's copy also ran at the *end* of every session,
+which is the opposite of what that line asks for. `buildSteps` now moves the armor copy to the
+front of a session, or drops it when the session already prescribes one, so the written rule and
+the actual running order agree.
+
+
 Plantar rolling is the best-evidenced item in the program — a large-effect improvement in hamstring
 and lumbar range without stretching the hamstring at all — and it sits in the Daily Armor, the
 warm-ups and under the desk. **Ball Work · Legs & Hips** (~12 min) applies the same trick to the

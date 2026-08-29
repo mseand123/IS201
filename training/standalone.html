@@ -2484,6 +2484,7 @@ const SESSIONS = {
   purpose: 'Roughly 6,940 m total, 592 m of high-speed running, 16 sprints, 46 accelerations and 47 decelerations. Your warm-up decides whether you meet that fresh or cold.',
   blocks: [
     { n: 'WARM-UP (T-60)', why: 'Run the Frisbee Warm-Up — this is the short list of what it must contain', items: [
+      { x: 'ball-roll-foot', d: '60 s per foot', note: 'While you put your cleats on. It leads the Frisbee Warm-Up for a reason.' },
       { x: 'easy-jog', d: '4 min easy', note: 'The full RAMP warm-up lives under Program → Warm-up. Start it an hour before pull.' },
       { x: 'seven-way-hips', d: '8 positions × 8 reps per side' },
       { x: 'clamshell', d: '15 per side' },
@@ -3675,6 +3676,7 @@ const ROUTINES = [
     sub:'Prevention, not rehab — the L-protocol plus the long-length isometric',
     why:'A previous strain is the strongest predictor of a future one, and it stays true long after the tissue has healed — because short fascicles and a long-length strength deficit do not fix themselves. Every exercise here loads the position where hamstrings actually fail. Weekly, forever, whether or not anything hurts.',
     items:[
+      { x:'ball-roll-foot', d:'60 s per foot', note:'Before hamstring loading, every time. It buys range in the posterior chain without stretching the hamstring, which is exactly what you want before loading it at length.' },
       { x:'ham-iso-long', d:'3 × 25 s per side' },
       { x:'askling-extender', d:'2 × 12 per side' },
       { x:'askling-diver', d:'3 × 6 per side' },
@@ -4469,6 +4471,7 @@ ROUTINES.unshift(
     sub:'Game day · everything the legs need to be ready to sprint',
     why:'Built on RAMP — Raise, Mobilise, Activate, Potentiate — because the order carries more than the exercise choice does. Temperature first, then range, then the muscles that need waking, then speed. Mobility on a cold muscle is just stretching, and going from standing to a hard cut is how people strain things in warm-ups. Everything here is about the legs and hips arriving ready to sprint; warm your throws up separately on your own clock. Start it around 40 minutes before pull, and if you finish early keep moving rather than sitting down.',
     items:[
+      { x:'ball-roll-foot', d:'60 s per foot', note:'Do this sitting down while you put your cleats on — it costs you no warm-up time at all. Toe-touch test before and after. The range effect fades in twenty to thirty minutes, so if you want it at game time rather than at warm-up time, take thirty seconds more just before you line up.' },
       { x:'easy-jog', d:'3 min easy' },
       { x:'leg-swings', d:'10 linear + 10 lateral per leg' },
       { x:'walking-lunge-rotation', d:'5 per side' },
@@ -4488,6 +4491,7 @@ ROUTINES.unshift(
     sub:'Pickup, practice, or a late arrival',
     why:'The version that survives contact with reality. Same RAMP order, half the volume, and nothing load-bearing removed — the raise, the two hip activations, the hamstring pre-activation and the graded build-ups all stay, because those are the parts that actually protect you. Cut this further and you are just jogging.',
     items:[
+      { x:'ball-roll-foot', d:'45 s per foot', note:'While you put your cleats on. Free, and the best-evidenced thing in the warm-up.' },
       { x:'easy-jog', d:'150 s easy' },
       { x:'leg-swings', d:'10 linear + 10 lateral per leg' },
       { x:'deep-squat-hold', d:'40 s', note:'One hold. If the bottom pinches at the front of the hip today, stay higher and note it.' },
@@ -4503,6 +4507,7 @@ ROUTINES.unshift(
     sub:'The honest floor before you sprint hard',
     why:'If the choice is between a thorough warm-up you skip and a short one you actually do, the short one wins every time. This is what is left when you strip the warm-up back to only the parts that are load-bearing. Raising muscle temperature is genuinely non-negotiable — warm muscle is more compliant, conducts faster and produces more force, and nothing else works properly before it has happened. The hamstring isometric is here because of your history and because it costs forty seconds. The build-ups are here because going from standing to a hard sprint in one step is the single most reliable way to strain something, and four graded runs removes that step. Everything cut from this list is beneficial. Nothing cut from it is essential. Use the full version when you have the time and this when you do not — but do not skip both.',
     items:[
+      { x:'ball-roll-foot', d:'45 s per foot', note:'Sitting down, while you lace up. The one item here to drop if you have no ball with you — everything else needs nothing.' },
       { x:'easy-jog', d:'2 min easy', note:'Non-negotiable. Warm first, everything else second.' },
       { x:'leg-swings', d:'10 linear + 10 lateral per leg', note:'The only mobility that survives the cut — it is fast and it is active.' },
       { x:'ham-iso-long', d:'2 × 20 s per side', t:{ r: 10 }, note:'Forty seconds of insurance on the tissue with the history.' },
@@ -4513,6 +4518,7 @@ ROUTINES.unshift(
     sub:'A long gap at a tournament, and getting sharp again for the next pull',
     why:'A ninety-minute gap between games is a different problem from half-time. You have gone fully cold, you have probably eaten, and you may have stiffened up sitting on a cooler. But you are also not fresh — you have a game in your legs — so this is not a repeat of the morning warm-up either. The shape that works: for the first hour, stay off your feet, get horizontal if you can, eat and drink. Then start this about twenty minutes before pull. The re-raise matters more than anything else in it, because temperature is what you actually lost. Keep the intensity ladder short but do not skip the top of it — the first sprint of game two hurts people more often than the first sprint of game one, because they assume they are still warm from earlier. They are not.',
     items:[
+      { x:'ball-roll-foot', d:'60 s per foot', note:'You are sitting down anyway. Feet have been in cleats on hard ground for two hours — this is the best moment of the day for it.' },
       { x:'easy-jog', d:'2 min easy', note:'Start about 20 minutes before pull. Warm first, everything else after.' },
       { x:'leg-swings', d:'10 linear + 10 lateral per leg', note:'Unstick the hips after sitting.' },
       { x:'adductor-squeeze-iso', d:'4 × 8 s', note:'Submaximal. The groin goes cold fastest and complains first.' },
@@ -4882,6 +4888,18 @@ function buildSteps(session, date, opts) {
   if (opts && opts.armor) ARMOR.items.forEach((it, ii) => {
     const st = makeStep(it, 'DAILY ARMOR', 'armor', ii); if (st) steps.push(st);
   });
+  // The plantar roll is prescribed "before any session with sprinting or hamstring
+  // loading", but it lives in the Daily Armor, which runs at the end. Move it to the
+  // front so the written rule and the actual order agree — and if the session already
+  // prescribes it, drop the armor's copy rather than rolling the same feet twice.
+  if (session) {
+    const armorRoll = steps.findIndex(st => st.x === 'ball-roll-foot' && st.key === 'armor');
+    if (armorRoll >= 0) {
+      const alsoInSession = steps.some(st => st.x === 'ball-roll-foot' && st.key !== 'armor');
+      const roll = steps.splice(armorRoll, 1)[0];
+      if (!alsoInSession) { roll.block = 'PRIME'; steps.unshift(roll); }
+    }
+  }
   return steps;
 }
 // A routine or a hand-picked set: steps that do not belong to today's checklist.

@@ -344,6 +344,18 @@ function buildSteps(session, date, opts) {
   if (opts && opts.armor) ARMOR.items.forEach((it, ii) => {
     const st = makeStep(it, 'DAILY ARMOR', 'armor', ii); if (st) steps.push(st);
   });
+  // The plantar roll is prescribed "before any session with sprinting or hamstring
+  // loading", but it lives in the Daily Armor, which runs at the end. Move it to the
+  // front so the written rule and the actual order agree — and if the session already
+  // prescribes it, drop the armor's copy rather than rolling the same feet twice.
+  if (session) {
+    const armorRoll = steps.findIndex(st => st.x === 'ball-roll-foot' && st.key === 'armor');
+    if (armorRoll >= 0) {
+      const alsoInSession = steps.some(st => st.x === 'ball-roll-foot' && st.key !== 'armor');
+      const roll = steps.splice(armorRoll, 1)[0];
+      if (!alsoInSession) { roll.block = 'PRIME'; steps.unshift(roll); }
+    }
+  }
   return steps;
 }
 // A routine or a hand-picked set: steps that do not belong to today's checklist.
