@@ -117,6 +117,24 @@ Three separate problems, three blocks, on the Program screen:
 
 The reasoning, including what is theatre, is in the Method screen under **Recovery, Honestly**.
 
+## Ball work
+
+Plantar rolling is the best-evidenced item in the program — a large-effect improvement in hamstring
+and lumbar range without stretching the hamstring at all — and it sits in the Daily Armor, the
+warm-ups and under the desk. **Ball Work · Legs & Hips** (~12 min) applies the same trick to the
+four targets above the ankle worth having: glute and deep rotators, lateral hip (TFL and glute
+medius), adductor, and calf plus peroneals.
+
+The claim is deliberately modest and matches the fascia article: the effect is neurological, fades
+within about half an hour, and costs no strength — so it is a primer or a comfort measure, not a
+treatment. Two things are left out on purpose. The IT band, because it is anchored fascia that
+cannot be lengthened and rolling it is mostly just painful, and the front of the hip crease, which
+is the wrong neighbourhood for a labral hip.
+
+`check-data.js` validates the content schema — field types, referenced exercise ids, unique
+routine and article ids, and that no routine carries a tag no screen renders. Run it with
+`node training/check-data.js`.
+
 ## Not following the plan
 
 Any day can be swapped: **Train something else** on the Today screen lists every session with its

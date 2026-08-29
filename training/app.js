@@ -1348,7 +1348,7 @@ function viewProgram() {
       el('div', { class: 'sec-head' }, [
         el('h2', null, 'After, and between'),
         el('div', { class: 'trace' }),
-        el('p', { class: 'small muted' }, 'What to do when the game ends — and, on a tournament weekend, what to do with the evening.')
+        el('p', { class: 'small muted' }, 'What to do when the game ends, what to do with a tournament evening, and the ball work that goes with both.')
       ]),
       el('div', { class: 'routine-grid' }, ROUTINES.filter(r => r.tag === 'RECOVERY').map(r => routineCard(r, today)))
     ]),

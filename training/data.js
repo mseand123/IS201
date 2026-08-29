@@ -48,6 +48,81 @@ const EX = {
   regr: 'Softer ball, seated instead of standing.',
   timer: { w: 75, r: 10, rounds: 2, label: 'Plantar roll — switch feet' }
 },
+'ball-glute': {
+  n: 'Glute & Deep Rotator Ball', cat: 'tissue', tags: ['hip','glute','tissue','labrum','home'],
+  why: 'The best ball target above the foot, and the one most worth your time. The deep external rotators sit underneath the glute max, they work constantly to stop the femur rotating inward when you cut, and they are almost impossible to reach with a foam roller — a roller spans them, a ball gets into them. Expect the same class of effect as the plantar roll: a real, short-lived increase in range with no strength loss, produced neurologically rather than by changing the tissue. For a labral hip there is a second reason to like it, which is that a deep rotator group that is not braced tends to let the femur drift, and the drift is what the labrum objects to.',
+  home: 'A lacrosse ball is ideal; a tennis ball is softer and the right place to start. Nothing else needed.',
+  timer: { w: 90, r: 10, rounds: 2, label: 'Glute ball — switch sides' },
+  setup: 'Sit on the floor with a lacrosse or tennis ball under one glute, that ankle crossed over the opposite knee. Hands behind you to control how much weight you put through it.',
+  steps: [
+    'Start with less weight than you think. You control the pressure with your hands and your other foot.',
+    'Hunt slowly around the meat of the glute, between the top of the hip bone and the sit bone. Do not go onto the tailbone or the bony ridge itself.',
+    'When you find a dense spot, park on it and breathe for 20–30 seconds rather than grinding back and forth.',
+    'Once parked, slowly rock the crossed knee in and out a few times. That shears the tissue under the ball instead of just compressing it, and it is where most of the effect comes from.',
+    'Ninety seconds a side is plenty. This is not a competition with the ball.'
+  ],
+  cues: ['Breathe out into the dense spot. If you are bracing and holding your breath, the pressure is too high to do anything useful.','Move the leg while you are parked — compression alone does much less than compression plus movement.','Discomfort that stays local and fades is fine. Anything else, see the faults.'],
+  faults: ['Electrical, buzzing or shooting sensations down the back of the leg. That is the sciatic nerve, not muscle — move off it immediately, and do not try to "release" it.','Going so heavy you tense everything, which defeats the point.','Grinding on the tailbone or the bony rim of the pelvis.'],
+  dose: '90 s per side',
+  prog: 'Harder ball, or do it standing against a wall for more control at higher pressure.',
+  regr: 'Softer ball, or do it against a wall so you can dial the pressure right down.'
+},
+'ball-lateral-hip': {
+  n: 'Lateral Hip Ball (TFL & Glute Med)', cat: 'tissue', tags: ['hip','glute','tissue','home'],
+  why: 'The side of the hip does a lot of work in a sport played sideways, and it is the area people most often attack wrongly. The IT band itself is dense fascia anchored along the femur — you cannot lengthen it, and rolling directly on it is mostly just painful. What does respond is the muscular tissue at either end of it: the TFL at the front of the hip point, and the glute medius behind it. Those are worth ninety seconds; the band between them is not.',
+  home: 'Against a wall with a lacrosse or tennis ball — no floor space at all. This is the one that works in a hotel room.',
+  timer: { w: 60, r: 10, rounds: 2, label: 'Lateral hip — switch sides' },
+  setup: 'Ball against a wall, standing, with the ball on the side of your hip just below and in front of the bony point. Standing gives you far better pressure control than lying on the floor does.',
+  steps: [
+    'Find the bony point at the side of your hip. The TFL is the soft tissue just below and in front of it; the glute medius is just behind it.',
+    'Lean into the ball at a pressure you can breathe through. Small slow circles, not fast passes.',
+    'Park on a dense spot and take the knee through a slow bend-and-straighten, or rotate the foot in and out.',
+    'Cover the front target and the back target. Skip the flat outside of the thigh between them.',
+    'Sixty seconds a side.'
+  ],
+  cues: ['Standing against a wall, not lying on the floor. You want to be able to back off instantly.','Slow. Fast rolling feels productive and does less.','Front of the hip point and behind it — not the flat slab in between.'],
+  faults: ['Grinding the IT band itself and calling it mobility.','Pushing into the front of the hip crease, which is the wrong place for you specifically — see the hip labrum notes.','So much pressure that you cannot breathe normally.'],
+  dose: '60 s per side',
+  prog: 'Harder ball.',
+  regr: 'Softer ball, or less lean.'
+},
+'ball-adductor': {
+  n: 'Adductor Ball', cat: 'tissue', tags: ['groin','adductor','tissue','home'],
+  why: 'Your weak link, so treat it gently. The adductors take a real beating in a cutting sport and they respond well to a bit of pressure before loading work — but this area is also where you have a known weakness, and aggressive digging into a groin that already has a history is a bad trade. The goal here is to make the Copenhagen work feel better, not to fix anything.',
+  home: 'Any ball and a patch of floor. Go softer rather than firmer here.',
+  timer: { w: 60, r: 10, rounds: 2, label: 'Adductor ball — switch sides' },
+  setup: 'Face down, one leg out to the side with the knee bent, ball under the inner thigh. Forearms on the floor carrying most of your weight.',
+  steps: [
+    'Start high, near the middle of the inner thigh, not up in the groin crease.',
+    'Slow passes along the inner thigh between the knee and about two-thirds of the way up. Stay out of the very top.',
+    'Park on a dense spot and bend and straighten the knee slowly a few times.',
+    'Sixty seconds a side and stop. Gentle beats thorough here.'
+  ],
+  cues: ['Most of your weight is on your forearms, not on the ball.','Stay out of the top third — the groin crease has things in it you do not want to compress.','If it is sharply painful rather than dull, you are too deep or too high.'],
+  faults: ['Treating a weak adductor with aggressive pressure. Volume of Copenhagen work is the fix; this is just comfort.','Rolling right up into the groin crease.','Doing this the day of a hard adductor session and turning up sore for it.'],
+  dose: '60 s per side',
+  prog: 'Slightly firmer ball.',
+  regr: 'Softer ball, or skip it — this is the most optional item in the block.'
+},
+'ball-calf-peroneal': {
+  n: 'Calf & Peroneal Ball', cat: 'tissue', tags: ['calf','ankle','tissue','home'],
+  why: 'Two targets in one position. The soleus takes several times bodyweight every stride and is chronically stiff in anyone who sprints on grass in cleats. The peroneals — the strip down the outside of the lower leg — are the muscles that resist a rolling ankle, so they matter for the same reason the eversion work does, and they are usually tender on whichever side you have rolled before. Rolling neither of them makes them stronger. It makes the ankle work that follows feel better and moves range in the short term, which is the honest claim.',
+  home: 'Sitting on the floor with a ball. Fine on a hotel carpet.',
+  timer: { w: 60, r: 10, rounds: 2, label: 'Calf & peroneal — switch sides' },
+  setup: 'Sitting, ball under the calf of one leg, that leg crossed over the other for extra pressure if you want it.',
+  steps: [
+    'Calf first: slow passes from just below the knee to just above the achilles, covering the inner and outer heads.',
+    'Park on a dense spot and pump the ankle up and down ten times. The ankle movement is what makes this work.',
+    'Then roll the leg outward so the ball sits on the outside of the shin bone, on the strip of muscle beside it. That is the peroneals.',
+    'Same treatment: slow passes, park, then turn the sole of the foot in and out while parked.',
+    'Sixty seconds a side across both targets.'
+  ],
+  cues: ['Pump the ankle whenever you are parked. Static pressure alone is the weakest version of this.','The peroneal strip is beside the shin bone, not on it. Bone is not a target.','Compare sides — a previously rolled ankle is usually noticeably more tender.'],
+  faults: ['Rolling directly on the shin bone or the achilles tendon.','Fast passes with no ankle movement.','Skipping the peroneal half, which is the half most people have never touched.'],
+  dose: '60 s per side',
+  prog: 'Cross the other leg on top for more load.',
+  regr: 'Less crossover weight, or do it against a wall.'
+},
 'short-foot': {
   n: 'Short Foot (Arch Doming)', cat: 'tissue', tags: ['foot','daily','iso'],
   why: 'An 8-week intrinsic foot protocol increases foot muscle volume and raises vertical propulsive force in running. The arch is your first spring: if it collapses passively, elastic energy leaks into the ground instead of returning to you. Every ground contact you take at 8.6 m/s starts here.',
@@ -1975,6 +2050,7 @@ const ARTICLES = [
   {h:'What this program actually does about it'},
   {ul:[
     'Plantar ball rolling daily and before every running session — the best-evidenced item on the list, and it takes 90 seconds.',
+    'Ball Work · Legs & Hips applies the same trick further up: glute and deep rotators, lateral hip, adductor, calf and peroneals. Same honest claim — short-term range, no strength loss, no tissue actually changed.',
     'Rebound flow as a primer before elastic and speed work: rhythmic pre-load-and-release in multiple directions, submaximal by design.',
     'Pogos, bounds and hurdle hops as the real elastic training — this is where tendon stiffness genuinely changes.',
     'Loaded long-length work (deep squat holds, ATG split squats, Cossacks, pancake sits) as the "loaded stretch" stimulus, which has better support than passive stretching for actual tissue adaptation.',
@@ -2960,6 +3036,17 @@ const ROUTINES = [
       { x:'box-breathing', d:'5 min' }
     ]},
 
+  { id:'ball-work', n:'Ball Work · Legs & Hips', tag:'RECOVERY',
+    sub:'The foot roll you already do, plus the four targets above it worth doing',
+    why:'You already do the best one. Plantar rolling is the highest-evidence item in this whole program — it produces a large-effect improvement in hamstring and lumbar range without stretching the hamstring at all — and everything here is the same trick applied further up. Be clear about what the trick is, though: the effect is neurological and it fades within about half an hour. Nothing here is breaking up adhesions or lengthening fascia; the forces needed to deform dense fascia are far beyond what a ball produces. What you get is a genuine short-term range increase with no strength loss, which makes this a primer before a session or a comfort measure after one, and not a treatment for anything. A ball also travels better than a roller, which is why this is the version worth having in your bag at a tournament. Two things it deliberately does not include: the IT band, because it is anchored fascia you cannot lengthen and rolling it is mostly just painful, and the front of the hip crease, which for you is the wrong neighbourhood entirely.',
+    items:[
+      { x:'ball-roll-foot', d:'60 s per foot', note:'Toe-touch test before and after. Still the best one.' },
+      { x:'ball-glute', d:'90 s per side', note:'The most valuable target above the foot. Move the crossed knee while you are parked. If it buzzes or shoots down the leg, that is nerve — move off it.' },
+      { x:'ball-lateral-hip', d:'60 s per side', note:'TFL in front of the hip point, glute medius behind it. Skip the flat slab between them.' },
+      { x:'ball-adductor', d:'60 s per side', note:'Gentle. This is your weak link, and pressure is not what fixes it.' },
+      { x:'ball-calf-peroneal', d:'60 s per side', note:'Pump the ankle while parked. Do not skip the peroneal strip on the outside.' }
+    ]},
+
   { id:'tournament-night', n:'Tournament Night', tag:'RECOVERY',
     sub:'Day one is done and you play again tomorrow',
     why:'This is the highest-leverage block in the app and almost none of it is exercise. Between days of a tournament, the things that actually determine how you play tomorrow are, in order: sleep, carbohydrate, protein, fluid. Everything else — this block included — is worth single-digit percentages by comparison. Refuel early rather than perfectly: roughly a gram of carbohydrate per kilogram of bodyweight per hour for the first few hours is the rate that refills glycogen fastest, which at 68 kg means real meals plus something sweet, starting within the first half hour rather than after the shower. Then protein, then keep drinking. Cold water immersion earns its place here specifically — it improves next-day sprint recovery after a simulated tournament — even though it is a bad idea after ordinary strength training, because it blunts the adaptation you were training for. At a tournament there is no adaptation to protect. You just need to run again in fourteen hours. One thing deliberately left out of the list below: if you are short on sleep, NSDR or a nap is worth more than everything in this block put together, but it is a twenty-minute lie-down rather than part of a circuit, so run it on its own from the library.',
@@ -3460,7 +3547,7 @@ Object.assign(EX, {
   n: 'Single-Leg Balance Progression', cat: 'armor', tags: ['ankle','knee','proprioception','prevention','home'],
   timer: { w: 40, r: 15, rounds: 6, label: 'Balance — switch legs' },
   why: 'Proprioceptive and balance training is one of the very few interventions with strong, repeatedly replicated evidence for preventing ankle sprains — particularly recurrent ones — and it carries over to the knee, because the thing that fails in a non-contact knee injury is neuromuscular control, not tissue strength. It is also the least impressive-looking exercise in this entire program, which is why almost nobody does it. Ultimate is played on uneven grass, in cleats, landing one-footed after a contested disc. That is a proprioceptive sport whether you train it as one or not.',
-  home: true,
+  home: 'Nothing at all, ideally barefoot. A folded towel or a couch cushion gives you the harder surface for level 5.',
   setup: 'Barefoot, on grass or a firm floor. One leg, soft knee, weight spread across the whole foot rather than gripping with the toes.',
   steps: [
     'Level 1 — Stand on one leg, eyes open, 30 s. If that is easy, do not linger here.',
@@ -3479,7 +3566,7 @@ Object.assign(EX, {
 'ankle-eversion': {
   n: 'Banded Ankle Eversion', cat: 'armor', tags: ['ankle','prevention','armor','home'],
   why: 'The lateral ankle sprain rolls the foot inward, and the peroneals are the only muscles that actively resist it. They are also the muscles nobody trains, because they do not show up in any lift. Strengthening them needs no equipment beyond a band and is the direct counter to the third most common injury site in ultimate. If you have ever rolled an ankle, they are almost certainly weaker on that side and you will feel the difference immediately.',
-  home: true,
+  home: 'Any resistance band. Without one, press the foot against your own hand or hook it against a table leg and hold — an isometric version works.',
   setup: 'Sitting, legs out. Loop a band around the outside of your forefoot and anchor the other end to something on the inside — a table leg, or your other foot.',
   steps: [
     'Start with the foot rotated slightly inward, band taut.',
@@ -3496,7 +3583,7 @@ Object.assign(EX, {
 'bound-stick': {
   n: 'Lateral Bound & Stick', cat: 'plyo', tags: ['knee','landing','prevention','decel','home'],
   why: 'The knee is the most injured site in ultimate, and the mechanism is almost never contact — it is a decelerating, rotating landing that the athlete could not control. Continuous skater bounds train the elastic push. This trains the opposite half: absorbing a sideways landing on one leg and holding it. Sticking the landing is what turns a plyometric into landing-quality work, and landing quality under fatigue is the thing that separates athletes who tear knees from athletes who do not.',
-  home: true,
+  home: 'Grass or any flat surface with a body length of room. No equipment.',
   repSec: 4,
   setup: 'Grass or a forgiving surface. Space to move sideways about a body length.',
   steps: [
