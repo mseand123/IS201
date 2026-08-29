@@ -549,8 +549,18 @@ const RUN = {
   },
   toggle() {
     if (!this.active || this.phase === 'done') return;
-    if (this.running) { this.running = false; this.left = Math.max(0, this.endsAt - performance.now()); cancelAnimationFrame(this.raf); }
-    else { this.running = true; this.endsAt = performance.now() + this.left; this.loop(); }
+    if (this.running) {
+      this.running = false;
+      if (this.phase === 'manual') this.pausedAt = Date.now();
+      else this.left = Math.max(0, this.endsAt - performance.now());
+      cancelAnimationFrame(this.raf);
+      try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) { /* none */ }
+    } else {
+      this.running = true;
+      if (this.phase === 'manual') this.startManual += Date.now() - (this.pausedAt || Date.now());
+      else this.endsAt = performance.now() + this.left;
+      this.loop();
+    }
     this.build();
   },
   loop() {
@@ -558,7 +568,7 @@ const RUN = {
     const step = () => {
       if (!this.running || !this.active) return;
       if (this.phase === 'manual') {
-        this.left = -(Date.now() - this.startManual);      // count up
+        this.left = -(Date.now() - this.startManual);   // counts up      // count up
       } else {
         this.left = this.endsAt - performance.now();
         const secs = Math.ceil(this.left / 1000);
@@ -665,6 +675,11 @@ function buildRun() {
       el('span', null, st.block),
       el('span', { class: 'num', id: 'runLeft' }, ''),
       el('span', { class: 'num', id: 'runStep' }, (RUN.i + 1) + ' / ' + RUN.steps.length),
+      el('button', {
+        class: 'btn btn-ghost btn-sm', onclick: () => RUN.toggle(),
+        'aria-label': RUN.running ? 'Pause session' : 'Resume session',
+        title: RUN.running ? 'Pause' : 'Resume'
+      }, [ico(RUN.running ? ICONS.pause : ICONS.play, 'nav-ico')]),
       el('button', { class: 'btn btn-ghost btn-sm', onclick: () => RUN.close(false), 'aria-label': 'Exit session' }, [ico(ICONS.x, 'nav-ico')])
     ])
   ]));
@@ -679,7 +694,7 @@ function buildRun() {
   const switching = RUN.phase === 'rest' && sw;
   const sideNow = sideLabel(st, RUN.round);
   const sideNext = sideLabel(st, RUN.round + 1);
-  runEl.appendChild(el('div', { class: 'run-body' + (switching ? ' switching' : '') }, [
+  runEl.appendChild(el('div', { class: 'run-body' + (switching ? ' switching' : '') + (RUN.running ? '' : ' paused') }, [
     el('h2', { class: 'display run-name' + (switching ? ' switch-name' : '') },
       switching ? sw.text : between ? 'Rest' : e.n),
     el('div', { class: 'run-dose num' }, switching
@@ -695,6 +710,7 @@ function buildRun() {
       svg,
       el('div', { class: 'run-ring-label' }, [
         time,
+        !RUN.running ? el('span', { class: 'run-tag paused-tag' }, 'Paused') : null,
         ringTag(st, isRest, isReady)
       ])
     ]),
@@ -706,7 +722,10 @@ function buildRun() {
     el('div', { class: 'run-ctl' }, [
       el('button', { class: 'btn run-btn', onclick: () => RUN.prev(), 'aria-label': 'Previous exercise' }, '‹ Back'),
       isManual
-        ? el('button', { class: 'btn btn-hi run-btn run-btn-main', onclick: () => st_manualDone() }, 'Done')
+        ? el('button', {
+            class: 'btn btn-hi run-btn run-btn-main',
+            onclick: () => (RUN.running ? st_manualDone() : RUN.toggle())
+          }, RUN.running ? 'Done' : 'Resume')
         : el('button', { class: 'btn btn-hi run-btn run-btn-main', onclick: () => RUN.toggle() }, RUN.running ? 'Pause' : 'Resume'),
       el('button', {
         class: 'btn run-btn',
@@ -1355,14 +1374,8 @@ function routineCard(r, date) {
   const n = sel.size;
   const chosen = n ? r.items.filter((_, i) => sel.has(i)) : r.items;
 
-  const picker = el('details', {
-    class: 'routine-pick', open: ROPEN.has(r.id) ? '' : null,
-    ontoggle: ev => { ev.target.open ? ROPEN.add(r.id) : ROPEN.delete(r.id); }
-  }, [
-    el('summary', null, [
-      el('span', { class: 'xs' }, n ? n + ' of ' + r.items.length + ' selected' : r.items.length + ' exercises'),
-      el('span', { class: 'xs muted' }, n ? 'tap to change' : 'tap to pick some')
-    ]),
+  const open = ROPEN.has(r.id);
+  const picker = el('div', { class: 'routine-pick' + (open ? ' open' : '') }, [
     el('div', { class: 'pick-list' }, r.items.map((it, i) => {
       const on = sel.has(i);
       return el('div', { class: 'pick-row' + (on ? ' on' : '') }, [
@@ -1377,7 +1390,13 @@ function routineCard(r, date) {
         ])
       ]);
     })),
-    n ? el('button', { class: 'btn btn-ghost btn-sm', onclick: () => { sel.clear(); render(); } }, 'Clear selection') : null
+    el('div', { class: 'row', style: 'gap:.4rem' }, [
+      el('button', {
+        class: 'btn btn-ghost btn-sm',
+        onclick: () => { r.items.forEach((_, i) => sel.add(i)); render(); }
+      }, 'Select all'),
+      n ? el('button', { class: 'btn btn-ghost btn-sm', onclick: () => { sel.clear(); render(); } }, 'Clear') : null
+    ])
   ]);
 
   return el('div', { class: 'card routine' }, [
@@ -1391,12 +1410,19 @@ function routineCard(r, date) {
     ]),
     el('p', { class: 'small muted' }, r.sub),
     el('p', { class: 'small' }, r.why),
-    picker,
-    el('button', {
-      class: 'btn btn-primary btn-run',
-      onclick: () => RUN.open(stepsFromItems(chosen, r.n), date, 0, n ? null : { routine: r.id })
-    }, [ico(ICONS.play, 'nav-ico'),
-        n ? 'Run ' + n + ' selected' : 'Run all ' + r.items.length])
+    open ? picker : null,
+    el('div', { class: 'routine-actions' }, [
+      el('button', {
+        class: 'btn btn-primary btn-run',
+        onclick: () => RUN.open(stepsFromItems(chosen, r.n), date, 0, n ? null : { routine: r.id })
+      }, [ico(ICONS.play, 'nav-ico'),
+          n ? 'Run ' + n + ' selected' : 'Run all ' + r.items.length]),
+      el('button', {
+        class: 'btn btn-pick', 'aria-expanded': open ? 'true' : 'false',
+        onclick: () => { open ? ROPEN.delete(r.id) : ROPEN.add(r.id); render(); }
+      }, open ? (n ? 'Hide · ' + n + ' of ' + r.items.length + ' picked' : 'Hide list')
+         : (n ? n + ' of ' + r.items.length + ' picked' : 'Pick exercises'))
+    ])
   ]);
 }
 

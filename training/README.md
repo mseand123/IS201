@@ -49,7 +49,11 @@ session — every block, then the Daily Armor — one exercise at a time:
 - The right-hand button means one thing per phase: **Next round** / **Next side** while rounds
   remain, **Done early** on the last one, **Skip rest** during a rest, **Skip** on a hand-timed
   set. Ending a round never leaves the exercise; **Finish exercise** in the link row does that
-- **Back**, **Pause**, and **How-to** without losing your place — mid-session the dialog leads with the steps and cues and folds the rationale away
+- **Pause works everywhere**, including on hand-timed sets: the pause button sits in the player's
+  top bar the whole time, the ring and clock dim, a `Paused` tag shows inside the ring, speech
+  stops, and the main button reads **Resume**. Count-up sets resume from where they stopped rather
+  than restarting. `Space` does the same thing from a keyboard
+- **Back** and **How-to** without losing your place — mid-session the dialog leads with the steps and cues and folds the rationale away
 - Screen wake lock while it runs; completed exercises tick themselves off on the Today screen
 
 ## Warm-up
@@ -97,11 +101,14 @@ workouts. An item can pass `t: { r: 15 }` to tighten a rest for its context (a d
 versus a dedicated block).
 
 Every item has a checkbox — tick any of them and a floating bar offers to run just those, with
-a time estimate. No mode to enter. The same checkboxes appear inside every routine card (open
-`N exercises` to pick from a routine) and in the library's builder. There is one timer in the
-app: the player. "Start session here", "Run this exercise" and "Mark done today" live in the
-exercise dialog rather than as per-row buttons. A separate quick timer for a single
-exercise lives in the exercise detail dialog and floats in a dock.
+a time estimate. No mode to enter. Every routine card carries the same idea on two plain
+buttons: **▶ Run all N** and **Pick exercises**, which opens the item list in place with
+**Select all** / **Clear** and reports the count on its own face (`3 of 14 picked`). Picking
+rewrites the run button to **Run 3 selected** and re-estimates the card. The list stays open
+across taps, and tapping an exercise's name there still opens its how-to. The library's builder
+uses the same checkboxes. There is one timer in the app: the player. "Start session here",
+"Run this exercise" and "Mark done today" live in the exercise dialog rather than as per-row
+buttons.
 
 ## Injury context
 
@@ -118,8 +125,8 @@ rather than labral rehab.
 
 27 exercises tagged `desk`, each labelled by how visible it is — `invisible` (nobody can tell),
 `subtle` (reads as fidgeting), `private` (fine alone, not in an open-plan office). Nine desk
-routines in the Desk view run them as guided circuits, from a two-minute hourly reset to
-**The Full Desk Session** — 22 minutes covering hip, groin, hamstring, foot, shoulder, posture
+routines in the Desk view run them as guided circuits, from a three-minute hourly reset to
+**The Full Desk Session** — ~43 minutes covering hip, groin, hamstring, foot, shoulder, posture
 and breathing without leaving a chair. The rationale: the armor protocols respond to
 frequency more than intensity, and a workday is the largest unused training window available.
 

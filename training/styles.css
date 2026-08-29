@@ -643,15 +643,10 @@ body.running { overflow: hidden; }
 .why-fold[open] > summary::before { content: "▾ "; }
 
 /* ---------- picking individual exercises inside a routine ---------- */
-.routine-pick { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.routine-pick > summary {
-  display: flex; align-items: baseline; gap: .5rem; cursor: pointer;
-  padding: .5rem 0; list-style: none;
-  font-family: var(--mono); letter-spacing: .06em; text-transform: uppercase;
-}
-.routine-pick > summary::-webkit-details-marker { display: none; }
-.routine-pick > summary::after { content: "›"; margin-left: auto; color: var(--muted); transform: rotate(90deg); }
-.routine-pick[open] > summary::after { transform: rotate(-90deg); }
+.routine-pick { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: .3rem 0; }
+.routine-actions { display: flex; gap: .4rem; margin-top: auto; }
+.routine-actions .btn-run { flex: 1 1 auto; }
+.btn-pick { flex: 0 0 auto; white-space: nowrap; }
 .pick-list { display: flex; flex-direction: column; padding-bottom: .4rem; }
 .pick-row { display: grid; grid-template-columns: 20px 1fr; gap: .55rem; align-items: start; padding: .3rem 0; }
 .pick-row.on .pick-name { color: var(--ink); }
@@ -699,3 +694,8 @@ body.running { overflow: hidden; }
 .bal-item { display: flex; align-items: center; gap: .4rem; }
 .bal-item .l { font-family: var(--mono); font-size: var(--t-xs); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .bal-warn { display: flex; align-items: center; gap: .5rem; flex-basis: 100%; }
+
+/* ---------- paused ---------- */
+.run-body.paused .run-ring svg { opacity: .4; }
+.run-body.paused .run-time { opacity: .55; }
+.paused-tag { color: var(--hi) !important; letter-spacing: .14em; }

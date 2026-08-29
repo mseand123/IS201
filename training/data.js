@@ -1634,7 +1634,7 @@ const SESSIONS = {
     { n: 'PRACTICE', why: '', items: [
       { x: 'throw-volume', d: 'Track hard throws. Cap at 40 on a practice day.' }
     ]},
-    { n: 'POST', why: 'The five minutes nobody does', items: [
+    { n: 'POST', why: 'The short block nobody does', items: [
       { x: 'cuff-iso-er', d: '2 × 25 s each way' },
       { x: 'deep-squat-hold', d: '2 min' },
       { x: 'box-breathing', d: '3 min' }
@@ -1698,12 +1698,12 @@ const SESSIONS = {
       { x: 'build-ups', d: '4 × 40 m at 60 / 75 / 90 / 95%, walk back' },
       { x: 'cut-builds', d: '3 rounds building, both directions' }
     ]},
-    { n: 'HALF TIME', why: 'Three minutes so the second half does not start cold', items: [
+    { n: 'HALF TIME', why: 'So the second half does not start cold', items: [
       { x: 'easy-jog', d: '75 s easy' },
       { x: 'clamshell', d: '12 per side' },
       { x: 'build-ups', d: '2 × 30 m at 70 / 90%, walk back' }
     ]},
-    { n: 'POST', why: 'The 10 minutes that decide how Sunday feels', items: [
+    { n: 'POST', why: 'The block that decides how Sunday feels', items: [
       { x: 'ball-roll-foot', d: '90 s per foot' },
       { x: 'deep-squat-hold', d: '2 min' },
       { x: 'contrast-shower', d: '6 min, finish cold' },
@@ -1738,7 +1738,7 @@ const SESSIONS = {
   fixed: true,   // dominated by a game, a practice or pickleball
   purpose: 'Pickleball, a hike, a pickup game. Play is not a break from training — it is the reason for it, and varied movement is genuinely good for connective tissue. Just warm up the groin and the shoulder first, because pickleball is a lateral-lunge sport and your groin is the weak link.',
   blocks: [
-    { n: 'PRE', why: 'Five minutes so pickleball does not cost you a groin', items: [
+    { n: 'PRE', why: 'So pickleball does not cost you a groin', items: [
       { x: 'ball-roll-foot', d: '60 s per foot' },
       { x: 'adductor-squeeze-iso', d: '2 ladders' },
       { x: 'skater-bound', d: '2 × 4 per side' },
@@ -1757,7 +1757,7 @@ const SESSIONS = {
 
 'off': {
   n: 'Off', type: 'LOW', dur: 12,
-  purpose: 'A genuine day off. The Daily Armor still happens — twelve minutes, that is the whole deal — and then you go live your life. Adaptation happens on this day, not on the hard ones.',
+  purpose: 'A genuine day off. The Daily Armor still happens — a quarter of an hour, that is the whole deal — and then you go live your life. Adaptation happens on this day, not on the hard ones.',
   blocks: [
     { n: 'ARMOR ONLY', why: 'Frequency is the active ingredient', items: [
       { x: 'deep-squat-hold', d: '5 min accumulated across the day' },
@@ -2800,7 +2800,7 @@ const ROUTINES = [
       { x:'desk-quad-iso', d:'3 × 25 s per side' },
       { x:'desk-grip-iso', d:'5 × 10 s per hand' }
     ]},
-  { id:'desk-reset', n:'Two-Minute Reset', tag:'DESK', covert:'invisible',
+  { id:'desk-reset', n:'Hourly Reset', tag:'DESK', covert:'invisible',
     sub:'The one you will actually do, hourly',
     why:'Short enough that there is no excuse. Set a recurring alarm and run it every ninety minutes.',
     items:[
@@ -2888,7 +2888,7 @@ const ROUTINES = [
       { x:'deep-squat-hold', d:'2 × 2 min' }
     ]},
   { id:'flush-short', n:'Post-Game Flush', tag:'SHORT',
-    sub:'The ten minutes that decide how tomorrow feels',
+    sub:'The block that decides how tomorrow feels',
     why:'Down-regulation and tissue work immediately after a game shortens the time you spend sympathetic and gets range back before it stiffens overnight.',
     items:[
       { x:'ball-roll-foot', d:'90 s per foot' },
@@ -3156,7 +3156,7 @@ Object.assign(EX, {
 ROUTINES.unshift(
   { id:'desk-full', n:'The Full Desk Session', tag:'DESK', covert:'invisible',
     sub:'A real session, done entirely in a chair',
-    why:'Not a snack — a complete session. Every weak link gets a genuine dose: hip rotation and glute control, the adductor at two lever lengths, the hamstring at both joints, feet, shoulder, posture, and a down-regulation to finish. Twenty-two minutes, no equipment beyond a ball and a chair, and nothing that draws attention. On a travel day or a day the session is not happening, this is not a consolation prize.',
+    why:'Not a snack — a complete session. Every weak link gets a genuine dose: hip rotation and glute control, the adductor at two lever lengths, the hamstring at both joints, feet, shoulder, posture, and a down-regulation to finish. No equipment beyond a ball and a chair, and nothing that draws attention. On a travel day or a day the session is not happening, this is not a consolation prize.',
     items:[
       { x:'desk-ball-roll', d:'90 s per foot' },
       { x:'hip-cars', d:'3 circles each direction per side', note:'Seated or standing beside the desk. Note where it pinches.' },
@@ -3538,7 +3538,7 @@ ROUTINES.unshift(
       { x:'cut-builds', d:'2 rounds building, both directions', est: 130 }
     ]},
   { id:'warmup-half', n:'Half-Time Top-Up', tag:'WARMUP',
-    sub:'Three minutes so the second half does not start cold',
+    sub:'So the second half does not start cold',
     why:'High-intensity running drops about 10% in the second half, and part of that is simply having sat down for ten minutes and gone cold. Three minutes of re-raising and two hip activations recovers most of it, and almost nobody does it.',
     items:[
       { x:'easy-jog', d:'75 s easy' },
