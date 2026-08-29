@@ -1691,7 +1691,7 @@ const SESSIONS = {
   blocks: [
     { n: 'WARM-UP (T-60)', why: 'Run the Frisbee Warm-Up — this is the short list of what it must contain', items: [
       { x: 'easy-jog', d: '4 min easy', note: 'The full RAMP warm-up lives under Program → Warm-up. Start it an hour before pull.' },
-      { x: 'seven-way-hips', d: '7 positions × 8 reps per side' },
+      { x: 'seven-way-hips', d: '8 positions × 8 reps per side' },
       { x: 'clamshell', d: '15 per side' },
       { x: 'adductor-squeeze-iso', d: '6 × 8 s', note: 'Submaximal. Wake the groin before you ask it to plant.' },
       { x: 'ham-iso-long', d: '2 × 20 s per side', t: { r: 12 }, note: 'Pre-activation for the exact tissue that tears at speed.' },
@@ -1986,7 +1986,7 @@ const ARTICLES = [
   {p:'Your warm-up contains no static stretching at all. That is deliberate, and it is worth explaining, because "stretch before you play" is the single most repeated piece of athletic advice there is and it is mostly wrong — not because stretching is bad, but because the warm-up is the one time of day it does the least good and the most harm.'},
 
   {h:'What is actually in the warm-up'},
-  {p:'Everything in the Frisbee Warm-Up is dynamic, active or graded. Leg swings and lunges with rotation take joints through range under their own muscular control. Clamshells, 7-way hips, adductor squeezes and the long-length hamstring isometric are activations — they wake specific muscles rather than lengthen them. A-skips, carioca, pogos, build-ups and cutting build-ups are potentiation: they rehearse the exact thing you are about to do, at rising speed, so your first hard cut of the game is not your first fast movement of the day.'},
+  {p:'Everything in the Frisbee Warm-Up is dynamic, active or graded. Leg swings and lunges with rotation take joints through range under their own muscular control. Clamshells, 8-way hips, adductor squeezes and the long-length hamstring isometric are activations — they wake specific muscles rather than lengthen them. A-skips, carioca, pogos, build-ups and cutting build-ups are potentiation: they rehearse the exact thing you are about to do, at rising speed, so your first hard cut of the game is not your first fast movement of the day.'},
   {p:'That is the RAMP model — Raise, Activate, Mobilise, Potentiate — and the evidence for it is much stronger than the evidence for any individual exercise inside it. The order is doing most of the work.'},
 
   {h:'The case against static stretching before sprinting, scoped honestly'},
@@ -2931,6 +2931,18 @@ const ROUTINES = [
       { x:'box-breathing', d:'5 min' }
     ]},
 
+  { id:'knee-ankle', n:'Knee & Ankle Insurance', tag:'ARMOR',
+    sub:'The two joints the ultimate injury data actually points at',
+    why:'The published injury data for ultimate is consistent and slightly surprising: the knee is the most injured site, the thigh is second and the ankle is third, and the mechanism is overwhelmingly non-contact — decelerating, cutting and landing, usually late in a game when neuromuscular control has degraded. Your program already covers the thigh properly through the Nordics, the L-protocol and the long-length isometrics. This block covers the other two, and it is the piece that was missing. Nothing in it is impressive to look at, which is precisely why it works: balance and landing-quality work are among the few things with replicated evidence for preventing exactly these injuries. Run it twice a week, and run it when you are already tired rather than fresh — fatigue is the condition the injury happens in.',
+    items:[
+      { x:'balance-progression', d:'2 × 40 s per leg at your level', t:{ r: 15 }, note:'Find the level where you wobble. Barefoot, on grass if you can.' },
+      { x:'ankle-eversion', d:'2 × 15 each direction, per side', note:'Two minutes for the muscles that resist a rolled ankle. Compare sides.' },
+      { x:'bound-stick', d:'3 × 5 per side, stick each one', t:{ r: 30 }, note:'The three-second hold is the exercise. If the knee dives inward, shorten the bound.' },
+      { x:'cut-decel', d:'4 rounds, both directions', note:'Braking mechanics deliberately, not incidentally.' },
+      { x:'single-leg-rdl', d:'2 × 8 per side, slow', note:'Hamstring and hip control on one leg, which is how you actually play.' },
+      { x:'tib-raise', d:'2 × 20', note:'The decelerators at the front of the shin. Cheap, and they stop the shins complaining on hard cutting weeks.' }
+    ]},
+
   { id:'range-block', n:'Range Block', tag:'RANGE',
     sub:'Where the static stretching actually goes',
     why:'Long passive holds do not belong in a warm-up, but they are not worthless — they are just in the wrong place. Put them here: after a session or on an off day, when a small transient loss of force costs you nothing and the tissue is already warm. The dose that matters is weekly, not daily. Roughly five minutes of accumulated stretch per muscle group per week is where measurable range starts to appear, and past about ten it stops paying. Two runs of this block covers that. Every position here is either loaded or actively held, because range you cannot produce force in is range you will not use on a field.',
@@ -3403,9 +3415,64 @@ Object.assign(EX, {
   regr: 'Hold a support, smaller circle.',
   flag: 'HIP LABRUM: closing the gate is flexion plus internal rotation, which is the provocative combination. Go to where it is free, not to where it stops.'
 },
+'balance-progression': {
+  n: 'Single-Leg Balance Progression', cat: 'armor', tags: ['ankle','knee','proprioception','prevention','home'],
+  timer: { w: 40, r: 15, rounds: 6, label: 'Balance — switch legs' },
+  why: 'Proprioceptive and balance training is one of the very few interventions with strong, repeatedly replicated evidence for preventing ankle sprains — particularly recurrent ones — and it carries over to the knee, because the thing that fails in a non-contact knee injury is neuromuscular control, not tissue strength. It is also the least impressive-looking exercise in this entire program, which is why almost nobody does it. Ultimate is played on uneven grass, in cleats, landing one-footed after a contested disc. That is a proprioceptive sport whether you train it as one or not.',
+  home: true,
+  setup: 'Barefoot, on grass or a firm floor. One leg, soft knee, weight spread across the whole foot rather than gripping with the toes.',
+  steps: [
+    'Level 1 — Stand on one leg, eyes open, 30 s. If that is easy, do not linger here.',
+    'Level 2 — Eyes closed, 30 s. This is a large jump; most people fail it the first time.',
+    'Level 3 — Eyes closed while you slowly turn your head side to side, then nod up and down.',
+    'Level 4 — Eyes closed, reaching the free foot out to the front, side and behind you without touching down.',
+    'Level 5 — Someone taps you lightly at the shoulder and hip at random, or you do it on a cushion or folded towel.',
+    'Work at the level where you are wobbling but not falling. That is the level that trains.'
+  ],
+  cues: ['Wobble is the point. If you are perfectly still, the level is too easy and you are not training anything.','Correct from the ankle and hip, not by windmilling your arms.','Do not claw the floor with your toes — spread the load through the whole foot.'],
+  faults: ['Staying at eyes-open forever because it feels like you are doing it right.','Holding onto something. If you need to, drop a level.','Doing it in shoes, which removes most of the information you are trying to train.'],
+  dose: '3 × 40 s per leg at your level',
+  prog: 'Move up a level, or add a ball toss.',
+  regr: 'Drop a level. Eyes open on a cushion is a legitimate place to be.'
+},
+'ankle-eversion': {
+  n: 'Banded Ankle Eversion', cat: 'armor', tags: ['ankle','prevention','armor','home'],
+  why: 'The lateral ankle sprain rolls the foot inward, and the peroneals are the only muscles that actively resist it. They are also the muscles nobody trains, because they do not show up in any lift. Strengthening them needs no equipment beyond a band and is the direct counter to the third most common injury site in ultimate. If you have ever rolled an ankle, they are almost certainly weaker on that side and you will feel the difference immediately.',
+  home: true,
+  setup: 'Sitting, legs out. Loop a band around the outside of your forefoot and anchor the other end to something on the inside — a table leg, or your other foot.',
+  steps: [
+    'Start with the foot rotated slightly inward, band taut.',
+    'Turn the sole of the foot outward and slightly up, against the band. Keep the shin still — the movement is at the ankle, not the hip.',
+    'Pause a beat at the end, then return slowly. The return is half the work.',
+    'Then do it the other way for a set: band on the inside of the foot, turn the foot inward, to keep the pair balanced.'
+  ],
+  cues: ['Slow on the way back. The eccentric is what actually has to catch a rolling ankle.','Shin still. If your knee is swinging, the band is too heavy.','Compare sides honestly — the previously injured ankle will usually be worse.'],
+  faults: ['Rotating the whole leg instead of the foot.','Going too heavy and losing the end range.','Only training eversion and skipping the inversion set.'],
+  dose: '2 × 15 each direction, per side',
+  prog: 'Heavier band, or add a slow 3-second lower.',
+  regr: 'Lighter band, or do it with no band against your own hand.'
+},
+'bound-stick': {
+  n: 'Lateral Bound & Stick', cat: 'plyo', tags: ['knee','landing','prevention','decel','home'],
+  why: 'The knee is the most injured site in ultimate, and the mechanism is almost never contact — it is a decelerating, rotating landing that the athlete could not control. Continuous skater bounds train the elastic push. This trains the opposite half: absorbing a sideways landing on one leg and holding it. Sticking the landing is what turns a plyometric into landing-quality work, and landing quality under fatigue is the thing that separates athletes who tear knees from athletes who do not.',
+  home: true,
+  repSec: 4,
+  setup: 'Grass or a forgiving surface. Space to move sideways about a body length.',
+  steps: [
+    'Push laterally off one leg and land on the other, out to the side.',
+    'Stick it. Absorb through the hip, knee tracking over the middle of the foot, and hold completely still for a full three-count before you move.',
+    'If your knee dives inward on landing, or you have to hop to catch yourself, the distance was too far. Shorten it.',
+    'Push back the other way and stick that one. That is one rep each side.'
+  ],
+  cues: ['The hold is the exercise. Anyone can jump sideways; the three-second freeze is what you are actually training.','Land hip first — sit into it — rather than catching it with a stiff knee.','Knee over the second toe. Watch it, or film a set from the front.'],
+  faults: ['Turning it into continuous bounds because the stick feels slow and boring.','Landing with the knee collapsing inward, which is the exact position you are trying to train out.','Going for distance. Distance is the plyo version; this is the control version.'],
+  dose: '3 × 5 per side, stick each one',
+  prog: 'Land with your eyes shut, or have someone toss you a disc mid-flight so you are catching rather than watching your feet.',
+  regr: 'Shorter bound, or step out and stick instead of jumping.'
+},
 'seven-way-hips': {
-  n: '7-Way Hips', cat: 'armor', tags: ['warmup','hip','glute','activate'],
-  why: 'The single most complete hip activation series there is: seven positions covering abduction, flexion, extension and both diagonals, plus circles in each direction. For a hip with a labral history it is close to ideal — every position is controlled, low-load and away from deep flexion, and it wakes up the gluteus medius that stops the femur drifting into the position the labrum objects to. It also gives you a daily read on which directions feel free and which do not.',
+  n: '8-Way Hips', cat: 'armor', tags: ['warmup','hip','glute','activate','labrum'],
+  why: 'The single most complete hip activation series there is: seven positions covering abduction, flexion, extension and both diagonals, plus circles in each direction — and an eighth that you added, which is the one that earns its place fastest. Positions 1 to 7 are all abduction-dominant with a straight leg. Position 8 bends the knees and rotates the hip in both directions, which is the only rotation in the series and the only time the internal rotators do anything. For a hip with a labral history that matters twice over: labral hips reliably lose internal rotation, it is one of the numbers you track under Tests, and rotation trained deliberately at a shallow flexion angle is exactly how you keep it without going near the position that pinches.',
   repSec: 1.5,
   setup: 'Side-lying, bottom knee bent for stability, head supported. Top leg straight, hips stacked and square — do not roll backward.',
   steps: [
@@ -3416,13 +3483,14 @@ Object.assign(EX, {
     '5 — Up and back: lift on a diagonal toward 45° behind. 10 reps.',
     '6 — Circles forward: 10 small controlled circles.',
     '7 — Circles backward: 10 small controlled circles.',
+    '8 — Rotate in and out: bend both knees to about 45\u00b0 and stack them, heels in line with the spine. Rotate the top knee up and open as far as it goes without the pelvis rolling back, then reverse it \u2014 keep the knees together and lift the top heel away instead, which rotates the hip inward. That is one rep, both directions. 10 reps.',
     'Then roll over and repeat the whole series on the other side.'
   ],
-  cues: ['Hips stacked and square the whole way — the moment you roll back, the hip flexor takes over.','Toes down, heel leading, on the abduction positions.','Small and controlled beats big and swung. It should burn in the side of the hip.'],
-  faults: ['Rolling the pelvis backward, which swaps glute medius for hip flexor.','Lifting too high — above about 30° the pelvis starts hiking.','Rushing the circles.'],
-  dose: '7 positions × 10 reps per side',
+  cues: ['Hips stacked and square the whole way — the moment you roll back, the hip flexor takes over.','Toes down, heel leading, on the abduction positions.','Small and controlled beats big and swung. It should burn in the side of the hip.','On position 8, the pelvis is the thing that wants to cheat. If it rolls, you are rotating your back, not your hip — shorten the range until it does not.'],
+  faults: ['Rolling the pelvis backward, which swaps glute medius for hip flexor.','Lifting too high — above about 30° the pelvis starts hiking.','Rushing the circles.','Only doing the opening half of position 8. The inward direction is the whole reason it is there.'],
+  dose: '8 positions × 10 reps per side',
   prog: 'Add a light band above the knees, or an ankle weight.',
-  regr: 'Fewer reps per position, or five positions.'
+  regr: 'Fewer reps per position, or drop to five positions, keeping 8.'
 },
 'clamshell': {
   n: 'Clamshells', cat: 'armor', tags: ['warmup','hip','glute','activate','labrum'],
@@ -3495,7 +3563,7 @@ Object.assign(EX, {
 },
 'build-ups': {
   n: 'Build-Up Runs', cat: 'speed', tags: ['warmup','speed','potentiate'],
-  why: 'The bridge between a warm-up and playing. Sprinting is the thing most likely to strain something, so you arrive there by degrees rather than in one step. Four graded runs takes two minutes and means your first hard cut of the game is not your first fast movement of the day.',
+  why: 'The bridge between a warm-up and playing. Sprinting is the thing most likely to strain something, so you arrive there by degrees rather than in one step. Four graded runs, most of which is walking back, and it means your first hard cut of the game is not your first fast movement of the day.',
   setup: '40 m of space.',
   steps: [
     'Run 1: 40 m at about 60%. Focus on being relaxed and tall.',
@@ -3560,7 +3628,7 @@ ROUTINES.unshift(
       { x:'deep-squat-hold', d:'2 × 40 s', t:{ r: 15 }, note:'Early and short — this is opening the hips while you are warm, not accumulating time. Check whether the bottom pinches today; that is worth knowing before you play.' },
       { x:'adductor-rockback', d:'10 rocks + 20 s hold' },
       { x:'clamshell', d:'15 per side, hold the last one 15 s' },
-      { x:'seven-way-hips', d:'7 positions × 8 reps per side' },
+      { x:'seven-way-hips', d:'8 positions × 8 reps per side' },
       { x:'adductor-squeeze-iso', d:'6 × 8 s', note:'Two ladders, submaximal. Wake the groin before you ask it to plant.' },
       { x:'ham-iso-long', d:'2 × 20 s per side', t:{ r: 12 }, note:'Pre-activating the hamstring at length, right before you sprint on it.' },
       { x:'a-skip', d:'2 × 20 m, walk back' },
@@ -3577,13 +3645,23 @@ ROUTINES.unshift(
       { x:'leg-swings', d:'10 linear + 10 lateral per leg' },
       { x:'deep-squat-hold', d:'40 s', note:'One hold. If the bottom pinches at the front of the hip today, stay higher and note it.' },
       { x:'clamshell', d:'15 per side' },
-      { x:'seven-way-hips', d:'7 positions × 6 reps per side' },
+      { x:'seven-way-hips', d:'8 positions × 6 reps per side' },
       { x:'adductor-squeeze-iso', d:'4 × 8 s' },
       { x:'ham-iso-long', d:'2 × 20 s per side', t:{ r: 12 } },
       { x:'a-skip', d:'2 × 20 m, walk back' },
       { x:'build-ups', d:'3 × 40 m at 60 / 80 / 90%, walk back' },
       { x:'cut-builds', d:'2 rounds building, both directions', est: 130 }
     ]},
+  { id:'warmup-min', n:'Sprint-Ready · Minimum', tag:'WARMUP',
+    sub:'The honest floor before you sprint hard',
+    why:'If the choice is between a thorough warm-up you skip and a short one you actually do, the short one wins every time. This is what is left when you strip the warm-up back to only the parts that are load-bearing. Raising muscle temperature is genuinely non-negotiable — warm muscle is more compliant, conducts faster and produces more force, and nothing else works properly before it has happened. The hamstring isometric is here because of your history and because it costs forty seconds. The build-ups are here because going from standing to a hard sprint in one step is the single most reliable way to strain something, and four graded runs removes that step. Everything cut from this list is beneficial. Nothing cut from it is essential. Use the full version when you have the time and this when you do not — but do not skip both.',
+    items:[
+      { x:'easy-jog', d:'2 min easy', note:'Non-negotiable. Warm first, everything else second.' },
+      { x:'leg-swings', d:'10 linear + 10 lateral per leg', note:'The only mobility that survives the cut — it is fast and it is active.' },
+      { x:'ham-iso-long', d:'2 × 20 s per side', t:{ r: 10 }, note:'Forty seconds of insurance on the tissue with the history.' },
+      { x:'build-ups', d:'4 × 40 m at 60 / 75 / 90 / 95%, walk back', note:'This is the actual on-ramp. If you cut anything else, keep these.' }
+    ]},
+
   { id:'warmup-half', n:'Half-Time Top-Up', tag:'WARMUP',
     sub:'So the second half does not start cold',
     why:'High-intensity running drops about 10% in the second half, and part of that is simply having sat down for ten minutes and gone cold. Three minutes of re-raising and two hip activations recovers most of it, and almost nobody does it.',

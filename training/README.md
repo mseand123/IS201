@@ -62,7 +62,7 @@ Three RAMP-ordered warm-ups lead the Program screen and sit on the Today quick-s
 **Frisbee Warm-Up** (~33 min, game day), **Warm-Up · Short** (~21 min) and **Half-Time Top-Up**
 (~5 min). They are legs-and-hips only — getting the body ready to sprint — with no throwing
 block; the arm warm-up lives in the Upper + Throw session instead. Eleven new exercises back
-them, including 7-way hips and clamshells, a short deep squat hold placed early, and graded
+them, including 8-way hips and clamshells, a short deep squat hold placed early, and graded
 build-up runs and cutting build-ups so the first hard plant of the day is deliberate.
 
 ## Stretching
@@ -79,6 +79,23 @@ The static work moved to the **Range Block** (Program → Getting longer): ~18 m
 actively-held positions run after a session or on an off day, dosed weekly (~5 min accumulated per
 muscle group per week) rather than daily. The deep squat hold is the one static position kept in
 the warm-up — short, loaded, early, and doubling as a daily read on the hip.
+
+## Injury prevention, against the actual data
+
+The published epidemiology for ultimate points at the knee first (19.5–39.7% of lower-limb
+injuries), the thigh second (11.9–31.9%) and the ankle third (15.5–30.1%), with a mechanism that
+is overwhelmingly non-contact: decelerating, cutting and landing under accumulated fatigue. The
+thigh was already covered by the Nordics, the Askling L-protocol and the long-length isometrics.
+**Knee & Ankle Insurance** (Program → Weak-link blocks, ~23 min) covers the other two — a
+single-leg balance progression, banded ankle eversion for the peroneals, lateral bound-and-stick
+for frontal-plane landing control, deceleration mechanics, single-leg RDLs and tibialis raises.
+It is written to be run *tired* rather than fresh, because fatigue is the condition the injury
+happens in.
+
+**Sprint-Ready · Minimum** (~10 min) is the fourth warm-up: what survives when the warm-up is
+stripped to only the load-bearing parts — raise, leg swings, one hamstring long-length isometric,
+and four graded build-ups. It exists because a short warm-up that gets done beats a thorough one
+that gets skipped.
 
 ## Not following the plan
 

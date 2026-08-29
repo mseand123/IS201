@@ -218,6 +218,22 @@ function manualSeconds(x, dose, est) {
     const sets = (d.match(/(\d+)\s*[×x]\s*\d+\s*min/i) || [])[1];
     return (sets ? +sets : 1) * (+mins[1]) * 60;
   }
+  // "3 × 40 s per leg", "2 × 25 s each direction" — a timed hold on an exercise that
+  // carries no timer block. Without this the seconds are read as reps by the branch below.
+  const secs = d.match(/(\d+)(?:\s*[–-]\s*(\d+))?\s*[×x]\s*(\d+)(?:\s*[–-]\s*(\d+))?\s*s\b/i);
+  if (secs) {
+    const sets = secs[2] ? (+secs[1] + +secs[2]) / 2 : +secs[1];
+    const hold = secs[4] ? (+secs[3] + +secs[4]) / 2 : +secs[3];
+    const rounds = sets * sideMult;
+    return rounds * hold + (rounds - 1) * (rest != null ? rest : (SET_REST[cat] != null ? SET_REST[cat] : 60));
+  }
+  // a single timed hold: "45 s per side", "90 s"
+  const oneSec = d.match(/^(\d+)(?:\s*[–-]\s*(\d+))?\s*s\b/i);
+  if (oneSec) {
+    const hold = oneSec[2] ? (+oneSec[1] + +oneSec[2]) / 2 : +oneSec[1];
+    return hold * sideMult + (sideMult - 1) * (rest != null ? rest : 15);
+  }
+
   // "3 × 8", "4 × 6–8 per side", "2 × 15–20"
   const sr = d.match(/(\d+)(?:\s*[–-]\s*(\d+))?\s*[×x]\s*(\d+)(?:\s*[–-]\s*(\d+))?/);
   if (sr) {
