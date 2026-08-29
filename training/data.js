@@ -843,7 +843,7 @@ const EX = {
   steps: ['Skip with a knee drive to hip height, ankle dorsiflexed.','Strike down and back under the hip, not out in front.','Stay tall, arms driving from the shoulder.','Fast ground contacts — the skip is quick, not floaty.'],
   cues: ['Toes up, knee up, foot down and back.','Tall posture, no leaning back.','Punch the ground.'],
   faults: ['Leaning back.','Reaching the foot forward.','Floating instead of striking.'],
-  dose: '2 × 20 m.',
+  dose: '2 × 20 m, walk back.',
   prog: 'A-skip → B-skip (add a leg extension and pawback).',
   regr: 'A-march.'
 },
@@ -1687,18 +1687,20 @@ const SESSIONS = {
   fixed: true,   // dominated by a game, a practice or pickleball
   purpose: 'Roughly 6,940 m total, 592 m of high-speed running, 16 sprints, 46 accelerations and 47 decelerations. Your warm-up decides whether you meet that fresh or cold.',
   blocks: [
-    { n: 'PRE (T-60)', why: 'The shoulder and the groin get prepared before the team warm-up', items: [
-      { x: 'ball-roll-foot', d: '60 s per foot' },
-      { x: 'adductor-squeeze-iso', d: '2 ladders, submaximal' },
-      { x: 'cuff-iso-er', d: '2 × 20 s each way' },
-      { x: 'ham-iso-long', d: '2 × 20 s per side', note: 'Post-activation potentiation for the exact tissue that tears.' }
+    { n: 'WARM-UP (T-60)', why: 'Run the Frisbee Warm-Up — this is the short list of what it must contain', items: [
+      { x: 'easy-jog', d: '4 min easy', note: 'The full RAMP warm-up lives under Program → Warm-up. Start it an hour before pull.' },
+      { x: 'seven-way-hips', d: '7 positions × 8 reps per side' },
+      { x: 'clamshell', d: '15 per side' },
+      { x: 'adductor-squeeze-iso', d: '6 × 8 s', note: 'Submaximal. Wake the groin before you ask it to plant.' },
+      { x: 'ham-iso-long', d: '2 × 20 s per side', t: { r: 12 }, note: 'Pre-activation for the exact tissue that tears at speed.' },
+      { x: 'build-ups', d: '4 × 40 m at 60 / 75 / 90 / 95%, walk back' },
+      { x: 'cut-builds', d: '3 rounds building, both directions' },
+      { x: 'disc-ladder', d: 'Short 20 · medium 15 · long 10 · hucks 5–8' }
     ]},
-    { n: 'PRE (T-30)', why: 'Ramp the system', items: [
-      { x: 'elastic-rebound-flow', d: '4 min' },
-      { x: 'a-skip', d: '2 × 20 m' },
-      { x: 'pogo-jumps', d: '2 × 15' },
-      { x: 'accel-sprint', d: '3 builds: 70%, 85%, 95%' },
-      { x: 'cut-decel', d: '4 cuts, building to game speed' }
+    { n: 'HALF TIME', why: 'Three minutes so the second half does not start cold', items: [
+      { x: 'easy-jog', d: '75 s easy' },
+      { x: 'clamshell', d: '12 per side' },
+      { x: 'build-ups', d: '2 × 30 m at 70 / 90%, walk back' }
     ]},
     { n: 'POST', why: 'The 10 minutes that decide how Sunday feels', items: [
       { x: 'ball-roll-foot', d: '90 s per foot' },
@@ -2884,17 +2886,6 @@ const ROUTINES = [
       { x:'side-plank-iso', d:'3 × 35 s per side' },
       { x:'deep-squat-hold', d:'2 × 2 min' }
     ]},
-  { id:'pregame', n:'Game-Day Warm-Up', tag:'SHORT',
-    sub:'Run this before the team warm-up, not instead of it',
-    why:'Your specific tissues get prepared before the generic warm-up starts. Pre-activating the hamstring at length before sprinting on it is the cheapest insurance in the whole program.',
-    items:[
-      { x:'ball-roll-foot', d:'60 s per foot' },
-      { x:'adductor-squeeze-iso', d:'2 ladders, submaximal' },
-      { x:'cuff-iso-er', d:'2 × 20 s each direction' },
-      { x:'ham-iso-long', d:'2 × 20 s per side' },
-      { x:'elastic-rebound-flow', d:'4 min' },
-      { x:'pogo-jumps', d:'2 × 15 contacts' }
-    ]},
   { id:'flush-short', n:'Post-Game Flush', tag:'SHORT',
     sub:'The ten minutes that decide how tomorrow feels',
     why:'Down-regulation and tissue work immediately after a game shortens the time you spend sympathetic and gets range back before it stiffens overnight.',
@@ -3299,6 +3290,264 @@ ROUTINES.push(
       { x:'side-plank-iso', d:'3 × 35 s per side' },
       { x:'hollow-hold', d:'3 × 25 s' },
       { x:'suitcase-carry', d:'3 × 30 m per side' }
+    ]}
+);
+
+
+/* ===========================================================
+   THE FRISBEE WARM-UP
+   Built on RAMP — Raise, Activate, Mobilise, Potentiate. The order is the
+   point: temperature first, then range, then the muscles that need waking,
+   then speed. Doing it backwards is how people pull things in warm-ups.
+   =========================================================== */
+Object.assign(EX, {
+
+'easy-jog': {
+  n: 'Easy Jog', cat: 'cond', tags: ['warmup','raise'],
+  why: 'The "raise" in RAMP, and the part people skip when they are late. Three to four minutes of easy running raises muscle temperature roughly 1–3°C, and warm muscle is more compliant, conducts faster, and produces more force. Nothing else in the warm-up works properly until this has happened — mobility work on a cold muscle is just stretching.',
+  setup: 'Sideline to sideline, or a lap of the field.',
+  steps: [
+    'Genuinely easy — conversational, nose breathing if you can.',
+    'Three to four minutes. You want to be warm and just barely breathing harder, not tired.',
+    'Add a few gentle direction changes in the last minute.',
+    'If it is under about 10°C, add two minutes and keep your layers on until the potentiate block.'
+  ],
+  cues: ['Easy means easy. This is temperature, not fitness.','Relaxed shoulders, relaxed hands.'],
+  faults: ['Turning it into a run.','Skipping it and going straight to stretching — the single most common warm-up error.'],
+  dose: '4 min easy',
+  prog: 'Add a minute in the cold.',
+  regr: 'Brisk walk building to a jog.',
+  timer: { w: 240, r: 0, rounds: 1, label: 'Easy jog' }
+},
+'leg-swings': {
+  n: 'Leg Swings — Linear & Lateral', cat: 'mobility', tags: ['warmup','hip','mobility'],
+  why: 'Dynamic range at the hip in both planes, which is what a cutting sport actually asks for. Swinging beats holding here: a warm-up wants range you can control at speed, and long static holds before explosive work can transiently reduce force output.',
+  est: 100,
+  setup: 'Hand on a fence, a post or a partner.',
+  steps: [
+    'Linear: swing one leg forward and back, starting small and growing the arc over 10 reps. Keep the torso still — the swing comes from the hip.',
+    'Lateral: face the support, swing the leg across the body and out, 10 reps. This is the adductor one, so take it gradually.',
+    'Ten each way, each leg. Never force the end of the range — let it open.',
+    'Keep the standing knee soft.'
+  ],
+  cues: ['Start small, grow the arc.','Torso still, hip does the work.','Relaxed leg — you are swinging it, not throwing it.'],
+  faults: ['Going to full range on the first rep.','Arching the low back on the backswing.'],
+  dose: '10 linear + 10 lateral per leg',
+  prog: 'Larger controlled arc.',
+  regr: 'Smaller arc, more support.',
+  flag: 'HIP LABRUM: the lateral swing crosses the midline. Keep it out of the pinch — a smaller arc that feels free beats a bigger one that catches.'
+},
+'open-close-gate': {
+  n: 'Open & Close the Gate', cat: 'mobility', tags: ['warmup','hip','mobility'],
+  why: 'Walking hip circles in both rotational directions. Ultimate plants and cuts through hip rotation constantly, and rotation is the range that disappears first in a hip that has been sitting all day.',
+  est: 75,
+  setup: 'Walking, 15 m of space.',
+  steps: [
+    'Open the gate: lift the knee to hip height, then rotate it out and away from the body, and step through.',
+    'Close the gate: lift the knee out to the side, rotate it in across the body, and step through.',
+    'Five each way per leg, walking forward.',
+    'Stay tall — no leaning to get more range.'
+  ],
+  cues: ['Knee leads, hip rotates around it.','Tall torso, no side bend.'],
+  faults: ['Leaning away to make the circle bigger.','Rushing.'],
+  dose: '5 open + 5 close per leg',
+  prog: 'Higher knee, larger circle.',
+  regr: 'Hold a support, smaller circle.',
+  flag: 'HIP LABRUM: closing the gate is flexion plus internal rotation, which is the provocative combination. Go to where it is free, not to where it stops.'
+},
+'seven-way-hips': {
+  n: '7-Way Hips', cat: 'armor', tags: ['warmup','hip','glute','activate'],
+  why: 'The single most complete hip activation series there is: seven positions covering abduction, flexion, extension and both diagonals, plus circles in each direction. For a hip with a labral history it is close to ideal — every position is controlled, low-load and away from deep flexion, and it wakes up the gluteus medius that stops the femur drifting into the position the labrum objects to. It also gives you a daily read on which directions feel free and which do not.',
+  repSec: 1.5,
+  setup: 'Side-lying, bottom knee bent for stability, head supported. Top leg straight, hips stacked and square — do not roll backward.',
+  steps: [
+    '1 — Straight up: lift the top leg to about 30°, toes pointed slightly down. 10 reps.',
+    '2 — Forward: leg slightly in front of the body, lift. 10 reps.',
+    '3 — Back: leg slightly behind the body line, lift. 10 reps.',
+    '4 — Up and forward: lift on a diagonal toward 45° in front. 10 reps.',
+    '5 — Up and back: lift on a diagonal toward 45° behind. 10 reps.',
+    '6 — Circles forward: 10 small controlled circles.',
+    '7 — Circles backward: 10 small controlled circles.',
+    'Then roll over and repeat the whole series on the other side.'
+  ],
+  cues: ['Hips stacked and square the whole way — the moment you roll back, the hip flexor takes over.','Toes down, heel leading, on the abduction positions.','Small and controlled beats big and swung. It should burn in the side of the hip.'],
+  faults: ['Rolling the pelvis backward, which swaps glute medius for hip flexor.','Lifting too high — above about 30° the pelvis starts hiking.','Rushing the circles.'],
+  dose: '7 positions × 10 reps per side',
+  prog: 'Add a light band above the knees, or an ankle weight.',
+  regr: 'Fewer reps per position, or five positions.'
+},
+'clamshell': {
+  n: 'Clamshells', cat: 'armor', tags: ['warmup','hip','glute','activate','labrum'],
+  why: 'The most direct way to switch on the deep hip external rotators and gluteus medius before you plant on them. For your hip specifically this is a good exercise: hip flexion stays shallow, the movement is pure external rotation, and it is nowhere near the flexion-adduction-internal-rotation position that provokes a labrum. Being able to hold the hip out of internal rotation under load is the whole point.',
+  repSec: 2,
+  setup: 'Side-lying, hips and knees stacked, knees bent to about 45°, heels in line with the spine. Band above the knees if you have one.',
+  steps: [
+    'Press the heels together and keep them together for every rep.',
+    'Rotate the top knee open, lifting it as far as it goes WITHOUT the pelvis rolling backward.',
+    'Pause a beat at the top and feel it in the side and back of the hip.',
+    'Lower under control. Fifteen to twenty reps, then a 15-second hold at the top on the last one.'
+  ],
+  cues: ['Heels glued together.','Hips stacked — put your back against a wall to check.','It should burn in the side of the hip, not the front and not the low back.'],
+  faults: ['Rolling the pelvis back to open the knee further — the only fault that matters.','Going fast.','Feeling it in the front of the hip, which means the pelvis has rotated.'],
+  dose: '2 × 15 per side, hold the last rep 15 s',
+  prog: 'Band above the knees, then a heavier band.',
+  regr: 'No band, fewer reps, back against a wall.'
+},
+'walking-lunge-rotation': {
+  n: 'Lunge with Rotation', cat: 'mobility', tags: ['warmup','hip','spine','mobility'],
+  why: 'The most efficient single warm-up movement there is: hip flexor length on the back leg, adductor and hamstring on the front, thoracic rotation on top, all while moving. It covers in one drill what four static stretches would.',
+  repSec: 7,
+  setup: 'Walking, 15 m of space.',
+  steps: [
+    'Step into a long lunge and drop the back knee toward the floor.',
+    'Place the same-side hand on the floor inside the front foot.',
+    'Rotate the opposite arm up toward the ceiling and follow it with your eyes. Hold 2 seconds.',
+    'Drive the front heel down, step through, alternate. Five per side.'
+  ],
+  cues: ['Long stride — a short one gives you nothing.','Rotate from the mid-back, follow the hand with your eyes.','Back glute squeezed to feel the hip flexor.'],
+  faults: ['Short stride.','Rotating from the low back.','Rushing through without the 2-second hold.'],
+  dose: '5 per side',
+  prog: 'Add a reach-under between the rotations.',
+  regr: 'Back knee down, hands on a low support.',
+  flag: 'HIP LABRUM: this is a deep front-leg hip flexion position. Shorten the stride if the front hip pinches.'
+},
+'inchworm': {
+  n: 'Inchworm', cat: 'mobility', tags: ['warmup','posterior','shoulder','mobility'],
+  why: 'Posterior chain length and shoulder loading in one, and it wakes up the trunk. The walk-out is also a gentle plank, which is exactly the amount of core activation a warm-up needs.',
+  repSec: 6,
+  setup: 'Standing, 10 m of space.',
+  steps: [
+    'Hinge and place the hands on the floor, keeping the legs as straight as is comfortable.',
+    'Walk the hands out to a plank. Ribs down, glutes on — do not let the hips sag.',
+    'Hold the plank for a beat, then walk the feet back toward the hands with small steps.',
+    'Stand up. Five reps.'
+  ],
+  cues: ['Legs as straight as they will go on the walk-in — that is the hamstring part.','Hips do not sag in the plank.','Small steps on the way back in.'],
+  faults: ['Bending the knees to make the walk-in easy.','Sagging through the middle.'],
+  dose: '5 reps',
+  prog: 'Add a push-up at the plank.',
+  regr: 'Bend the knees, shorter walk-out.'
+},
+'carioca': {
+  n: 'Carioca', cat: 'speed', tags: ['warmup','hip','lateral','potentiate'],
+  why: 'Hip rotation at speed, which is the thing you cannot get from any drill done standing still. It also rehearses the crossover step that starts most cuts in ultimate. Build it up gradually — carioca cold is a classic way to tweak a groin.',
+  est: 120,
+  setup: '20 m of space, side-on to the direction of travel.',
+  steps: [
+    'Travel sideways: trail leg crosses in FRONT, then behind, alternating.',
+    'Drive the hips — the rotation comes from the pelvis, not the feet.',
+    'First pass at 50%, second at 75%. Both directions.',
+    'Stay tall and light; do not let it become a shuffle.'
+  ],
+  cues: ['Hips rotate, shoulders stay square down the line.','Quick feet, tall posture.','Build the speed across passes — never full speed on the first one.'],
+  faults: ['Going hard on the first rep.','Turning the shoulders instead of the hips.','Heavy, flat feet.'],
+  dose: '2 × 20 m each direction, building',
+  prog: 'Faster, longer.',
+  regr: 'Slow grapevine, shorter distance.'
+},
+'build-ups': {
+  n: 'Build-Up Runs', cat: 'speed', tags: ['warmup','speed','potentiate'],
+  why: 'The bridge between a warm-up and playing. Sprinting is the thing most likely to strain something, so you arrive there by degrees rather than in one step. Four graded runs takes two minutes and means your first hard cut of the game is not your first fast movement of the day.',
+  setup: '40 m of space.',
+  steps: [
+    'Run 1: 40 m at about 60%. Focus on being relaxed and tall.',
+    'Run 2: 40 m at 75%.',
+    'Run 3: 40 m at 90%.',
+    'Run 4: 40 m at 95%. If anything feels grabby, stop here and add another 60% run instead.',
+    'Walk back between each. No rush.'
+  ],
+  cues: ['Relaxed face and hands, especially on the fast ones.','Each run a little quicker than the last, not a jump straight to full.','Tall posture — you are rehearsing good mechanics, not just getting warm.'],
+  faults: ['Going 60% then straight to 100%.','Short recovery, so the last one is a tired sprint rather than a fast one.'],
+  dose: '4 × 40 m at 60 / 75 / 90 / 95%, walk back between',
+  prog: 'Add a fifth at 100% on a game day.',
+  regr: 'Three runs, capped at 85%.',
+  flag: 'This is where a hamstring tells you how it feels. Grabby on run 3 means you do not do run 4 — add easy running instead and reassess.'
+},
+'cut-builds': {
+  n: 'Cutting Build-Ups', cat: 'speed', tags: ['warmup','cod','potentiate','ultimate'],
+  why: 'Rehearsing the actual movement of the sport at rising intensity. Your first hard plant should not be against a defender — it should be here, deliberately, at 70%, then 85%, then full. This is also the last chance for the groin and hip to tell you something before it matters.',
+  est: 200,
+  setup: 'Two cones about 10 m apart, plus space to accelerate.',
+  steps: [
+    'Round 1 at 70%: jog in, plant, cut at 45°, accelerate out. Both directions.',
+    'Round 2 at 85%: same pattern, sharper plant.',
+    'Round 3 at full: add a 90° cut and a comeback cut.',
+    'Finish with two deep cuts at game speed.',
+    'Plant foot outside the hip, knee tracking over the foot, hips low into the turn.'
+  ],
+  cues: ['Get low before the plant, not during it.','Plant foot outside the hip — never underneath you.','Knee tracks over the foot; do not let it fall inward.'],
+  faults: ['Going full speed on the first rep.','Cutting off a straight, locked leg.','Knee collapsing inward — the position that provokes both the groin and the hip.'],
+  dose: '3 rounds building, both directions',
+  prog: 'Add reactive cuts off a partner call.',
+  regr: 'Two rounds, capped at 85%, wider cutting angles.'
+},
+'disc-ladder': {
+  n: 'Throwing Ladder', cat: 'throw', tags: ['warmup','shoulder','ultimate'],
+  why: 'A shoulder and forearm warm-up that happens to be throwing practice. Going straight to hucks cold is how throwing shoulders start aching mid-season — and the first ten minutes of throwing is also where your release actually gets calibrated for the day.',
+  setup: 'Partner, starting close.',
+  steps: [
+    'Short (5–8 m): 20 throws, flick and backhand, easy. Wrist and forearm only.',
+    'Medium (15–20 m): 15 each side, adding shoulder and a little step.',
+    'Long (30–40 m): 10 each side at 70–80%, full step-through.',
+    'Hucks: 5–8 at full effort, no more. Count them — they are the load.',
+    'Two or three overhead throws at most, and only if the shoulder is quiet.'
+  ],
+  cues: ['Legs and hips generate the throw; the arm delivers it.','Do not skip the short block — that is where the forearm warms up.','Count the hard ones.'],
+  faults: ['Starting at 30 m.','Unlimited hucks in the warm-up, leaving nothing for the game.','Overheads before anything else is warm.'],
+  dose: 'Short 20 · medium 15 · long 10 · hucks 5–8',
+  prog: 'Add a few break-mark throws at the medium distance.',
+  regr: 'Short and medium only.',
+  est: 480
+}
+});
+
+ROUTINES.unshift(
+  { id:'warmup-full', n:'Frisbee Warm-Up', tag:'WARMUP',
+    sub:'Game day · the full thing, done properly',
+    why:'Built on RAMP — Raise, Activate, Mobilise, Potentiate — because the order matters more than the exercises do. Temperature first, then range, then the muscles that need waking, then speed, then the disc. Mobility on a cold muscle is just stretching, and sprinting before activation is how people strain things in warm-ups. Start it around 45 minutes before pull; if you finish early, keep moving rather than sitting down.',
+    items:[
+      { x:'easy-jog', d:'4 min easy' },
+      { x:'leg-swings', d:'10 linear + 10 lateral per leg' },
+      { x:'open-close-gate', d:'5 open + 5 close per leg' },
+      { x:'walking-lunge-rotation', d:'5 per side' },
+      { x:'inchworm', d:'5 reps' },
+      { x:'adductor-rockback', d:'10 rocks + 20 s hold' },
+      { x:'clamshell', d:'15 per side, hold the last one 15 s' },
+      { x:'seven-way-hips', d:'7 positions × 8 reps per side' },
+      { x:'adductor-squeeze-iso', d:'6 × 8 s', note:'Two ladders, submaximal. Wake the groin before you ask it to plant.' },
+      { x:'ham-iso-long', d:'2 × 20 s per side', t:{ r: 12 }, note:'Pre-activating the hamstring at length, right before you sprint on it.' },
+      { x:'cuff-iso-er', d:'2 × 15 s each direction', t:{ r: 8 } },
+      { x:'a-skip', d:'2 × 20 m, walk back' },
+      { x:'carioca', d:'2 × 20 m each direction, building, walk back' },
+      { x:'pogo-jumps', d:'2 × 15 contacts, 30 s rest' },
+      { x:'build-ups', d:'4 × 40 m at 60 / 75 / 90 / 95%, walk back' },
+      { x:'cut-builds', d:'3 rounds building, both directions' },
+      { x:'disc-ladder', d:'Short 20 · medium 15 · long 10 · hucks 5–8' }
+    ]},
+  { id:'warmup-short', n:'Warm-Up · Short', tag:'WARMUP',
+    sub:'Pickup, practice, or a late arrival',
+    why:'The version that survives contact with reality. Same RAMP order, half the volume, and nothing important removed — the raise, the two hip activations, the graded build-ups and the throwing ladder all stay, because those are the parts that actually protect you. Cut this further and you are just jogging.',
+    items:[
+      { x:'easy-jog', d:'3 min easy' },
+      { x:'leg-swings', d:'10 linear + 10 lateral per leg' },
+      { x:'walking-lunge-rotation', d:'4 per side' },
+      { x:'clamshell', d:'15 per side' },
+      { x:'seven-way-hips', d:'7 positions × 6 reps per side' },
+      { x:'adductor-squeeze-iso', d:'4 × 8 s' },
+      { x:'ham-iso-long', d:'2 × 20 s per side', t:{ r: 12 } },
+      { x:'a-skip', d:'2 × 20 m, walk back' },
+      { x:'build-ups', d:'3 × 40 m at 60 / 80 / 90%, walk back' },
+      { x:'cut-builds', d:'2 rounds building, both directions', est: 130 },
+      { x:'disc-ladder', d:'Short 15 · medium 10 · long 8', est: 300 }
+    ]},
+  { id:'warmup-half', n:'Half-Time Top-Up', tag:'WARMUP',
+    sub:'Three minutes so the second half does not start cold',
+    why:'High-intensity running drops about 10% in the second half, and part of that is simply having sat down for ten minutes and gone cold. Three minutes of re-raising and two hip activations recovers most of it, and almost nobody does it.',
+    items:[
+      { x:'easy-jog', d:'75 s easy' },
+      { x:'clamshell', d:'12 per side' },
+      { x:'adductor-squeeze-iso', d:'3 × 8 s' },
+      { x:'build-ups', d:'2 × 30 m at 70 / 90%, walk back' }
     ]}
 );
 

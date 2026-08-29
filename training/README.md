@@ -52,6 +52,15 @@ session — every block, then the Daily Armor — one exercise at a time:
 - **Back**, **Pause**, and **How-to** without losing your place — mid-session the dialog leads with the steps and cues and folds the rationale away
 - Screen wake lock while it runs; completed exercises tick themselves off on the Today screen
 
+## Warm-up
+
+Three RAMP-ordered warm-ups lead the Program screen and sit on the Today quick-start row:
+**Frisbee Warm-Up** (~45 min, game day — raise, mobilise, activate, potentiate, then the disc),
+**Warm-Up · Short** (~27 min, pickup or a late arrival) and **Half-Time Top-Up** (~5 min). Eleven
+new exercises back them, including 7-way hips and clamshells for the hip, graded build-up runs
+and cutting build-ups so the first hard plant of the day is deliberate, and a throwing ladder
+that treats hucks as the load they are.
+
 ## Not following the plan
 
 Any day can be swapped: **Train something else** on the Today screen lists every session with its
@@ -60,8 +69,9 @@ CNS-expensive days back to back against the day before or after. The override is
 in `S.override`, so the week grid, estimates and weekly balance all follow it.
 
 The Program screen carries a **weekly balance** panel — high days, max-velocity exposures,
-Copenhagen sessions, Nordic sessions — against their target ranges, plus a warning naming any
-back-to-back high days. That is the check that keeps improvisation honest: day order is
+Copenhagen sessions, Nordic sessions — measured against what *this phase* plans rather than a
+fixed target, so a restoration block with no high days reads as correct instead of a shortfall.
+Plus a warning naming any back-to-back high days. That is the check that keeps improvisation honest: day order is
 flexible, weekly structure is not.
 
 ## Voice

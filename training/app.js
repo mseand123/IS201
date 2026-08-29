@@ -157,8 +157,10 @@ function resolve(it) {
    =========================================================== */
 
 // How long to rest after a set you finish by hand, by exercise category.
-const REST_BY_CAT = { strength: 90, plyo: 90, speed: 150, iso: 75, cond: 60, throw: 60,
-  armor: 45, tissue: 20, mobility: 20, breath: 15 };
+// The gap before the NEXT exercise — a transition, not a training rest. Rests
+// between sets of the same exercise are read out of the dose text instead.
+const REST_BY_CAT = { strength: 45, plyo: 45, speed: 45, iso: 25, cond: 30, throw: 20,
+  armor: 20, tissue: 10, mobility: 10, breath: 0 };
 
 // "Per your current Copenhagen week" resolves to the actual dose for this date.
 function copenDose(d) {
@@ -173,7 +175,7 @@ const REP_SECONDS = { strength: 4, plyo: 3, throw: 5, armor: 3.5, mobility: 3, t
 const SET_REST = { strength: 90, plyo: 90, speed: 150, throw: 60, armor: 45, cond: 60, mobility: 20, tissue: 15, iso: 60, breath: 0 };
 
 function parseRestSeconds(dose) {
-  if (/walk-?back/i.test(dose)) return 50;
+  if (/walk[\s-]?back/i.test(dose)) return 50;
   const m = dose.match(/(\d+)(?:\s*[–-]\s*(\d+))?\s*(s|sec|seconds?|min|minutes?)\s*(?:rest|recovery|between)/i);
   if (!m) return null;
   const lo = +m[1], hi = m[2] ? +m[2] : lo, v = (lo + hi) / 2;
@@ -181,13 +183,21 @@ function parseRestSeconds(dose) {
 }
 
 // Seconds of actual work for a set the athlete times themselves.
-function manualSeconds(x, dose) {
+function manualSeconds(x, dose, est) {
   const e = EX[x], cat = e.cat;
+  if (est) return est;
   if (e.est) return e.est;
   const d = dose || e.dose || '';
   const perSide = /per (side|leg|foot|arm|hand)|each (side|leg|foot|arm|hand)|each direction/i.test(d);
   const sideMult = perSide ? 2 : 1;
   const rest = parseRestSeconds(d);
+  const secPer = e.repSec != null ? e.repSec
+    : /contacts?\b/i.test(d) ? 0.5
+    : (REP_SECONDS[cat] != null ? REP_SECONDS[cat] : 3.5);
+
+  // "7 positions × 10 reps per side" — one continuous series, no rest between
+  const pos = d.match(/(\d+)\s*positions?\s*[×x]\s*(\d+)/i);
+  if (pos) return +pos[1] * +pos[2] * secPer * sideMult + (+pos[1] - 1) * 3 * sideMult;
 
   // "5 × 20 m" / "4 × (30 m build + 20 m fly)" — sprint work, dominated by rest
   const dist = d.match(/(\d+)\s*[×x]\s*\(?\s*(\d+)\s*m/i);
@@ -213,8 +223,7 @@ function manualSeconds(x, dose) {
   if (sr) {
     const sets = sr[2] ? (+sr[1] + +sr[2]) / 2 : +sr[1];
     const reps = sr[4] ? (+sr[3] + +sr[4]) / 2 : +sr[3];
-    const secPerRep = REP_SECONDS[cat] != null ? REP_SECONDS[cat] : 3.5;
-    const work = sets * reps * secPerRep * sideMult;
+    const work = sets * reps * secPer * sideMult;
     return work + (sets - 1) * (rest != null ? rest : (SET_REST[cat] != null ? SET_REST[cat] : 60));
   }
   return 60;
@@ -227,7 +236,7 @@ function stepSeconds(st) {
     const rest = Math.max(st.rest, sw ? 8 : 0);
     return COUNT_IN + st.work * st.rounds + rest * Math.max(0, st.rounds - 1);
   }
-  return COUNT_IN + manualSeconds(st.x, st.dose) + (st.restAfter || 0);
+  return COUNT_IN + manualSeconds(st.x, st.dose, st.est) + (st.restAfter || 0);
 }
 const runSeconds = steps => steps.reduce((a, st) => a + stepSeconds(st), 0);
 function sessionSeconds(session, date, opts) {
@@ -305,6 +314,7 @@ function makeStep(it, blockName, key, ii) {
   return {
     ii: ii, key: key, block: blockName,
     x: r.x, dose: r.d, note: r.note || (isHome() && e.home) || e.flag || '',
+    est: it.est || null,
     mode: t ? 'timed' : 'manual',
     work: t ? t.w : 0, rest: t ? t.r : 0, rounds: t ? t.rounds : 1,
     label: t ? t.label : '',
@@ -1100,14 +1110,15 @@ function viewToday() {
     ]),
     pickBar(date),
     el('div', { class: 'shortcut' }, [
-      el('span', { class: 'eyebrow' }, 'At your desk'),
-      (() => {
-        const r = ROUTINES.find(x => x.id === 'desk-reset');
+      el('span', { class: 'eyebrow' }, 'Quick start'),
+      ...['warmup-full', 'warmup-short', 'desk-reset'].map(id => {
+        const r = ROUTINES.find(x => x.id === id);
+        if (!r) return null;
         return el('button', {
           class: 'btn btn-sm', onclick: () => RUN.open(stepsFromItems(r.items, r.n), date, 0, { routine: r.id })
         }, [ico(ICONS.play, 'nav-ico'), r.n + ' · ' + fmtMins(runSeconds(stepsFromItems(r.items, r.n)))]);
-      })(),
-      el('button', { class: 'btn btn-ghost btn-sm', onclick: () => go('desk') }, 'All desk routines →')
+      }).filter(Boolean),
+      el('button', { class: 'btn btn-ghost btn-sm', onclick: () => go('desk') }, 'Desk routines →')
     ]),
     el('div', { class: 'stack stack-sm' }, [
       el('div', { class: 'eyebrow' }, 'Session notes'),
@@ -1143,19 +1154,20 @@ function pickBar(date) {
   ]);
 }
 
-// What the week actually contains, so swapping days stays honest.
+/* What the week actually contains, measured against what THIS phase plans —
+   a restoration block having no high days is correct, not a shortfall.      */
 const WEEK_RULES = [
-  { k: 'high',  n: 'High days',        lo: 2, hi: 3, why: 'CNS-expensive days. More than three and recovery loses.' },
-  { k: 'maxv',  n: 'Max-velocity',     lo: 1, hi: 2, why: 'Eccentric hamstring strength falls past ~7–8 weekly efforts above 90%.' },
-  { k: 'copen', n: 'Copenhagen',       lo: 2, hi: 2, why: 'Adductor outcomes track accumulated volume.' },
-  { k: 'nordic', n: 'Nordic',          lo: 1, hi: 2, why: 'Potent and sore. Twice a week is the ceiling.' }
+  { k: 'high',   n: 'High days',     why: 'CNS-expensive days. Going over what the phase plans is where recovery loses.' },
+  { k: 'maxv',   n: 'Max-velocity',  why: 'Eccentric hamstring strength falls past roughly 7–8 weekly efforts above 90%.' },
+  { k: 'copen',  n: 'Copenhagen',    why: 'Adductor outcomes track accumulated volume, so under-shooting costs you.' },
+  { k: 'nordic', n: 'Nordic',        why: 'Potent and sore. Twice a week is the ceiling.' }
 ];
-function weekBalance(monday) {
+function countWeek(pick) {
   const c = { high: 0, maxv: 0, copen: 0, nordic: 0 }, types = [];
   for (let i = 0; i < 7; i++) {
-    const d = addDays(monday, i), pl = planFor(d), items = pl.session.blocks.flatMap(b => b.items).map(it => it.x);
-    types.push(pl.session.type);
-    if (pl.session.type === 'HIGH') c.high++;
+    const sn = pick(i), items = sn.blocks.flatMap(b => b.items).map(it => it.x);
+    types.push(sn.type);
+    if (sn.type === 'HIGH') c.high++;
     if (items.includes('flying-30') || items.includes('curve-sprint')) c.maxv++;
     if (items.includes('copenhagen-adduction')) c.copen++;
     if (items.includes('nordic-curl')) c.nordic++;
@@ -1164,15 +1176,23 @@ function weekBalance(monday) {
   for (let i = 0; i < 7; i++) if (types[i] === 'HIGH' && types[(i + 1) % 7] === 'HIGH') clashes.push(DOW[i] + '→' + DOW[(i + 1) % 7]);
   return { c: c, clashes: clashes };
 }
+function weekBalance(monday) {
+  const actual = countWeek(i => planFor(addDays(monday, i)).session);
+  const phase = phaseFor(monday);
+  const planned = countWeek(i => SESSIONS[phase.micro[i]]);
+  return { a: actual.c, p: planned.c, clashes: actual.clashes };
+}
 function balancePanel(monday) {
   const b = weekBalance(monday);
+  const anyDiff = WEEK_RULES.some(r => b.a[r.k] !== b.p[r.k]);
   return el('div', { class: 'balance' }, [
+    el('span', { class: 'eyebrow' }, anyDiff ? 'This week vs the plan' : 'This week matches the plan'),
     ...WEEK_RULES.map(r => {
-      const v = b.c[r.k];
-      const state = v > r.hi ? 'hard' : v < r.lo ? 'warn' : 'good';
+      const v = b.a[r.k], want = b.p[r.k];
+      const state = v > want ? 'hard' : v < want ? 'warn' : 'good';
       return el('div', { class: 'bal-item', title: r.why }, [
         el('span', { class: 'l' }, r.n),
-        el('span', { class: 'v num chip ' + state }, v + (r.lo === r.hi ? ' / ' + r.hi : ' · ' + r.lo + '–' + r.hi))
+        el('span', { class: 'v num chip ' + state }, v === want ? String(v) : v + ' / ' + want)
       ]);
     }),
     b.clashes.length ? el('div', { class: 'bal-warn' }, [
@@ -1221,6 +1241,17 @@ function viewProgram() {
   }));
 
   return el('div', { class: 'stack stack-xl' }, [
+    el('div', { class: 'stack stack-md' }, [
+      el('div', { class: 'sec-head' }, [
+        el('h2', null, 'Warm-up'),
+        el('div', { class: 'trace' }),
+        el('p', { class: 'small muted', style: 'max-width:72ch' },
+          'Built on RAMP — raise, mobilise, activate, potentiate — because the order matters more than the exercises. '
+          + 'Temperature first, then range, then the muscles that need waking, then speed, then the disc. '
+          + 'The full one is a game-day warm-up: start it an hour before pull.')
+      ]),
+      el('div', { class: 'routine-grid' }, ROUTINES.filter(r => r.tag === 'WARMUP').map(r => routineCard(r, today)))
+    ]),
     el('div', { class: 'stack stack-md' }, [
       el('div', { class: 'sec-head' }, [
         el('h2', null, 'This week'),
