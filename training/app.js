@@ -1168,6 +1168,7 @@ function viewToday() {
           class: 'btn btn-sm', onclick: () => RUN.open(stepsFromItems(r.items, r.n), date, 0, { routine: r.id })
         }, [ico(ICONS.play, 'nav-ico'), r.n + ' · ' + fmtMins(runSeconds(stepsFromItems(r.items, r.n)))]);
       }).filter(Boolean),
+      el('button', { class: 'btn btn-ghost btn-sm', onclick: () => { go('program'); goSub('play'); } }, 'Playing today? →'),
       el('button', { class: 'btn btn-ghost btn-sm', onclick: () => go('desk') }, 'Desk routines →')
     ]),
     el('div', { class: 'stack stack-sm' }, [
@@ -1290,106 +1291,133 @@ function viewProgram() {
     ]);
   }));
 
-  return el('div', { class: 'stack stack-xl' }, [
-    el('div', { class: 'stack stack-md' }, [
-      el('div', { class: 'sec-head' }, [
-        el('h2', null, 'Warm-up'),
-        el('div', { class: 'trace' }),
-        el('p', { class: 'small muted', style: 'max-width:72ch' },
-          'Built on RAMP — raise, mobilise, activate, potentiate — because the order matters more than the exercises. '
-          + 'Temperature first, then range, then the muscles that need waking, then speed, then the disc. '
-          + 'The full one is a game-day warm-up: start it an hour before pull.')
-      ]),
-      el('div', { class: 'routine-grid' }, ROUTINES.filter(r => r.tag === 'WARMUP').map(r => routineCard(r, today)))
+  /* ---- the sections, each self-contained so the hub can show one at a time ---- */
+  const sec = (title, blurb, body) => el('div', { class: 'stack stack-md' }, [
+    el('div', { class: 'sec-head' }, [
+      el('h2', null, title), el('div', { class: 'trace' }),
+      blurb ? el('p', { class: 'small muted', style: 'max-width:72ch' }, blurb) : null
     ]),
-    el('div', { class: 'stack stack-md' }, [
-      el('div', { class: 'sec-head' }, [
-        el('h2', null, 'This week'),
-        el('div', { class: 'trace' }),
-        el('p', { class: 'small muted' }, 'Week of ' + fmtShort(mon) + ' · ' + cur.n + '. Bars show CNS cost: one bar is a low day, three is a high day. Never two threes back to back.')
-      ]),
-      balancePanel(mon),
-      el('div', { class: 'row', style: 'margin-bottom:.6rem' }, [
-        el('button', { class: 'btn btn-sm', onclick: () => { viewDate = addDays(mon, -7); render(); } }, '‹ Previous week'),
-        el('button', { class: 'btn btn-sm', onclick: () => { viewDate = new Date(); render(); } }, 'This week'),
-        el('button', { class: 'btn btn-sm', onclick: () => { viewDate = addDays(mon, 7); render(); } }, 'Next week ›')
-      ]),
-      weekGrid
-    ]),
-    el('div', { class: 'stack stack-md' }, [
-      el('div', { class: 'sec-head' }, [
-        el('h2', null, 'The year'),
-        el('div', { class: 'trace' }),
-        el('p', { class: 'small muted' }, 'Anchored to the UFA calendar: the 2026 season closed at Championship Weekend on August 28, and the 2027 season opens in late April. Everything counts backward from there.')
-      ]),
-      timeline,
-      el('div', { class: 'stack stack-sm', style: 'margin-top:.8rem' }, PHASES.map(p => el('div', {
-        class: 'card' + (p.id === cur.id ? '' : ''), style: p.id === cur.id ? 'border-color:var(--hi-fill)' : ''
-      }, [
-        el('div', { class: 'spread' }, [
+    body
+  ]);
+  const grid = rs => el('div', { class: 'routine-grid' }, rs.map(r => routineCard(r, today)));
+  const byTag = t => ROUTINES.filter(r => r.tag === t);
+  const byId = id => ROUTINES.find(r => r.id === id);
+
+  const SECTIONS = {
+    play: {
+      n: 'Frisbee', blurb: 'Game day, in the order it happens.',
+      body: () => el('div', { class: 'stack stack-xl' }, PLAY_GROUPS.map(g =>
+        sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
+    },
+    blocks: {
+      n: 'Weak-link blocks', blurb: 'One thing, done properly, rather than fitted around a session.',
+      body: () => sec('Weak-link blocks',
+        'The rehab and prevention tracks as standalone blocks. Knee & Ankle Insurance is written to be run tired.',
+        grid(byTag('ARMOR')))
+    },
+    short: {
+      n: 'When time is short', blurb: 'Not the whole session — the part with the highest return.',
+      body: () => sec('When time is short', 'Not the whole session — the part of it with the highest return.', grid(byTag('SHORT')))
+    },
+    week: {
+      n: 'This week', blurb: 'The plan, and how the load balances across it.',
+      body: () => sec('This week',
+        'Week of ' + fmtShort(mon) + ' · ' + cur.n + '. Bars show CNS cost: one bar is a low day, three is a high day. Never two threes back to back.',
+        el('div', { class: 'stack stack-md' }, [
+          balancePanel(mon),
           el('div', { class: 'row' }, [
-            el('span', { class: 'eyebrow' }, p.tag),
-            el('h3', { class: 'display', style: 'font-size:var(--t-md)' }, p.n),
-            p.id === cur.id ? el('span', { class: 'chip solid' }, 'CURRENT') : null
+            el('button', { class: 'btn btn-sm', onclick: () => { viewDate = addDays(mon, -7); render(); } }, '\u2039 Previous week'),
+            el('button', { class: 'btn btn-sm', onclick: () => { viewDate = new Date(); render(); } }, 'This week'),
+            el('button', { class: 'btn btn-sm', onclick: () => { viewDate = addDays(mon, 7); render(); } }, 'Next week \u203a')
           ]),
-          el('span', { class: 'num xs muted' }, fmtShort(parse(p.start)) + ' → ' + fmtShort(parse(p.end)))
-        ]),
-        el('p', { class: 'small', style: 'margin-top:.4rem;max-width:70ch' }, p.focus),
-        el('ul', { class: 'small muted', style: 'margin-top:.4rem' }, p.keys.map(k => el('li', null, k))),
-        el('div', { class: 'row', style: 'margin-top:.5rem' }, p.micro.map((sid, i) =>
-          el('span', { class: 'chip', title: SESSIONS[sid].n }, DOW[i] + ' · ' + SESSIONS[sid].n)))
-      ])))
+          weekGrid
+        ]))
+    },
+    year: {
+      n: 'The year', blurb: 'Phases, anchored to the UFA calendar.',
+      body: () => sec('The year',
+        'Anchored to the UFA calendar: the 2026 season closed at Championship Weekend on August 28, and the 2027 season opens in late April. Everything counts backward from there.',
+        el('div', { class: 'stack stack-md' }, [
+          timeline,
+          el('div', { class: 'stack stack-sm' }, PHASES.map(p => el('div', {
+            class: 'card', style: p.id === cur.id ? 'border-color:var(--hi-fill)' : ''
+          }, [
+            el('div', { class: 'spread' }, [
+              el('div', { class: 'row' }, [
+                el('span', { class: 'eyebrow' }, p.tag),
+                el('h3', { class: 'display', style: 'font-size:var(--t-md)' }, p.n),
+                p.id === cur.id ? el('span', { class: 'chip solid' }, 'CURRENT') : null
+              ]),
+              el('span', { class: 'num xs muted' }, fmtShort(parse(p.start)) + ' \u2192 ' + fmtShort(parse(p.end)))
+            ]),
+            el('p', { class: 'small', style: 'margin-top:.4rem;max-width:70ch' }, p.focus),
+            el('ul', { class: 'small muted', style: 'margin-top:.4rem' }, p.keys.map(k => el('li', null, k))),
+            el('div', { class: 'row', style: 'margin-top:.5rem' }, p.micro.map((sid, i) =>
+              el('span', { class: 'chip', title: SESSIONS[sid].n }, DOW[i] + ' \u00b7 ' + SESSIONS[sid].n)))
+          ])))
+        ]))
+    },
+    copen: {
+      n: 'Copenhagen ladder', blurb: 'Ten weeks to rebuild the adductor.',
+      body: () => sec('Copenhagen ladder',
+        'Volume drives the outcome, so the jumps are deliberately small — most people who fail this exercise failed the progression, not the exercise.',
+        el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
+          el('thead', null, [el('tr', null, [el('th', null, 'Wk'), el('th', null, 'Exercise'), el('th', null, 'Dose'), el('th', null, 'Freq'), el('th', null, 'Note')])]),
+          el('tbody', null, COPEN.map(c => {
+            const now = copenWeekFor(new Date());
+            return el('tr', { style: now && now.w === c.w ? 'background:var(--warn-bg)' : '' }, [
+              el('td', { class: 'n' }, String(c.w)),
+              el('td', null, [exLink(c.ex)]),
+              el('td', null, c.d), el('td', null, c.f),
+              el('td', { class: 'small muted' }, c.note)
+            ]);
+          }))
+        ])]))
+    }
+  };
+
+  // A section is open: show it with a way back.
+  if (sub && SECTIONS[sub]) {
+    return el('div', { class: 'stack stack-lg' }, [
+      el('button', { class: 'btn btn-sm back-link', onclick: () => goSub(null) }, '\u2039 All of Program'),
+      SECTIONS[sub].body()
+    ]);
+  }
+
+  // The hub.
+  const counts = {
+    play: PLAY_GROUPS.reduce((a, g) => a + g.ids.length, 0) + ' blocks',
+    blocks: byTag('ARMOR').length + ' blocks',
+    short: byTag('SHORT').length + ' blocks',
+    week: fmtShort(mon),
+    year: PHASES.length + ' phases',
+    copen: COPEN.length + ' weeks'
+  };
+  const tile = (key, icon, hi) => el('button', {
+    class: 'tile' + (hi ? ' tile-hi' : ''), onclick: () => goSub(key)
+  }, [
+    el('span', { class: 'tile-ico' }, [ico(icon, 'nav-ico')]),
+    el('span', { class: 'tile-body' }, [
+      el('span', { class: 'tile-n' }, SECTIONS[key].n),
+      el('span', { class: 'tile-sub' }, SECTIONS[key].blurb)
     ]),
-    el('div', { class: 'stack stack-md' }, [
-      el('div', { class: 'sec-head' }, [
-        el('h2', null, 'Weak-link blocks'),
-        el('div', { class: 'trace' }),
-        el('p', { class: 'small muted' }, 'The rehab tracks as standalone blocks, for when you want to hit one thing properly rather than fit it around a session.')
-      ]),
-      el('div', { class: 'routine-grid' }, ROUTINES.filter(r => r.tag === 'ARMOR').map(r => routineCard(r, today)))
+    el('span', { class: 'tile-meta num' }, counts[key])
+  ]);
+
+  return el('div', { class: 'stack stack-lg' }, [
+    el('div', { class: 'sec-head' }, [
+      el('h2', null, 'Program'),
+      el('div', { class: 'trace' }),
+      el('p', { class: 'small muted', style: 'max-width:72ch' },
+        'Everything that is not today\u2019s session. Start with Frisbee on a game day.')
     ]),
-    el('div', { class: 'stack stack-md' }, [
-      el('div', { class: 'sec-head' }, [
-        el('h2', null, 'When time is short'),
-        el('div', { class: 'trace' }),
-        el('p', { class: 'small muted' }, 'Not the whole session — the part of it with the highest return.')
-      ]),
-      el('div', { class: 'routine-grid' }, ROUTINES.filter(r => r.tag === 'SHORT').map(r => routineCard(r, today)))
-    ]),
-    el('div', { class: 'stack stack-md' }, [
-      el('div', { class: 'sec-head' }, [
-        el('h2', null, 'After, and between'),
-        el('div', { class: 'trace' }),
-        el('p', { class: 'small muted' }, 'What to do when the game ends, what to do with a tournament evening, and the ball work that goes with both.')
-      ]),
-      el('div', { class: 'routine-grid' }, ROUTINES.filter(r => r.tag === 'RECOVERY').map(r => routineCard(r, today)))
-    ]),
-    el('div', { class: 'stack stack-md' }, [
-      el('div', { class: 'sec-head' }, [
-        el('h2', null, 'Getting longer'),
-        el('div', { class: 'trace' }),
-        el('p', { class: 'small muted' }, 'Static holds, kept out of the warm-up and put where they pay — after a session or on an off day. Twice a week is the dose.')
-      ]),
-      el('div', { class: 'routine-grid' }, ROUTINES.filter(r => r.tag === 'RANGE').map(r => routineCard(r, today)))
-    ]),
-    el('div', { class: 'stack stack-md' }, [
-      el('div', { class: 'sec-head' }, [
-        el('h2', null, 'Copenhagen ladder'),
-        el('div', { class: 'trace' }),
-        el('p', { class: 'small muted' }, 'Ten weeks to rebuild the adductor. Volume drives the outcome, so the jumps are deliberately small — most people who fail this exercise failed the progression, not the exercise.')
-      ]),
-      el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
-        el('thead', null, [el('tr', null, [el('th', null, 'Wk'), el('th', null, 'Exercise'), el('th', null, 'Dose'), el('th', null, 'Freq'), el('th', null, 'Note')])]),
-        el('tbody', null, COPEN.map(c => {
-          const now = copenWeekFor(new Date());
-          return el('tr', { style: now && now.w === c.w ? 'background:var(--warn-bg)' : '' }, [
-            el('td', { class: 'n' }, String(c.w)),
-            el('td', null, [exLink(c.ex)]),
-            el('td', null, c.d), el('td', null, c.f),
-            el('td', { class: 'small muted' }, c.note)
-          ]);
-        }))
-      ])])
+    el('div', { class: 'hub' }, [
+      tile('play', ICONS.play, true),
+      tile('blocks', ICONS.armor),
+      tile('short', ICONS.clock),
+      tile('week', ICONS.today),
+      tile('year', ICONS.program),
+      tile('copen', ICONS.tests)
     ])
   ]);
 }
@@ -1408,6 +1436,7 @@ const RSEL = {};
 const rsel = id => RSEL[id] || (RSEL[id] = new Set());
 // A re-render rebuilds the <details>, so remember which ones the user had open.
 const ROPEN = new Set();
+const WHYOPEN = new Set();   // rationale is collapsed by default so a list of blocks stays scannable
 
 function routineCard(r, date) {
   const log = S.routineLog || [];
@@ -1453,7 +1482,16 @@ function routineCard(r, date) {
       el('span', { class: 'num xs muted' }, '≈ ' + fmtMins(runSeconds(stepsFromItems(chosen, r.n))))
     ]),
     el('p', { class: 'small muted' }, r.sub),
-    el('p', { class: 'small' }, r.why),
+    (() => {
+      const shown = WHYOPEN.has(r.id);
+      return el('div', { class: 'why-fold' }, [
+        el('button', {
+          class: 'why-toggle', 'aria-expanded': shown ? 'true' : 'false',
+          onclick: () => { shown ? WHYOPEN.delete(r.id) : WHYOPEN.add(r.id); render(); }
+        }, shown ? 'Hide the reasoning' : 'Why this block exists'),
+        shown ? el('p', { class: 'small', style: 'margin-top:.45rem' }, r.why) : null
+      ]);
+    })(),
     open ? picker : null,
     el('div', { class: 'routine-actions' }, [
       el('button', {
@@ -1572,6 +1610,7 @@ function viewBuild() {
    VIEW: LIBRARY
    =========================================================== */
 let libFilter = 'all', libQuery = '';
+let libTab = 'browse';   // the builder is its own tab, not 149 more cards below the library
 const CATS = [
   ['all', 'All'], ['__desk', 'Desk'], ['__home', 'No gym needed'], ['iso', 'Isometrics'], ['speed', 'Speed'], ['plyo', 'Plyometrics'],
   ['strength', 'Strength'], ['armor', 'Rehab'], ['tissue', 'Tissue & fascia'],
@@ -1588,13 +1627,14 @@ function viewLibrary() {
     const qOk = !q || e.n.toLowerCase().includes(q) || (e.tags || []).join(' ').includes(q) || e.why.toLowerCase().includes(q);
     return catOk && qOk;
   });
+  const tab = el('div', { class: 'seg' }, [
+    el('button', { class: 'seg-b' + (libTab === 'build' ? '' : ' on'), onclick: () => { libTab = 'browse'; render(); } }, 'Browse'),
+    el('button', { class: 'seg-b' + (libTab === 'build' ? ' on' : ''), onclick: () => { libTab = 'build'; render(); } }, 'Build a session')
+  ]);
+  if (libTab === 'build') return el('div', { class: 'stack stack-md' }, [tab, viewBuild()]);
   return el('div', { class: 'stack stack-md' }, [
-    el('div', { class: 'sec-head' }, [
-      el('h2', null, 'Exercise library'),
-      el('div', { class: 'trace' }),
-      el('p', { class: 'small muted' }, Object.keys(EX).length + ' exercises. Every one has a set-up, a step-by-step, coaching cues, the faults that ruin it, and why it is in the program at all.')
-    ]),
-    el('div', { class: 'filters' }, [
+    tab,
+    el('div', { class: 'filters filters-stick' }, [
       el('input', {
         type: 'text', placeholder: 'Search…', value: libQuery, style: 'min-width:180px',
         oninput: ev => { libQuery = ev.target.value; const f = document.activeElement === ev.target; render(); if (f) { const n = $('.filters input'); n.focus(); n.setSelectionRange(n.value.length, n.value.length); } }
@@ -1604,12 +1644,12 @@ function viewLibrary() {
         onclick: () => { libFilter = k; render(); }
       }, label))
     ]),
+    el('p', { class: 'xs muted num' }, ids.length + ' of ' + Object.keys(EX).length + ' exercises'),
     el('div', { class: 'lib-grid' }, ids.map(id => el('button', { class: 'lib-card', onclick: () => openEx(id) }, [
       el('span', { class: 'n' }, EX[id].n),
       el('span', { class: 'd' }, EX[id].dose),
       el('div', { class: 'row', style: 'gap:.25rem;margin-top:.15rem' }, (EX[id].tags || []).slice(0, 3).map(t => el('span', { class: 'chip' }, t)))
-    ]))),
-    viewBuild()
+    ])))
   ]);
 }
 
@@ -1823,7 +1863,11 @@ const NAV = [
   ['method', 'Method', ICONS.method, '6']
 ];
 let route = 'today';
-function go(r) { route = r; window.scrollTo(0, 0); render(); }
+let sub = null;   // the open Program section, or null for its hub
+// Tapping the tab you are already on returns to that screen's top level,
+// the way every phone app behaves.
+function go(r) { sub = null; route = r; window.scrollTo(0, 0); render(); }
+function goSub(s) { sub = s; window.scrollTo(0, 0); render(); }
 
 function strip() {
   const pl = planFor(new Date());

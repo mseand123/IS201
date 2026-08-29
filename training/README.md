@@ -59,8 +59,8 @@ session — every block, then the Daily Armor — one exercise at a time:
 ## Warm-up
 
 Three RAMP-ordered warm-ups lead the Program screen and sit on the Today quick-start row:
-**Frisbee Warm-Up** (~33 min, game day), **Warm-Up · Short** (~21 min) and **Half-Time Top-Up**
-(~5 min). They are legs-and-hips only — getting the body ready to sprint — with no throwing
+**Frisbee Warm-Up** (~36 min, game day), **Warm-Up · Short** (~23 min), **Sprint-Ready · Minimum**
+(~12 min) and **Half-Time Top-Up** (~5 min). They are legs-and-hips only — getting the body ready to sprint — with no throwing
 block; the arm warm-up lives in the Upper + Throw session instead. Eleven new exercises back
 them, including 8-way hips and clamshells, a short deep squat hold placed early, and graded
 build-up runs and cutting build-ups so the first hard plant of the day is deliberate.
@@ -75,7 +75,7 @@ injury-prevention effect where strength training has a large one. Two athlete-sp
 apply — passive end-range hip flexion/adduction/IR is the provocative position for a labral hip,
 and "tight hamstrings" in a sprinter is usually protective tone rather than short tissue.
 
-The static work moved to the **Range Block** (Program → Getting longer): ~18 minutes of loaded and
+The static work moved to the **Range Block** (Program → Frisbee → After you play): ~18 minutes of loaded and
 actively-held positions run after a session or on an off day, dosed weekly (~5 min accumulated per
 muscle group per week) rather than daily. The deep squat hold is the one static position kept in
 the warm-up — short, loaded, early, and doubling as a daily read on the hip.
@@ -92,7 +92,7 @@ for frontal-plane landing control, deceleration mechanics, single-leg RDLs and t
 It is written to be run *tired* rather than fresh, because fatigue is the condition the injury
 happens in.
 
-**Sprint-Ready · Minimum** (~10 min) is the fourth warm-up: what survives when the warm-up is
+**Sprint-Ready · Minimum** (~12 min) is the fourth warm-up: what survives when the warm-up is
 stripped to only the load-bearing parts — raise, leg swings, one hamstring long-length isometric,
 and four graded build-ups. It exists because a short warm-up that gets done beats a thorough one
 that gets skipped.
@@ -105,7 +105,7 @@ Three separate problems, three blocks, on the Program screen:
   for active cool-downs is weak: the best review of the question found them largely ineffective
   for soreness, performance and injury. What it is actually for is getting range back before you
   stiffen overnight and dropping out of a sympathetic state so eating and sleeping happen sooner.
-- **Between Games** (~16 min) — a long gap at a tournament, which is a different problem from
+- **Between Games** (~18 min) — a long gap at a tournament, which is a different problem from
   half-time: fully cold, possibly stiff, but with a game already in the legs. Spend the first hour
   horizontal and eating; start this about twenty minutes before pull and do not skip the top of
   the intensity ladder.
@@ -143,6 +143,25 @@ is the wrong neighbourhood for a labral hip.
 `check-data.js` validates the content schema — field types, referenced exercise ids, unique
 routine and article ids, and that no routine carries a tag no screen renders. Run it with
 `node training/check-data.js`.
+
+## Getting around
+
+The Program screen is a hub, not a scroll. Six tiles — **Frisbee**, **Weak-link blocks**, **When
+time is short**, **This week**, **The year**, **Copenhagen ladder** — each opening one section with
+a way back. Frisbee is the game-day entry point and groups everything by when you reach for it:
+**Before you play**, **Between games**, **After you play**. That last group is where the cool-down,
+the ball work, the stretching and the tournament-evening block all live, which is where they were
+impossible to find before. `PLAY_GROUPS` in `data.js` defines the grouping, and `check-data.js`
+fails the build if a game-day routine appears in no group.
+
+Three things follow from treating this as a phone app rather than a document:
+
+- A routine's rationale is collapsed behind **Why this block exists**, so a list of blocks stays
+  scannable. Open state persists across re-renders.
+- The Library is two tabs, **Browse** and **Build a session**. It used to render all 149 exercise
+  cards *and* 149 builder cards on one page — roughly 39 phone screens. Search and the category
+  chips are sticky, so they stay reachable inside a long list.
+- Tapping the tab you are already on returns to that screen's top level.
 
 ## Not following the plan
 

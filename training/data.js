@@ -3820,4 +3820,21 @@ ROUTINES.unshift(
     ]}
 );
 
-if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB, ROUTINES }; }
+/* ===========================================================
+   PLAY GROUPS — game day, in the order it actually happens.
+   The tags say what a routine is; this says when you reach for it.
+   =========================================================== */
+const PLAY_GROUPS = [
+  { n: 'Before you play',
+    sub: 'Pick by how much time you have. All three finish sprint-ready.',
+    ids: ['warmup-full', 'warmup-short', 'warmup-min'] },
+  { n: 'Between games',
+    sub: 'A ten-minute half-time and a long tournament gap are different problems.',
+    ids: ['warmup-half', 'warmup-between'] },
+  { n: 'After you play',
+    sub: 'The cool-down, the ball work, the stretching, and what to do with a tournament evening.',
+    ids: ['flush-short', 'ball-work', 'range-block', 'tournament-night'] }
+];
+
+
+if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB, ROUTINES, PLAY_GROUPS }; }

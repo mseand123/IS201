@@ -699,3 +699,106 @@ body.running { overflow: hidden; }
 .run-body.paused .run-ring svg { opacity: .4; }
 .run-body.paused .run-time { opacity: .55; }
 .paused-tag { color: var(--hi) !important; letter-spacing: .14em; }
+
+/* ===========================================================
+   HUB — the Program screen's top level. Big, thumb-sized targets
+   that say what is behind them, in the flat 4px language the rest
+   of the app already uses.
+   =========================================================== */
+.hub {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: .55rem;
+}
+.tile {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  width: 100%;
+  min-height: 66px;
+  padding: .85rem .95rem;
+  text-align: left;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  transition: border-color .12s ease, background .12s ease, transform .06s ease;
+}
+.tile:hover { border-color: var(--brand); background: var(--surface); }
+.tile:active { transform: scale(.985); }
+.tile:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.tile-ico {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 34px; height: 34px;
+  border-radius: 4px;
+  background: var(--sunken);
+  color: var(--brand);
+}
+.tile-ico svg { width: 17px; height: 17px; }
+.tile-body { display: flex; flex-direction: column; gap: .12rem; min-width: 0; flex: 1 1 auto; }
+.tile-n { font-family: var(--display); font-weight: 600; font-size: var(--t-md); line-height: 1.2; }
+.tile-sub { font-size: var(--t-xs); color: var(--muted); line-height: 1.35; }
+.tile-meta {
+  flex: 0 0 auto;
+  font-size: var(--t-xs);
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+/* The one tile that is the answer on a game day. */
+.tile-hi { border-color: var(--hi-fill); }
+.tile-hi .tile-ico { background: var(--hi-fill); color: var(--on-hi); }
+.tile-hi:hover { border-color: var(--hi-fill); }
+
+.back-link { align-self: flex-start; color: var(--muted); }
+.back-link:hover { color: var(--brand); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tile { transition: none; }
+  .tile:active { transform: none; }
+}
+
+/* A routine's rationale is worth reading once, not re-reading on every scroll. */
+.why-toggle {
+  display: inline-flex; align-items: center; gap: .3rem;
+  background: none; border: 0; padding: 0;
+  font: inherit; font-size: var(--t-xs);
+  color: var(--muted); cursor: pointer; text-align: left;
+}
+.why-toggle::before { content: "▸"; font-size: .7em; }
+.why-toggle[aria-expanded="true"]::before { content: "▾"; }
+.why-toggle:hover { color: var(--brand); }
+.why-toggle:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+/* ---------- segmented control: two views of one screen ---------- */
+.seg {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  align-self: flex-start;
+}
+.seg-b {
+  background: none; border: 0; cursor: pointer;
+  font: inherit; font-size: var(--t-xs);
+  padding: .42rem .85rem;
+  color: var(--muted);
+}
+.seg-b + .seg-b { border-left: 1px solid var(--line); }
+.seg-b:hover { color: var(--ink); background: var(--sunken); }
+.seg-b.on { background: var(--brand-2); color: var(--on-brand); }
+.seg-b:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
+
+/* Keep search and filters reachable in a long list instead of only at the top. */
+.filters-stick {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--paper);
+  padding: .5rem 0;
+  margin-bottom: -.2rem;
+}

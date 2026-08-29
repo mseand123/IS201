@@ -33,6 +33,17 @@ d.ROUTINES.forEach(r => {
 d.ARMOR.items.forEach(i => check(i.x, 'ARMOR'));
 Object.entries(d.HOME_SUB).forEach(([k, v]) => { check(k, 'HOME_SUB key'); check(v.x, 'HOME_SUB value for ' + k); });
 
+// every play-group id must resolve to a routine
+const byId = new Set(d.ROUTINES.map(r => r.id));
+d.PLAY_GROUPS.forEach(g => {
+  ck(typeof g.n === 'string' && typeof g.sub === 'string', 'play group needs a name and a subtitle');
+  g.ids.forEach(id => ck(byId.has(id), 'play group "' + g.n + '" references a missing routine: ' + id));
+});
+// nothing game-day should be unreachable from the play hub
+const grouped = new Set(d.PLAY_GROUPS.flatMap(g => g.ids));
+d.ROUTINES.filter(r => ['WARMUP', 'RECOVERY', 'RANGE'].includes(r.tag))
+  .forEach(r => ck(grouped.has(r.id), r.id + ' is game-day but appears in no play group'));
+
 // routine ids unique
 const ids = d.ROUTINES.map(r => r.id);
 ck(new Set(ids).size === ids.length, 'routine ids must be unique: ' + ids.filter((x,i)=>ids.indexOf(x)!==i).join(', '));
