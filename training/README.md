@@ -97,6 +97,26 @@ stripped to only the load-bearing parts — raise, leg swings, one hamstring lon
 and four graded build-ups. It exists because a short warm-up that gets done beats a thorough one
 that gets skipped.
 
+## After the game, and between games
+
+Three separate problems, three blocks, on the Program screen:
+
+- **Post-Game Flush** (~17 min) — after a single game. Deliberately narrow, because the evidence
+  for active cool-downs is weak: the best review of the question found them largely ineffective
+  for soreness, performance and injury. What it is actually for is getting range back before you
+  stiffen overnight and dropping out of a sympathetic state so eating and sleeping happen sooner.
+- **Between Games** (~16 min) — a long gap at a tournament, which is a different problem from
+  half-time: fully cold, possibly stiff, but with a game already in the legs. Spend the first hour
+  horizontal and eating; start this about twenty minutes before pull and do not skip the top of
+  the intensity ladder.
+- **Tournament Night** (~25 min) — day one done, playing again tomorrow. The block itself is the
+  small part; its notes carry the actual hierarchy — sleep, then carbohydrate early (~1 g/kg/hr
+  for the first few hours), then protein and fluid. Cold water immersion is included *here*
+  specifically, because it improves next-day sprint recovery at a tournament while blunting
+  adaptation when used after ordinary strength training.
+
+The reasoning, including what is theatre, is in the Method screen under **Recovery, Honestly**.
+
 ## Not following the plan
 
 Any day can be swapped: **Train something else** on the Today screen lists every session with its

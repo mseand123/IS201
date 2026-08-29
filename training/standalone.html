@@ -2731,6 +2731,32 @@ const ARTICLES = [
   {callout:{k:'warnc', h:'The practical version', p:'Before you play: dynamic, active, graded, finishing fast. After you play or on an off day: hold things, load end range, take your time. If you only have five minutes before a game, spend all five on build-ups and cutting build-ups — not one of them on a stretch.'}}
 ]},
 
+{ id:'recovery', n:'Recovery, Honestly', sub:'What moves the needle between games, and what is theatre', body:[
+  {p:'Recovery is the area of sports science with the widest gap between what athletes spend time on and what actually works. Most of the visible stuff — the cool-down jog, the foam roller, the stretching circle — is somewhere between mildly useful and purely ritual. Most of what actually works is boring, happens in a kitchen or a bed, and nobody films it.'},
+
+  {h:'The cool-down does less than you think'},
+  {p:'The best review of this question compared active cool-downs against simply stopping, across performance, soreness, injury and long-term adaptation. The conclusion was that active cool-downs are largely ineffective for improving recovery or reducing muscle soreness, and there is no good evidence they prevent injury. That is an uncomfortable finding given how universal the practice is, but it is the finding.'},
+  {p:'The Post-Game Flush in this app is deliberately narrow because of that. It is there to get range back before you stiffen overnight and to drop you out of a sympathetic state so eating and sleeping happen sooner. Both of those are real and both are worth ten minutes. Neither of them is training, and if you skip it what you lose is comfort, not adaptation.'},
+
+  {h:'What actually determines how you play tomorrow'},
+  {p:'In rough order of size, and it is not close:'},
+  {ul:[
+    'Sleep. The single largest lever, by a distance. Sleep extension improves sprint times in athletes; sleep restriction degrades them. On a tournament weekend, a decision that costs you an hour of sleep is almost never worth whatever it bought you.',
+    'Carbohydrate, early. Glycogen is what you actually ran out of. Refilling it is fastest in the first few hours, at roughly a gram per kilogram of bodyweight per hour — for you that is real meals plus something sweet, started within half an hour of finishing rather than after the shower and the drive.',
+    'Protein and fluid. Less time-critical than carbohydrate but not optional. Drink to thirst plus a bit, and get protein into the same window.',
+    'Everything else. Contrast showers, rolling, compression, stretching. These are worth single-digit percentages and they mostly act on how you feel rather than what you can do. That is not nothing — feeling less wrecked at 8am on day two has real value — but do not let them displace the three above.'
+  ]},
+
+  {h:'Cold water is context-dependent, and the context flips the answer'},
+  {p:'Cold water immersion is the one recovery modality where the right answer genuinely reverses depending on when you use it. After a tournament day, it helps: immersion improved recovery of sprint speed twenty-four hours after a simulated tournament and reduced markers of muscle damage. After ordinary strength training, it hurts: chronic post-training cold immersion measurably blunts the strength and hypertrophy adaptations you did the session to get.'},
+  {p:'So the rule is periodised, not universal. Cold water during competition and congested fixtures, where you need to perform again tomorrow and there is no adaptation to protect. No cold water in the hours after a lifting session in a training block, where the adaptation is the entire point. If you want the shower anyway on a training day, take it warm.'},
+
+  {h:'The between-games problem'},
+  {p:'A long gap at a tournament is not a longer half-time, and treating it as one is how people get hurt in game two. You have gone fully cold and possibly stiff, but you also have a game in your legs, so it is not a repeat of the morning either. Spend the first hour horizontal, eating and drinking. Start the Between Games block about twenty minutes before pull, and do not skip the top of the intensity ladder — the most common tournament injury story is someone who felt fine, assumed they were still warm from earlier, and sprinted flat out on cold tissue.'},
+
+  {callout:{k:'warnc', h:'If you only do three things at a tournament', p:'Eat carbohydrate within half an hour of the final whistle. Sleep as much as the schedule physically allows. Re-warm properly before game two rather than trusting that you are still warm. Those three outrank every other recovery intervention on this page combined.'}}
+]},
+
 { id:'groin', n:'Dossier: The Adductor', sub:'Your weakest link, and the one with the clearest fix', body:[
   {p:'A weak adductor in a cutting sport is not a minor asymmetry. Groin injuries are among the most common and most stubborn problems in field sport, and adductor strength is the most modifiable risk factor we know of.'},
   {h:'What the evidence actually says'},
@@ -2898,6 +2924,9 @@ const ARTICLES = [
 { id:'sources', n:'Sources', sub:'Where the claims come from', body:[
   {p:'Every protocol in this program traces to published work. These are the primary anchors, so you can check any of it yourself.'},
   {ul:[
+    'Van Hooren & Peake — Do we need a cool-down after exercise? A narrative review. Sports Medicine, 2018 (active cool-downs largely ineffective for soreness, performance and injury).',
+    'Cold water immersion improves recovery of sprint speed following a simulated tournament — PubMed 30957673.',
+    'Adaptations to post-exercise cold water immersion: friend, foe, or futile? Front Sports Act Living, 2021 (the periodised case: use it in competition, avoid it after strength work).',
     'Behm et al. — Acute effects of muscle stretching on physical performance, range of motion, and injury incidence in healthy active individuals: a systematic review. Appl Physiol Nutr Metab, 2016 (the <60 s vs >60 s dose split, and dynamic stretching\u2019s small positive effect).',
     'Simic, Sarabon & Markovic — Does pre-exercise static stretching inhibit maximal muscular performance? A meta-analytical review. Scand J Med Sci Sports, 2013.',
     'Lauersen, Bertelsen & Andersen — The effectiveness of exercise interventions to prevent sports injuries: systematic review and meta-analysis. Br J Sports Med, 2014 (strength training roughly a third of acute injuries; stretching no significant effect).',
@@ -3640,14 +3669,26 @@ const ROUTINES = [
       { x:'side-plank-iso', d:'3 × 35 s per side' },
       { x:'deep-squat-hold', d:'2 × 2 min' }
     ]},
-  { id:'flush-short', n:'Post-Game Flush', tag:'SHORT',
+  { id:'flush-short', n:'Post-Game Flush', tag:'RECOVERY',
     sub:'The block that decides how tomorrow feels',
-    why:'Down-regulation and tissue work immediately after a game shortens the time you spend sympathetic and gets range back before it stiffens overnight.',
+    why:'Worth being straight about what this does. The evidence that an active cool-down speeds recovery, reduces soreness or improves how you play tomorrow is weak — the best review of it concluded that active cool-downs are largely ineffective for those things. What this block is actually for is narrower and still worth ten minutes: getting range back before it stiffens overnight, and dropping you out of a sympathetic state so that eating and sleeping happen sooner. Those two are real. If you skip it, the thing you lose is comfort, not adaptation — so do it because it makes tomorrow more pleasant, not because you think it is training.',
     items:[
       { x:'ball-roll-foot', d:'90 s per foot' },
       { x:'nerve-glide-sciatic', d:'2 × 10 per side' },
       { x:'deep-squat-hold', d:'2 × 2 min' },
       { x:'box-breathing', d:'5 min' }
+    ]},
+
+  { id:'tournament-night', n:'Tournament Night', tag:'RECOVERY',
+    sub:'Day one is done and you play again tomorrow',
+    why:'This is the highest-leverage block in the app and almost none of it is exercise. Between days of a tournament, the things that actually determine how you play tomorrow are, in order: sleep, carbohydrate, protein, fluid. Everything else — this block included — is worth single-digit percentages by comparison. Refuel early rather than perfectly: roughly a gram of carbohydrate per kilogram of bodyweight per hour for the first few hours is the rate that refills glycogen fastest, which at 68 kg means real meals plus something sweet, starting within the first half hour rather than after the shower. Then protein, then keep drinking. Cold water immersion earns its place here specifically — it improves next-day sprint recovery after a simulated tournament — even though it is a bad idea after ordinary strength training, because it blunts the adaptation you were training for. At a tournament there is no adaptation to protect. You just need to run again in fourteen hours. One thing deliberately left out of the list below: if you are short on sleep, NSDR or a nap is worth more than everything in this block put together, but it is a twenty-minute lie-down rather than part of a circuit, so run it on its own from the library.',
+    items:[
+      { x:'contrast-shower', d:'6 min, finish cold', note:'The one context where this is clearly worth doing. Finish cold. Skip it entirely if you are already shivering or it is late and it will cost you sleep — sleep wins.' },
+      { x:'foam-roll-post', d:'6 min total', note:'For comfort and range, not for "flushing lactate", which is not a thing that happens.' },
+      { x:'ball-roll-foot', d:'60 s per foot', note:'Cleats and grass all day. This one genuinely helps the next morning.' },
+      { x:'couch-stretch', d:'2 × 40 s per side', note:'Hip flexors, after a day of sprinting and sitting between games.' },
+      { x:'deep-squat-hold', d:'2 min', note:'Your daily read on the hip. If it pinches more than this morning, note it — that is useful information for tomorrow.' },
+      { x:'box-breathing', d:'5 min', note:'Get out of a sympathetic state so you can actually eat and sleep.' }
     ]},
 
   { id:'knee-ankle', n:'Knee & Ankle Insurance', tag:'ARMOR',
@@ -4379,6 +4420,19 @@ ROUTINES.unshift(
       { x:'leg-swings', d:'10 linear + 10 lateral per leg', note:'The only mobility that survives the cut — it is fast and it is active.' },
       { x:'ham-iso-long', d:'2 × 20 s per side', t:{ r: 10 }, note:'Forty seconds of insurance on the tissue with the history.' },
       { x:'build-ups', d:'4 × 40 m at 60 / 75 / 90 / 95%, walk back', note:'This is the actual on-ramp. If you cut anything else, keep these.' }
+    ]},
+
+  { id:'warmup-between', n:'Between Games', tag:'WARMUP',
+    sub:'A long gap at a tournament, and getting sharp again for the next pull',
+    why:'A ninety-minute gap between games is a different problem from half-time. You have gone fully cold, you have probably eaten, and you may have stiffened up sitting on a cooler. But you are also not fresh — you have a game in your legs — so this is not a repeat of the morning warm-up either. The shape that works: for the first hour, stay off your feet, get horizontal if you can, eat and drink. Then start this about twenty minutes before pull. The re-raise matters more than anything else in it, because temperature is what you actually lost. Keep the intensity ladder short but do not skip the top of it — the first sprint of game two hurts people more often than the first sprint of game one, because they assume they are still warm from earlier. They are not.',
+    items:[
+      { x:'easy-jog', d:'2 min easy', note:'Start about 20 minutes before pull. Warm first, everything else after.' },
+      { x:'leg-swings', d:'10 linear + 10 lateral per leg', note:'Unstick the hips after sitting.' },
+      { x:'adductor-squeeze-iso', d:'4 × 8 s', note:'Submaximal. The groin goes cold fastest and complains first.' },
+      { x:'ham-iso-long', d:'2 × 20 s per side', t:{ r: 12 }, note:'Cheap insurance on tired tissue.' },
+      { x:'a-skip', d:'2 × 20 m, walk back' },
+      { x:'build-ups', d:'3 × 40 m at 70 / 85 / 95%, walk back', note:'Do not skip the 95%. This is the whole point.' },
+      { x:'cut-builds', d:'2 rounds building, both directions', note:'One hard change of direction before the game asks for one.' }
     ]},
 
   { id:'warmup-half', n:'Half-Time Top-Up', tag:'WARMUP',
@@ -5740,6 +5794,14 @@ function viewProgram() {
         el('p', { class: 'small muted' }, 'Not the whole session — the part of it with the highest return.')
       ]),
       el('div', { class: 'routine-grid' }, ROUTINES.filter(r => r.tag === 'SHORT').map(r => routineCard(r, today)))
+    ]),
+    el('div', { class: 'stack stack-md' }, [
+      el('div', { class: 'sec-head' }, [
+        el('h2', null, 'After, and between'),
+        el('div', { class: 'trace' }),
+        el('p', { class: 'small muted' }, 'What to do when the game ends — and, on a tournament weekend, what to do with the evening.')
+      ]),
+      el('div', { class: 'routine-grid' }, ROUTINES.filter(r => r.tag === 'RECOVERY').map(r => routineCard(r, today)))
     ]),
     el('div', { class: 'stack stack-md' }, [
       el('div', { class: 'sec-head' }, [
