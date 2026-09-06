@@ -247,6 +247,26 @@ carries real fallback stacks for when they cannot load.
   installs on Android too and works with no signal. Drag the folder, or connect the repo to Netlify
   with the publish directory set to `netlify` and skip dragging entirely.
 
+## The look
+
+The identity was right — turf-biased neutrals, field green, disc yellow, Archivo over IBM Plex —
+but the treatment was loud: monospace uppercase on every label, a hairline border on every
+surface, 3px corners, dotted rules, and a four-item status strip crammed into a phone header.
+The pass was restraint, not a restyle:
+
+- **Type.** Uppercase is now a role, not a default: the eyebrow above a thing, the small label on
+  a block or table, the phase dividers in a running list, and the exercise name in the player
+  (read at arm's length mid-set). Section headings, chips, tabs, the status strip and the player's
+  controls are sentence case in the body face. Mono is reserved for numbers, times and doses.
+- **Shape.** One radius scale (`--r-sm` 8, `--r-md` 12, `--r-lg` 16, pills at 999) and one soft
+  lift (`--lift`). Surfaces sit on the ground by contrast, so their edge is `--edge` — the line
+  token at 60% — instead of a full hairline. List rows keep their separators; cards do not.
+- **Header on a phone.** One line: the mark, today's session, the Gym/Home toggle. Phase and
+  week live on Program, where they are already shown.
+- The dotted "trace" rule under headings is retired (kept in the DOM, `display: none`).
+
+Nothing about colour changed; the validated palette and both themes are untouched.
+
 ## Getting around
 
 The Program screen is a hub, not a scroll. Six tiles — **Frisbee**, **Weak-link blocks**, **When

@@ -866,7 +866,7 @@ function tickRun() {
 const typeChip = t => el('span', { class: 'chip ' + (t === 'HIGH' ? 'hard' : t === 'MED' ? 'warn' : 'good') }, [
   el('span', { class: 'load ' + (t === 'HIGH' ? 'l3' : t === 'MED' ? 'l2' : 'l1'), 'aria-hidden': 'true' },
     [el('i'), el('i'), el('i')]),
-  t + ' DAY'
+  t.charAt(0) + t.slice(1).toLowerCase() + ' day'
 ]);
 
 function exLink(id, label) {
@@ -931,7 +931,7 @@ function openEx(id) {
     RUN.active ? null : el('div', { class: 'row' }, [
       el('button', {
         class: 'btn btn-hi',
-        onclick: () => { closeModal(); RUN.open(stepsFromItems([{ x: id, d: e.dose }], e.n.toUpperCase()), new Date(), 0); }
+        onclick: () => { closeModal(); RUN.open(stepsFromItems([{ x: id, d: e.dose }], e.n), new Date(), 0); }
       }, [ico(ICONS.play, 'nav-ico'), 'Run this exercise']),
       findKeys(viewDate, id).length ? el('button', {
         class: 'btn btn-sm',
@@ -1163,9 +1163,9 @@ function viewToday() {
         typeChip(s.type),
         el('span', { class: 'chip', title: s.fixed ? 'Dominated by the activity itself' : 'Estimated from the actual work, rests and rounds' },
           '≈ ' + fmtMins(sessionSeconds(s, date)) + (s.fixed ? '' : '')),
-        el('span', { class: 'chip' }, pl.phase.tag + ' · WK ' + pl.week + '/' + pl.totalWeeks),
+        el('span', { class: 'chip' }, pl.phase.tag + ' · Wk ' + pl.week + '/' + pl.totalWeeks),
         pl.swapped ? el('button', { class: 'chip warn', onclick: () => swapDialog(date) },
-          'SWAPPED FROM ' + SESSIONS[pl.planned].n.toUpperCase()) : null
+          'Swapped from ' + SESSIONS[pl.planned].n) : null
       ])
     ]),
     el('div', { class: 'row' }, [
@@ -1401,7 +1401,7 @@ function viewProgram() {
               el('div', { class: 'row' }, [
                 el('span', { class: 'eyebrow' }, p.tag),
                 el('h3', { class: 'display', style: 'font-size:var(--t-md)' }, p.n),
-                p.id === cur.id ? el('span', { class: 'chip solid' }, 'CURRENT') : null
+                p.id === cur.id ? el('span', { class: 'chip solid' }, 'Current') : null
               ]),
               el('span', { class: 'num xs muted' }, fmtShort(parse(p.start)) + ' \u2192 ' + fmtShort(parse(p.end)))
             ]),
@@ -1949,7 +1949,7 @@ function strip() {
       el('span', { class: 'brand-mark', style: 'font-size:.8rem' }, 'GC'),
       el('span', { class: 'brand-sub', style: 'font-size:9px' }, 'ground contact')
     ]),
-    el('div', { class: 'strip-item' }, [el('span', { class: 'eyebrow' }, 'Phase'), el('span', { class: 'v' }, pl.phase.tag + ' · ' + pl.phase.n)]),
+    el('div', { class: 'strip-item phase-item' }, [el('span', { class: 'eyebrow' }, 'Phase'), el('span', { class: 'v' }, pl.phase.tag + ' · ' + pl.phase.n)]),
     el('div', { class: 'strip-sep' }),
     el('div', { class: 'strip-item wide' }, [el('span', { class: 'eyebrow' }, 'Week'), el('span', { class: 'v' }, pl.week + ' / ' + pl.totalWeeks)]),
     el('div', { class: 'strip-sep' }),
@@ -1957,8 +1957,8 @@ function strip() {
     el('div', { class: 'strip-sep' }),
     el('div', { class: 'strip-item wide' }, [el('span', { class: 'eyebrow' }, 'Armor · 28 days'), el('div', { class: 'streak', style: 'margin-top:3px' }, cells)]),
     el('div', { class: 'row strip-right', style: 'margin-left:auto;gap:.5rem' }, [
-      v ? el('span', { class: 'chip chip-status ' + (v.k === 'red' ? 'hard' : v.k === 'amber' ? 'warn' : 'good') }, [el('span', { class: 'dot' }), v.k.toUpperCase()])
-        : el('span', { class: 'chip chip-status' }, armorN + '/' + ARMOR.items.length + ' ARMOR'),
+      v ? el('span', { class: 'chip chip-status ' + (v.k === 'red' ? 'hard' : v.k === 'amber' ? 'warn' : 'good') }, [el('span', { class: 'dot' }), v.k.charAt(0).toUpperCase() + v.k.slice(1)])
+        : el('span', { class: 'chip chip-status' }, armorN + '/' + ARMOR.items.length + ' armor'),
       modeToggle()
     ])
   ]);
