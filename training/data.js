@@ -1522,7 +1522,8 @@ const SESSIONS = {
       { x: 'skater-bound', d: '2 × 4 per side, stick landings' }
     ]},
     { n: 'ELASTIC', why: 'Reactive strength, short contacts', items: [
-      { x: 'pogo-jumps', d: '3 × 25, then 2 × 15 single-leg per side' },
+      { x: 'pogo-jumps', d: '3 × 25 contacts', note: 'Both feet. Stiff ankles, minimal ground time.' },
+      { x: 'pogo-jumps', d: '2 × 15 contacts per side', note: 'Now single-leg. The app will call the switch.' },
       { x: 'hurdle-hops', d: '4 × 5 hurdles' },
       { x: 'bounds', d: '4 × 30 m' }
     ]},
@@ -3079,7 +3080,7 @@ const ROUTINES = [
     items:[
       { x:'knee-to-wall', d:'10 reps + 30 s hold per side', note:'Ankle first. If dorsiflexion is the limit, everything below inherits it — including the squat depth you are about to chase.' },
       { x:'deep-squat-hold', d:'2 × 90 s', t:{ r: 30 }, note:'Longer than the warm-up version, because nothing is sprinting after it. Sit into it and breathe rather than bracing.' },
-      { x:'ninety-ninety', d:'8 switches + 30 s hold each side', note:'Active hip rotation, and the safest way to work a labral hip near end range — you are producing the position, not being put in it.' },
+      { x:'ninety-ninety', d:'30 s hold per side', note:'Switch back and forth a few times to find the range first, then hold. Active hip rotation, and the safest way to work a labral hip near end range \u2014 you are producing the position, not being put in it.' },
       { x:'couch-stretch', d:'2 × 45 s per side', note:'The one that undoes a workday. Squeeze the glute on the stretched side; that turns a passive hang into an active lengthening.' },
       { x:'pancake-sit', d:'3 × 45 s', t:{ r: 20 }, note:'Adductors and hamstrings at length together. Push the floor away and lift out of the hips instead of collapsing forward.' },
       { x:'jefferson-curl', d:'3 × 5 slow', note:'Light. This is loaded end-range work for the posterior chain, not a max lift — the load is there to make the tissue adapt, not to be impressive.' },
@@ -3623,22 +3624,23 @@ Object.assign(EX, {
   regr: 'Fewer reps per position, or drop to five positions, keeping 8.'
 },
 'glute-bridge-warm': {
-  n: 'Glute Bridge \u2192 Single Leg', cat: 'armor', tags: ['warmup','glute','hip','activate','potentiate'],
+  n: 'Single-Leg Glute Bridge', cat: 'armor', tags: ['warmup','glute','hip','activate','potentiate'],
   why: 'The gap in almost every hip warm-up, including the one you were doing. Clamshells and 8-way hips are abduction and rotation \u2014 they wake the glute medius and the deep rotators, which stop the femur drifting. Neither of them asks the gluteus maximus to extend the hip, and hip extension is the propulsive action in sprinting. A glute that has not been asked to extend hard in the last ten minutes hands more of the first few strides to the hamstring, which is the tissue you least want picking up slack on a cold first sprint. Thirty seconds fixes it.',
   home: 'Nothing. Floor and a wall, or grass.',
   repSec: 2.5,
   setup: 'On your back, knees bent about 90\u00b0, heels close enough that you can just brush them with your fingertips. Arms flat.',
   steps: [
-    'Push through the heels and lift the hips until shoulder, hip and knee are in one line. Do not go higher \u2014 extra height comes from the lower back, not the hip.',
-    'Squeeze the glute hard at the top and hold a beat. You should feel it in the glute, not the hamstring and not the lower back.',
-    'Ten reps like that, then extend one leg straight out and do six per side, keeping the hips level.',
-    'If the hamstring cramps, walk your heels a little closer and squeeze harder before you lift.'
+    'Find it first: two or three both-feet bridges. Squeeze the glute, then lift until shoulder, hip and knee are in one line. Do not go higher \u2014 extra height comes from the lower back, not the hip.',
+    'Now extend one leg straight out in front, so you are standing on one heel.',
+    'Squeeze and lift, keeping the hips dead level. Pause a beat at the top.',
+    'Eight of those, then swap legs \u2014 the app will tell you when.',
+    'If the hamstring cramps, walk your heel a little closer and squeeze the glute harder before you lift.'
   ],
   cues: ['Squeeze first, then lift. Leading with the squeeze is what makes this activation rather than a movement.','Ribs down \u2014 if your back arches you have swapped glute for lumbar extension.','On the single-leg version the hips stay level. A dropping hip means the side you are standing on is the one that needs this.'],
   faults: ['Lifting higher by arching the back.','Feeling it entirely in the hamstrings, which usually means the heels are too far away.','Rushing. This is thirty seconds of intent, not a set of reps.'],
-  dose: '10 reps + 6 per side',
+  dose: '8 per side',
   prog: 'Pause three seconds at the top, or elevate the feet.',
-  regr: 'Double-leg only.'
+  regr: 'Both feet down, 12 reps. Come back to single leg once you can feel the glute doing it.'
 },
 'clamshell': {
   n: 'Clamshells', cat: 'armor', tags: ['warmup','hip','glute','activate','labrum'],
@@ -3778,7 +3780,7 @@ ROUTINES.unshift(
       { x:'adductor-rockback', d:'10 rocks + 20 s hold' },
       { x:'clamshell', g:'ACTIVATE · wake what has to hold you up', d:'15 per side, hold the last one 15 s' },
       { x:'seven-way-hips', d:'8 positions × 8 reps per side' },
-      { x:'glute-bridge-warm', d:'10 reps + 6 per side', note:'The only hip extension in the warm-up. Squeeze first, then lift \u2014 this is what stops the hamstring carrying the first few strides.' },
+      { x:'glute-bridge-warm', d:'8 per side', note:'The only hip extension in the warm-up. Squeeze first, then lift \u2014 this is what stops the hamstring carrying the first few strides.' },
       { x:'adductor-squeeze-iso', d:'6 × 8 s', note:'Two ladders, submaximal. Wake the groin before you ask it to plant.' },
       { x:'ham-iso-long', d:'2 × 20 s per side', t:{ r: 12 }, note:'Pre-activating the hamstring at length, right before you sprint on it.' },
       { x:'a-skip', g:'POTENTIATE · rising to full speed, in order', d:'2 × 20 m, walk back' },
@@ -3797,7 +3799,7 @@ ROUTINES.unshift(
       { x:'deep-squat-hold', d:'40 s', note:'One hold. If the bottom pinches at the front of the hip today, stay higher and note it.' },
       { x:'clamshell', d:'15 per side' },
       { x:'seven-way-hips', d:'8 positions × 6 reps per side' },
-      { x:'glute-bridge-warm', d:'10 reps + 5 per side' },
+      { x:'glute-bridge-warm', d:'6 per side' },
       { x:'adductor-squeeze-iso', d:'4 × 8 s' },
       { x:'ham-iso-long', d:'2 × 20 s per side', t:{ r: 12 } },
       { x:'a-skip', d:'2 × 20 m, walk back' },

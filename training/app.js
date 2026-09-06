@@ -252,7 +252,9 @@ function stepSeconds(st) {
     const rest = Math.max(st.rest, sw ? 8 : 0);
     return COUNT_IN + st.work * st.rounds + rest * Math.max(0, st.rounds - 1);
   }
-  return COUNT_IN + manualSeconds(st.x, st.dose, st.est) + (st.restAfter || 0);
+  const sw = switchInfo(st);
+  const changeovers = Math.max(0, (st.rounds || 1) - 1) * Math.max(st.rest || 0, sw ? 8 : 0);
+  return COUNT_IN + manualSeconds(st.x, st.dose, st.est) + changeovers + (st.restAfter || 0);
 }
 const runSeconds = steps => steps.reduce((a, st) => a + stepSeconds(st), 0);
 function sessionSeconds(session, date, opts) {
@@ -297,6 +299,9 @@ function sideLabel(st, round) {
   return round % 2 === 1 ? 'Left' : 'Right';
 }
 
+// A hand-counted set gets a short, explicit changeover rather than silently
+// expecting you to know. The switch screen enforces its own 8 s floor.
+const SWITCH_REST = 10;
 const SIDE_MULT = d => {
   let m = 1;
   if (/\b(per|each)\s+(side|leg|foot|arm|hand)s?\b/i.test(d)) m *= 2;
@@ -331,8 +336,12 @@ function makeStep(it, blockName, key, ii) {
     ii: ii, key: key, block: blockName,
     x: r.x, dose: r.d, note: r.note || (isHome() && e.home) || e.flag || '',
     est: it.est || null,
+    // A hand-counted set that says "per side" is two sets, not one. Without this it
+    // ran as a single step whose Done ended the exercise, with no prompt to switch.
     mode: t ? 'timed' : 'manual',
-    work: t ? t.w : 0, rest: t ? t.r : 0, rounds: t ? t.rounds : 1,
+    work: t ? t.w : 0,
+    rest: t ? t.r : (SIDE_MULT(r.d || e.dose || '') > 1 ? SWITCH_REST : 0),
+    rounds: t ? t.rounds : SIDE_MULT(r.d || e.dose || ''),
     label: t ? t.label : '',
     restAfter: REST_BY_CAT[e.cat] != null ? REST_BY_CAT[e.cat] : 60
   };
@@ -564,15 +573,15 @@ const RUN = {
       }
       return this.next();   // a timed step's own config already carries its rest
     }
-    if (this.phase === 'rest') { this.round++; return this.enter('work'); }
+    if (this.phase === 'rest') { this.round++; return this.enter(st.mode === 'timed' ? 'work' : 'manual'); }
     if (this.phase === 'restAfter') return this.next();
   },
   // End this round early and carry on with the exercise.
   nextRound() {
     const st = this.step();
-    if (this.phase === 'work' && this.round < st.rounds) {
+    if ((this.phase === 'work' || this.phase === 'manual') && this.round < st.rounds) {
       if (st.rest) return this.enter('rest');
-      this.round++; return this.enter('work');
+      this.round++; return this.enter(st.mode === 'timed' ? 'work' : 'manual');
     }
     return this.next();                      // last round: the exercise is finished
   },
@@ -629,6 +638,8 @@ const RUN = {
 };
 function st_manualDone() {
   const st = RUN.step();
+  // More sides to go: hand over to the switch screen rather than ending the exercise.
+  if (RUN.round < st.rounds) return RUN.enter('rest');
   if (st.restAfter && RUN.i < RUN.steps.length - 1) { RUN.markDone(); RUN.enter('restAfter'); }
   else RUN.next();
 }
@@ -724,7 +735,7 @@ function buildRun() {
 
   const between = RUN.phase === 'restAfter' && nextStep;
   const sw = switchInfo(st);
-  const moreRounds = RUN.phase === 'work' && st.rounds > 1 && RUN.round < st.rounds;
+  const moreRounds = (RUN.phase === 'work' || RUN.phase === 'manual') && st.rounds > 1 && RUN.round < st.rounds;
   const switching = RUN.phase === 'rest' && sw;
   const sideNow = sideLabel(st, RUN.round);
   const sideNext = sideLabel(st, RUN.round + 1);
@@ -759,20 +770,24 @@ function buildRun() {
         ? el('button', {
             class: 'btn btn-hi run-btn run-btn-main',
             onclick: () => (RUN.running ? st_manualDone() : RUN.toggle())
-          }, RUN.running ? 'Done' : 'Resume')
+          }, !RUN.running ? 'Resume'
+             : moreRounds ? (sw && sw.sided ? 'Done · this side' : 'Done · this round')
+             : 'Done')
         : el('button', { class: 'btn btn-hi run-btn run-btn-main', onclick: () => RUN.toggle() }, RUN.running ? 'Pause' : 'Resume'),
       el('button', {
         class: 'btn run-btn',
-        onclick: () => (isRest ? RUN.advance() : isManual ? RUN.skip() : RUN.nextRound())
+        onclick: () => (isRest ? RUN.advance()
+          : isManual && !moreRounds ? RUN.skip()
+          : RUN.nextRound())
       }, isRest ? 'Skip rest'
+         : moreRounds ? (sw && sw.sided ? 'Next side' : 'Next round')
          : isManual ? 'Skip'
-         : moreRounds ? (sw ? 'Next side' : 'Next round')
          : 'Done early')
     ]),
     el('div', { class: 'row', style: 'gap:.4rem' }, [
       el('button', { class: 'btn btn-ghost btn-sm', onclick: () => openEx(between ? nextStep.x : st.x) },
         between ? 'How-to · next' : 'How-to'),
-      moreRounds && !isRest && !isManual
+      moreRounds && !isRest
         ? el('button', { class: 'btn btn-ghost btn-sm', onclick: () => RUN.doneEarly() }, 'Finish exercise')
         : null,
       el('button', { class: 'btn btn-ghost btn-sm', onclick: () => voiceDialog() },
@@ -797,7 +812,16 @@ function tickRun() {
 
   if (RUN.ui.left) {
     const rest = RUN.steps.slice(RUN.i + 1).reduce((a, x) => a + stepSeconds(x), 0);
-    const here = isManual ? 0 : Math.max(0, RUN.left / 1000);
+    // A hand-counted set has no countdown, but it does have an estimate — using zero
+    // made a set you were part-way through read "~0 s left".
+    let here;
+    if (isManual) {
+      const perRound = manualSeconds(st.x, st.dose, st.est) / Math.max(1, st.rounds);
+      const elapsed = Math.max(0, -RUN.left / 1000);
+      here = perRound * (st.rounds - RUN.round) + Math.max(0, perRound - elapsed);
+    } else {
+      here = Math.max(0, RUN.left / 1000);
+    }
     RUN.ui.left.textContent = '~' + fmtMins(rest + here) + ' left';
   }
   const t = isManual ? fmtClock(-RUN.left)

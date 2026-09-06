@@ -144,6 +144,25 @@ is the wrong neighbourhood for a labral hip.
 routine and article ids, and that no routine carries a tag no screen renders. Run it with
 `node training/check-data.js`.
 
+## Sides on hand-counted sets
+
+A set the athlete counts themselves — "8 per side", "3 x 6 per side" — used to run as a single
+step whose **Done** ended the exercise, with nothing saying to switch. Only *timed* per-side work
+got the changeover screen. That affected 44 distinct doses across the app: clamshells, 8-way hips,
+the whole Askling protocol, single-leg RDLs, skater bounds.
+
+`makeStep` now takes a hand-counted step's round count from its dose through the same `SIDE_MULT`
+the timed path uses, so those steps run two rounds with the existing switch screen, tone, voice
+line and Left/Right chip between them. **Done** reads "Done · this side" while a side remains and
+finishes only the side; **Finish exercise** still ends the whole thing. `sides.js` covers it.
+
+Two knock-on fixes: a hand-counted step contributed zero to the header's remaining-time estimate,
+so a set you were part-way through read "~0 s left" — it now uses the step's own estimate. And
+three compound doses were ambiguous once sides were real, because "per side" only applied to part
+of them: the pogo prescription split into its double-leg and single-leg halves, the 90/90 dose
+now names the hold, and the glute bridge dropped its double-leg preamble into the exercise's own
+steps.
+
 ## The warm-up order
 
 The Frisbee Warm-Up runs strict RAMP, and now says so: each item carries an optional `g` group
