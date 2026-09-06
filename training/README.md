@@ -144,6 +144,48 @@ is the wrong neighbourhood for a labral hip.
 routine and article ids, and that no routine carries a tag no screen renders. Run it with
 `node training/check-data.js`.
 
+## The audit pass
+
+Two validators run without a browser:
+
+- `node training/check-data.js` — content schema: field types, referenced ids, unique ids, every
+  routine tag renders, every game-day routine sits in a play group.
+- `node training/audit.js` — loads the app's own estimator in a Node `vm` sandbox and walks every
+  step the app can build (every session block, routine, the armor): doses the estimator cannot
+  read, per-side doses whose round count would leave sides unbalanced, per-side steps with no
+  changeover (so no switch alert), outlier durations, and a duration table for every routine and
+  session. Exit 1 on errors.
+
+The first run of `audit.js` found that any bare count without a "×" — "15 per side",
+"10 switches", "4 singles", "3 max broad jumps" — fell to a flat 60 s. That was most of the
+activation work in the warm-ups. `manualSeconds` now reads a leading count followed by a
+non-unit word, and a bare distance. Copenhagen items outside a ladder week now resolve to the
+week-1 dose instead of an unreadable sentence, and the three authored doses with no number
+carry an `est`. The two sessions over 100 minutes were trimmed to 98 and 95.
+
+A Playwright sweep (`everything.js` in the scratchpad) opens all 150 how-tos, runs all 29 routines
+end to end, and starts all 24 sessions, failing on any page error.
+
+## Elastic and isometric
+
+The app is named after ground contact and had no block devoted to it — plyometrics lived as
+garnish inside lifting sessions. Program now has an **Elastic & isometric** tile:
+
+- **Plyometric Ladder** (~35 min) — extensive to intensive: prime, pogos, single-leg pogos, low
+  hurdle rebounds, skater bounds, alternating bounds, stuck broad jumps, then depth jumps behind a
+  gate. The gate is a countermovement jump within 10% of the logged best; below it, the ladder
+  ends after the bounds. Phase labels render in the list and the player.
+- **Iso → Elastic Contrast** (~22 min) — four pairs of a maximal isometric and the plyometric it
+  feeds (yielding and overcoming split-squat isos, the long-length hamstring iso, the soleus iso),
+  with the 2–4 minute rests that post-activation potentiation depends on written into the block.
+- **Overcoming Isometrics** moved here from "When time is short".
+
+**Ground Contact: Plyometrics, Properly** is the Method article behind it: fast vs slow
+stretch-shortening cycle, RSI as the number that matters (it is the Drop Jump test under Tests),
+contacts not sets, box height by rebound not by height, the 48-hour rule, landing quality tied
+to the knee data, and the honest size of the potentiation effect. Flanagan & Comyns, the
+Ramirez-Campillo plyometric reviews and Seitz & Haff are in Sources.
+
 ## Sides on hand-counted sets
 
 A set the athlete counts themselves — "8 per side", "3 x 6 per side" — used to run as a single

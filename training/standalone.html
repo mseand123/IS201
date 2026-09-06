@@ -1738,6 +1738,7 @@ const EX = {
 /* ============ SPEED ============ */
 'wall-drill': {
   n: 'Wall Drill — March / Switch', cat: 'speed', tags: ['speed','technique','accel'],
+  est: 180,
   why: 'Teaches the acceleration body angle and the front-side mechanics that most field-sport athletes never learn. The wall removes balance from the equation so you can feel the position.',
   setup: 'Hands on a wall, body at ~45°, straight line from head to the support ankle.',
   steps: ['One knee up, thigh parallel, ankle dorsiflexed, heel under the hip.','March: slowly alternate, holding each position for 2 s. 6 per side.','Switch: quick single exchanges, 3 per side.','Continuous: rapid alternations, 6–10 total, staying rigid at the trunk.'],
@@ -1794,6 +1795,7 @@ const EX = {
 },
 'cut-decel': {
   n: 'Deceleration & Cut Mechanics', cat: 'speed', tags: ['cod','decel','ultimate','adductor'],
+  repSec: 14,
   why: 'You decelerate 47 times a game. Deceleration is where hamstrings and groins tear, and it is a trainable skill with a technical model: get low early, take short braking steps, keep the centre of mass behind the plant foot. Most athletes train acceleration and never train the brake.',
   setup: 'Cones at 0, 10, 15 m on turf.',
   steps: [
@@ -1992,6 +1994,7 @@ const EX = {
 },
 'co2-tolerance': {
   n: 'CO₂ Tolerance Test', cat: 'breath', tags: ['recovery','test'],
+  est: 120,
   why: 'A free, repeatable proxy for autonomic recovery state. A control-pause that drops sharply from your baseline usually shows up a day or two before you feel run down.',
   setup: 'Seated, calm, at least 10 minutes after any activity.',
   steps: ['Breathe normally for a minute.','Take a normal (not maximal) inhale, then exhale fully.','Start a timer and hold until the first strong urge to breathe — not to maximum.','Record the seconds. Track it as a trend, not a single number.'],
@@ -2235,16 +2238,15 @@ const SESSIONS = {
       { x: 'disc-ladder', d: 'Short 20 · medium 15 · long 10', note: 'The arm warm-up. On a field day this replaces the first half of the throwing block.' },
       { x: 'band-pull-apart', d: '2 × 15 + 15 face pulls' },
       { x: 'thoracic-opener', d: '4 positions × 5 breaths + 8 rotations/side' },
-      { x: 'sleeper-stretch', d: '3 × 30 s', note: 'Only if your IR difference is over 15°. Measure first.' }
+      { x: 'sleeper-stretch', d: '2 × 30 s', note: 'Only if your IR difference is over 15°. Measure first.' }
     ]},
     { n: 'PULL', why: '3:1 pull to push for a throwing shoulder', items: [
-      { x: 'weighted-pullup', d: '4 × 4–6' },
+      { x: 'weighted-pullup', d: '3 × 4–6' },
       { x: 'chest-supported-row', d: '3 × 8–12' },
       { x: 'prone-ytw', d: '2 × 8 each' }
     ]},
     { n: 'PUSH', why: 'Mass matters at 150 lb', items: [
-      { x: 'overhead-press', d: '3 × 5–8' },
-      { x: 'db-incline-press', d: '3 × 8–10', note: 'Swap for the landmine press if the shoulder wants a friendlier arc.' }
+      { x: 'overhead-press', d: '3 × 5–8' }
     ]},
     { n: 'TRUNK', why: 'A rotational sport needs a trunk that resists rotation', items: [
       { x: 'pallof-press', d: '3 × 5 with 5 s holds per side' },
@@ -2252,7 +2254,7 @@ const SESSIONS = {
     ]},
     { n: 'ROTATE + THROW', why: 'Hip-led rotation, then the disc', items: [
       { x: 'medball-rotational', d: '4 × 5 per side, max intent' },
-      { x: 'medball-slam-rot', d: '3 × 6 per side' },
+      { x: 'medball-slam-rot', d: '2 × 6 per side' },
       { x: 'throw-volume', d: 'Full session — count hard throws, cap at 30' }
     ]},
     { n: 'FINISH', why: '', items: [
@@ -2359,16 +2361,15 @@ const SESSIONS = {
     { n: 'ELASTIC', why: 'Reactive strength, short contacts', items: [
       { x: 'pogo-jumps', d: '3 × 25 contacts', note: 'Both feet. Stiff ankles, minimal ground time.' },
       { x: 'pogo-jumps', d: '2 × 15 contacts per side', note: 'Now single-leg. The app will call the switch.' },
-      { x: 'hurdle-hops', d: '4 × 5 hurdles' },
-      { x: 'bounds', d: '4 × 30 m' }
+      { x: 'hurdle-hops', d: '3 × 5 hurdles' },
+      { x: 'bounds', d: '3 × 30 m' }
     ]},
     { n: 'CHANGE OF DIRECTION', why: 'The actual sport skill', items: [
       { x: 'cut-decel', d: '8 reps: 2 × stop, 2 × 45°, 2 × 90°, 2 × 180°' },
-      { x: 'curve-sprint', d: '4 × 30 m, both directions' }
+      { x: 'curve-sprint', d: '3 × 30 m, both directions' }
     ]},
     { n: 'UPPER + TRUNK', why: 'The only upper exposure in this phase — do not skip it', items: [
       { x: 'weighted-pullup', d: '3 × 5' },
-      { x: 'db-incline-press', d: '3 × 8' },
       { x: 'hollow-hold', d: '3 × 25 s' }
     ]},
     { n: 'ARMOR', why: '', items: [
@@ -2874,6 +2875,38 @@ const ARTICLES = [
   {callout:{k:'', h:'How this program uses them', p:'Phase 1 leans on yielding isos (tendon capacity). Phase 2 introduces overcoming isos (RFD). Phase 3 keeps overcoming isos and drops most long holds. In-season, overcoming isos become the primary strength method. The Daily Armor uses submaximal yielding isos throughout, because low-load frequency is what injured tissue responds to.'}}
 ]},
 
+{ id:'plyometrics', n:'Ground Contact: Plyometrics, Properly', sub:'What the app is named after, and how to earn the top of the ladder', body:[
+  {p:'Every jump you do is not a plyometric, and treating them all the same is the most common way plyometric training either does nothing or wrecks a tendon. A plyometric is a stretch-shortening cycle: the muscle-tendon unit is loaded fast, stores energy, and returns it. What decides whether that happens is time on the ground.'},
+
+  {h:'Contact time is the variable'},
+  {p:'A fast stretch-shortening cycle lasts under about a quarter of a second on the ground — a sprint stride, a pogo, a rebound off a hurdle. A slow one lasts longer — a countermovement jump, a deep landing, most things people film in gyms. Both are useful; they are different qualities and they are trained differently. The number that captures the fast one is the reactive strength index: how high you rebound divided by how long you were on the floor to do it. That is the Drop Jump RSI test on your Tests screen, and it is the single best measure of whether this training is working. Jump height alone can improve while RSI gets worse, and that is an athlete getting slower off the ground while feeling stronger.'},
+
+  {h:'Extensive, then intensive'},
+  {p:'Extensive plyometrics are low-height, high-count and rhythmic: pogos, skips, low hurdle rebounds, submaximal bounds. They build tendon stiffness and teach the foot to be quiet, and they are safe to do in volume. Intensive plyometrics are maximal and few: depth jumps, single-leg bounds for distance, hurdle hops at full height. They are the ones that produce the biggest change in reactive strength and the ones that produce the injuries. The order in the Plyometric Ladder is the order of the last thirty years of coaching consensus: in place, then horizontal, then single leg, then shock. Each rung asks for more force in less time.'},
+
+  {h:'How many'},
+  {p:'Count contacts, not sets. For a trained athlete on an intensive day, forty to sixty high-quality ground contacts is plenty, and the meta-analyses of plyometric training in team-sport athletes find no advantage to piling on more. Extensive work tolerates two or three times that. In practice the number that matters is not the one you planned but the one at which quality broke: the first contact that is audibly longer or the first landing that is louder is the end of the set, regardless of the rep count. That rule is worth more than any prescription.'},
+
+  {h:'Depth jumps are earned, not scheduled'},
+  {ul:[
+    'Box height: the one that gives you the highest, fastest rebound, not the highest box you can survive. For most athletes that is somewhere between thirty and forty-five centimetres. Above that, contact time balloons, the exercise turns into a slow landing, and the tendon takes the load without the stimulus.',
+    'Readiness: a countermovement jump within ten percent of your best on the day. Below that, your nervous system is not fresh, and shock work on a tired system is where patellar and achilles tendons get hurt. The Plyometric Ladder puts the gate before the depth jumps for exactly this reason.',
+    'Spacing: forty-eight hours between intensive plyometric sessions, and never on the day after a game. This is the high-low principle from The Method, applied to the most CNS-expensive thing in the program.',
+    'Surface: grass or track, in shoes. Not concrete, and not barefoot for the intensive rungs. The barefoot pogos in the program are extensive on purpose.'
+  ]},
+
+  {h:'Landing is half the exercise'},
+  {p:'Ultimate\u2019s most injured joint is the knee, and the mechanism is a decelerating, rotating landing the athlete could not control. Every plyometric is also a landing, which means every plyometric is either rehearsing a good one or a bad one. Knee over the second toe, hip absorbing before the knee, quiet. Film a set from the front once in a while. If the knee dives inward, the height or the distance is too much, whatever the plan says. The Lateral Bound & Stick in Knee & Ankle Insurance exists to train the landing without the rebound; do it there before you rely on it here.'},
+
+  {h:'The isometric pairing'},
+  {p:'You like isometrics, and there is a legitimate way to use them here. A maximal isometric followed two to four minutes later by a plyometric on the same tissue produces a small, real, acute increase in the plyometric\u2019s output. This is post-activation potentiation, and the meta-analytic picture is consistent: it works, the effect is modest, and it depends on the rest between the two halves — too short and fatigue wins, too long and it has faded. The Iso \u2192 Elastic Contrast block is built on that window. Do not treat it as a circuit; the rests are the mechanism.'},
+
+  {h:'Why bounding is the one that matters most'},
+  {p:'Of everything in the ladder, alternating bounds are the closest thing to sprinting that is not sprinting: single-leg, horizontal, fast contact, full hip extension. If you only ever did one plyometric, it would be that one. It is also the one most people do badly — reaching with the front foot and landing on a straight leg — so it sits after the bilateral rungs, when you are warm and the pattern is already grooved.'},
+
+  {callout:{k:'warnc', h:'The version to remember', p:'Contact time, not height. Count contacts, and stop at the first slow one. Earn the depth jumps with a jump test, every session. Forty-eight hours between hard ones. Land the way you would want to land under a disc.'}}
+]},
+
 { id:'fascia', n:'The Fascia Layer, Honestly', sub:'What holds up, what is theory, and what to actually do', body:[
   {p:'You asked about fascia specifically, so here is the straight version — including where the popular story runs ahead of the evidence, because you will get more out of this if you know which parts are load-bearing.'},
   {h:'What is well supported'},
@@ -3121,6 +3154,9 @@ const ARTICLES = [
     'Van Hooren & Peake — Do we need a cool-down after exercise? A narrative review. Sports Medicine, 2018 (active cool-downs largely ineffective for soreness, performance and injury).',
     'Cold water immersion improves recovery of sprint speed following a simulated tournament — PubMed 30957673.',
     'Adaptations to post-exercise cold water immersion: friend, foe, or futile? Front Sports Act Living, 2021 (the periodised case: use it in competition, avoid it after strength work).',
+    'Flanagan & Comyns — The use of contact time and the reactive strength index to optimize fast stretch-shortening cycle training. Strength Cond J, 2008 (fast vs slow SSC, RSI, box height).',
+    'Ramirez-Campillo et al. — Methodological characteristics and future directions for plyometric jump training research: a scoping review, and the associated team-sport meta-analyses (contacts per session, progression).',
+    'Seitz & Haff — Factors modulating post-activation potentiation of jump, sprint, throw and upper-body ballistic performances: a systematic review with meta-analysis. Sports Med, 2016 (the small-to-moderate effect and the 2\u20134 min window).',
     'Behm et al. — Acute effects of muscle stretching on physical performance, range of motion, and injury incidence in healthy active individuals: a systematic review. Appl Physiol Nutr Metab, 2016 (the <60 s vs >60 s dose split, and dynamic stretching\u2019s small positive effect).',
     'Simic, Sarabon & Markovic — Does pre-exercise static stretching inhibit maximal muscular performance? A meta-analytical review. Scand J Med Sci Sports, 2013.',
     'Lauersen, Bertelsen & Andersen — The effectiveness of exercise interventions to prevent sports injuries: systematic review and meta-analysis. Br J Sports Med, 2014 (strength training roughly a third of acute injuries; stretching no significant effect).',
@@ -3841,7 +3877,7 @@ const ROUTINES = [
       { x:'broad-jump', d:'4 singles, stick every landing' },
       { x:'skater-bound', d:'3 × 5 per side' }
     ]},
-  { id:'micro-iso', n:'Overcoming Isometrics', tag:'SHORT',
+  { id:'micro-iso', n:'Overcoming Isometrics', tag:'POWER',
     sub:'Maximum force, no equipment, no soreness tomorrow — but the rests are long',
     why:'Overcoming isometrics give you an enormous neural stimulus with no eccentric damage, so this can go the day before a game. Yielding holds afterwards for tendon capacity.',
     items:[
@@ -3907,6 +3943,35 @@ const ROUTINES = [
       { x:'cut-decel', d:'4 rounds, both directions', note:'Braking mechanics deliberately, not incidentally.' },
       { x:'single-leg-rdl', d:'2 × 8 per side, slow', note:'Hamstring and hip control on one leg, which is how you actually play.' },
       { x:'tib-raise', d:'2 × 20', note:'The decelerators at the front of the shin. Cheap, and they stop the shins complaining on hard cutting weeks.' }
+    ]},
+
+  { id:'plyo-ladder', n:'Plyometric Ladder', tag:'POWER',
+    sub:'Extensive to intensive, in the order the tissue can take it, with a gate at the top',
+    why:'The app is called Ground Contact because the thing that separates an elastic athlete from a strong one is what happens in the 100 to 250 milliseconds the foot is on the floor. This block trains that quality on its own, rather than as a garnish inside a lifting session. It runs extensive to intensive: in place first, then horizontal, then single-leg, then shock. The order is not decorative. Each rung asks the tendon to return more energy in less time, and skipping to the top is how people end up with a sore patellar tendon and no idea why. Two rules hold the whole thing together. Quality over count: the moment your contacts get longer or your landings get louder, the set is over, whatever the number said. And the gate: the depth jumps at the end are earned by a countermovement jump within ten percent of your best on the day. Below that, you finish after the bounds and you have still trained.',
+    items:[
+      { x:'elastic-rebound-flow', g:'PRIME · load the spring gently', d:'3 min', note:'Rhythmic and submaximal. This is teaching the tissue what is coming.' },
+      { x:'cmj', d:'3 singles', note:'Your gate. Note the best of three against your logged baseline under Tests. Within 10%: the whole ladder. Below it: stop after the bounds today.' },
+      { x:'pogo-jumps', g:'EXTENSIVE · short contacts, low height', d:'3 × 20 contacts', note:'Both feet. Ankles stiff, knees quiet, ground time as short as you can make it.' },
+      { x:'pogo-jumps', d:'2 × 10 contacts per side', note:'Single leg. If the contact audibly slows, that is the end of the set.' },
+      { x:'hurdle-hops', d:'3 × 5 hurdles', note:'Low hurdles. Rebound, do not reset between them.' },
+      { x:'skater-bound', g:'HORIZONTAL · the sprint-specific rung', d:'3 × 5 per side', note:'Cover distance, land quietly, straight back out. This is the plane the sport lives in.' },
+      { x:'bounds', d:'3 × 20 m', note:'Long, floating contacts. Bounding is the most sprint-specific thing in this block.' },
+      { x:'broad-jump', d:'4 singles, stick every landing', note:'Maximal, then hold the landing for a full two-count. Full recovery between each.' },
+      { x:'depth-jump', g:'SHOCK · only if the gate opened', d:'2 × 4 from a low box', note:'Knee height at most. Use the box that gives you the highest, fastest rebound — not the highest box. Skip this rung entirely if your CMJ was below the gate.' }
+    ]},
+
+  { id:'iso-elastic', n:'Iso → Elastic Contrast', tag:'POWER',
+    sub:'A hard hold, then the bounce it prepares you for',
+    why:'Pairing a maximal isometric with a plyometric on the same muscles is the cleanest version of contrast training, and it suits you: you like the holds, and the holds are the part that is easy to do wrong. The honest science: a heavy or maximal effort does acutely raise power output in the movement that follows — the meta-analytic effect is real, small to moderate, and it depends on enough rest between the two halves that fatigue has cleared but the excitation has not. That window is roughly two to four minutes for a trained athlete, and it is why the rests inside this block are longer than feel natural. Do not shorten them. The four pairs here take the four tissues that decide a first step and a cut — the front of the hip and thigh in a split stance, the same in an overcoming push, the hamstring at length, and the soleus — and follow each with the elastic movement it feeds.',
+    items:[
+      { x:'iso-split-squat-yield', g:'PAIR 1 · split stance, yielding', d:'30 s per side', t:{ r: 15 } },
+      { x:'pogo-jumps', d:'2 × 15 contacts', note:'Two to three minutes after the hold. Short, sharp, quiet.' },
+      { x:'iso-split-squat-overcome', g:'PAIR 2 · split stance, overcoming', d:'3 × 6 s per side', t:{ r: 20 }, note:'Maximal against something immovable. Nothing moves except your intent.' },
+      { x:'skater-bound', d:'2 × 4 per side', note:'Lateral, and the landing is the point.' },
+      { x:'ham-iso-long', g:'PAIR 3 · hamstring at length', d:'2 × 20 s per side', t:{ r: 15 } },
+      { x:'a-skip', d:'2 × 20 m, walk back', note:'Fast feet, tall posture — the hamstring you just held now cycles the leg.' },
+      { x:'calf-iso-soleus', g:'PAIR 4 · soleus', d:'2 × 30 s', t:{ r: 20 } },
+      { x:'hurdle-hops', d:'2 × 5 hurdles', note:'Low hurdles, continuous rebound. The soleus is the spring you just wound.' }
     ]},
 
   { id:'range-block', n:'Range Block', tag:'RANGE',
@@ -4734,6 +4799,7 @@ const ico = (d, extra) => {
 const ICONS = {
   today: 'M12 2v4|M12 22v-4|M2 12h4|M22 12h-4|M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8',
   program: 'M3 5h18|M3 12h18|M3 19h18|M8 3v4|M16 10v4|M11 17v4',
+  bolt: 'M13 2L4 14h6l-1 8 9-12h-6l1-8z',
   library: 'M4 4h6v16H4z|M14 4h6v16h-6z|M7 8h0|M17 8h0',
   armor: 'M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z|M9 12l2 2 4-4',
   tests: 'M3 18l5-6 4 3 5-8|M3 21h18|M3 3v18',
@@ -4864,7 +4930,10 @@ const REST_BY_CAT = { strength: 45, plyo: 45, speed: 45, iso: 25, cond: 30, thro
 // "Per your current Copenhagen week" resolves to the actual dose for this date.
 function copenDose(d) {
   const c = copenWeekFor(new Date());
-  return c ? c.d + ' (' + c.f + ') · ladder week ' + c.w : d;
+  if (c) return c.d + ' (' + c.f + ') · ladder week ' + c.w;
+  // Outside the ten-week ladder the item still has to be a real, timeable dose.
+  const w1 = COPEN[0];
+  return w1 ? w1.d + ' (' + w1.f + ') · ladder not active, week-1 dose' : d;
 }
 /* ---------- how long will this actually take ----------
    The player's own timing, plus a read of the dose text for hand-timed sets.
@@ -4940,6 +5009,21 @@ function manualSeconds(x, dose, est) {
     const reps = sr[4] ? (+sr[3] + +sr[4]) / 2 : +sr[3];
     const work = sets * reps * secPer * sideMult;
     return work + (sets - 1) * (rest != null ? rest : (SET_REST[cat] != null ? SET_REST[cat] : 60));
+  }
+  // "20 m downhill", "40 m build" — one run of a distance, no set count
+  const oneDist = d.match(/(?:^|:\s*)(\d+)\s*m\b/i);
+  if (oneDist) return +oneDist[1] / 5.5 + 3;
+  // A bare count: "15 per side", "8 per side", "10 switches", "4 singles", "6 reps at 80%".
+  // These used to fall through to the flat 60 s below, which made most activation work
+  // in the warm-ups a guess.
+  // A leading count followed by a word that is not a unit: "15 per side", "3 max broad
+  // jumps", "4 rounds, both directions", "10 switches".
+  const bare = d.match(/(?:^|:\s*)(\d+)(?:\s*[–-]\s*(\d+))?(?=\s+(?!(?:s|sec|seconds?|min|minutes?|m|km|%)\b)[a-z%,]|\s*$)/i);
+  if (bare) {
+    const reps = bare[2] ? (+bare[1] + +bare[2]) / 2 : +bare[1];
+    // singles and sticks are slow — landing, resetting, walking back
+    const per = /singles?|stick|max/i.test(d) ? Math.max(secPer, 8) : secPer;
+    return reps * per * sideMult;
   }
   return 60;
 }
@@ -6044,6 +6128,12 @@ function viewProgram() {
         'The rehab and prevention tracks as standalone blocks. Knee & Ankle Insurance is written to be run tired.',
         grid(byTag('ARMOR')))
     },
+    power: {
+      n: 'Elastic & isometric', blurb: 'Plyometrics with a gate at the top, and the isometric pairings.',
+      body: () => sec('Elastic & isometric',
+        'The quality the app is named after, trained on its own. Contact time over height, contacts counted not sets, and the depth jumps earned by a jump test every session. Read Ground Contact under Method first.',
+        grid(byTag('POWER')))
+    },
     short: {
       n: 'When time is short', blurb: 'Not the whole session — the part with the highest return.',
       body: () => sec('When time is short', 'Not the whole session — the part of it with the highest return.', grid(byTag('SHORT')))
@@ -6117,6 +6207,7 @@ function viewProgram() {
   const counts = {
     play: PLAY_GROUPS.reduce((a, g) => a + g.ids.length, 0) + ' blocks',
     blocks: byTag('ARMOR').length + ' blocks',
+    power: byTag('POWER').length + ' blocks',
     short: byTag('SHORT').length + ' blocks',
     week: fmtShort(mon),
     year: PHASES.length + ' phases',
@@ -6143,6 +6234,7 @@ function viewProgram() {
     el('div', { class: 'hub' }, [
       tile('play', ICONS.play, true),
       tile('blocks', ICONS.armor),
+      tile('power', ICONS.bolt),
       tile('short', ICONS.clock),
       tile('week', ICONS.today),
       tile('year', ICONS.program),

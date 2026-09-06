@@ -35,6 +35,7 @@ const ico = (d, extra) => {
 const ICONS = {
   today: 'M12 2v4|M12 22v-4|M2 12h4|M22 12h-4|M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8',
   program: 'M3 5h18|M3 12h18|M3 19h18|M8 3v4|M16 10v4|M11 17v4',
+  bolt: 'M13 2L4 14h6l-1 8 9-12h-6l1-8z',
   library: 'M4 4h6v16H4z|M14 4h6v16h-6z|M7 8h0|M17 8h0',
   armor: 'M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z|M9 12l2 2 4-4',
   tests: 'M3 18l5-6 4 3 5-8|M3 21h18|M3 3v18',
@@ -165,7 +166,10 @@ const REST_BY_CAT = { strength: 45, plyo: 45, speed: 45, iso: 25, cond: 30, thro
 // "Per your current Copenhagen week" resolves to the actual dose for this date.
 function copenDose(d) {
   const c = copenWeekFor(new Date());
-  return c ? c.d + ' (' + c.f + ') · ladder week ' + c.w : d;
+  if (c) return c.d + ' (' + c.f + ') · ladder week ' + c.w;
+  // Outside the ten-week ladder the item still has to be a real, timeable dose.
+  const w1 = COPEN[0];
+  return w1 ? w1.d + ' (' + w1.f + ') · ladder not active, week-1 dose' : d;
 }
 /* ---------- how long will this actually take ----------
    The player's own timing, plus a read of the dose text for hand-timed sets.
@@ -241,6 +245,21 @@ function manualSeconds(x, dose, est) {
     const reps = sr[4] ? (+sr[3] + +sr[4]) / 2 : +sr[3];
     const work = sets * reps * secPer * sideMult;
     return work + (sets - 1) * (rest != null ? rest : (SET_REST[cat] != null ? SET_REST[cat] : 60));
+  }
+  // "20 m downhill", "40 m build" — one run of a distance, no set count
+  const oneDist = d.match(/(?:^|:\s*)(\d+)\s*m\b/i);
+  if (oneDist) return +oneDist[1] / 5.5 + 3;
+  // A bare count: "15 per side", "8 per side", "10 switches", "4 singles", "6 reps at 80%".
+  // These used to fall through to the flat 60 s below, which made most activation work
+  // in the warm-ups a guess.
+  // A leading count followed by a word that is not a unit: "15 per side", "3 max broad
+  // jumps", "4 rounds, both directions", "10 switches".
+  const bare = d.match(/(?:^|:\s*)(\d+)(?:\s*[–-]\s*(\d+))?(?=\s+(?!(?:s|sec|seconds?|min|minutes?|m|km|%)\b)[a-z%,]|\s*$)/i);
+  if (bare) {
+    const reps = bare[2] ? (+bare[1] + +bare[2]) / 2 : +bare[1];
+    // singles and sticks are slow — landing, resetting, walking back
+    const per = /singles?|stick|max/i.test(d) ? Math.max(secPer, 8) : secPer;
+    return reps * per * sideMult;
   }
   return 60;
 }
@@ -1345,6 +1364,12 @@ function viewProgram() {
         'The rehab and prevention tracks as standalone blocks. Knee & Ankle Insurance is written to be run tired.',
         grid(byTag('ARMOR')))
     },
+    power: {
+      n: 'Elastic & isometric', blurb: 'Plyometrics with a gate at the top, and the isometric pairings.',
+      body: () => sec('Elastic & isometric',
+        'The quality the app is named after, trained on its own. Contact time over height, contacts counted not sets, and the depth jumps earned by a jump test every session. Read Ground Contact under Method first.',
+        grid(byTag('POWER')))
+    },
     short: {
       n: 'When time is short', blurb: 'Not the whole session — the part with the highest return.',
       body: () => sec('When time is short', 'Not the whole session — the part of it with the highest return.', grid(byTag('SHORT')))
@@ -1418,6 +1443,7 @@ function viewProgram() {
   const counts = {
     play: PLAY_GROUPS.reduce((a, g) => a + g.ids.length, 0) + ' blocks',
     blocks: byTag('ARMOR').length + ' blocks',
+    power: byTag('POWER').length + ' blocks',
     short: byTag('SHORT').length + ' blocks',
     week: fmtShort(mon),
     year: PHASES.length + ' phases',
@@ -1444,6 +1470,7 @@ function viewProgram() {
     el('div', { class: 'hub' }, [
       tile('play', ICONS.play, true),
       tile('blocks', ICONS.armor),
+      tile('power', ICONS.bolt),
       tile('short', ICONS.clock),
       tile('week', ICONS.today),
       tile('year', ICONS.program),

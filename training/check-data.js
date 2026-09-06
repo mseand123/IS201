@@ -27,7 +27,7 @@ Object.entries(d.SESSIONS).forEach(([k, s]) => (s.blocks || []).forEach(b => {
 }));
 d.ROUTINES.forEach(r => {
   ck(typeof r.n === 'string' && typeof r.id === 'string', 'routine needs id and name');
-  ck(['WARMUP','DESK','ARMOR','SHORT','RANGE','RECOVERY'].includes(r.tag), 'routine ' + r.id + ' has an unrendered tag: ' + r.tag);
+  ck(['WARMUP','DESK','ARMOR','SHORT','RANGE','RECOVERY','POWER'].includes(r.tag), 'routine ' + r.id + ' has an unrendered tag: ' + r.tag);
   r.items.forEach(i => check(i.x, 'routine ' + r.id));
 });
 d.ARMOR.items.forEach(i => check(i.x, 'ARMOR'));
