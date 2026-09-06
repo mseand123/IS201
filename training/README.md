@@ -59,7 +59,7 @@ session — every block, then the Daily Armor — one exercise at a time:
 ## Warm-up
 
 Three RAMP-ordered warm-ups lead the Program screen and sit on the Today quick-start row:
-**Frisbee Warm-Up** (~36 min, game day), **Warm-Up · Short** (~23 min), **Sprint-Ready · Minimum**
+**Frisbee Warm-Up** (~38 min, game day), **Warm-Up · Short** (~24 min), **Sprint-Ready · Minimum**
 (~12 min) and **Half-Time Top-Up** (~5 min). They are legs-and-hips only — getting the body ready to sprint — with no throwing
 block; the arm warm-up lives in the Upper + Throw session instead. Eleven new exercises back
 them, including 8-way hips and clamshells, a short deep squat hold placed early, and graded
@@ -143,6 +143,38 @@ is the wrong neighbourhood for a labral hip.
 `check-data.js` validates the content schema — field types, referenced exercise ids, unique
 routine and article ids, and that no routine carries a tag no screen renders. Run it with
 `node training/check-data.js`.
+
+## The warm-up order
+
+The Frisbee Warm-Up runs strict RAMP, and now says so: each item carries an optional `g` group
+label, rendered as a divider in the list and as the block name in the player, so you can see
+which phase you are in rather than trusting the order.
+
+    PREP        plantar roll, sitting, while you lace up
+    RAISE       easy jog — nothing else works before this
+    MOBILISE    leg swings, lunge with rotation, deep squat hold, adductor rock-back
+    ACTIVATE    clamshells, 8-way hips, glute bridge, adductor squeeze, hamstring isometric
+    POTENTIATE  A-skip, carioca, pogos, build-ups at 60/75/90/95%, cutting build-ups
+
+Nothing fast happens before the raise, and the intensity ladder is unbroken from a skip to a
+95% run to a cut — `ramp.js` asserts that ordering rather than leaving it to inspection.
+
+One gap this audit found: every hip item in the warm-up was abduction or rotation — clamshells,
+8-way hips, glute medius. Nothing asked the gluteus maximus to *extend* the hip, which is the
+propulsive action in sprinting, so the first few strides were handing more work to the hamstring.
+**Glute Bridge → Single Leg** now closes that, for about thirty seconds.
+
+## Deploying it
+
+`node training/build.js` also writes `netlify/` — a drag-and-drop deploy folder. Drop it on
+https://app.netlify.com/drop and it is live. The folder is generated; edit `training/` and rebuild
+rather than touching it.
+
+It is a proper installable app once deployed: `manifest.webmanifest` plus icons make it
+add-to-home-screen on iOS and Android, and `sw.js` caches the shell so it opens **with no signal** —
+which matters, because the place you most need it is a field. The cache name is stamped with a hash
+of the page, so a rebuild evicts the old one. Fonts are the only external request, and the CSS
+carries real fallback stacks for when they cannot load.
 
 ## Getting around
 

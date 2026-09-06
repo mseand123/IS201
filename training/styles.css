@@ -802,3 +802,16 @@ body.running { overflow: hidden; }
   padding: .5rem 0;
   margin-bottom: -.2rem;
 }
+
+/* A block that runs in phases says so, in the list and in the player. */
+.pick-group {
+  margin: .7rem 0 .1rem;
+  padding-top: .5rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: .06em;
+  color: var(--faint);
+  text-transform: uppercase;
+}
+.pick-list > .pick-group:first-child { margin-top: 0; padding-top: 0; border-top: 0; }

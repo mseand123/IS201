@@ -33,6 +33,10 @@ d.ROUTINES.forEach(r => {
 d.ARMOR.items.forEach(i => check(i.x, 'ARMOR'));
 Object.entries(d.HOME_SUB).forEach(([k, v]) => { check(k, 'HOME_SUB key'); check(v.x, 'HOME_SUB value for ' + k); });
 
+// item group labels are strings
+d.ROUTINES.forEach(r => r.items.forEach(i =>
+  ck(i.g === undefined || typeof i.g === 'string', r.id + ' has a non-string group label')));
+
 // every play-group id must resolve to a routine
 const byId = new Set(d.ROUTINES.map(r => r.id));
 d.PLAY_GROUPS.forEach(g => {

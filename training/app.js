@@ -360,7 +360,13 @@ function buildSteps(session, date, opts) {
 }
 // A routine or a hand-picked set: steps that do not belong to today's checklist.
 function stepsFromItems(items, blockName) {
-  return items.map((it, i) => makeStep(it, blockName, null, i)).filter(Boolean);
+  // Carry the last group label forward so the player's top bar says which phase
+  // of the block you are in, not just which block.
+  let g = null;
+  return items.map((it, i) => {
+    if (it.g) g = it.g;
+    return makeStep(it, g ? g.split('\u00b7')[0].trim() : blockName, null, i);
+  }).filter(Boolean);
 }
 
 /* ---------- voice ----------
@@ -1449,9 +1455,9 @@ function routineCard(r, date) {
 
   const open = ROPEN.has(r.id);
   const picker = el('div', { class: 'routine-pick' + (open ? ' open' : '') }, [
-    el('div', { class: 'pick-list' }, r.items.map((it, i) => {
+    el('div', { class: 'pick-list' }, r.items.flatMap((it, i) => {
       const on = sel.has(i);
-      return el('div', { class: 'pick-row' + (on ? ' on' : '') }, [
+      const row = el('div', { class: 'pick-row' + (on ? ' on' : '') }, [
         el('button', {
           class: 'tick pick', 'aria-pressed': on ? 'true' : 'false', 'aria-label': 'Select ' + EX[it.x].n,
           onclick: () => { on ? sel.delete(i) : sel.add(i); render(); }
@@ -1462,6 +1468,8 @@ function routineCard(r, date) {
           el('span', { class: 'pick-dose num' }, it.d)
         ])
       ]);
+      // A group label marks where one phase of the block hands over to the next.
+      return it.g ? [el('div', { class: 'pick-group' }, it.g), row] : [row];
     })),
     el('div', { class: 'row', style: 'gap:.4rem' }, [
       el('button', {
