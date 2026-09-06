@@ -176,6 +176,16 @@ which matters, because the place you most need it is a field. The cache name is 
 of the page, so a rebuild evicts the old one. Fonts are the only external request, and the CSS
 carries real fallback stacks for when they cannot load.
 
+### Two ways to deploy
+
+- **`index-deploy.html`** — the whole app as one file. Drag it straight onto Netlify Drop, which
+  accepts a lone HTML file. Nothing to unzip. The manifest and the touch icon are inlined as data
+  URIs, so it still adds to an iPhone home screen; it also opens by double-clicking from disk. The
+  one thing it cannot do is register a service worker, so this version has no offline cache.
+- **`netlify/`** — the folder. Same app plus `sw.js`, the manifest and icons as real files, so it
+  installs on Android too and works with no signal. Drag the folder, or connect the repo to Netlify
+  with the publish directory set to `netlify` and skip dragging entirely.
+
 ## Getting around
 
 The Program screen is a hub, not a scroll. Six tiles — **Frisbee**, **Weak-link blocks**, **When

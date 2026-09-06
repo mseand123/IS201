@@ -123,6 +123,32 @@ fs.writeFileSync(path.join(out, '_headers'),
   + '/index.html\n  Cache-Control: no-cache\n'
   + '/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: no-referrer\n');
 
+/* ---- one-file deploy ----
+   Netlify Drop accepts a lone HTML file, which is the least-friction way to get
+   this online. A single file cannot register a service worker, so this build
+   trades offline caching for having nothing to unzip; the netlify/ folder above
+   is the version that keeps it.                                            */
+const icon192 = fs.readFileSync(path.join(dir, 'assets', 'icon-192.png')).toString('base64');
+const icon512 = fs.readFileSync(path.join(dir, 'assets', 'icon-512.png')).toString('base64');
+const png = b64 => 'data:image/png;base64,' + b64;
+const manifest = 'data:application/manifest+json,' + encodeURIComponent(JSON.stringify({
+  name: 'Ground Contact', short_name: 'Ground Contact',
+  start_url: './', display: 'standalone', orientation: 'portrait',
+  background_color: '#101A17', theme_color: '#101A17',
+  icons: [{ src: png(icon192), sizes: '192x192', type: 'image/png' },
+          { src: png(icon512), sizes: '512x512', type: 'image/png', purpose: 'any maskable' }]
+}));
+const single = doc.replace('</head>',
+  '<link rel="manifest" href="' + manifest + '" />\n'
+  + '<meta name="apple-mobile-web-app-capable" content="yes" />\n'
+  + '<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />\n'
+  + '<meta name="apple-mobile-web-app-title" content="Ground Contact" />\n'
+  + '<link rel="apple-touch-icon" href="' + png(icon192) + '" />\n'
+  + '<meta name="description" content="Elastic-athlete training system: guided sessions, a full-screen timer, and the exercise library behind them." />\n'
+  + '</head>');
+fs.writeFileSync(path.join(dir, '..', 'index-deploy.html'), single);
+
 console.log('standalone.html', (doc.length / 1024).toFixed(0) + ' KB'
   + (process.argv[2] ? ' · fragment → ' + process.argv[2] : '')
-  + ' · netlify/ ' + (web.length / 1024).toFixed(0) + ' KB');
+  + ' · netlify/ ' + (web.length / 1024).toFixed(0) + ' KB'
+  + ' · index-deploy.html ' + (single.length / 1024).toFixed(0) + ' KB');
