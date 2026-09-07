@@ -48,6 +48,25 @@ const grouped = new Set(d.PLAY_GROUPS.flatMap(g => g.ids));
 d.ROUTINES.filter(r => ['WARMUP', 'RECOVERY', 'RANGE'].includes(r.tag))
   .forEach(r => ck(grouped.has(r.id), r.id + ' is game-day but appears in no play group'));
 
+// every warm-up exercise says what it targets — that is the label under the name
+d.ROUTINES.filter(r => r.tag === 'WARMUP').forEach(r => r.items.forEach(i =>
+  ck(typeof (d.EX[i.x] || {}).targets === 'string' && d.EX[i.x].targets.length > 0,
+     r.id + ' › ' + i.x + ' has no targets label')));
+Object.values(d.EX).forEach(e => ck(e.targets === undefined || typeof e.targets === 'string', e.n + ' targets should be a string'));
+
+// a warm-up's summary line is short and honest: required, and every term it names must
+// appear in at least one of its items' targets
+const norm = x => x.toLowerCase().replace(/[^a-z ]/g, ' ').replace(/\s+/g, ' ').trim();
+d.ROUTINES.filter(r => r.tag === 'WARMUP').forEach(r => {
+  ck(typeof r.targets === 'string' && r.targets.length > 0, r.id + ' has no targets summary');
+  ck(!r.targets || r.targets.split('·').length <= 9, r.id + ' targets summary is not short: ' + r.targets);
+  const pool = norm(r.items.map(i => (d.EX[i.x] || {}).targets || '').join(' '));
+  (r.targets || '').split('·').map(norm).filter(Boolean).forEach(term => {
+    const words = term.replace(/&/g, ' ').split(' ').filter(w => w.length > 2 && !['and','the'].includes(w));
+    ck(words.some(w => pool.includes(w.replace(/s$/, ''))), r.id + ' summary claims "' + term + '" but no item targets it');
+  });
+});
+
 // routine ids unique
 const ids = d.ROUTINES.map(r => r.id);
 ck(new Set(ids).size === ids.length, 'routine ids must be unique: ' + ids.filter((x,i)=>ids.indexOf(x)!==i).join(', '));

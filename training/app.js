@@ -301,15 +301,19 @@ function switchInfo(st) {
   if (!st || st.rounds < 2 || !st.rest) return null;
   const lbl = st.label || '';
   const dash = lbl.indexOf('—');
+  // What the dose says about sides wins over a terse timer label: a label that just says
+  // "switch" on a "per side" dose still gets the Left/Right chip and the spoken side.
+  let fromDose = null;
+  for (const [re, text, sided] of SWITCH_WORDS) {
+    if (re.test(st.dose || '')) { fromDose = { text: text, sided: sided }; break; }
+  }
   if (dash >= 0) {
     const said = lbl.slice(dash + 1).trim();
     const sided = /\b(side|leg|feet|foot|arm|hand)s?\b/i.test(said);
+    if (!sided && fromDose && fromDose.sided) return fromDose;
     return { text: said.charAt(0).toUpperCase() + said.slice(1), sided: sided };
   }
-  for (const [re, text, sided] of SWITCH_WORDS) {
-    if (re.test(st.dose || '')) return { text: text, sided: sided };
-  }
-  return null;
+  return fromDose;
 }
 // Which side you are on right now, so it is never a guess mid-set.
 function sideLabel(st, round) {
@@ -770,6 +774,7 @@ function buildRun() {
         st.rounds > 1 && !isReady ? el('span', { class: 'run-round' }, 'Round ' + RUN.round + ' / ' + st.rounds) : null,
         sideNow && !isReady ? el('span', { class: 'run-round side' }, sideNow) : null
       ]),
+    e.targets && !between && !switching ? el('p', { class: 'run-targets' }, e.targets) : null,
     el('div', { class: 'run-ring' + (isRest ? ' rest' : '') }, [
       svg,
       el('div', { class: 'run-ring-label' }, [
@@ -1516,7 +1521,8 @@ function routineCard(r, date) {
               g.appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' })); return g; })()]),
         el('div', { class: 'pick-body' }, [
           el('button', { class: 'pick-name', onclick: () => openEx(it.x) }, EX[it.x].n),
-          el('span', { class: 'pick-dose num' }, it.d)
+          el('span', { class: 'pick-dose num' }, it.d),
+          EX[it.x].targets ? el('span', { class: 'pick-targets' }, EX[it.x].targets) : null
         ])
       ]);
       // A group label marks where one phase of the block hands over to the next.
@@ -1541,6 +1547,9 @@ function routineCard(r, date) {
       el('span', { class: 'num xs muted' }, '≈ ' + fmtMins(runSeconds(stepsFromItems(chosen, r.n))))
     ]),
     el('p', { class: 'small muted' }, r.sub),
+    // A short, authored line saying what the block is for. check-data.js verifies every term
+    // against the items' own targets, so it stays honest without becoming a list of everything.
+    r.targets ? el('p', { class: 'routine-targets' }, [el('span', { class: 'eyebrow' }, 'Targets'), ' ' + r.targets]) : null,
     (() => {
       const shown = WHYOPEN.has(r.id);
       return el('div', { class: 'why-fold' }, [

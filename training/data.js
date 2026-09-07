@@ -32,6 +32,7 @@ const EX = {
 /* ============ FOOT, FASCIA, TISSUE ============ */
 'ball-roll-foot': {
   n: 'Plantar Ball Roll', cat: 'tissue', tags: ['fascia','foot','daily','hamstring'],
+  targets: 'Feet · plantar fascia · calves · posterior chain range',
   why: 'The one you already love, and it is the best-evidenced trick in the whole toolbox. Rolling the sole of the foot produces an immediate, measurable increase in hamstring and lumbar flexibility — sit-and-reach improves with a large effect size — without stretching the hamstring at all. The working explanation is the superficial back line: plantar fascia → calf → hamstring → sacrotuberous ligament → erectors are mechanically continuous, so downregulating tone at one end changes extensibility along the chain. For a guy with "tight hamstrings" and a strain history, this is how you buy range without pulling on healing tissue.',
   setup: 'Barefoot, standing, one hand on a wall. Lacrosse ball for aggressive, tennis ball for tolerable, frozen bottle if the plantar fascia is hot.',
   steps: [
@@ -251,6 +252,7 @@ const EX = {
 /* ============ THE HAMSTRING TRACK ============ */
 'ham-iso-long': {
   n: 'Long-Length Hamstring Isometric', cat: 'iso', tags: ['hamstring','iso','daily','armor'],
+  targets: 'Hamstrings at length',
   why: 'Over 80% of hamstring injuries happen in late swing during sprinting, when the muscle is long, lengthening fast, and contracting hard. Biceps femoris long head produces its highest force at roughly 45° hip flexion with 10–30° knee flexion — so that is where you train it. Isometric hip-extension protocols raise isometric knee-flexion torque ~10% and hip-extension force ~12%. Your hamstring is healed; this is what keeps it that way, and it is a timed hold, which you like.',
   home: "Heels on a couch, a dining chair, a low table or the bottom step of a staircase. Knee-height is what matters, not what the furniture is.",
   setup: 'Lie on your back, heels on a bench or box roughly knee-height, knees bent to about 20°, hips flexed to about 45°.',
@@ -400,6 +402,7 @@ const EX = {
 /* ============ THE ADDUCTOR TRACK ============ */
 'adductor-squeeze-iso': {
   n: 'Adductor Squeeze Isometric Ladder', cat: 'iso', tags: ['adductor','iso','daily','armor'],
+  targets: 'Adductors · groin',
   why: 'The squeeze test is both your diagnostic and your treatment. Adductor strength deficits are the clearest modifiable risk factor for groin injury in cutting sports, and an isometric squeeze at multiple hip angles is the safest way to load a cranky adductor daily. Three angles because the adductor group has different lines of pull through the range — 0° biases adductor magnus, 45° the longus/brevis, 90° the pectineus/anterior fibres.',
   setup: 'Lie on your back with a ball (or a blood-pressure cuff, if you want numbers) between the knees.',
   steps: [
@@ -478,6 +481,7 @@ const EX = {
 },
 'adductor-rockback': {
   n: 'Adductor Rock-Back (Frog)', cat: 'mobility', tags: ['adductor','mobility','daily'],
+  targets: 'Adductors · inner hip range',
   why: 'Low-load, high-frequency adductor lengthening you can do daily without adding fatigue. Prepares the groin for the deep squat holds you like.',
   setup: 'On hands and knees, knees wide, shins in line with the thighs, feet flat or toes together.',
   steps: ['Set a neutral spine.','Rock the hips back toward the heels until you feel a stretch through the inner thighs.','Rock forward. Rhythmic, 2 s each way.','After 10 reps, hold the back position for 30 s and breathe into it.'],
@@ -675,6 +679,7 @@ const EX = {
 },
 'deep-squat-hold': {
   n: 'Deep Squat Hold', cat: 'iso', tags: ['mobility','iso','daily','favourite','fascia'],
+  targets: 'Ankles · hips at depth · adductors · daily hip check',
   why: 'Your favourite, and it earns its place. A deep squat is the position your hips, knees and ankles need to keep access to, and accumulated time in it is the cheapest way to keep it. It also loads the adductors and the posterior hip capsule at end range under bodyweight, which is loaded stretching — the kind of exposure animal work associates with real tissue adaptation. Treat it as a daily accumulation target, not a workout.',
   home: "Requires nothing at all, anywhere, forever. Hold a doorframe if the balance is not there yet.",
   setup: 'Feet roughly shoulder width, toes out 10–20°, barefoot ideally.',
@@ -695,6 +700,7 @@ const EX = {
 },
 'iso-hip-flexor': {
   n: 'Standing Hip Flexor Isometric', cat: 'iso', tags: ['iso','hip','speed'],
+  targets: 'Hip flexors · knee drive',
   why: 'Hip flexor strength above 90° is a direct contributor to sprint stride frequency and to the knee drive that separates fast cutters from quick ones. Almost nobody trains it above 90°, which is where it is weakest.',
   setup: 'Stand tall, hold a rail lightly for balance.',
   steps: ['Lift one knee as high as it will go — above hip height.','Actively pull it higher against the limit of your range. No band needed at first.','Hold 15–20 s at hard effort, standing leg tall and glute engaged.','Switch.'],
@@ -816,6 +822,7 @@ const EX = {
 /* ============ PLYOMETRICS & ELASTIC ============ */
 'pogo-jumps': {
   n: 'Pogo Jumps (Ankle Stiffness)', cat: 'plyo', tags: ['elastic','speed','foot'],
+  targets: 'Achilles & calves · ankle stiffness',
   why: 'Pogos are the base of reactive strength: low intensity, high frequency, training foot and ankle stiffness, rhythm and repeated fast ground contacts. This is the drill that shortens your ground contact time, and ground contact time is the difference between fast and quick.',
   setup: 'Shoes or barefoot, on a firm surface with some give (track, turf, gym floor).',
   steps: ['Feet hip width, knees almost straight — under 15° of bend.','Bounce continuously off the ankles.','Contact times as short as possible; think "hot floor".','20–30 contacts, then stop before quality drops.'],
@@ -915,6 +922,7 @@ const EX = {
 },
 'a-skip': {
   n: 'A-Skip', cat: 'speed', tags: ['speed','technique','warmup'],
+  targets: 'Hip flexors · calves · sprint rhythm',
   why: 'Rhythm, front-side mechanics, and ankle stiffness in one drill. The universal sprint warm-up for a reason.',
   setup: '20–30 m of open space.',
   steps: ['Skip with a knee drive to hip height, ankle dorsiflexed.','Strike down and back under the hip, not out in front.','Stay tall, arms driving from the shoulder.','Fast ground contacts — the skip is quick, not floaty.'],
@@ -3560,6 +3568,7 @@ Object.assign(EX, {
 
 'easy-jog': {
   n: 'Easy Jog', cat: 'cond', tags: ['warmup','raise'],
+  targets: 'Whole body temperature · heart rate',
   why: 'The "raise" in RAMP, and the part people skip when they are late. Three to four minutes of easy running raises muscle temperature roughly 1–3°C, and warm muscle is more compliant, conducts faster, and produces more force. Nothing else in the warm-up works properly until this has happened — mobility work on a cold muscle is just stretching.',
   setup: 'Sideline to sideline, or a lap of the field.',
   steps: [
@@ -3577,6 +3586,7 @@ Object.assign(EX, {
 },
 'leg-swings': {
   n: 'Leg Swings — Linear & Lateral', cat: 'mobility', tags: ['warmup','hip','mobility'],
+  targets: 'Hip flexors & hamstrings (linear) · adductors & glute med (lateral)',
   why: 'Dynamic range at the hip in both planes, which is what a cutting sport actually asks for. Swinging beats holding here: a warm-up wants range you can control at speed, and long static holds before explosive work can transiently reduce force output.',
   est: 100,
   setup: 'Hand on a fence, a post or a partner.',
@@ -3668,6 +3678,7 @@ Object.assign(EX, {
 },
 'seven-way-hips': {
   n: '8-Way Hips', cat: 'armor', tags: ['warmup','hip','glute','activate','labrum'],
+  targets: 'Glute med · hip rotators (both directions)',
   why: 'The single most complete hip activation series there is: seven positions covering abduction, flexion, extension and both diagonals, plus circles in each direction — and an eighth that you added, which is the one that earns its place fastest. Positions 1 to 7 are all abduction-dominant with a straight leg. Position 8 bends the knees and rotates the hip in both directions, which is the only rotation in the series and the only time the internal rotators do anything. For a hip with a labral history that matters twice over: labral hips reliably lose internal rotation, it is one of the numbers you track under Tests, and rotation trained deliberately at a shallow flexion angle is exactly how you keep it without going near the position that pinches.',
   repSec: 1.5,
   setup: 'Side-lying, bottom knee bent for stability, head supported. Top leg straight, hips stacked and square — do not roll backward.',
@@ -3690,6 +3701,7 @@ Object.assign(EX, {
 },
 'glute-bridge-warm': {
   n: 'Single-Leg Glute Bridge', cat: 'armor', tags: ['warmup','glute','hip','activate','potentiate'],
+  targets: 'Glute max · hip extension',
   why: 'The gap in almost every hip warm-up, including the one you were doing. Clamshells and 8-way hips are abduction and rotation \u2014 they wake the glute medius and the deep rotators, which stop the femur drifting. Neither of them asks the gluteus maximus to extend the hip, and hip extension is the propulsive action in sprinting. A glute that has not been asked to extend hard in the last ten minutes hands more of the first few strides to the hamstring, which is the tissue you least want picking up slack on a cold first sprint. Thirty seconds fixes it.',
   home: 'Nothing. Floor and a wall, or grass.',
   repSec: 2.5,
@@ -3709,6 +3721,7 @@ Object.assign(EX, {
 },
 'clamshell': {
   n: 'Clamshells', cat: 'armor', tags: ['warmup','hip','glute','activate','labrum'],
+  targets: 'Glute med · deep hip rotators',
   why: 'The most direct way to switch on the deep hip external rotators and gluteus medius before you plant on them. For your hip specifically this is a good exercise: hip flexion stays shallow, the movement is pure external rotation, and it is nowhere near the flexion-adduction-internal-rotation position that provokes a labrum. Being able to hold the hip out of internal rotation under load is the whole point.',
   repSec: 2,
   setup: 'Side-lying, hips and knees stacked, knees bent to about 45°, heels in line with the spine. Band above the knees if you have one.',
@@ -3726,6 +3739,7 @@ Object.assign(EX, {
 },
 'walking-lunge-rotation': {
   n: 'Lunge with Rotation', cat: 'mobility', tags: ['warmup','hip','spine','mobility'],
+  targets: 'Hip flexors · quads · thoracic rotation',
   why: 'The most efficient single warm-up movement there is: hip flexor length on the back leg, adductor and hamstring on the front, thoracic rotation on top, all while moving. It covers in one drill what four static stretches would.',
   repSec: 7,
   setup: 'Walking, 15 m of space.',
@@ -3761,6 +3775,7 @@ Object.assign(EX, {
 },
 'carioca': {
   n: 'Carioca', cat: 'speed', tags: ['warmup','hip','lateral','potentiate'],
+  targets: 'Hips in the frontal plane · adductors · crossover step',
   why: 'Hip rotation at speed, which is the thing you cannot get from any drill done standing still. It also rehearses the crossover step that starts most cuts in ultimate. Build it up gradually — carioca cold is a classic way to tweak a groin.',
   est: 120,
   setup: '20 m of space, side-on to the direction of travel.',
@@ -3778,6 +3793,7 @@ Object.assign(EX, {
 },
 'build-ups': {
   n: 'Build-Up Runs', cat: 'speed', tags: ['warmup','speed','potentiate'],
+  targets: 'Sprint mechanics · graded to top speed',
   why: 'The bridge between a warm-up and playing. Sprinting is the thing most likely to strain something, so you arrive there by degrees rather than in one step. Four graded runs, most of which is walking back, and it means your first hard cut of the game is not your first fast movement of the day.',
   setup: '40 m of space.',
   steps: [
@@ -3796,6 +3812,7 @@ Object.assign(EX, {
 },
 'cut-builds': {
   n: 'Cutting Build-Ups', cat: 'speed', tags: ['warmup','cod','potentiate','ultimate'],
+  targets: 'Deceleration · cutting · knee control',
   why: 'Rehearsing the actual movement of the sport at rising intensity. Your first hard plant should not be against a defender — it should be here, deliberately, at 70%, then 85%, then full. This is also the last chance for the groin and hip to tell you something before it matters.',
   est: 200,
   setup: 'Two cones about 10 m apart, plus space to accelerate.',
@@ -3834,6 +3851,7 @@ Object.assign(EX, {
 
 ROUTINES.unshift(
   { id:'warmup-full', n:'Frisbee Warm-Up', tag:'WARMUP',
+    targets:'Feet & calves · hip flexors · glutes · adductors · hamstrings · ankles · sprint mechanics · cutting',
     sub:'Game day · everything the legs need to be ready to sprint',
     why:'Built on RAMP — Raise, Mobilise, Activate, Potentiate — because the order carries more than the exercise choice does. Temperature first, then range, then the muscles that need waking, then speed. Mobility on a cold muscle is just stretching, and going from standing to a hard cut is how people strain things in warm-ups. Everything here is about the legs and hips arriving ready to sprint; warm your throws up separately on your own clock. Start it around 40 minutes before pull, and if you finish early keep moving rather than sitting down.',
     items:[
@@ -3846,6 +3864,7 @@ ROUTINES.unshift(
       { x:'clamshell', g:'ACTIVATE · wake what has to hold you up', d:'15 per side, hold the last one 15 s' },
       { x:'seven-way-hips', d:'8 positions × 8 reps per side' },
       { x:'glute-bridge-warm', d:'8 per side', note:'The only hip extension in the warm-up. Squeeze first, then lift \u2014 this is what stops the hamstring carrying the first few strides.' },
+      { x:'iso-hip-flexor', d:'2 × 15 s per side', t:{ r: 10 }, note:'The other half of a stride. Knee up above hip height, drive into your hands or the wall, hard. This is the muscle that lifts the knee at top speed.' },
       { x:'adductor-squeeze-iso', d:'6 × 8 s', note:'Two ladders, submaximal. Wake the groin before you ask it to plant.' },
       { x:'ham-iso-long', d:'2 × 20 s per side', t:{ r: 12 }, note:'Pre-activating the hamstring at length, right before you sprint on it.' },
       { x:'a-skip', g:'POTENTIATE · rising to full speed, in order', d:'2 × 20 m, walk back' },
@@ -3855,6 +3874,7 @@ ROUTINES.unshift(
       { x:'cut-builds', d:'3 rounds building, both directions' }
     ]},
   { id:'warmup-short', n:'Warm-Up · Short', tag:'WARMUP',
+    targets:'Feet & calves · hip flexors · glutes · adductors · hamstrings · sprint mechanics · cutting',
     sub:'Pickup, practice, or a late arrival',
     why:'The version that survives contact with reality. Same RAMP order, half the volume, and nothing load-bearing removed — the raise, the two hip activations, the hamstring pre-activation and the graded build-ups all stay, because those are the parts that actually protect you. Cut this further and you are just jogging.',
     items:[
@@ -3865,6 +3885,7 @@ ROUTINES.unshift(
       { x:'clamshell', d:'15 per side' },
       { x:'seven-way-hips', d:'8 positions × 6 reps per side' },
       { x:'glute-bridge-warm', d:'6 per side' },
+      { x:'iso-hip-flexor', d:'15 s per side', t:{ r: 8 } },
       { x:'adductor-squeeze-iso', d:'4 × 8 s' },
       { x:'ham-iso-long', d:'2 × 20 s per side', t:{ r: 12 } },
       { x:'a-skip', d:'2 × 20 m, walk back' },
@@ -3872,6 +3893,7 @@ ROUTINES.unshift(
       { x:'cut-builds', d:'2 rounds building, both directions', est: 130 }
     ]},
   { id:'warmup-min', n:'Sprint-Ready · Minimum', tag:'WARMUP',
+    targets:'Feet · hip flexors & hamstrings · sprint mechanics',
     sub:'The honest floor before you sprint hard',
     why:'If the choice is between a thorough warm-up you skip and a short one you actually do, the short one wins every time. This is what is left when you strip the warm-up back to only the parts that are load-bearing. Raising muscle temperature is genuinely non-negotiable — warm muscle is more compliant, conducts faster and produces more force, and nothing else works properly before it has happened. The hamstring isometric is here because of your history and because it costs forty seconds. The build-ups are here because going from standing to a hard sprint in one step is the single most reliable way to strain something, and four graded runs removes that step. Everything cut from this list is beneficial. Nothing cut from it is essential. Use the full version when you have the time and this when you do not — but do not skip both.',
     items:[
@@ -3883,6 +3905,7 @@ ROUTINES.unshift(
     ]},
 
   { id:'warmup-between', n:'Between Games', tag:'WARMUP',
+    targets:'Feet · hips · adductors · hamstrings · sprint mechanics · cutting',
     sub:'A long gap at a tournament, and getting sharp again for the next pull',
     why:'A ninety-minute gap between games is a different problem from half-time. You have gone fully cold, you have probably eaten, and you may have stiffened up sitting on a cooler. But you are also not fresh — you have a game in your legs — so this is not a repeat of the morning warm-up either. The shape that works: for the first hour, stay off your feet, get horizontal if you can, eat and drink. Then start this about twenty minutes before pull. The re-raise matters more than anything else in it, because temperature is what you actually lost. Keep the intensity ladder short but do not skip the top of it — the first sprint of game two hurts people more often than the first sprint of game one, because they assume they are still warm from earlier. They are not.',
     items:[
@@ -3897,6 +3920,7 @@ ROUTINES.unshift(
     ]},
 
   { id:'warmup-half', n:'Half-Time Top-Up', tag:'WARMUP',
+    targets:'Temperature · glute med · adductors · sprint mechanics',
     sub:'So the second half does not start cold',
     why:'High-intensity running drops about 10% in the second half, and part of that is simply having sat down for ten minutes and gone cold. Three minutes of re-raising and two hip activations recovers most of it, and almost nobody does it.',
     items:[

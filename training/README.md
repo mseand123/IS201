@@ -205,6 +205,19 @@ of them: the pogo prescription split into its double-leg and single-leg halves, 
 now names the hold, and the glute bridge dropped its double-leg preamble into the exercise's own
 steps.
 
+## What each thing is for
+
+Exercises can carry a `targets` string — plain language, not tags: "Glute max · hip extension",
+"Achilles & calves · ankle stiffness". It renders in three places: under the exercise name in a
+routine's pick list, under the dose in the player (so mid-set you know what you are supposed to
+feel), and as a short authored **Targets** line on the routine card. The card line is written, not
+derived — a union of seventeen items is a paragraph, not a label — and `check-data.js` verifies
+every term in it against the items' own targets, so it cannot claim something the block does not do. `check-data.js`
+requires it on every warm-up item. The Frisbee Warm-Up also gained a **Standing Hip Flexor
+Isometric** in the activate block, right after the glute bridge: extensor, then the flexor it
+works against. Until then the hip flexors were mobilised (lunges, leg swings) and driven (A-skips)
+but never activated.
+
 ## The warm-up order
 
 The Frisbee Warm-Up runs strict RAMP, and now says so: each item carries an optional `g` group

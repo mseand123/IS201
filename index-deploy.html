@@ -838,6 +838,12 @@ body.running { overflow: hidden; }
 }
 .pick-list > .pick-group:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
 
+/* ---------- what a block, and each exercise in it, is actually for ---------- */
+.routine-targets { font-size: var(--t-xs); color: var(--ink-2); line-height: 1.4; }
+.routine-targets .eyebrow { margin-right: .35rem; }
+.pick-targets { font-size: var(--t-xs); color: var(--faint); line-height: 1.3; }
+.run-targets { font-size: var(--t-sm); color: var(--muted); margin-top: -.3rem; max-width: 34ch; }
+
 </style>
 <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Ground%20Contact%22%2C%22short_name%22%3A%22Ground%20Contact%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22orientation%22%3A%22portrait%22%2C%22background_color%22%3A%22%23101A17%22%2C%22theme_color%22%3A%22%23101A17%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAAQAElEQVR4nOydf3RU1Z3A7%2Fs1M29%2BZpLMZPITCEkICAQQCSAkCIh223V3lVIpItYf29Vu3e5uj7%2BqZ6u1u9jV09P%2B4Wq1VrsoiBWp3eoiiED4IeFHCARSAoGQISRMyI%2FJ%2FH4%2F%2ByDntBxaJffdefPem7mfk5NzlPdgZt5n7v3e7%2F3ee%2Bm8kiKAwaiFBhgMAlggDBJYIAwSWCAMElggDBJYIAwSWCAMElggDBJYIAwSWCAMElggDBJYIAwSWCAMElggDBJYIAwSWCAMElggDBJYIAwSWCAMElggDBJYIAwSWCAMElggDBJYIAwSWCAMElggDBJYIAwSWCAMElggDBJYIAwSWCAMElggDBJYIAwSWCAMElggDBJYIAwSWCAMElggDBK5LhDBWgmHjbCzpMOm%2FBCshaDogIdfPb2vOj9ekxfLswoRjkoIVIInEwIR48hQmAr2k8EQCPaI3UGhp4cHOQyRc%2FtEUySZ76YKPMoPme8iaeqaP19U0v%2FDOSdcjDjGvy8uUMd67YfPUAfaxJaWRDwOcoqcEYihmfEBurSQ8rq%2F5KpVNd3%2FVncaIHC8376lxbLxt%2FGhIQnkAFkukAxkuqhAUYcqyico8ssvrvJE3156gCZlgAwvgR2d7o2fgl1NUSCTIHvJXoFokplQylSWkHbrGO%2FYcOv%2B6rwYSCt9MWbDXsf%2F%2FiYWjaTBSwOSjQLZGEtVOT0%2BQDIQQ4TZvsFXFx0B2hDlyPcOuV%2FfkLjUP9bQyixQNpcTZAuE026ZVmmbWUMXeq7bYV3DbP%2FQotJLQBsslDyzPLl6mTSu1nmmjxgazB6NskUgirTUVdlm1dB5ToIkADxziwbqi4aAlihKTy5K3XML7x3nPtDKCVkx%2FM8GgSh%2FHrtwOu3LIwg16oySZ%2BVuqwiBjDC9JPkPS%2BjTw2x3t%2BklMrdAMklY66pt06sIGjUjmhKpVTVBkCmcFvGOm1K%2BCe49hzjJzB2aiQUinCy7YDoTyAfpIMrTU%2FPDFa4EyCBTi5O3NVqbTtDhYbNKZFaBqIoi29wpFGsD6eNwf95dE3vSkgcaO%2Fms8PVGMZh0njptyu7MhAJRpHV2rbW2giDTnKCLCbQyL3FzYBBkFoaUb6tLlVS7mg7wotlaIrMJZKHZhjra7wXa0Dbo6Rh2zi8esFKZzvtNKUotutn20T6ZS5kp5WgmgQgLY2%2BcSbkdQEu6Io6PzwUIQk6KpJ0WWDpzU1o%2BB794PrOlmUjETeOQaTLRBGtVxuqkgwUaIA6NSPGUnORkjld%2BSykepJTfnJzgrIxcVEwXFtC%2BfKrQC3xeIt8FClxSqVeYUqjJzHtwxHrvj4gLPQIwA%2BYQiHDY2IV1JDvWWa2xIAmCFBoWLlwS%2BgYBr%2BZp5RdQtzSwt86S5o2P2qh0NlQXY8yqH1PBLhM4ZAKBCJuFXTQzXfZI8YTQOyj0DYj9w0SaOgqaAfPn2RffRDZOipc4OZAOQnHmrqepUJ%2FRHTK8QAylxD2kyw6QEUdiqRNdUu8A0JJlSx3%2FemeqMi8JkOkK25Y%2FIUXChq4rMnYQTZHsgjrKg%2FoKxXgydbQzdaQDRDXPE3ae4d%2F5WOyTPVPGiU4L0rPPswnz51g3fyYaeWxvYIEIwM6fRhV4AAJKIJxq70odPCmHowRQP1MGh0ycaOfe%2BQTEbO6p5byNVt9T%2Bh183UzH77bzcsZePCTGFcgyfSJT5gdqkQSR6wimmtulgRFdPnul2Tjcyq3fThJe95QSjlGb4K7I4zwVnl2fpye0SjsGFYgK5CtTpEAtUjSR2NkiKuGOrHNChePAvgPcxy3WJfWky6KyK6orTZ4cdp05a8S5DiMKdHnQvmC66pkKITSU2H0UpAz0cStzpR%2FsImfNYktcKhuSxmnC7w9ZRkYMF1AbTyCSsDfMUD1o5zp7kgfbCclwmdxUSt68lS%2Bb5K71pwA8FkqeO4t5b6skGUwhwwlknVFNF6mp0JBlOXW4g%2B8IEkaNN5VAeFsTP2Lx3FydVFE1WWgXfOPdn%2B01VjBkLIEoX55VVegj80JiT5vYp22OJy20tnFHLjqXzBQs8PO1NxQnm4NOQ62FNdaSJWtdNYBH4oX4jhZpIAxMwp498buft8V4SsW9z30Lt0BfAFNdxpRDj9uVniu5p01J8wBTMTgoHr3ouGNOCraM22sTEg53S6tRNDKKQITVYqufomLkpaSYxQtaLcfRlPPn%2BRjrWVgDPekxYxy%2FsYlJJgwRThtFIMvUCTR80pk%2F18ef6AKm5cgxbsJkV40PblymBE%2Bs37FznyEiIUPEQErzw4wPAEjES8PKsAuYnMfXxo70QZfIrZg54i0wxNY8hhBIiX5gOy8plkzsOw7MjyCAh54VeiJweS%2BGkh9cmc4FBaoxgEAMxVQWQ91xZdB%2BFAhZskB4JCw%2B8AId5%2BGexcqbIm6PmnFcetE%2FBmImVcAWyaeOdUqhYZBFDA%2BJKYcLKqBWIiHO6Wo%2BpPNwTP8WyFJZAnW90nkJZ3tB1vH2u9G%2BmAXqlpX1scv5bV3RWSCqyEtYGKhbUsfPgmyEF8DPP4IrvCxg%2BQULtF2jcl10FoguhyuoFcMxsacfZCmbNkfODsOFxn%2FXqPPEn64CUSRdUgh1B3f8DMheZJl4aRNcL7akJmq16umQngIp9kBtAyUOhMWL2m7hoztbt8XbQhAdmYMRly1Nw4oD1egpEFVcAHW9MmsBcoAX3oHLEC6erWccrWsL5IMYvSvRjzRsshlTdTQ3x8%2BGISKhORUZ3ZLmGnQTiHDZCQvEV00wQ61PutjZDiFQIctXVsFFTmlEN4EoXx7U9WJfpndd0ZEdB%2BCS7PWzck8guhBi7l2Zu5AGR0DOsP%2FzeEKAeDT1tbqVdujYAkEEQEIuNT8KkkzsOgMxxTR%2Fgm4ndOgjEGGzQgVA4sXcEkhhZyvEo%2FFYBZ9fn4lVfWpKSAdEkCjLspBZgRjWWlQz3lczzl8zXvnPUMfZUEd3qKOLT6hZkaOO7buS8nIw9oLXinFMf0iH8gSdipJgBBKHIoDL0C4nJEPX3%2Fu3N664nbrqmITaJfWXXwYvHNq4Zf%2BvP5T4TLyYoQGhrd8%2BzT%2FWvqmihDoEdECnFsj%2BZ4HGuWKzfUMTPbEyZ6InynaOOA6GvF2RP88RZiz9UzKteun37%2FOW%2F%2FXaSEWpOau%2BWt1w47YX37xw7BTQnvYLFgiBAvpMaOjZhdko4eGpZ1dWBa%2BZzxAl8O7psv85XhkXLr88OSPNT%2FENE5f%2F9LHrFkYqeimXvfe9F3rbkI4VGwtQX5xynz75aL2CaIuDETYsa76nJviXs2HK%2F%2FlmzfkNy%2FZ7LFfqxrVf5U7brMueeHCMZbXKZcsef0C5BWjMAEziosCpT32mTsN4mnpy1sly55cV4JU6Us%2FMbgeXWyDNi%2B4WPrwirxRiSZpysXIL0JjhMESj4rDkUgvUOCH8lYqL173sltJLt5X3SRq3QJTVMu2rDQAS5RblRqAlgzAC2a365BL1Eeie6de3Z5S%2Fr%2ByVOW0FKq6doGJBo3KLb2IZ0JJBmFNXHUwudWGlzrEmVAJsEmgsUGDKRKCK4smVQEugzqWz07nUAo1dIL89JSe1FahQbUNSpLFAly5BDD%2FzbPpsCKyPQPyYvy02SmLZ7Dyu9rqQMPu%2F8DpNp%2BojUEKAmLgp9GubrLrUeR6oQvWNYwTqjccFfebCdBIIZhWmr1BbgfpPdwNVqL5xjPh9MALxOSUQVAvk1faj6e9UK1CntgL5CiDeeILX51GaoQXK13aWJz44cnL7fgCJcktc4xo3nxfijeeaQBAfDWTtqxq2%2F2zdcA%2FEkc3hC%2F3KLUBjoN54nMslgfojEI1zgVvzURgXiX%2By9nV5bFvoKpf9%2F3%2F%2BQrkFaEyhB%2BKNQ32kaUQfgc6FIP7dQncmhvG9xzs3PfZSpP86Cxejl4Y2%2FfuLfScysUC2wAUxND93UZ9yDp0Egtld44ZAGo5OGgvnD%2F%2Fh7Qeeafto1xddcPzjpnX3P3O%2B9STICFOKIN541wV9smX61AOdCUKkTYscXHW149SpTJSTpqKJT198a89rm%2FxV5b7qcb6qcnB5uB5URuyhU93JcARkitrJVr89Nvbru4L6ZBL1EagL8tyQxnlMZgQaRRGl%2B9AJ5Qfoxy1z4Xa96ejIUDt9Dfp0YYMDYigOUQvRONUcJ9CmkYVTIb5jF6KWeDyX6oEUDgch6upvLImydoOegKEFThc5owii%2F2rp1uQw67Ggm0AtHRDDTooEDQv03MQkwzTczMLsewMO6rfbsW4CNR%2BDK1RtnAVyB9g3e7BVty5eN4HajyejMPN%2Fi2sgmnSz01gF8WZjPNVxMnMjjGvQTSBZJo72QvTcXptw69Kc6MVuv93hhakOO3g%2BV3co%2B6wVbqT6%2Fbs4gsjy4jKSkB%2B%2FE25AvqNVz4eo57%2B9%2BaO4CJP9Gu9JLr%2FTBbKabyx3lTgh%2BiNeIn63JSd3KANXtvhvOgcnxHdvj1s0X9CnG8pbe%2FQrcKFe01lXJKznuU867xP94R64F6BMa6xZadCD7tF5cJUr3waXo9%2FclMv7RAOw9dMY7CEj314UUfJsIOtwOMkHGuEq1CIc9el2nQenOj8JLgXeO%2ByGusVlER9ek4XDsUfvtzshFwe%2Bd8gl6D3Ho%2F9X%2BfV3k7wI1w6vmRuum6Fb8l4LbpzNrp4Dd%2F6Q8qG9%2Brae4fMo%2BgsU6hM%2BOAp32CVDyq8%2BmvD74bIAhqW4hHnlOwkK8lFsbHEPD%2Bp%2FYpohgolXN6QECa4RUlJtrz1NMLrtbps2rFbijR8AtxWuK1I%2BrlfWGeLgZkMIdD7I%2F%2F4EdIKntjD%2B4pOmD4Z%2B%2Fgxb6YXuiX7b5g6FDHHorlFObW7rBHcvlmgSLtFcVZgS3O6DR4xyiDosjzzountWGECSFMhH1oJ4HB%2F7fRXRiATyXPMmQpfV1Vcmjw%2B4us4Z4usIRcNCx%2FNfHybg8zg%2F3erZvVef%2BsO%2FxEAJlVd%2BFYU6ZGQUkgAvfSsyscpk%2BemaSdafPRRVYU%2FHAPv6WwY6dMZYGbmnXlczsHJapI3PJOfUmyYeUl7q%2BqeSdlrNGOrJX%2Bh%2FUvPVGKULG6W3V6iY5Kz1Q1e3WCj5jvpU1OppbTN6PHTfKud%2FrwrbaDVlBe8f9azfpH%2Fu52qMJZDC50fFry2ilXQzgETpyxomJcsnubbv5mRgxAJqkpDXPuV8aEGYVPXqeqOWbz%2FL8wYL9gwnEJeS95%2B2Ll%2FIU6o%2BZaX1mjvPsW2%2FnEoZq3LI7aF%2B%2Bbx18USVK8s4kbj3J7a%2BXsOtTjGcQODK1m6DpOuWySrLNEtcnNKG7TjGhIf1T9SOMm685d0fyZMK1Pc%2BT2zI27vXWJ3XKEYUSKHtBD9hsqvGp9IhpQdc3ijaA66j7Tq3%2BQ4H8S%2F%2F6Fx7b8yLsIehEvq8%2FIZBS8KJvBK4k9szBkODdT%2BxzgggfXCDSfrlrc63N0YkMdNREUXLq7%2Fh%2BqelUa8Vqd852OO878kkb9SVlcYVCt7VYgAAA9FJREFUCFwpkVn%2FXxRKyz%2FKubDtpQ%2BsWz7J3Jf4a3%2Fj%2FN4diXI36mKJkwPsiseEZMK4leCGFkghz0u9vxaUudKwbOV4v%2F25N6kjLdpGEjfOZn%2BwWrzBl4bdgxTvVzwlDw8ZJZL7qxhdIHCl2mHjc4Lfnp5Y5vSgbccfbNv3C4cOxoGcnjwqQco33WRfPIdqqE1O9KZnkiEUZ%2B56mgr1GX1TABMIpDB%2BAvPWU0LAkc54eISjdp527mwBO5oSkRE1E5MuN7lsib1hurRgQlTJhoP0cTHGrP4xfa7LBBN85hBIwR%2Bgf%2FU0qMrXZBJRibV7I5b%2BKBUapnqHiNCA3BsSL14Uey5wNE0Gihi%2Fnyz2U0UFIOCV%2FXlSwC34HXy%2BNpvDnxpi7%2FuhdKnf0D3XnzCNQAouD%2Fnms%2FRUv24nFGeA1j7H%2Ff%2FBX65NMAlmWt4QCUvffJzf2521awt3d7lWPZEykT3AsInEL0IUwYfbeVvAM7MsQRDZs2OQLMuv7fE%2B8UI08%2FkqREwm0GVkYm8z1zbgXjRdsFLZsFQ%2BnKIfedX17iYlTWW%2Br4QJBbpC1zn%2B%2Fw5Y5s6yFNrNV4t4NW0h%2Bz3PEu3tuu3PgohZBVKIRKTfbBPzK9zTSoxS3wnLuoOe7z6XiEZM3I6aWCAFSQI79nHN550zawmvzUwbcZ4dtn3nZXbD%2B3FZNnckZ6Zh%2FJeg5ILXrHT%2F860jKirRMkyYo17e6nprfUSWsmEQkCUCjeL2kPffbb9nXsSYGinqvLPP9cv1cXWJb2OSVQKN4nAQa1Y677t5xGM1ikZDKfqt3a5fb4jGYtm2w1oWCjQKawf3rnCuWRgrYPUcpg0kmDd2OtZtjCWT2bk5X9YKNApFyw0LHLfOJRZPiiEWdkGhTK591uH4ZJ%2FctCcmCtm8RXqWC3Q18%2Bazi%2BdQjZOS4zxaDfu7wrZdJ23b94v79hmxflkLckigP1FcQi9aYGuYJtVXxBwMapwU5cjmoHPXMXLH7mTvhZw70yMXBbqa0jKmoowuL6UqAqCsQPJ7RIdFYmmZZZTf4uhoLsJRCYFK8GRCIGIcGQpT5wfI7j4Q7BG7g0JPj7lT4YjkukAYRPQ5LwyTNWCBMEhggTBIYIEwSGCBMEhggTBIYIEwSGCBMEhggTBIYIEwSGCBMEhggTBIYIEwSGCBMEhggTBIYIEwSGCBMEhggTBIYIEwSGCBMEhggTBIYIEwSGCBMEhggTBIYIEwSGCBMEhggTBIYIEwSGCBMEhggTBIYIEwSGCBMEhggTBIYIEwSGCBMEhggTBIYIEwSGCBMEj8EQAA%2F%2F94e6OxAAAABklEQVQDACVOzdyqu6NUAAAAAElFTkSuQmCC%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAIAAAB7GkOtAAAQAElEQVR4nOzdCXhV1bk38LX3PvOcOSFzmMIQCCRhxhFFQO1VHGt7r1qtVjtYv3tbbWtrbWvtYG97O1jHtre9Wqe2yiBgWxUBmQMECBDIPBEy58zD3t%2BOWLUUFE7OOWvtvf6%2Fh4cHvbdynpxz1n%2Bvtd71LoNnXA4BAAD%2BGAgAAHAJAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAAACcQgAAAHAKAQAAwCkEAAAApxAAoC8Wo2izCCYjMUiCQXr3d4NgfO%2FPaQ4yr8Q7PTdY4A7nOUPlaT71fzEYNPiioj8sDYfEQFj0hQRvUPCrv%2FuJN0B8QeL1Kf6A0j8kt7dFTvTECIBeIABAkxRBEO0W9Zdgt%2F7jd7Ngs4iG03ykMy3B6yd0LMzrm%2Bzx%2Fuv%2F1WOJesjZCkTF9hFze7%2BxrU9sPU5aOuS2jkhrSzgWFQiA1giecTkEgGUmw%2BjI7rCKo79b1N%2BJOtxbzYLw8WOuOvTfXN5yVVmnRVJI0siKctxnbhs0tfVL7T1iS7fc2h5taYkMD8kEgGEIAGCSyShleQw5HjErTVJH%2FLjcNKn13plHCT3qXGFro2VLHdm8NTDYjzAA5iAAgBmiKGW5paw0Mcsjue1n84B%2FJpIgf7umflnxccIGRVEO99u2Npg375F3bA8EgkmcjgCcPQQA0KQOhFK6U8pOU5%2F3pTSXIIlkzFzGyM8W752RMUyYFI4J%2B7rtWw4btuyK7tkbUGRsHgA1CACgQCGKlOkxFGQbx2UKZiNJHFFQnr5wF7Oj%2FykGg4YN9fZVG%2BVtW33qrjYBSC0EAKSU4HEYC7INBVnqLi5Jgm9WH%2FxEaTfRmm6fcV2d%2FdW%2FRw7sDxGAVEEAQCoIDouhIEcd%2BkWnlSTN9ePbvzL7CNGypkHLa3stf1kfammOEIAkQwBAEglWk7rOY8jPHj2ClWQ51uBflr1jknSyv3rwhG3NbtOr64M93VECkBwIAEgCgzg67hflGDLcJFW%2BUVV%2FVVkX0Z1dXfZXthhXveb1%2BwlAYiEAIKEsRtP4AkNpnmhM6SFz9fF%2F1fItkn63Ub1h8cVdrmdexIQAEgkBAIkhOGzGyYXG%2FCyBxjB8z4yGT09uI3oXkcm6Q%2B7Hn482NGCvGBIAAQBjJWZ5TJMKDdlphJ5Xl2%2FOt3M0Jm5pdTy1Sti8OUAAxgABAHFSBDJa0DmhwOBJ%2BgbvRytz%2BV5cuo3w51Cf9ZkNplVrvXIMp8kgHpLFSfnbC9qj7vGOz7dWTzEW54oWE6HtEyWdc3MGCH8ybdFLKkIrlxqlNPvhhnAEhaNwjhAAcC7UPd7JxeaaKca8DMHISi%2FxGye1lbn4LZFxmmILJwRvukxIK3Q2tMo%2BL7rOwdlCAMDZkUTT1BJLzRRDlkdgrNrmxoltuTbeN0XNkjKrMHjTkpg931W7PxzFbADOAgIAPoaiKIbiXOu86YbcdEFkca35M1OaXSYUR44yiKSqMLhyiTQg2OsPhcbSURV4gE1g%2BCiC22GZNVFKcxKGbbvm7wYMdP%2Fi4AnbA0%2BJ%2B%2BuCBOAMMAOAMzAZTZUTLTMnJKlrWwL9x%2BRWo4gO%2B6fKskeuWxQqLHftrpcDfvx84DQQAHAqRSCmiYWWuVMN6U5NrCFcWdLlNmMJ6DTUt688O3TjEiJ7nHv3h3D3AJwCAQD%2FRMpNt86fbizIYm2n9yMsKejJ4%2BkU2LkyScqC8cHLLzJ3BixNTdgdhg8gAOA9gsNqnTPVNLlIMCXyhpYUWJDbN96NTmkfw2OJrpgdmjPHXntMGBxEqSiMQgAAIQbJOL3UMnuy6Ehis%2F7kKbAH%2BDwIFocCd%2FiGC6OeQtfu%2FREcHAMEAO%2FEdJf1vEpjdpp2SwZHIsbrJnQQODuSQCoLglcvkfZ1Wjs7sXfCNQQAvxR1dXhKiaVqksjMmd74DIRMK0q6cBTgnNiN8r%2FNDRuyXNt2B9X1PwJcQgBwSrCaLAsqTEXZ%2BjgrlGcLauUieHaIAqkpCS5cYNu4h%2Fh9qBPlEQKAR1JOunXhDMmpyRX%2F02octl8%2FoU3Cg%2By5y3NGVl5Ejg3Zm3ALMX8QAHxRRME8Y4JlxngNVXmeDV%2FUYDdGZ2ZiEhAPi6RcXhVKK3Zu3hHGWQGuIAA4MlrouajCmJtB9OhAv%2FuasnazXi6FT70Z40JLzrNsqheHUSTKDQQALwzFuZZ5UyWrhehUWBZbvbZLC3sIxCvTFr3mPPmE4qw%2FHCbAAQQAByTRXD3ZPLlIEPV7afq7mkbsNgMWgsbEKClLpgcnTne8tS0aRV2V3iEAdE5wO2yLZxgyPYQP23rSq7IGxqEzxNhMyAytuNC4o8nYeyJGQL8QAHo22thnYYVopn9rYwoJb3VkzcgYQnegMXKbY1ctjB4dcTQ2ojpItxAAumUozbNUl%2Bt%2B2edfhWRpbUtutjVYnuYlMAYGkSyrDA4Y3XUHsCWgTwgAfTJNKzVPK%2BX2QihFnQd0Zg2FjPNy%2Bpi8xEwz1I%2FQ%2BeVBS65ryw5kgA4hAPRGEYilptxUOo5w78CAa11rjs0YLXN5cUZsLKqKgmVTnBs2hUc%2FXqAjCAB9kUTbggpDnj4r%2FeMwHDGqU4FXm%2FMUhYyzB%2B1GbGnGaVJWqLrGvn5TDKVBeoI7gXXEZLQurpBcSPQzmpExuKSgpyJj2GWMOk2RDAu2N8%2FNoT7rLQ%2FK%2FX3IUZ1AAOiE4LBYFs6QbLo953VO5HBYHgnKvgDxBeRojLz7S1F%2FxdQ%2FyMrJf1T%2FHB59mvWki3abZLeLNpv6S7Bbic0qqL%2FUPzgspCBLKc6IFLnDHgsefUd1eU2fflhsa8ZPQw8QAHogeBzqyo9g1thNXgmhhCIxdZT3BhT195GAOugrXr86ypNEcziFsjJzSZFUOk4ozlKKMiNFnpDbxOOzcH%2FQ8JlHzQcPoNBW8xAAmidlp1nmThUMEuGDoijyiC%2FWOyz3DcX6hpUAzWEoP99YPdtUXU6qSkJlngA%2FZVeBqHj34%2FbNmwMEtAwBoG2Ggixzdbnuxx0lJscGvaMjfv9Q7MTQ6JIOe1xucU6NpWaqOLs0PCXLb9T7AYyYTO5%2F3v3KKh8BzUIAaJhhQr6lYjzRL3X5PtbVF%2B3qi3X3jY432mGzkUsutl9cpSwu9dqMem6u%2BYPXPM%2F8HgfutAoBoFXqs7%2BlZgrRIzkUHh33O%2FuiPQOCou32zkYzWbzAdsk84cJJvjSzPjdOv%2Fqc%2By%2BYB2gTAkCTxOw06%2Fzpgr4Oucr%2BQLSzP9bZG%2B0bFHR3S60gKnNrbJcsFC8uD%2BQ5dHWqVp2b3fmEa%2BNGPwGtQQBoj5jutC6aIUg62fWVvYFIx4loxwlliJenyBkzLZcuMiyrCBS4dFJIE4yJN%2F%2FEVlsbJKApCACNERxW2%2FmVgkkPFZ%2FRvuHI0XZ16Oe0Z5EgX7bU%2BZmlkRk5enh2Hg5L13%2FX3HgULYO0BAGgKRaj7YLZotVMtExRFHWJP9zQLvfj5pZRVTWW268ULygb0noQ9vhNK78h9nTjjJhmIAC0wyhZz58lOW1Es5RoLNJ6PNzQRvw4Q3Sq4hLj7deZr6gYsmj5WuOmQct198vDQ7hVWBsQANqgiIJt8Uwp3UW0SQ6FI41dkcaOk90X4Ew86eLN19punOvVbueJuh7bJ78aDiPitQABoAHqA6F1%2FnRDbjrRoNiIP3KsI9LSLcjaLuhMJYtFuObf7DdfECjU5i7xphbnbV%2F3KzJ6R7MO7aA1wFw12ZifRbRGCUdC%2B5tCuw4pg14Bg%2F%2B5iEbJvv3h36%2BVR8zuypKIWWuLQkWecHG5a8NGNFtlHQKAdcZpJeayfKIp6jZvtPV4YOtBuXdIfxX9qaMIe%2BrCL71tyClxTM7S2FRAfcGmbNc7O1EUxDQEANMMZXmWaWVEU6KD3tD2g9HGLm01b2BWIKCoj9JbWmyzysV0q5Y2BqqLgz3EdaAeGcAuBAC7xEy3pWaKhkoDlXA0rK751B4mAXznE6yrM%2FrsupjP6p5VEjFpZ0XogimBba2Ozk7s%2FDMKm8CsMhlsl1SLJhPRiHDr8XBdIwlj2Te5MrOkr99pWT5liGhEb8C47F4BhaFswgyAReoaunX%2BdK1c7iiHwoGtB6JHO7DmkwJ%2Bv7J%2BY%2BRgv2NxRVQTJwZsRrl8um3V3zAJYBECgEWmSYWm0nFEC6I9A4HN%2B5RhNAJLqabmyF%2B2GCpnWvKcGphyFXvCfpurdh8WBpmDAGCO4HFYajRwx4siy%2BEDzaHaI0IMNZ4U%2BH3Ky69HYh5PdWmQ%2Fbawc8pCbx2xnjiB2%2BTZggBgjCTazqsUme%2F1JvsCgc37Y529nPZxY4Wwszb8TpNtYSVxsn07sSSSxbOFF14fPeIA7EAAsMUyZwr7%2FR4i7T3BLftJAIf9mdDdHX35LWHCFHtpOtPviMsUKyp3rH8LZQIMQQAwxFCSq67%2BE4bJ0ViwtiFS30I0flGXzoRDypo3Ij3ENX9S2Ciy%2B9ZMzAx1y66Dh7AZwAoEACsEh806d6ogsnuVeGzQG9i0V%2BnVTAEibw7UhzfUmefNlFg%2BL7awPLRuj3lwEAVjTGB3uOGKIgrWedMEA7uXfEW7%2B%2Fxv1RIfln2Y1ng0vPI%2FY1ta2X2qs0jKL%2F%2BfYtL2lRb6gRkAEyyVEw05aYRVkdbjwe0H0dBNE9Rd1lVvRMqmOdX1FsIkdYKSUex6YwsWguhDANAn5aabK8YTVoWPtIX3HkVPNw1RFGHdm6GMUlfFOEYzYHpe8Miw81gjNoQpQwBQJljNltEb3hldiwvuaYgcaSOgNYIgvPVOJOpyzR%2FP6EXt50%2BPvrrd6B3BZgBNCADKLAumSw4Wb3lUZCW4vT7W1kNAs3buCXfJrgunikl4gAAAEABJREFUBhg8rmGSlMlTLH%2F5K84F0IQAoGl08WdSEWGPEo0F3qmTjw8Q0Lj6Q%2BFDg84lM8MG9iaZhe7wwX5HUzMWgqhBFRA1ikBMMycQ9ijhqP%2FtvfIJlHvqxN%2F%2B7r%2Flf%2By%2BCIs1ZvdfH5IMqC6gBjMAakwTCxm86FEOhgMb96C5m850dUbfqLcsnTvam5OwxG2O%2BW3u3XtREUQHZgCUGA3GcuYO%2FcqRaGDTPsUbIKA7Rw6Hbv6hicF5wF0XjaRnsHsCRt8wA6DDVDnBwFjPHyUmBzfvU4Z8BHSqry%2B2q912xZwIU0Vn6m5wWoHjb5uwE0ABAoACweOwVk4kLFEUJbjtINb9da%2BzM9ow4lhWGWSqLmhKdvDvh21oFp16CAAKLPOnixa27noM7T4S6%2BglwIHGxsgJwX3RVIbOB6hpNHWy8cX1CIBUQwCkmqEo21TG1m1fofrm6LFOAtw4UB82ZrmqixnKgBxHpDXsPHwEC0EphQBILVG0LJjOVNO3SHN3eH8jAc5s3RkeN9E5NYehXhGzxsvPbRBwY0wqIQBSyjil2JiTTpgR6eoN7qxHnx8%2B%2FW1zqGKWsySNlQywG2WS5lKTiUCqoAw0dQSryTShgDAj2jsU3IbRn2OKePe3%2Fbu77IQZtywcys9n%2FT5UPUEApI55xgR2mr7J%2FlBw634BF3vxLRohdzwU6Q2wMuaaJeW%2BzyIAUgcBkCKC02YYl0nYoChKYNsBEkHRBZDhIflLj1lkZh4FLp04XD4F98WkCPYAUsQ8c7zkYmWuHT7YjKJPeF9nZ9SQ5a4pYaUoyJVlW78R5UCpgBlASliMBmba%2FkR7BsKHWwnAh%2FzsiWF2NgOWThnKzTMQSD4EQCoYJxUycvBSDoeDO%2BoZ7A4PlCniFx6JDoSYGHYNArnlWguB5EMAJJ1ilEwleYQB7%2FZ7qCdhFFrDafSeiN37FCt3E11bNWK34zEl6bAHkHSmCQUGNmr%2Fw0daYy3HCcAZtLVFnPmuygL6mwEmSRmxuHbvwZmA5MIMILkUQTBOyCcMiPUPq3u%2FBOAj%2FeCXI3U9TMwDPr3QJ0ooU04uBEByGQpzRDP9vm9KOBLcdhBnvuBjyTHhCz%2BUWbg2IMce%2BcTlWJ9ILgRAEqlr7qZJTBz9DdY1KkHMpuGsdHVGf7TaSRhwx1KGWhXpEgIgiQy5GZKT%2FmxaXfyJtWLpH87Bsy8MH%2BqzEtpKPcHFi1nZl9YlBEASmSbSX%2F1XZyGh2iME4FwIgvitZ5goCf3M5WxdYqwzCIBkEZw2KSuN0BZt6ZZxwzucuz21gVf207%2B1dH6hF50hkgcBkCymyUWENjkSDe1vIgBxeeTxEAu7wbetxKngZEEAJIfFaCig3%2FthtO4zgmNfEKf%2Bvtgv%2Fkp%2FN3gZOkMkDQIgKUwledTbLcRGfJFGXPQIY%2FKb%2Fxs5NkC5K4NBINdegc4QSYEASApDQQ6hTd37Rdk%2FjJEiCw%2F%2BL%2F0G%2FVfMYuj6Yj1BACSe6LaJTsoldJG2HrlvhACM2fZtgQ0NlHeDi91BbAUnAwIg8aT8bEKVHI2G6o4RgAR56JehUIzyfHLFhbgpLPEQAIlnKKQcAFF16T%2BE%2BzQgYU70xJ7f5SZUXVGJaubEQwAkmJjmlGw0N6wUWQ43dBCAhHr6%2BWCUame2PEd4xkxsBScYAiDBqFd%2FRlt7SBiP%2F5Bg3V3R9fWUJwErzkcxaIIhABJJURRDAeX1n3ADrnuEpHjiZcpnSi6f6VMUdIZIJARAIhkyPaKFZvPnSHef4kXBHCTFofrQO200%2BzNnWiM1NaxcXKwPCIBEkmiv%2F0Qa2glA0jy9mvKIseJ8DFmJhJ9mwqg7ZMZ8mgEQG%2FLJvUMEIGneftt%2FhGqb6Eun%2BrEKlEAIgISRsj2CmWapcvgwVv8h6Z7eQHORU10FWrgI14QlDAIgYYxUz3%2FJgVC0o4cAJNmra73HfTQfdC5fjBYnCYMASAxFIFJ%2BJqEncrgNV%2F5CCsgx4Xdv09yJXTLZK4i4LD4xEACJIWW4RSO1ImUlHI20dBOAlHjuJS%2FFewLc5tjsKvrXVeoDAiAxDJk0z8hEOk4QGTtjkCJ%2BP1lXT3Mhfm4F%2BgIlBgIgMcR0mgEQVQMAIIXWvE3zgWP2BFxzlBgIgARQiCJlUOuXKwfDsZ4BApBCW97xD4WorQLNzvcTAVPeBEAAJIDkcQkGal%2BGaEcP9dvHgDeKLKzdT%2B22SLsxNnUqtgESAAGQAGImzesyou1Y%2FwEKVr8VI%2FTMmUHzOIJuIAASwJBBbQMg5g%2FK%2Fbj5CyjYscPXG6C2GTt7Ms340Q0EQAJIFAOgHYe%2FgA5BEFfvpXYgYG4R7odJAATAWAkOK8UOEBGs%2FwA9a96iVo3jsUSLS1AMOlYIgLGS6J0AkL0BZchHACjZtzfY5aW2Fl8zC9fEjxUCYKxEeus%2F0bbjBICqVXtshJLqclSCjhUCYKwM9EqAIt39BICqN3dQWwWqKg4RGBsEwNiYjaKNTj2yEo3Jg6j%2FAcpqdweCMTrHUIpcIU86RrAxwY9vTKR0amdhYn3DaP8J1MkxYf9xaqtAlRUWAmOAABgTwU7tOKLcj8u%2FgAm7j1GrxikpwAg2JvjxjYlILwCifcMEgAE7DlDbjC3OxcUAY0Kthb0%2BiA46k19FlmN9Q1gAOicmp238wllZZYW2dJc9w%2BPI8HgKcsKBkL9v0Ns36Osb9PcPn2hsO7a5NjyCQ0bnYNeugKwoIo2GVMWZOA88JgiAMREcdJYgY4NeQcazz1lx5mSMXzx7%2FILKcRUTRenUnn0mq9lUkKMmwfv%2FRo7FOusaGjfXHt1UO3K8j8DH8fmUQ332qZkUUrM4LUJgDBAA8VOfeSQbnQCQe7EB8PHSi8ctvH1l2YLKc%2FpfqSFRUFmu%2Fjrv7hsbt%2BzZ8tSf%2Bpo7CHykXU0mKgFQ4AoJoqTImAzHCQEQP4obADHsAH8kZ3b6vFuvmrJkniCOaZdLDY%2FSeTPq%2F7p1229eGT7eS%2BAMdtYrn64hVJSWmRuPhgnEBZvA8RMc9AKgFzvAZzRtxeJP%2F%2B67Uy9dMMbR%2FyT1P6L%2Bpz7124emLltM4Ay2bg8QSkqL8BQbP%2Fzs4iedewDYjdEC%2B%2BhMud1n80Xi%2FOHH%2FEESwZV4p2G0mJd%2B7bbxi2aTRDOazZf8180lc6a9%2FsPfRAI4gHqqwX75hN%2BYZaOwIl%2Bcj6fY%2BCEA4ieeRQA4jNG52f01OQPT04fyHQGX8YOiheGI1OG17u937zietr0nbSRytsXUijdI4F9kTSxe%2Fs07PfnZJGkmnl%2BTWVa45sFf9TVhV%2BBUrUMmKgFQkksgbgiA%2BH30EtDF%2BT03TWqdmXnGtRo1DFxp3ilp3mvHj44mdX3OZxuKNrTlkI8je1GkeKrKay5ZdPs1kjHpn%2Be0wtzrf%2FX1N%2F%2FnuYOvvU3gQ1p7pao8knrFmZgNxw8BEL8zbQKfN%2B7EHVObytO85FxUZIx8P%2BPALeXNjx8oe7Mz6yP%2BP2UftfVWNuVOLUvN6H%2BSuhx00T2fGmzr6tx%2FlMA%2FtB6XSAVJvaI07ADHD8tncVJEQbSe2o5cFJRH5tX998K6cx393zfJ43t0Yd335u03CGc8Xal4EQAfcGSlXfm9L6Rs9D9J%2FetWPHS3IzudwD80d9I5DzzOETbiXoB4IQDiJDlPPQNskaK%2FWFx7SWECrui6rLDnF%2BftsRhOP7eVfdgDeI%2FJZrny4S9Z3RQ6cts8riu%2B83nJjKvJ39PcTm0ppqQICRAnBECcTmkD5zRGHr%2Bgdm7OIEmQmuzBpy7Y7TKeZlcNS0Dvq75pRdb4QkJJ9sTiuf9%2BBYF3NTRQK44qKZYIxAUBECfxQ49%2B6srPowvqpqcnuDu%2Fuj%2F8k0X71P%2F4h%2F9lzB9EE4iTnDkZs1ZeQqiadfUSV04mAUIiIdIXoNMWNBO3AsQLP7h4GT546PivyiNV2Ql79v%2BwWZlD988%2B%2FE%2F%2FCo%2F%2F%2F7Dw9pUGE%2BVrwQ1m04LbrybwrrYhOgti9I7kax4CIF6G9350V5Z0XjchiVXhV5d1Xju%2B7f1%2FxAbASblTyyZfNJcwQH0ZGSX5BAhp6aWzFGPFFkC8EABxEt7tK5lnD3yt6hBJsntnHs20vDfuywEUvY1aeNtKwoxFn7uOACEnhumMJzYEQLwQAPF6dwno8xXHjMn%2FEZok5bapLSf%2FrMTQAH30NFZBZTlhRknNdPUlEe75gnS6clpRihUvBECcBIM02TN8WWEPSYlPlHTm2t6dBEQRACQZ3X7GiMGXlHr%2BAJ3yBKsZZRFxQgDESZDEGya2k1RRJwHXT3h3JwBt4AgpWziLMIbBl5R6tPanrCYEQJwQAPEyiOflpbRB%2FEUFo0fMFO5nALZ0d%2B6UUsIY9SXZM9yEbz4fpRkAAiBeCIA4VRX4PeaUPowX2IMlTh%2F2AMYvrBQE5m6AUl9ScfV0wjevn85AbDNRu5Ve6xAAcbqglMKdXOeN6yUR3j%2FrmROKCJNyppYRvvlpBYARM4A4oRtonMqzKBzIKveMKFHe9wDs6YyutDD7wlLGF6AzPbViBhAvBECc0qwU7r7IsoYI90tAtjRGx1lmX1jKjHjpPIlbDAiAOCEA4pRmpjAQqwGgRHmf7drTKfT%2BPBtmJ%2B8dCfxeOgOxzaB%2BGZnbFtIE7AHEQ1GUTCuFE7mFjiCJ8D4DcOUy2nwtvZDGhVgsGRigsz7pMqE2Ok4IgHgIgkBrL1Yy8D4DCLF6IyazLyxlJInOY3hUweN%2FnBAAcfJH6fS9stt5b33uG6BQf3U2mH1hKUPrw0nry6gDCIA4%2BSN0PnMOB%2B9vmb%2BP0XGW2ReWMg47nQ8nrS%2BjDiAA4hSMUmp8aOX9LfP1szoDYPWFpYzNRufDGYhgHIsTqoDi5A%2FT%2BcxZbbwvd%2FoHhgmTmH1hKWOnNQMIIwDihACIE63PnMPG%2B2e9u76RMInZF5YyVhuhAgEQN%2Fzg4uQL03kSt3E%2FA2jeVqcozJVCqS%2Bpees%2Bwjc7pQ8nAiBu%2BMHFKRCidPeFhfe3LOwLdNc3EcaoLyns5%2F22TpuVVgCgDDROCIA40frM2XD%2FNSGNm2sJYxh8Salnt1AKgBCB%2BCAA4uSnNAOwWfCwQ45t2k0Yw%2BBLSj1aTye0vow6gACIU4DSQwdmAKqBtu72PYcIM9QXo74kwj0HrQDgfe0tfgiAOAUo3X%2Bd5Ubjw1HvPPNnwowtT%2F%2BJACGZlNr0IQDihgCIk5%2FCdQCjijNxKfyozv1Hj7Gx7K6%2BjK4DxwjQ%2B3D6EADxQgDEyRemU4lYnE7hHgI2qZMAmfbtCOoLeOdphuYidBWl01kYpfU0pgMIgDj19tFZiilwhgQRF%2BCN6mvq2P6H1YQq9QX0NXcQIMRoJnl2Cj3SVSf6sS4aJwRAnJrbqD2Jl5VZCLxr2%2F%2BuOrZlD6Gk8Z296gsg8K7SEjOhpKkV0%2BI4IQDi1NIcpnUetaQIvQ%2F%2FQVFef%2BSp4e5eknLDx3vXP%2FwkYe9MMi2lxXT6ysRk0tFGZ%2Fd%2FjiQAABAASURBVOahAwiAOMkxodNH55GntBDv2gdC3sDqb%2F0qEkzpPqD6163%2B5i%2FDPqw9f6A0n05dXIfXrMg4BxAnDCXxaxswERqKs%2FHU%2BU9ONLS8%2BbNnSQqpf92JhlYCH1KUQ%2Bdj2Urpa6gPCID4tfbSWYopzsKW16kOrt%2F8whceDgyNkCRT%2Fwr1L1L%2FOgL%2FrDiTzsW8bb1YEY0fAiB%2BLcfpTDyL0tD65DS6Dhz7453f7W%2FtJEnT09Ci%2FhWo%2Bj%2BtkjQ6C%2FEtxwnEDQEQv9ZOOnPePHvYk4437jTUjdnn7%2Fpekg6Iqf%2FZF7%2F4iPpXEPgXbo%2BUaaVTitPaiQlx%2FHAhTPxa2unMeVVzqqwbXvcR%2BBdhf3D1A78oWzCz5qbLc6eUkUToPtS48%2F%2FWHNtMrd6UfYsWWNT9eEJDSyu1r6EOIADid7ISVBAoLATNmS5seJ3AmTRu2av%2Byp85ueamFcXV00i8Wncd3PGH1e17DxP4SNVTCC3HGtXgQRVQnBAA8QsGlRMBc7aNwtJnVSkKnz9ex97D6i9nTsaERbPKFs4aVzFRlD5%2Bw1COxTrrGo5t2XPs7d0jx%2FsInIXqEjofyC6vSZGxBBQ%2FBMCYtA0ZqQRAeYbPbjf5fKgH%2FXjqIF778l%2FVXyanbfzCWVllhbZ0lz3D48jweApywoGQv2%2FQ2zfo6xv09w%2BfaGxT1%2FrDI34CZ81mI5My6ByJaBs0qU9iBOKFABiT1l6pKo%2BknigIVVXWjRsxTp0DdVivX7e5nkCCzZ9nUzfgCQ2tfagBHRMUk4xJSw%2B1z9%2BcCrx3wISaadQ%2Biq3Hsfo%2FJhhExuTQMWrtiKvK0AALmFBVRm1H6uAxbACMCQJgTLbvCMiU2oHNyPWZqLVfBHiP%2BiGcmk1nKVL96u3ahVXQMUEAjIm6DdvQbyM0GARSWYkLgoGy6mqbgdIyzKFeux%2Fj%2F9ggAMZqdzO15%2FAL52AHDCi7oJraGLKrGW3gxgoBMFY76ZWVLKvA8w%2FQpCjy5TOonUjfWY8y6LFCAIzV9t3UypDzHOHKWVgFAmqq59gyrNSKEd7ZihMAY4UAGKue7mj7MLVVoBXnYxUIqFmxmNrHr3nIMjRIrQZPNxAACbCrlVoALK%2FwqdNwApBy6gfvsmnUFiF3taAGLgEQAAmw8zC1H2OmNVJTYycAKbdgvp3i%2Bs%2BuwzgClgAIgATYuZdma7YV5%2BNNBAqWL6a5%2FLi9FhsACYCxIwEaj4YHg9S6Kl061Y9VIEgxQVSWTkv6BZxn0hswtjXjGoAEQAAkxs42atU46irQggVYBYKUWrjA7jZR24Pd2Yrit8RAACTGzgaa0%2BHli%2FA%2BQkotX0RzCX7XERS%2FJQYGjsTYvodma7alU70WC%2FbEIEXUD9sl5V5Cz%2FY9uBApMRAAibG%2FLqCuSxJK3ObYDSuxCgQpcsNKh4ve%2Bk9fwFh%2FkM79M%2FqDAEgMQRDXH6DTFe6kWy%2FwEQFbwZB8gvyZC6m1f1CtqbOrXzcCiYCfY8Ks3Uhz%2FM2xRy5f5iIASXbFcieVa1Dft%2FYt1P8kDAIgYXbs8FFcBVLdsSxEAJLsjuU0R%2F8un6kWJwASBwGQMOq0dG0dzYX4SRmBeXNRHgdJNH%2BBdWIazfX3dftoLrTqDwIgkda8Rbk71S1XEoDkue0KQtfqN7H%2Bk0gIgETaUxvo8tK8pOL8kuGyCbglA5KidLxxUTG107%2Fk3fWf%2FXVY%2F0kkBECCvVZHc4oqCMJt19DchwAd%2B9z1lD9aq2qx%2FpNgCIAEW0N7inrFtOH0TJyThARLz5BWTBsmVK15g%2BZxS11CACSYOkWluwpkkpRbrsNWMCTYZz9pNVA9bN46bD5Ujzq3BEMAJN6qPZQnqjfNHVGf1whAgmRlSzfU0H78r8VjTeIhABKP%2BkTVbozdf6eFACTI1%2B60WA2Uz5n%2FeT0e%2FxMPAZB46kS1ZYjy%2BHvltCHcFw8JUVVjWV4%2BRKhqGLC2NGMDIPEQAEmxdg%2F9B%2FBv3xrFRTEwRoKofO9W%2BqX3r9XiBuCkQAAkxR9fDUYVQld5RuCT16E7EIzJp653lropl96rX6UXV6P8PykQAEnR3RXdcMhNaPvyihGXG28xxEn98HxxKc2TXye9Vu%2Fu6cYB4KTA6JAsj79E%2FyPrNsXuvQ1nZyBOX7nDRrHv%2F%2FueeBGjf7IgAJJF3Qre1uYktF03a3DiRKyfwjkrn2K%2BZuYAoe2dNseRw6j%2FSRYEQBI9tYb%2BNY2SSB68gwCcq%2B%2FdoQgC%2FQ%2FwU6swRiURfrhJtHGjv2mQfjlQ9TjfFStwYSScg6s%2F4Zie7Se0NQxYN22i%2FzJ0DAGQXE%2B%2BzsSBrK9f48vMwtlgOCsZ2eL9V9Hf%2B1U9tQ6tbZMLAZBcf351pC9Avz1nmjn68%2FsMOBYAH0%2BQf%2FlVIwt7vz1%2B06trvQSSCQGQXHJM%2BN3bTCy%2FzM7zffEOHAuAj3Hvna5ZeTTvfH%2Ffbzfa1K8PgWRCACTdH170%2BSJMLL%2Fcdf5AdTX6Q8AZzZ9v%2Fewi%2BpU%2FKvUr88eXmcghfUMAJJ3Pp7y0m349qEoUhJ99LpiWhjcdTsOTLv709gALlT%2Bq53c61S8OgSTDWJAKz7xAvzPESZnWyM%2Fuw7EAOJW6P%2FTz%2B0weCxNHrtQvy5PP0rx6nh8IgFTo7oqur6ffGeKkuYUjt9%2FsIAAfctdt7jkFrOy4rjng6u%2BjvwvNAwRAijzxMkPH2e%2B5ZLCyEpsB8J4ZMy1fvKifMOOx59H5OUUQAClyqD60oYGVIhyDQH52d9BuR4kFjHZ8%2B8XnQyIbS%2F%2BqtYfcTccQACmCAEidR56IhJgpa8u1Rx77lkWUsM%2FGNYORPPktY46dlQE3EBUf%2FjU6P6cOAiB1Ojoiz2xiZSdANbdg5KcP2HE6jF%2BC%2FMsHrZW5DFVbPrnRdaIHq%2F%2BpI1mc2A9MnV37w9deKtmNrIy5EzJCmaXuN98JE%2BDPD77muGwy5aveP6zLZ7rnkZCM8T%2BFEAAppX64j0ftS2cw1N62YlxQSXPt2I0M4Ms9dzg%2BPYfyTb%2Bn%2BNr%2FORqOYPU%2FpRAAqdbQEJk%2F3zrOydAHfW5psIe4DtQjA3hxzVWOry4fJCyp7bL%2F4DHU%2FqcaAoCCuibDjReEGTlyedIFUwKHh52NjXj%2B0r%2BLL7L9%2BFODTH38YjK57cemgX6s%2FqQaNoEpaGgIvbgnjbBEFIT%2F%2Fo8RdArSvdnVlp%2FeMsJO0edJf9ztPnYU135RgACg40dP%2BIfCbDXoN0nKE1%2FwT5qMRhG6pb65T30hYGKs9nc4LD36OG59oQMBQMfwkPzz9Ux0iPswuzH2m6%2BEJ5cjA3RIfVt%2F%2B5Ww%2BhYTxvxkLfq%2BUYMAoOYPz48cG2DivrAPy7RGnrs%2FWFXD3AuDsZhVZVHf1gwrc3s8TUOWZ59nqBSVN9gEpkcRGvrMV89jrvZGXSK4fE7kyJCjqQl7wnpwyRLbY3d6rQYWT%2Fzd%2FZilqxN7v9QgAGjq6IhOmWEvy2AuAwwiWTYr2Ce69h9EBmjbtSsdP%2FrkoIHJqf5rh1y%2FeQ6lnzQhACjb2yDccHGMwe%2BnIAgXTgkJGa7tu3A%2BQKu%2BfKfjK8vYqvh8Xygm3PYw8WP1nyoEAGUjI3LA5l48idEGWHNKgnkTnH%2FfElITgYCGCPJPvuH4ZDVbZ30%2F7PurPVu3ofSTMgQAfXvqwjOr7MUeRh%2B0p%2BaGKmY71m%2BOokmLVhjN5ImHbEsmsru5%2BsYx18M%2Fx5W%2F9CEAmPDWTvnKC0WHidHGnCVp4flzra9tliPYEWCe0yX%2B7rsmdq73%2BlcdXtPND0TwWWIBykCZMDwkf%2BmXFkbuDT6tWXm%2BVx4Vp0wzEWDY9ArLKz8mM1nq8HwK9UN%2B988MKPxnBGYArOjujipu17zx7N6G4TbHrl4YVXcs1DUrAuy5%2FWbHj%2F992GNmeqnu0Q2eDa%2Bj8ocVCACG7KgNzpnrKHCzO7xKIlH3q6tqbBt3ycEgHuJYkZYmPvag%2BfrZwxLbW%2FWbWpwPPoquDwwRPONyCDBD%2FSav%2FrGSyd6JzVP0BYxffMyycyce5eibP9%2F66G0snvI9hfqZuexeQV3tJMAMzADYoj5W7%2Bu0Xj0vxGbt9vtsRvmqeSFzjnvr7hBRUCFKhygp%2F3m389srh2zM3DF3JrKi3P4LWzP6jTMGAcCczs6oIctdU8L61dhqRFUXB89baN28XxgZwWNdqo3LN%2FzuIePS8hHGnxVO%2Bvkbaa%2BsxuIPcxAALNq6O7hwgS2PpVvDziTHEVl5gdLsdRzDw10KXbrE%2FtSXgwUubezGb2933PeIVxNBxRvsATAqM0ta%2FcNYmjlKNOL1Btf3n4x0tCMGkiu%2FwPjAHcYLx2umg%2BZg0LD0P8XBfswRWYQZAKP8fuVgr%2B3f5mjmrPz4jND1F8Vsua49%2ByNRzcSWllhtoze5%2F%2Bg%2FfBMyNPOpUBTlc792HG3AYwGjEADsamuLhJyuBQyfDDiFQSTqrsBVS6R%2BYj98BN%2F5hFEU%2BZqrnb%2F6UmRxmZ%2FNvp5n8r3VaWtew9I%2FuxAATNu9J5xZ4qoYp5kMUDlM8iUVofMXWeo7jT09mAuM1fQKyxNfl26oGbEzX%2Bpziqe2eB57ht2OFEAQAOx7Y0tw0gynhmb9J6mbw9ctChVMdu4%2BJAf8ODIWj%2FRM6Tv32r5x1XC2XXs5uuqg%2B8Efo90b67AJrAGipPz2%2B7a5BSNEg%2FwR8eU9rqefD3Z1YjZwtvLGGT57o%2FnqyhGLpMm9000tztu%2B7ldklP2wDgGgDeoG4HOPmKZkanU5NSKTNQfdj78QaTyKPkIfpWyC6a4bjMumDBk0O3jW9dg%2B%2BdVwGK3%2BtQABoBmedPGlh4VCl4a%2FWIqivNHo%2FtWLsbp9GB5OVTHD%2FPnrpPNLhzRdL980aLnufhn9HrQCAaAl%2BfnGFx%2BKst%2F15WPt6HA8%2Fqr49tuoDxl14QW226%2BIVeVpfsW8x29a%2BQ2xpxtrfZqBANCYSZPNf%2Fxa0G7Uw%2B1c9b22J9cZ17w2QhQu76UQ5Csvd95%2BaXhShh566g2Hpeu%2Fa8YSn7YgALSnqsby7Jf1U13XPmz%2By27r6r%2BFmo7xcnSgsMRwzWWWK2b78x36GS5v%2BJGjtlZL9cpAEAAatWSJ7ee3DIn6aq5yqM%2F62m7zqtdDeu0noa7gfWKp5bJZwcm6eOR%2FX0wmdz7h2rgRC3ragwDQqutWOr6zcpDo0b7jtrW7TGv%2BGtTHanJmlvSJZdZls8MV2focIr%2F6nPsvq1Dyr0kIAA277d8d%2F3WZPjPgpJ2d9td2Gtes9w8MaK%2BqxO2RrlphXTo7Mlv7u7sf4QeveZ75PY77ahUCQNtWXuX47jUDOlsLOoWsKA39ttoW867Dyq7d4Y4OdheI8otM1TONVeXCrKLQhHS%2F7t%2BX%2B%2F7oeQXP%2FlqGANC8iy%2By%2FeQWr0aPjMbhuM9Y226tPSrtrIsc2B%2Bge9xUEJWKCmtVhWH2RLkyP5ht46UGJhgTvvSU8823sO6vbQgAPaistD55j99l0kNt6DkJx4SOEXNJkQLfAAAINElEQVTbgKGtV2jtIq3t0dbWSFuXEookPhXMRqVonFBUZCzKNxTlCoVZcmF6dJwjZJK463Q0EpZu%2BYkFp%2Fl0AAGgExMnmn57X4T92%2BRTo8draB8wtPYIHT3EG1T8QeIPEF%2BQ%2BAIkoP6jn%2FiDss9HBodHx26PS7Dbic0i2mzEahHsVmK3EJtV%2FTfEYREKct4b67M02JEtGdQZ2K0%2FMB5Fvb8uIAD0Y1y%2B4ZlvkFI3arEhWZoGLZ%2F6ltJ7gru5pl5xeQJTpzo7otfdJ9f12AhAEuzttl97n4zRX09wH4CuhELKq2%2FKU2bYS9IwQ4dEervZeesDQVztoDMIAL2JRsnqN8JFk53l2dijg8T4U537Sw955Sj6%2B%2BsNAkCXhNffjpizXVXF2A%2BAsfr1Rs93f%2BpTP1QEdAcBoFvv7AwPm9yLJwU03V8eKFIU5YE%2FpT2Ng776hQDQs737w7u6HOdXylYDLuiAc9MXMN71a%2Fv6DTjqpWcIAJ1rb4%2F%2B%2BR2xYro134VtYThbW1od%2F%2FEtuaEBx0p0DgGgfwGf8qcN4ajbXVMWFLEaBB8pIpOfrPd861F%2FMIiCH%2F3DQTCOTK%2Bw%2FOKL4Tw7pgJweh1e0xd%2Fbtpfh9oBXmAGwJGenujLbwkTpthL01EhCqdad9j1mW%2BGOzrQ8YIjCAC%2BhEPKmjcivYJz%2FqSIQcQcH0YFouJDf3Y%2F%2BpgvgjV%2FzmAJiFNlE0y%2Fulcu9WCyz7uj%2FZYv%2FFTEZe58wgyAUwP9sRf%2BKmcWO6flYTmIX3%2Fc7bnrO8E%2BtPfhFQKAX7EYeWNL5MiQc%2FG0qJm%2FpvacGwlL9zzj%2FM2zPhmDP8cQALw71hh5aZMhp9gxKTOIM8M8UBTl1QPuO76vHDyIZR%2FeYQ8A3lM5y%2FrQrdHJGQEC%2BnXwhO2Bp0QUesJJCAD4gKLIN17r%2FNJyX7oFtYB60xcw%2FnSt%2FfmXhgUBt4DAexAAcCqnS7znNusNVUMGLAjpQlQhz%2B30%2FPcTPp8POz3wTxAAcHrjJ5gfukOozkcnSG3b2eH4%2Bq9izU2o8IfTQADAR1m21P6VlYFxDuwWak%2BH1%2FSDl6zrN%2FgIwBkgAOBjmMzkrpsdtywatkjoKa0Ngaj49CbXr3%2FnjeCMB3wkBACclbxxhm%2FcYVwycYQA29YfcX3%2FiXBXJ7bx4eMhAOAcTJ1uvv0qw6Xl2B9mTkQm6w65n3wpevgQHvvhbCEA4Jxl5xpuvdZyTdWI04RTpPQNh6UXdjp%2F91KwpxtP%2FXBuEAAQJ5uNXHeV89Pn%2BQuceOSko33Y%2FPu3bM%2F%2F2RvA5S0QFwQAjI0gL7vUecvS6MxcVJukTm2X%2FTfrDevWj%2BBUF4wFAgASo2KG%2BbMrpYvHD0sYkZImJpPXG1xP%2FTlWtw%2BzLkgABAAkUn6B8ZZrzStnjdgM2B5IJF9EernW%2BcwLQZT3QAIhACDxHE7himX2y2uiOEg8djs7HKu3G1at83lHsNAPCYYAgCTKzJIuv9S6vCoyI8eLXtNnT1GUfccda3cZX10f6O%2FFXAqSBQEAqaAuDS1fYl4%2BOzw100%2FgzA6esK2tNb2yDjWdkAoIAEip4hLj5WoSVAYnpKMl%2FQcaBqyv1ZpfWRdqb0fXNkgdBADQMWmy%2BfKLjMtmBopc%2FBa0tAxZ1u2z%2FGldCN06gQoEAFBWWGKYO8tSXS5XFYd4CAN10N%2FVat51SNi6O9TegnEfaEIAAEPSM6R5NZbqqaS6NDwx3S%2FqYt9YVpQj%2FbZdTaYdB8i2ncH%2BPmzqAisQAMAoh1OoqbJWTRdryiJTs%2FwmSUtFkKGYcLDHtrPRuHO%2FvGNnAFdxAZsQAKABoqSUlJpLiwylhWJJDinJihanhbNtrFxTc9xnbBkwN5%2BQWnqEpja5qTXa3BSSYyh7BdYhAECrLBahbIKprMhYkk9KcpSSzEixJ%2BRKcoPSobCkjvUtfcbm40JzB2lsjTQeDQfRiw20CQEAuqKmgsMput0Gl1Nwqn9Qf7cTt11w2InLqjitissqOy2y0yy7zLEMa0Rdq%2FGGDcMhaSQkjgTF4YA4EhCGA4LXR4Z8yoj6%2B4gyMiIPjyhDQ9Hh4VgYPXhARxAAAACcMhAAAOASAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATiEAAAA4hQAAAOAUAgAAgFMIAAAATv1%2FAAAA%2F%2F8%2FxFy5AAAABklEQVQDAPdd47kOWVOUAAAAAElFTkSuQmCC%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -883,6 +889,7 @@ const EX = {
 /* ============ FOOT, FASCIA, TISSUE ============ */
 'ball-roll-foot': {
   n: 'Plantar Ball Roll', cat: 'tissue', tags: ['fascia','foot','daily','hamstring'],
+  targets: 'Feet · plantar fascia · calves · posterior chain range',
   why: 'The one you already love, and it is the best-evidenced trick in the whole toolbox. Rolling the sole of the foot produces an immediate, measurable increase in hamstring and lumbar flexibility — sit-and-reach improves with a large effect size — without stretching the hamstring at all. The working explanation is the superficial back line: plantar fascia → calf → hamstring → sacrotuberous ligament → erectors are mechanically continuous, so downregulating tone at one end changes extensibility along the chain. For a guy with "tight hamstrings" and a strain history, this is how you buy range without pulling on healing tissue.',
   setup: 'Barefoot, standing, one hand on a wall. Lacrosse ball for aggressive, tennis ball for tolerable, frozen bottle if the plantar fascia is hot.',
   steps: [
@@ -1102,6 +1109,7 @@ const EX = {
 /* ============ THE HAMSTRING TRACK ============ */
 'ham-iso-long': {
   n: 'Long-Length Hamstring Isometric', cat: 'iso', tags: ['hamstring','iso','daily','armor'],
+  targets: 'Hamstrings at length',
   why: 'Over 80% of hamstring injuries happen in late swing during sprinting, when the muscle is long, lengthening fast, and contracting hard. Biceps femoris long head produces its highest force at roughly 45° hip flexion with 10–30° knee flexion — so that is where you train it. Isometric hip-extension protocols raise isometric knee-flexion torque ~10% and hip-extension force ~12%. Your hamstring is healed; this is what keeps it that way, and it is a timed hold, which you like.',
   home: "Heels on a couch, a dining chair, a low table or the bottom step of a staircase. Knee-height is what matters, not what the furniture is.",
   setup: 'Lie on your back, heels on a bench or box roughly knee-height, knees bent to about 20°, hips flexed to about 45°.',
@@ -1251,6 +1259,7 @@ const EX = {
 /* ============ THE ADDUCTOR TRACK ============ */
 'adductor-squeeze-iso': {
   n: 'Adductor Squeeze Isometric Ladder', cat: 'iso', tags: ['adductor','iso','daily','armor'],
+  targets: 'Adductors · groin',
   why: 'The squeeze test is both your diagnostic and your treatment. Adductor strength deficits are the clearest modifiable risk factor for groin injury in cutting sports, and an isometric squeeze at multiple hip angles is the safest way to load a cranky adductor daily. Three angles because the adductor group has different lines of pull through the range — 0° biases adductor magnus, 45° the longus/brevis, 90° the pectineus/anterior fibres.',
   setup: 'Lie on your back with a ball (or a blood-pressure cuff, if you want numbers) between the knees.',
   steps: [
@@ -1329,6 +1338,7 @@ const EX = {
 },
 'adductor-rockback': {
   n: 'Adductor Rock-Back (Frog)', cat: 'mobility', tags: ['adductor','mobility','daily'],
+  targets: 'Adductors · inner hip range',
   why: 'Low-load, high-frequency adductor lengthening you can do daily without adding fatigue. Prepares the groin for the deep squat holds you like.',
   setup: 'On hands and knees, knees wide, shins in line with the thighs, feet flat or toes together.',
   steps: ['Set a neutral spine.','Rock the hips back toward the heels until you feel a stretch through the inner thighs.','Rock forward. Rhythmic, 2 s each way.','After 10 reps, hold the back position for 30 s and breathe into it.'],
@@ -1526,6 +1536,7 @@ const EX = {
 },
 'deep-squat-hold': {
   n: 'Deep Squat Hold', cat: 'iso', tags: ['mobility','iso','daily','favourite','fascia'],
+  targets: 'Ankles · hips at depth · adductors · daily hip check',
   why: 'Your favourite, and it earns its place. A deep squat is the position your hips, knees and ankles need to keep access to, and accumulated time in it is the cheapest way to keep it. It also loads the adductors and the posterior hip capsule at end range under bodyweight, which is loaded stretching — the kind of exposure animal work associates with real tissue adaptation. Treat it as a daily accumulation target, not a workout.',
   home: "Requires nothing at all, anywhere, forever. Hold a doorframe if the balance is not there yet.",
   setup: 'Feet roughly shoulder width, toes out 10–20°, barefoot ideally.',
@@ -1546,6 +1557,7 @@ const EX = {
 },
 'iso-hip-flexor': {
   n: 'Standing Hip Flexor Isometric', cat: 'iso', tags: ['iso','hip','speed'],
+  targets: 'Hip flexors · knee drive',
   why: 'Hip flexor strength above 90° is a direct contributor to sprint stride frequency and to the knee drive that separates fast cutters from quick ones. Almost nobody trains it above 90°, which is where it is weakest.',
   setup: 'Stand tall, hold a rail lightly for balance.',
   steps: ['Lift one knee as high as it will go — above hip height.','Actively pull it higher against the limit of your range. No band needed at first.','Hold 15–20 s at hard effort, standing leg tall and glute engaged.','Switch.'],
@@ -1667,6 +1679,7 @@ const EX = {
 /* ============ PLYOMETRICS & ELASTIC ============ */
 'pogo-jumps': {
   n: 'Pogo Jumps (Ankle Stiffness)', cat: 'plyo', tags: ['elastic','speed','foot'],
+  targets: 'Achilles & calves · ankle stiffness',
   why: 'Pogos are the base of reactive strength: low intensity, high frequency, training foot and ankle stiffness, rhythm and repeated fast ground contacts. This is the drill that shortens your ground contact time, and ground contact time is the difference between fast and quick.',
   setup: 'Shoes or barefoot, on a firm surface with some give (track, turf, gym floor).',
   steps: ['Feet hip width, knees almost straight — under 15° of bend.','Bounce continuously off the ankles.','Contact times as short as possible; think "hot floor".','20–30 contacts, then stop before quality drops.'],
@@ -1766,6 +1779,7 @@ const EX = {
 },
 'a-skip': {
   n: 'A-Skip', cat: 'speed', tags: ['speed','technique','warmup'],
+  targets: 'Hip flexors · calves · sprint rhythm',
   why: 'Rhythm, front-side mechanics, and ankle stiffness in one drill. The universal sprint warm-up for a reason.',
   setup: '20–30 m of open space.',
   steps: ['Skip with a knee drive to hip height, ankle dorsiflexed.','Strike down and back under the hip, not out in front.','Stay tall, arms driving from the shoulder.','Fast ground contacts — the skip is quick, not floaty.'],
@@ -4411,6 +4425,7 @@ Object.assign(EX, {
 
 'easy-jog': {
   n: 'Easy Jog', cat: 'cond', tags: ['warmup','raise'],
+  targets: 'Whole body temperature · heart rate',
   why: 'The "raise" in RAMP, and the part people skip when they are late. Three to four minutes of easy running raises muscle temperature roughly 1–3°C, and warm muscle is more compliant, conducts faster, and produces more force. Nothing else in the warm-up works properly until this has happened — mobility work on a cold muscle is just stretching.',
   setup: 'Sideline to sideline, or a lap of the field.',
   steps: [
@@ -4428,6 +4443,7 @@ Object.assign(EX, {
 },
 'leg-swings': {
   n: 'Leg Swings — Linear & Lateral', cat: 'mobility', tags: ['warmup','hip','mobility'],
+  targets: 'Hip flexors & hamstrings (linear) · adductors & glute med (lateral)',
   why: 'Dynamic range at the hip in both planes, which is what a cutting sport actually asks for. Swinging beats holding here: a warm-up wants range you can control at speed, and long static holds before explosive work can transiently reduce force output.',
   est: 100,
   setup: 'Hand on a fence, a post or a partner.',
@@ -4519,6 +4535,7 @@ Object.assign(EX, {
 },
 'seven-way-hips': {
   n: '8-Way Hips', cat: 'armor', tags: ['warmup','hip','glute','activate','labrum'],
+  targets: 'Glute med · hip rotators (both directions)',
   why: 'The single most complete hip activation series there is: seven positions covering abduction, flexion, extension and both diagonals, plus circles in each direction — and an eighth that you added, which is the one that earns its place fastest. Positions 1 to 7 are all abduction-dominant with a straight leg. Position 8 bends the knees and rotates the hip in both directions, which is the only rotation in the series and the only time the internal rotators do anything. For a hip with a labral history that matters twice over: labral hips reliably lose internal rotation, it is one of the numbers you track under Tests, and rotation trained deliberately at a shallow flexion angle is exactly how you keep it without going near the position that pinches.',
   repSec: 1.5,
   setup: 'Side-lying, bottom knee bent for stability, head supported. Top leg straight, hips stacked and square — do not roll backward.',
@@ -4541,6 +4558,7 @@ Object.assign(EX, {
 },
 'glute-bridge-warm': {
   n: 'Single-Leg Glute Bridge', cat: 'armor', tags: ['warmup','glute','hip','activate','potentiate'],
+  targets: 'Glute max · hip extension',
   why: 'The gap in almost every hip warm-up, including the one you were doing. Clamshells and 8-way hips are abduction and rotation \u2014 they wake the glute medius and the deep rotators, which stop the femur drifting. Neither of them asks the gluteus maximus to extend the hip, and hip extension is the propulsive action in sprinting. A glute that has not been asked to extend hard in the last ten minutes hands more of the first few strides to the hamstring, which is the tissue you least want picking up slack on a cold first sprint. Thirty seconds fixes it.',
   home: 'Nothing. Floor and a wall, or grass.',
   repSec: 2.5,
@@ -4560,6 +4578,7 @@ Object.assign(EX, {
 },
 'clamshell': {
   n: 'Clamshells', cat: 'armor', tags: ['warmup','hip','glute','activate','labrum'],
+  targets: 'Glute med · deep hip rotators',
   why: 'The most direct way to switch on the deep hip external rotators and gluteus medius before you plant on them. For your hip specifically this is a good exercise: hip flexion stays shallow, the movement is pure external rotation, and it is nowhere near the flexion-adduction-internal-rotation position that provokes a labrum. Being able to hold the hip out of internal rotation under load is the whole point.',
   repSec: 2,
   setup: 'Side-lying, hips and knees stacked, knees bent to about 45°, heels in line with the spine. Band above the knees if you have one.',
@@ -4577,6 +4596,7 @@ Object.assign(EX, {
 },
 'walking-lunge-rotation': {
   n: 'Lunge with Rotation', cat: 'mobility', tags: ['warmup','hip','spine','mobility'],
+  targets: 'Hip flexors · quads · thoracic rotation',
   why: 'The most efficient single warm-up movement there is: hip flexor length on the back leg, adductor and hamstring on the front, thoracic rotation on top, all while moving. It covers in one drill what four static stretches would.',
   repSec: 7,
   setup: 'Walking, 15 m of space.',
@@ -4612,6 +4632,7 @@ Object.assign(EX, {
 },
 'carioca': {
   n: 'Carioca', cat: 'speed', tags: ['warmup','hip','lateral','potentiate'],
+  targets: 'Hips in the frontal plane · adductors · crossover step',
   why: 'Hip rotation at speed, which is the thing you cannot get from any drill done standing still. It also rehearses the crossover step that starts most cuts in ultimate. Build it up gradually — carioca cold is a classic way to tweak a groin.',
   est: 120,
   setup: '20 m of space, side-on to the direction of travel.',
@@ -4629,6 +4650,7 @@ Object.assign(EX, {
 },
 'build-ups': {
   n: 'Build-Up Runs', cat: 'speed', tags: ['warmup','speed','potentiate'],
+  targets: 'Sprint mechanics · graded to top speed',
   why: 'The bridge between a warm-up and playing. Sprinting is the thing most likely to strain something, so you arrive there by degrees rather than in one step. Four graded runs, most of which is walking back, and it means your first hard cut of the game is not your first fast movement of the day.',
   setup: '40 m of space.',
   steps: [
@@ -4647,6 +4669,7 @@ Object.assign(EX, {
 },
 'cut-builds': {
   n: 'Cutting Build-Ups', cat: 'speed', tags: ['warmup','cod','potentiate','ultimate'],
+  targets: 'Deceleration · cutting · knee control',
   why: 'Rehearsing the actual movement of the sport at rising intensity. Your first hard plant should not be against a defender — it should be here, deliberately, at 70%, then 85%, then full. This is also the last chance for the groin and hip to tell you something before it matters.',
   est: 200,
   setup: 'Two cones about 10 m apart, plus space to accelerate.',
@@ -4685,6 +4708,7 @@ Object.assign(EX, {
 
 ROUTINES.unshift(
   { id:'warmup-full', n:'Frisbee Warm-Up', tag:'WARMUP',
+    targets:'Feet & calves · hip flexors · glutes · adductors · hamstrings · ankles · sprint mechanics · cutting',
     sub:'Game day · everything the legs need to be ready to sprint',
     why:'Built on RAMP — Raise, Mobilise, Activate, Potentiate — because the order carries more than the exercise choice does. Temperature first, then range, then the muscles that need waking, then speed. Mobility on a cold muscle is just stretching, and going from standing to a hard cut is how people strain things in warm-ups. Everything here is about the legs and hips arriving ready to sprint; warm your throws up separately on your own clock. Start it around 40 minutes before pull, and if you finish early keep moving rather than sitting down.',
     items:[
@@ -4697,6 +4721,7 @@ ROUTINES.unshift(
       { x:'clamshell', g:'ACTIVATE · wake what has to hold you up', d:'15 per side, hold the last one 15 s' },
       { x:'seven-way-hips', d:'8 positions × 8 reps per side' },
       { x:'glute-bridge-warm', d:'8 per side', note:'The only hip extension in the warm-up. Squeeze first, then lift \u2014 this is what stops the hamstring carrying the first few strides.' },
+      { x:'iso-hip-flexor', d:'2 × 15 s per side', t:{ r: 10 }, note:'The other half of a stride. Knee up above hip height, drive into your hands or the wall, hard. This is the muscle that lifts the knee at top speed.' },
       { x:'adductor-squeeze-iso', d:'6 × 8 s', note:'Two ladders, submaximal. Wake the groin before you ask it to plant.' },
       { x:'ham-iso-long', d:'2 × 20 s per side', t:{ r: 12 }, note:'Pre-activating the hamstring at length, right before you sprint on it.' },
       { x:'a-skip', g:'POTENTIATE · rising to full speed, in order', d:'2 × 20 m, walk back' },
@@ -4706,6 +4731,7 @@ ROUTINES.unshift(
       { x:'cut-builds', d:'3 rounds building, both directions' }
     ]},
   { id:'warmup-short', n:'Warm-Up · Short', tag:'WARMUP',
+    targets:'Feet & calves · hip flexors · glutes · adductors · hamstrings · sprint mechanics · cutting',
     sub:'Pickup, practice, or a late arrival',
     why:'The version that survives contact with reality. Same RAMP order, half the volume, and nothing load-bearing removed — the raise, the two hip activations, the hamstring pre-activation and the graded build-ups all stay, because those are the parts that actually protect you. Cut this further and you are just jogging.',
     items:[
@@ -4716,6 +4742,7 @@ ROUTINES.unshift(
       { x:'clamshell', d:'15 per side' },
       { x:'seven-way-hips', d:'8 positions × 6 reps per side' },
       { x:'glute-bridge-warm', d:'6 per side' },
+      { x:'iso-hip-flexor', d:'15 s per side', t:{ r: 8 } },
       { x:'adductor-squeeze-iso', d:'4 × 8 s' },
       { x:'ham-iso-long', d:'2 × 20 s per side', t:{ r: 12 } },
       { x:'a-skip', d:'2 × 20 m, walk back' },
@@ -4723,6 +4750,7 @@ ROUTINES.unshift(
       { x:'cut-builds', d:'2 rounds building, both directions', est: 130 }
     ]},
   { id:'warmup-min', n:'Sprint-Ready · Minimum', tag:'WARMUP',
+    targets:'Feet · hip flexors & hamstrings · sprint mechanics',
     sub:'The honest floor before you sprint hard',
     why:'If the choice is between a thorough warm-up you skip and a short one you actually do, the short one wins every time. This is what is left when you strip the warm-up back to only the parts that are load-bearing. Raising muscle temperature is genuinely non-negotiable — warm muscle is more compliant, conducts faster and produces more force, and nothing else works properly before it has happened. The hamstring isometric is here because of your history and because it costs forty seconds. The build-ups are here because going from standing to a hard sprint in one step is the single most reliable way to strain something, and four graded runs removes that step. Everything cut from this list is beneficial. Nothing cut from it is essential. Use the full version when you have the time and this when you do not — but do not skip both.',
     items:[
@@ -4734,6 +4762,7 @@ ROUTINES.unshift(
     ]},
 
   { id:'warmup-between', n:'Between Games', tag:'WARMUP',
+    targets:'Feet · hips · adductors · hamstrings · sprint mechanics · cutting',
     sub:'A long gap at a tournament, and getting sharp again for the next pull',
     why:'A ninety-minute gap between games is a different problem from half-time. You have gone fully cold, you have probably eaten, and you may have stiffened up sitting on a cooler. But you are also not fresh — you have a game in your legs — so this is not a repeat of the morning warm-up either. The shape that works: for the first hour, stay off your feet, get horizontal if you can, eat and drink. Then start this about twenty minutes before pull. The re-raise matters more than anything else in it, because temperature is what you actually lost. Keep the intensity ladder short but do not skip the top of it — the first sprint of game two hurts people more often than the first sprint of game one, because they assume they are still warm from earlier. They are not.',
     items:[
@@ -4748,6 +4777,7 @@ ROUTINES.unshift(
     ]},
 
   { id:'warmup-half', n:'Half-Time Top-Up', tag:'WARMUP',
+    targets:'Temperature · glute med · adductors · sprint mechanics',
     sub:'So the second half does not start cold',
     why:'High-intensity running drops about 10% in the second half, and part of that is simply having sat down for ten minutes and gone cold. Three minutes of re-raising and two hip activations recovers most of it, and almost nobody does it.',
     items:[
@@ -5081,15 +5111,19 @@ function switchInfo(st) {
   if (!st || st.rounds < 2 || !st.rest) return null;
   const lbl = st.label || '';
   const dash = lbl.indexOf('—');
+  // What the dose says about sides wins over a terse timer label: a label that just says
+  // "switch" on a "per side" dose still gets the Left/Right chip and the spoken side.
+  let fromDose = null;
+  for (const [re, text, sided] of SWITCH_WORDS) {
+    if (re.test(st.dose || '')) { fromDose = { text: text, sided: sided }; break; }
+  }
   if (dash >= 0) {
     const said = lbl.slice(dash + 1).trim();
     const sided = /\b(side|leg|feet|foot|arm|hand)s?\b/i.test(said);
+    if (!sided && fromDose && fromDose.sided) return fromDose;
     return { text: said.charAt(0).toUpperCase() + said.slice(1), sided: sided };
   }
-  for (const [re, text, sided] of SWITCH_WORDS) {
-    if (re.test(st.dose || '')) return { text: text, sided: sided };
-  }
-  return null;
+  return fromDose;
 }
 // Which side you are on right now, so it is never a guess mid-set.
 function sideLabel(st, round) {
@@ -5550,6 +5584,7 @@ function buildRun() {
         st.rounds > 1 && !isReady ? el('span', { class: 'run-round' }, 'Round ' + RUN.round + ' / ' + st.rounds) : null,
         sideNow && !isReady ? el('span', { class: 'run-round side' }, sideNow) : null
       ]),
+    e.targets && !between && !switching ? el('p', { class: 'run-targets' }, e.targets) : null,
     el('div', { class: 'run-ring' + (isRest ? ' rest' : '') }, [
       svg,
       el('div', { class: 'run-ring-label' }, [
@@ -6296,7 +6331,8 @@ function routineCard(r, date) {
               g.appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' })); return g; })()]),
         el('div', { class: 'pick-body' }, [
           el('button', { class: 'pick-name', onclick: () => openEx(it.x) }, EX[it.x].n),
-          el('span', { class: 'pick-dose num' }, it.d)
+          el('span', { class: 'pick-dose num' }, it.d),
+          EX[it.x].targets ? el('span', { class: 'pick-targets' }, EX[it.x].targets) : null
         ])
       ]);
       // A group label marks where one phase of the block hands over to the next.
@@ -6321,6 +6357,9 @@ function routineCard(r, date) {
       el('span', { class: 'num xs muted' }, '≈ ' + fmtMins(runSeconds(stepsFromItems(chosen, r.n))))
     ]),
     el('p', { class: 'small muted' }, r.sub),
+    // A short, authored line saying what the block is for. check-data.js verifies every term
+    // against the items' own targets, so it stays honest without becoming a list of everything.
+    r.targets ? el('p', { class: 'routine-targets' }, [el('span', { class: 'eyebrow' }, 'Targets'), ' ' + r.targets]) : null,
     (() => {
       const shown = WHYOPEN.has(r.id);
       return el('div', { class: 'why-fold' }, [
