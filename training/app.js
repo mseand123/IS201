@@ -877,6 +877,28 @@ const typeChip = t => el('span', { class: 'chip ' + (t === 'HIGH' ? 'hard' : t =
   t.charAt(0) + t.slice(1).toLowerCase() + ' day'
 ]);
 
+// The whole program runs on high-low. This is that same currency per exercise, so a
+// list you are picking from tells you what each row will cost before you add it.
+// 1 stack it freely, 2 moderate, 3 wants a clean nervous system. `cost` overrides.
+const COST_LABEL = { 1: 'Light \u00b7 stack freely', 2: 'Moderate', 3: 'Taxing \u00b7 do fresh' };
+function exCost(e) {
+  if (e.cost) return e.cost;
+  const t = e.tags || [];
+  if (t.includes('high-intensity') || t.includes('rfd') || t.includes('maxv')) return 3;
+  if (e.cat === 'speed' || e.cat === 'plyo') return 3;
+  if (t.includes('eccentric')) return 3;
+  if (['tissue', 'mobility', 'breath'].includes(e.cat)) return 1;
+  if (t.includes('daily')) return 1;
+  return 2;
+}
+function costChip(e) {
+  const c = exCost(e);
+  return el('span', { class: 'cost-chip cost-' + c }, [
+    el('span', { class: 'load l' + c, 'aria-hidden': 'true' }, [el('i'), el('i'), el('i')]),
+    COST_LABEL[c]
+  ]);
+}
+
 function exLink(id, label) {
   return el('button', { type: 'button', onclick: () => openEx(id) }, label || EX[id].n);
 }
@@ -1040,16 +1062,19 @@ function itemRow(date, key, it, i) {
   }, [svgEl('svg', { viewBox: '0 0 24 24' })]);
   tick.querySelector('svg').appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' }));
   row.appendChild(tick);
-  row.appendChild(el('div', { class: 'item-name' }, [
-    exLink(r.x),
+  const open = el('button', { class: 'item-open', onclick: () => openEx(r.x), 'aria-label': e.n + ' \u2014 how-to' });
+  row.appendChild(open);
+  open.appendChild(el('div', { class: 'item-name' }, [
+    e.n,
     r.swapped ? el('span', { class: 'chip swap', title: 'Swapped in for ' + EX[r.from].n }, 'HOME') : null
   ]));
-  row.appendChild(el('div', { class: 'item-dose' }, [
+  open.appendChild(el('div', { class: 'item-dose' }, [
     r.d,
     e.flag && /HIP LABRUM RULE/.test(e.flag)
-      ? el('button', { class: 'chip warn flagchip', onclick: () => openEx(r.x) }, 'Hip rule') : null
+      ? el('span', { class: 'chip warn flagchip' }, 'Hip rule') : null
   ]));
-  if (r.note) row.appendChild(el('div', { class: 'item-note' }, r.note));
+  open.appendChild(costChip(e));
+  if (r.note) open.appendChild(el('div', { class: 'item-note' }, r.note));
   row.dataset.at = key + ':' + i;
   return row;
 }
@@ -1163,9 +1188,15 @@ function tickCard(date, blk, store, note) {
       }, [svgEl('svg', { viewBox: '0 0 24 24' })]);
       tick.querySelector('svg').appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' }));
       row.appendChild(tick);
-      row.appendChild(el('div', { class: 'item-name' }, [exLink(r.x)]));
-      row.appendChild(el('div', { class: 'item-dose' }, r.d));
-      if (r.note && hints) row.appendChild(el('div', { class: 'item-note' }, r.note));
+      const open = el('button', { class: 'item-open', onclick: () => openEx(r.x), 'aria-label': e.n + ' \u2014 how-to' });
+      row.appendChild(open);
+      open.appendChild(el('div', { class: 'item-name' }, e.n));
+      open.appendChild(el('div', { class: 'item-dose' }, r.d + ' \u00b7 tap for how-to'));
+      open.appendChild(costChip(e));
+      if (r.note && hints) open.appendChild(el('div', { class: 'item-note' }, r.note));
+      row.appendChild(el('button', {
+        class: 'btn btn-sm row-start', onclick: () => RUN.open(stepsFromItems([{ x: r.x, d: r.d }], e.n), date, 0)
+      }, 'Start'));
       return row;
     }).filter(Boolean),
     el('div', { class: 'tick-foot' }, [
@@ -1564,17 +1595,23 @@ function routineCard(r, date) {
   const picker = el('div', { class: 'routine-pick' + (open ? ' open' : '') }, [
     el('div', { class: 'pick-list' }, r.items.flatMap((it, i) => {
       const on = sel.has(i);
+      const ex = EX[it.x];
       const row = el('div', { class: 'pick-row' + (on ? ' on' : '') }, [
         el('button', {
-          class: 'tick pick', 'aria-pressed': on ? 'true' : 'false', 'aria-label': 'Select ' + EX[it.x].n,
+          class: 'tick pick', 'aria-pressed': on ? 'true' : 'false', 'aria-label': 'Select ' + ex.n,
           onclick: () => { on ? sel.delete(i) : sel.add(i); render(); }
         }, [(() => { const g = svgEl('svg', { viewBox: '0 0 24 24' });
               g.appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' })); return g; })()]),
-        el('div', { class: 'pick-body' }, [
-          el('button', { class: 'pick-name', onclick: () => openEx(it.x) }, EX[it.x].n),
-          el('span', { class: 'pick-dose num' }, it.d),
-          EX[it.x].targets ? el('span', { class: 'pick-targets' }, EX[it.x].targets) : null
-        ])
+        el('button', { class: 'pick-body pick-open', onclick: () => openEx(it.x), 'aria-label': ex.n + ' \u2014 how-to' }, [
+          el('span', { class: 'pick-name' }, ex.n),
+          el('span', { class: 'pick-dose num' }, it.d + ' \u00b7 tap for how-to'),
+          costChip(ex),
+          ex.targets ? el('span', { class: 'pick-targets' }, ex.targets) : null
+        ]),
+        el('button', {
+          class: 'btn btn-sm row-start',
+          onclick: () => RUN.open(stepsFromItems([it], ex.n), date, 0)
+        }, 'Start')
       ]);
       // A group label marks where one phase of the block hands over to the next.
       return it.g ? [el('div', { class: 'pick-group' }, it.g), row] : [row];

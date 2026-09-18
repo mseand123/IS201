@@ -887,3 +887,60 @@ body.running { overflow: hidden; }
 .tick-foot { display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap; padding: .6rem .9rem; border-top: 1px solid var(--line); }
 /* the daily lists are read on a phone: the name must not wrap behind its own count */
 .block-head .name { white-space: nowrap; }
+
+/* ===========================================================
+   Rows you can act on: the whole row opens the how-to, each row
+   can be started on its own, and each says what it will cost.
+   =========================================================== */
+.item { grid-template-columns: 26px 1fr auto; }
+.item-open,
+.pick-open {
+  display: grid;
+  gap: .1rem;
+  grid-column: 2;
+  width: 100%;
+  min-width: 0;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+.item-open > *, .pick-open > * { grid-column: 1; }
+.item-open:hover .item-name,
+.pick-open:hover .pick-name { color: var(--brand); }
+.item-open:focus-visible,
+.pick-open:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: var(--r-sm); }
+/* the name is no longer its own button, so it keeps the underline itself */
+.item-open .item-name,
+.pick-open .pick-name { border-bottom: 0; }
+
+.row-start {
+  grid-column: 3;
+  align-self: center;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  border-color: var(--brand);
+  color: var(--brand);
+  background: none;
+}
+.row-start:hover { background: var(--brand-2); border-color: var(--brand-2); color: var(--on-brand); }
+
+.cost-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: .01em;
+  color: var(--muted);
+  margin-top: .15rem;
+}
+.cost-chip.cost-1 { color: var(--good); }
+.cost-chip.cost-2 { color: var(--muted); }
+.cost-chip.cost-3 { color: var(--warn); }
+
+.pick-row { grid-template-columns: 20px 1fr auto; align-items: center; }
+.pick-row .row-start { padding: .35rem .7rem; }

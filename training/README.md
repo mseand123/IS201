@@ -80,6 +80,37 @@ after a session or on an off day, dosed weekly (~5 min accumulated per muscle gr
 than daily. The deep squat hold is the one static position kept in the warm-up — short, loaded, early,
 and doubling as a daily read on the hip.
 
+### Rows you can act on
+
+Three changes to every exercise row, in the picker and on the daily lists.
+
+**The whole row opens the how-to.** It used to be the name text only, which is a small target on
+a phone and gives no hint that there is anything to tap. The name, dose, cost and targets now sit
+inside one button, and the dose line says `· tap for how-to` so the affordance is stated rather
+than guessed. The tick stays a separate control: it selects, or marks done, and never opens the
+dialog.
+
+**Each row has its own Start.** Running one exercise previously meant opening its dialog and
+finding *Run this exercise* in there. Now it is one tap from the list, which is what you want when
+the answer is "just the deep squat hold".
+
+**Each row says what it costs.** `exCost()` rates every exercise 1, 2 or 3 and renders it with the
+same three-bar load meter the session chips use, because this is the same high-low currency the
+whole program runs on:
+
+| | meaning |
+|---|---|
+| Light · stack freely | no meaningful CNS cost — tissue, mobility, breath, the daily work |
+| Moderate | most isometrics, most strength, the armor tracks |
+| Taxing · do fresh | sprinting, intensive plyos, eccentrics, the heaviest bilateral lifts |
+
+Most of it derives from category and tags. Nineteen exercises carry an explicit `cost` because the
+derivation would be wrong on them, and those are the interesting cases: barefoot pogos and the
+rebound flow are *deliberately* extensive and submaximal, so they are light despite being plyos;
+A-skips and wall drills are technique rather than sprinting; extensive tempo is rated light because
+the program uses it to *accelerate* recovery, while the repeat-sprint protocol next to it is rated
+taxing. `check-data.js` enforces that `cost` is 1, 2 or 3.
+
 ### By body part, the other door in
 
 The library was only reachable by the plan's logic: what today's session says, or which weak link

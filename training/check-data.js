@@ -5,7 +5,7 @@ const ck = (c, m) => { if (!c) fail.push('✗ ' + m); };
 
 const STR = ['n','cat','why','setup','dose','prog','regr','flag','home','warmup','covert'];
 const ARR = ['tags','steps','cues','faults'];
-const NUM = ['est','repSec'];
+const NUM = ['est','repSec','cost'];
 
 Object.entries(d.EX).forEach(([k, e]) => {
   STR.forEach(f => ck(e[f] === undefined || typeof e[f] === 'string', k + '.' + f + ' should be a string, got ' + typeof e[f]));
@@ -16,6 +16,7 @@ Object.entries(d.EX).forEach(([k, e]) => {
   if (e.timer) ['w','r','rounds'].forEach(f => ck(typeof e.timer[f] === 'number', k + '.timer.' + f + ' should be a number'));
   (e.steps || []).forEach((st, i) => ck(typeof st === 'string', k + '.steps[' + i + '] should be a string'));
   if (e.covert) ck(['invisible','subtle','private'].includes(e.covert), k + '.covert has an unknown value: ' + e.covert);
+  if (e.cost !== undefined) ck([1,2,3].includes(e.cost), k + '.cost should be 1, 2 or 3, got ' + e.cost);
 });
 
 // every referenced exercise id must exist

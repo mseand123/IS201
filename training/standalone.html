@@ -900,6 +900,63 @@ body.running { overflow: hidden; }
 /* the daily lists are read on a phone: the name must not wrap behind its own count */
 .block-head .name { white-space: nowrap; }
 
+/* ===========================================================
+   Rows you can act on: the whole row opens the how-to, each row
+   can be started on its own, and each says what it will cost.
+   =========================================================== */
+.item { grid-template-columns: 26px 1fr auto; }
+.item-open,
+.pick-open {
+  display: grid;
+  gap: .1rem;
+  grid-column: 2;
+  width: 100%;
+  min-width: 0;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+.item-open > *, .pick-open > * { grid-column: 1; }
+.item-open:hover .item-name,
+.pick-open:hover .pick-name { color: var(--brand); }
+.item-open:focus-visible,
+.pick-open:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: var(--r-sm); }
+/* the name is no longer its own button, so it keeps the underline itself */
+.item-open .item-name,
+.pick-open .pick-name { border-bottom: 0; }
+
+.row-start {
+  grid-column: 3;
+  align-self: center;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  border-color: var(--brand);
+  color: var(--brand);
+  background: none;
+}
+.row-start:hover { background: var(--brand-2); border-color: var(--brand-2); color: var(--on-brand); }
+
+.cost-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: .01em;
+  color: var(--muted);
+  margin-top: .15rem;
+}
+.cost-chip.cost-1 { color: var(--good); }
+.cost-chip.cost-2 { color: var(--muted); }
+.cost-chip.cost-3 { color: var(--warn); }
+
+.pick-row { grid-template-columns: 20px 1fr auto; align-items: center; }
+.pick-row .row-start { padding: .35rem .7rem; }
+
 </style>
 </head>
 <body>
@@ -1126,6 +1183,7 @@ const EX = {
 },
 'barefoot-pogo-grass': {
   n: 'Barefoot Grass Pogos', cat: 'plyo', tags: ['foot','fascia','elastic','speed'],
+  cost: 1,
   why: 'The lowest-intensity, highest-frequency way to train foot and ankle stiffness — the base of reactive strength. Barefoot on grass forces the intrinsic foot muscles to do their job instead of outsourcing it to a shoe. Schleip\'s elastic-recoil principle in its simplest form: rhythmic, small-amplitude oscillation that trains the tissue to return energy.',
   setup: 'Barefoot on grass or turf, feet hip width.',
   steps: [
@@ -1407,6 +1465,7 @@ const EX = {
 },
 'skater-bound': {
   n: 'Lateral Skater Bound', cat: 'plyo', tags: ['adductor','lateral','elastic','cod'],
+  cost: 2,
   why: 'The plyometric that most resembles an ultimate cut: lateral force production, single-leg landing, adductor and glute-med eccentric control. Trains the groin to absorb, not just to squeeze.',
   setup: 'Open space, athletic stance.',
   steps: ['Push laterally off one leg, land on the other, stick the landing for one full second.','Land with the knee tracking over the middle of the foot and the hip loaded, not the knee caving.','Once sticking is clean, remove the pause and bound continuously for elastic quality.'],
@@ -1653,6 +1712,7 @@ const EX = {
 /* ============ STRENGTH ============ */
 'trap-bar-deadlift': {
   n: 'Trap Bar Deadlift', cat: 'strength', tags: ['power','legs','mass'],
+  cost: 3,
   why: 'The best strength-to-risk ratio for a field athlete: more upright torso than a straight-bar pull, less shear on the spine, and it transfers well to sprint acceleration. Your primary max-strength lift.',
   setup: 'Feet hip width inside the bar, high handles until the position is clean.',
   steps: ['Hips between a squat and a hinge, chest up, lats set (armpits over the bar).','Take up slack, then push the floor away.','Lock out with the glutes, no hyperextension.','Lower under control — this is not a drop.'],
@@ -1686,6 +1746,7 @@ const EX = {
 },
 'front-squat': {
   n: 'Front Squat', cat: 'strength', tags: ['legs','trunk','mass'],
+  cost: 3,
   why: 'More upright than a back squat, kinder to the shoulder than a low-bar back squat, and it forces trunk strength. If the front rack bothers the labrum, use a safety-squat bar or a heels-elevated goblet squat instead.',
   setup: 'Bar on the front delts, elbows high, fingertip grip or crossed arms.',
   steps: ['Elbows up throughout — if they drop, the bar goes forward.','Sit down between the hips, knees travelling forward.','Depth: hip crease below the knee if the position holds.','Drive up, elbows still high.'],
@@ -1735,6 +1796,7 @@ const EX = {
 /* ============ PLYOMETRICS & ELASTIC ============ */
 'pogo-jumps': {
   n: 'Pogo Jumps (Ankle Stiffness)', cat: 'plyo', tags: ['elastic','speed','foot'],
+  cost: 2,
   targets: 'Achilles & calves · ankle stiffness',
   why: 'Pogos are the base of reactive strength: low intensity, high frequency, training foot and ankle stiffness, rhythm and repeated fast ground contacts. This is the drill that shortens your ground contact time, and ground contact time is the difference between fast and quick.',
   setup: 'Shoes or barefoot, on a firm surface with some give (track, turf, gym floor).',
@@ -1759,6 +1821,7 @@ const EX = {
 },
 'hurdle-hops': {
   n: 'Continuous Hurdle Hops', cat: 'plyo', tags: ['elastic','stiffness'],
+  cost: 3,
   why: 'Trains stiff, repeated ground contacts with a vertical demand and a hard constraint. The hurdle forces height while the "continuous" instruction forces short contacts.',
   setup: '4–6 hurdles at 45–75 cm, spaced about 1 m apart.',
   steps: ['Hop over each hurdle with both feet, landing and leaving immediately.','Knees stay relatively straight — this is an ankle and hip drill, not a knee drill.','Arms cycle rhythmically.','Reset fully between sets.'],
@@ -1771,6 +1834,7 @@ const EX = {
 },
 'broad-jump': {
   n: 'Standing Broad Jump', cat: 'plyo', tags: ['power','test','horizontal'],
+  cost: 3,
   why: 'The most honest field test of horizontal power there is, and horizontal power is what acceleration is made of. Also a training tool: maximal intent, low volume.',
   setup: 'Flat, non-slip surface, room to land.',
   steps: ['Feet hip width behind a line.','Swing the arms back, load the hips, then explode forward and up.','Aim for a 45° takeoff, not straight up.','Land absorbing through hips and knees, and stick it.'],
@@ -1782,6 +1846,7 @@ const EX = {
 },
 'bounds': {
   n: 'Alternating Bounds', cat: 'plyo', tags: ['elastic','horizontal','speed'],
+  cost: 3,
   why: 'The bridge between plyometrics and sprinting: horizontal force, single-leg, long ground contacts you progressively shorten. This is where fascial elastic recoil is most obviously trained — the catapult mechanism in a human gait pattern.',
   setup: '30–40 m of grass or track.',
   steps: ['Start with a jog-in of 5–10 m.','Push off one leg, fly, land on the other, immediately push again.','Aim for distance per bound, then progressively for less ground time at the same distance.','Count bounds over 30 m: fewer bounds means more powerful ones.'],
@@ -1793,6 +1858,7 @@ const EX = {
 },
 'elastic-rebound-flow': {
   n: 'Fascial Rebound Flow', cat: 'plyo', tags: ['fascia','elastic','prep'],
+  cost: 1,
   why: 'Schleip\'s elastic-recoil work in practice: rhythmic, oscillatory, multi-directional pre-bounces that use stored energy rather than muscular effort. During hopping, muscle fibres contract nearly isometrically while the fascial elements lengthen and shorten like a spring, and regular oscillatory exercise increases the storage capacity of those tissues. He also cautions that untamed rebound training injures people more than standard strength work — so this is deliberately submaximal and rhythmic, not maximal.',
   setup: 'Open space, no equipment.',
   steps: [
@@ -1811,6 +1877,7 @@ const EX = {
 },
 'cmj': {
   n: 'Countermovement Jump', cat: 'plyo', tags: ['test','power'],
+  cost: 1,
   why: 'The standard field measure of lower-body power, and a useful daily readiness check: a CMJ that is 5%+ below your rolling average is a reliable sign of neuromuscular fatigue.',
   setup: 'Flat surface. Use a phone jump app or a wall-touch mark.',
   steps: ['Stand tall, hands on hips (or free for a max test — pick one and stay consistent).','Dip fast to a self-selected depth, then jump maximally.','Land softly.','Best of three, full recovery.'],
@@ -1823,6 +1890,7 @@ const EX = {
 /* ============ SPEED ============ */
 'wall-drill': {
   n: 'Wall Drill — March / Switch', cat: 'speed', tags: ['speed','technique','accel'],
+  cost: 1,
   est: 180,
   why: 'Teaches the acceleration body angle and the front-side mechanics that most field-sport athletes never learn. The wall removes balance from the equation so you can feel the position.',
   setup: 'Hands on a wall, body at ~45°, straight line from head to the support ankle.',
@@ -1835,6 +1903,7 @@ const EX = {
 },
 'a-skip': {
   n: 'A-Skip', cat: 'speed', tags: ['speed','technique','warmup'],
+  cost: 1,
   targets: 'Hip flexors · calves · sprint rhythm',
   why: 'Rhythm, front-side mechanics, and ankle stiffness in one drill. The universal sprint warm-up for a reason.',
   setup: '20–30 m of open space.',
@@ -1898,6 +1967,7 @@ const EX = {
 },
 'tempo-runs': {
   n: 'Extensive Tempo Runs', cat: 'cond', tags: ['conditioning','recovery','aerobic'],
+  cost: 1,
   why: 'The backbone of the high-low system: submaximal running at 65–75% that builds the aerobic base and capillary density that ultimate demands, without the CNS cost of a speed session. It is how you fill the "low" days without compromising the "high" ones — and it accelerates recovery rather than adding fatigue.',
   setup: 'Grass field, ideally barefoot or in flats. Mark 100 m.',
   steps: [
@@ -1915,6 +1985,7 @@ const EX = {
 },
 'rsa-protocol': {
   n: 'Repeat Sprint Ability (Game Model)', cat: 'cond', tags: ['conditioning','ultimate','specific'],
+  cost: 3,
   why: 'Built directly from the UFA GPS data: roughly 16 max sprints per game with incomplete recovery, and a documented 10% drop in high-intensity running in the second half. This session trains the exact thing that falls apart — your ability to repeat a max effort after an incomplete rest.',
   setup: 'Turf, cones at 0 and 40 m.',
   steps: [
@@ -4558,6 +4629,7 @@ Object.assign(EX, {
 
 'easy-jog': {
   n: 'Easy Jog', cat: 'cond', tags: ['warmup','raise'],
+  cost: 1,
   targets: 'Whole body temperature · heart rate',
   why: 'The "raise" in RAMP, and the part people skip when they are late. Three to four minutes of easy running raises muscle temperature roughly 1–3°C, and warm muscle is more compliant, conducts faster, and produces more force. Nothing else in the warm-up works properly until this has happened — mobility work on a cold muscle is just stretching.',
   setup: 'Sideline to sideline, or a lap of the field.',
@@ -4650,6 +4722,7 @@ Object.assign(EX, {
 },
 'bound-stick': {
   n: 'Lateral Bound & Stick', cat: 'plyo', tags: ['knee','landing','prevention','decel','home'],
+  cost: 2,
   why: 'The knee is the most injured site in ultimate, and the mechanism is almost never contact — it is a decelerating, rotating landing that the athlete could not control. Continuous skater bounds train the elastic push. This trains the opposite half: absorbing a sideways landing on one leg and holding it. Sticking the landing is what turns a plyometric into landing-quality work, and landing quality under fatigue is the thing that separates athletes who tear knees from athletes who do not.',
   home: 'Grass or any flat surface with a body length of room. No equipment.',
   repSec: 4,
@@ -4765,6 +4838,7 @@ Object.assign(EX, {
 },
 'carioca': {
   n: 'Carioca', cat: 'speed', tags: ['warmup','hip','lateral','potentiate'],
+  cost: 1,
   targets: 'Hips in the frontal plane · adductors · crossover step',
   why: 'Hip rotation at speed, which is the thing you cannot get from any drill done standing still. It also rehearses the crossover step that starts most cuts in ultimate. Build it up gradually — carioca cold is a classic way to tweak a groin.',
   est: 120,
@@ -4783,6 +4857,7 @@ Object.assign(EX, {
 },
 'build-ups': {
   n: 'Build-Up Runs', cat: 'speed', tags: ['warmup','speed','potentiate'],
+  cost: 2,
   targets: 'Sprint mechanics · graded to top speed',
   why: 'The bridge between a warm-up and playing. Sprinting is the thing most likely to strain something, so you arrive there by degrees rather than in one step. Four graded runs, most of which is walking back, and it means your first hard cut of the game is not your first fast movement of the day.',
   setup: '40 m of space.',
@@ -4802,6 +4877,7 @@ Object.assign(EX, {
 },
 'cut-builds': {
   n: 'Cutting Build-Ups', cat: 'speed', tags: ['warmup','cod','potentiate','ultimate'],
+  cost: 2,
   targets: 'Deceleration · cutting · knee control',
   why: 'Rehearsing the actual movement of the sport at rising intensity. Your first hard plant should not be against a defender — it should be here, deliberately, at 70%, then 85%, then full. This is also the last chance for the groin and hip to tell you something before it matters.',
   est: 200,
@@ -5948,6 +6024,28 @@ const typeChip = t => el('span', { class: 'chip ' + (t === 'HIGH' ? 'hard' : t =
   t.charAt(0) + t.slice(1).toLowerCase() + ' day'
 ]);
 
+// The whole program runs on high-low. This is that same currency per exercise, so a
+// list you are picking from tells you what each row will cost before you add it.
+// 1 stack it freely, 2 moderate, 3 wants a clean nervous system. `cost` overrides.
+const COST_LABEL = { 1: 'Light \u00b7 stack freely', 2: 'Moderate', 3: 'Taxing \u00b7 do fresh' };
+function exCost(e) {
+  if (e.cost) return e.cost;
+  const t = e.tags || [];
+  if (t.includes('high-intensity') || t.includes('rfd') || t.includes('maxv')) return 3;
+  if (e.cat === 'speed' || e.cat === 'plyo') return 3;
+  if (t.includes('eccentric')) return 3;
+  if (['tissue', 'mobility', 'breath'].includes(e.cat)) return 1;
+  if (t.includes('daily')) return 1;
+  return 2;
+}
+function costChip(e) {
+  const c = exCost(e);
+  return el('span', { class: 'cost-chip cost-' + c }, [
+    el('span', { class: 'load l' + c, 'aria-hidden': 'true' }, [el('i'), el('i'), el('i')]),
+    COST_LABEL[c]
+  ]);
+}
+
 function exLink(id, label) {
   return el('button', { type: 'button', onclick: () => openEx(id) }, label || EX[id].n);
 }
@@ -6111,16 +6209,19 @@ function itemRow(date, key, it, i) {
   }, [svgEl('svg', { viewBox: '0 0 24 24' })]);
   tick.querySelector('svg').appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' }));
   row.appendChild(tick);
-  row.appendChild(el('div', { class: 'item-name' }, [
-    exLink(r.x),
+  const open = el('button', { class: 'item-open', onclick: () => openEx(r.x), 'aria-label': e.n + ' \u2014 how-to' });
+  row.appendChild(open);
+  open.appendChild(el('div', { class: 'item-name' }, [
+    e.n,
     r.swapped ? el('span', { class: 'chip swap', title: 'Swapped in for ' + EX[r.from].n }, 'HOME') : null
   ]));
-  row.appendChild(el('div', { class: 'item-dose' }, [
+  open.appendChild(el('div', { class: 'item-dose' }, [
     r.d,
     e.flag && /HIP LABRUM RULE/.test(e.flag)
-      ? el('button', { class: 'chip warn flagchip', onclick: () => openEx(r.x) }, 'Hip rule') : null
+      ? el('span', { class: 'chip warn flagchip' }, 'Hip rule') : null
   ]));
-  if (r.note) row.appendChild(el('div', { class: 'item-note' }, r.note));
+  open.appendChild(costChip(e));
+  if (r.note) open.appendChild(el('div', { class: 'item-note' }, r.note));
   row.dataset.at = key + ':' + i;
   return row;
 }
@@ -6234,9 +6335,15 @@ function tickCard(date, blk, store, note) {
       }, [svgEl('svg', { viewBox: '0 0 24 24' })]);
       tick.querySelector('svg').appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' }));
       row.appendChild(tick);
-      row.appendChild(el('div', { class: 'item-name' }, [exLink(r.x)]));
-      row.appendChild(el('div', { class: 'item-dose' }, r.d));
-      if (r.note && hints) row.appendChild(el('div', { class: 'item-note' }, r.note));
+      const open = el('button', { class: 'item-open', onclick: () => openEx(r.x), 'aria-label': e.n + ' \u2014 how-to' });
+      row.appendChild(open);
+      open.appendChild(el('div', { class: 'item-name' }, e.n));
+      open.appendChild(el('div', { class: 'item-dose' }, r.d + ' \u00b7 tap for how-to'));
+      open.appendChild(costChip(e));
+      if (r.note && hints) open.appendChild(el('div', { class: 'item-note' }, r.note));
+      row.appendChild(el('button', {
+        class: 'btn btn-sm row-start', onclick: () => RUN.open(stepsFromItems([{ x: r.x, d: r.d }], e.n), date, 0)
+      }, 'Start'));
       return row;
     }).filter(Boolean),
     el('div', { class: 'tick-foot' }, [
@@ -6635,17 +6742,23 @@ function routineCard(r, date) {
   const picker = el('div', { class: 'routine-pick' + (open ? ' open' : '') }, [
     el('div', { class: 'pick-list' }, r.items.flatMap((it, i) => {
       const on = sel.has(i);
+      const ex = EX[it.x];
       const row = el('div', { class: 'pick-row' + (on ? ' on' : '') }, [
         el('button', {
-          class: 'tick pick', 'aria-pressed': on ? 'true' : 'false', 'aria-label': 'Select ' + EX[it.x].n,
+          class: 'tick pick', 'aria-pressed': on ? 'true' : 'false', 'aria-label': 'Select ' + ex.n,
           onclick: () => { on ? sel.delete(i) : sel.add(i); render(); }
         }, [(() => { const g = svgEl('svg', { viewBox: '0 0 24 24' });
               g.appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' })); return g; })()]),
-        el('div', { class: 'pick-body' }, [
-          el('button', { class: 'pick-name', onclick: () => openEx(it.x) }, EX[it.x].n),
-          el('span', { class: 'pick-dose num' }, it.d),
-          EX[it.x].targets ? el('span', { class: 'pick-targets' }, EX[it.x].targets) : null
-        ])
+        el('button', { class: 'pick-body pick-open', onclick: () => openEx(it.x), 'aria-label': ex.n + ' \u2014 how-to' }, [
+          el('span', { class: 'pick-name' }, ex.n),
+          el('span', { class: 'pick-dose num' }, it.d + ' \u00b7 tap for how-to'),
+          costChip(ex),
+          ex.targets ? el('span', { class: 'pick-targets' }, ex.targets) : null
+        ]),
+        el('button', {
+          class: 'btn btn-sm row-start',
+          onclick: () => RUN.open(stepsFromItems([it], ex.n), date, 0)
+        }, 'Start')
       ]);
       // A group label marks where one phase of the block hands over to the next.
       return it.g ? [el('div', { class: 'pick-group' }, it.g), row] : [row];
