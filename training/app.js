@@ -46,6 +46,7 @@ const ICONS = {
   x: 'M6 6l12 12|M18 6L6 18',
   clock: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18|M12 7v5l3 2',
   desk: 'M3 4h18v11H3z|M3 19h18|M9 15v4|M15 15v4',
+  daily: 'M3 12a9 9 0 0 1 15-6.7L21 8|M21 12a9 9 0 0 1-15 6.7L3 16|M21 4v4h-4|M3 20v-4h4',
   range: 'M9 4H4v5|M15 20h5v-5|M4 4l6 6|M20 20l-6-6',
   check: 'M4 12l6 6L20 6'
 };
@@ -94,7 +95,7 @@ function copenWeekFor(date) {
 
 /* ---------- persistence ---------- */
 const KEY = 'groundcontact.v1';
-let S = { done: {}, armor: {}, readiness: {}, tests: [], notes: {}, override: {}, settings: { theme: 'auto', mode: 'gym' } };
+let S = { done: {}, armor: {}, free: {}, readiness: {}, tests: [], notes: {}, override: {}, settings: { theme: 'auto', mode: 'gym' } };
 function load() {
   try { const r = localStorage.getItem(KEY); if (r) S = Object.assign(S, JSON.parse(r)); } catch (e) { /* private mode */ }
 }
@@ -1069,13 +1070,25 @@ function startArmorRun(date) {
   RUN.open(buildSteps(null, date, { armor: true }), date, 0);
 }
 
+// Session blocks start collapsed. The player walks you through the session anyway,
+// so the full list is reference rather than the thing you came to Today for.
+const BOPEN = new Set();
 function blockCard(date, b, bi) {
+  const key = 'b' + bi, open = BOPEN.has(key);
+  const done = S.done[iso(date)] || {};
+  const doneN = b.items.filter((_, i) => done[key + ':' + i]).length;
   return el('section', { class: 'block' }, [
-    el('header', { class: 'block-head' }, [
+    el('button', {
+      class: 'block-head block-toggle', 'aria-expanded': open ? 'true' : 'false',
+      onclick: () => { open ? BOPEN.delete(key) : BOPEN.add(key); render(); }
+    }, [
       el('span', { class: 'name' }, b.n),
-      b.why ? el('span', { class: 'why' }, b.why) : null
+      el('span', { class: 'why' }, doneN ? doneN + ' / ' + b.items.length + ' done'
+        : b.items.length + (b.items.length === 1 ? ' exercise' : ' exercises')),
+      el('span', { class: 'block-caret', 'aria-hidden': 'true' }, '\u203a')
     ]),
-    ...b.items.map((it, i) => itemRow(date, 'b' + bi, it, i)).filter(Boolean)
+    ...(open && b.why ? [el('div', { class: 'block-why' }, b.why)] : []),
+    ...(open ? b.items.map((it, i) => itemRow(date, key, it, i)).filter(Boolean) : [])
   ]);
 }
 
@@ -1154,6 +1167,59 @@ function armorCard(date) {
   ]);
 }
 
+// A day-scoped tick list. Unlike the session checklist these are marked done by hand,
+// because the whole point is that they happen in ones and twos across a day.
+const NOTESOPEN = new Set();   // the hints teach it the first week and are noise after
+function tickCard(date, blk, store, note) {
+  const d = iso(date);
+  const map = S[store][d] || (S[store][d] = {});
+  const doneN = blk.items.filter((_, i) => map[i]).length;
+  const hints = NOTESOPEN.has(store);
+  return el('section', { class: 'block' }, [
+    el('header', { class: 'block-head' }, [
+      el('span', { class: 'name' }, blk.n),
+      el('span', { class: 'why' }, doneN + ' / ' + blk.items.length + (note ? ' \u00b7 ' + note : ''))
+    ]),
+    ...blk.items.map((it, i) => {
+      const r = resolve(it), e = EX[r.x];
+      if (!e) return null;
+      const row = el('div', { class: 'item' + (map[i] ? ' done' : '') });
+      const tick = el('button', {
+        class: 'tick', 'aria-pressed': map[i] ? 'true' : 'false', 'aria-label': 'Mark ' + e.n + ' done',
+        onclick: () => { map[i] ? delete map[i] : map[i] = 1; save(); render(); }
+      }, [svgEl('svg', { viewBox: '0 0 24 24' })]);
+      tick.querySelector('svg').appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' }));
+      row.appendChild(tick);
+      row.appendChild(el('div', { class: 'item-name' }, [exLink(r.x)]));
+      row.appendChild(el('div', { class: 'item-dose' }, r.d));
+      if (r.note && hints) row.appendChild(el('div', { class: 'item-note' }, r.note));
+      return row;
+    }).filter(Boolean),
+    el('div', { class: 'tick-foot' }, [
+      el('button', {
+        class: 'why-toggle', 'aria-expanded': hints ? 'true' : 'false',
+        onclick: () => { hints ? NOTESOPEN.delete(store) : NOTESOPEN.add(store); render(); }
+      }, hints ? 'Hide the hints' : 'Show the hints'),
+      el('span', { class: 'xs muted' }, 'Tap any name for the full how-to.')
+    ])
+  ]);
+}
+
+// Today shows how the day is going in one line instead of two full lists.
+function dailyStrip(date) {
+  const d = iso(date);
+  const a = S.armor[d] || {}, f = S.free[d] || {};
+  const an = ARMOR.items.filter((_, i) => a[i]).length;
+  const fn = FREE_WINS.items.filter((_, i) => f[i]).length;
+  const pill = (label, n, total) => el('span', { class: 'chip' + (n >= total ? ' good' : '') }, label + ' ' + n + '/' + total);
+  return el('button', { class: 'daily-strip', onclick: () => go('daily') }, [
+    el('span', { class: 'eyebrow' }, 'Every day'),
+    pill('Free wins', fn, FREE_WINS.items.length),
+    pill('Armor', an, ARMOR.items.length),
+    el('span', { class: 'daily-strip-go' }, '\u203a')
+  ]);
+}
+
 function viewToday() {
   const date = viewDate;
   const pl = planFor(date);
@@ -1209,10 +1275,7 @@ function viewToday() {
       ]),
       ...s.blocks.map((b, i) => blockCard(date, b, i))
     ]),
-    el('div', { class: 'stack stack-md' }, [
-      el('div', { class: 'sec-head' }, [el('h2', null, 'Armor'), el('div', { class: 'trace' })]),
-      armorCard(date)
-    ]),
+    dailyStrip(date),
     pickBar(date),
     el('div', { class: 'shortcut' }, [
       el('span', { class: 'eyebrow' }, 'Quick start'),
@@ -1224,7 +1287,7 @@ function viewToday() {
         }, [ico(ICONS.play, 'nav-ico'), r.n + ' · ' + fmtMins(runSeconds(stepsFromItems(r.items, r.n)))]);
       }).filter(Boolean),
       el('button', { class: 'btn btn-ghost btn-sm', onclick: () => { go('program'); goSub('play'); } }, 'Playing today? →'),
-      el('button', { class: 'btn btn-ghost btn-sm', onclick: () => go('desk') }, 'Desk routines →')
+      el('button', { class: 'btn btn-ghost btn-sm', onclick: () => go('daily') }, 'Every day →')
     ]),
     el('div', { class: 'stack stack-sm' }, [
       el('div', { class: 'eyebrow' }, 'Session notes'),
@@ -1360,7 +1423,7 @@ function viewProgram() {
 
   const SECTIONS = {
     play: {
-      n: 'Frisbee', blurb: 'Game day, in the order it happens.',
+      n: 'Frisbee', blurb: 'Game day, in the order it happens. Warm-ups, between games, after.',
       body: () => el('div', { class: 'stack stack-xl' }, PLAY_GROUPS.map(g =>
         sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
     },
@@ -1477,10 +1540,10 @@ function viewProgram() {
       el('h2', null, 'Program'),
       el('div', { class: 'trace' }),
       el('p', { class: 'small muted', style: 'max-width:72ch' },
-        'Everything that is not today\u2019s session. Start with Frisbee on a game day.')
+        'Everything that is not today\u2019s session. The daily and range work carries any sport; Frisbee is the game-day layer on top of it.')
     ]),
     el('div', { class: 'hub' }, [
-      tile('play', ICONS.play, true),
+      tile('play', ICONS.play),
       tile('blocks', ICONS.armor),
       tile('range', ICONS.range),
       tile('power', ICONS.bolt),
@@ -1581,6 +1644,40 @@ function routineCard(r, date) {
       }, open ? (n ? 'Hide · ' + n + ' of ' + r.items.length + ' picked' : 'Hide list')
          : (n ? n + ' of ' + r.items.length + ' picked' : 'Pick exercises'))
     ])
+  ]);
+}
+
+function viewDaily() {
+  const date = new Date();
+  return el('div', { class: 'stack stack-xl' }, [
+    el('div', { class: 'stack stack-md' }, [
+      el('div', { class: 'sec-head' }, [
+        el('h2', null, 'Every day'),
+        el('div', { class: 'trace' }),
+        el('p', { class: 'small muted', style: 'max-width:72ch' },
+          'Two different jobs. Free wins cost almost nothing and are judged over months \u2014 tick them off as the day goes rather than sitting down to do them. The Armor is medicine, aimed at the tissues most likely to end a season, and it wants doing properly in one sitting.')
+      ]),
+      tickCard(date, FREE_WINS, 'free'),
+      el('div', { class: 'row', style: 'gap:.4rem' }, [
+        el('button', {
+          class: 'btn btn-sm',
+          onclick: () => RUN.open(stepsFromItems(FREE_WINS.items, FREE_WINS.n), date, 0)
+        }, [ico(ICONS.play, 'nav-ico'), 'Run them as a block instead']),
+        el('button', { class: 'btn btn-ghost btn-sm', onclick: () => {
+          const d = iso(date), m = S.free[d] || (S.free[d] = {});
+          const all = FREE_WINS.items.every((_, i) => m[i]);
+          FREE_WINS.items.forEach((_, i) => { if (all) delete m[i]; else m[i] = 1; });
+          save(); render();
+        } }, 'Tick all')
+      ]),
+      tickCard(date, ARMOR, 'armor', 'no exceptions'),
+      el('div', { class: 'row', style: 'gap:.4rem' }, [
+        el('button', {
+          class: 'btn btn-sm', onclick: () => startArmorRun(date)
+        }, [ico(ICONS.play, 'nav-ico'), 'Run the Armor \u00b7 ' + fmtMins(runSeconds(buildSteps(null, date, { armor: true })))])
+      ])
+    ]),
+    viewDesk()
   ]);
 }
 
@@ -1932,7 +2029,7 @@ function viewMethod() {
    =========================================================== */
 const NAV = [
   ['today', 'Today', ICONS.today, '1'],
-  ['desk', 'Desk', ICONS.desk, '2'],
+  ['daily', 'Daily', ICONS.daily, '2'],
   ['program', 'Program', ICONS.program, '3'],
   ['library', 'Library', ICONS.library, '4'],
   ['tests', 'Tests', ICONS.tests, '5'],
@@ -1998,7 +2095,7 @@ function render() {
   main.appendChild(strip());
   const v = el('div', { class: 'view' }, [
     route === 'today' ? viewToday() :
-    route === 'desk' ? viewDesk() :
+    route === 'daily' ? viewDaily() :
     route === 'program' ? viewProgram() :
     route === 'library' ? viewLibrary() :
     route === 'tests' ? viewTests() : viewMethod()
@@ -2045,7 +2142,7 @@ function exportData() {
 function importData() {
   const t = window.prompt('Paste a backup here. This replaces everything currently saved.');
   if (!t) return;
-  try { S = Object.assign({ done: {}, armor: {}, readiness: {}, tests: [], notes: {}, override: {}, settings: {} }, JSON.parse(t)); save(); render(); }
+  try { S = Object.assign({ done: {}, armor: {}, free: {}, readiness: {}, tests: [], notes: {}, override: {}, settings: {} }, JSON.parse(t)); save(); render(); }
   catch (e) { alert('That did not parse as a backup.'); }
 }
 

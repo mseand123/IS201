@@ -4031,6 +4031,25 @@ const PLAY_GROUPS = [
 ];
 
 
+/* -----------------------------------------------------------
+   FREE WINS — the daily deposits. Not a workout, and not the Armor.
+   Ticked off across a day rather than run as a block.
+   ----------------------------------------------------------- */
+const FREE_WINS = {
+  n: 'Free Wins',
+  sub: 'No warm-up, no sets, no gym \u00b7 ticked off across a day',
+  why: 'Nothing here is a workout, and that is the point. These are the things that cost almost nothing and pay compound interest: a position you keep by visiting it daily, an elastic quality you keep by bouncing on it for twenty seconds, a joint you keep by moving it through its own arc. None of it needs a warm-up, a gym, or a change of clothes. Keep the distinction from the Daily Armor clear, because they are different jobs. The Armor is medicine \u2014 loaded isometrics aimed squarely at the tissues most likely to end a season, and it wants doing properly in one sitting. This is the opposite: free, scattered, and judged over months rather than sessions. Tick these off as the day goes. The deep squat is the clearest case: five accumulated minutes is the target and almost none of it should happen in a training session. It happens while you are on the phone, while you are reading, while something is cooking.',
+  items: [
+    { x: 'deep-squat-hold', d: '5 min accumulated', note: 'The highest-value habit on the list, and none of it needs a session. Two minutes at a time is plenty. Heels down, long spine, never past a pinch at the front of the hip.' },
+    { x: 'barefoot-pogo-grass', d: '2 \u00d7 20 contacts', note: 'Twenty seconds of bouncing, barefoot, on grass or a firm floor. Listen rather than watch \u2014 quiet is stiff and elastic, a thud is collapsing. This quality responds to frequency far more than volume.' },
+    { x: 'hip-cars', d: '2 circles each direction per side', note: 'An assessment as much as an exercise. Slow enough to be boring, pelvis dead still, and note where it catches. That arc growing is the clearest sign the hip is improving.' },
+    { x: 'hanging-decompression', d: '2 \u00d7 30 s', note: 'Free if you have a bar, a beam or a door frame rated for it. Shoulder range, grip, and gentle traction for a spine and hips that spent the day compressed.' },
+    { x: 'toe-yoga', d: '10 alternations per foot', note: 'Cheap neurological hygiene for feet that live in shoes and cleats. Barefoot, while you brush your teeth.' },
+    { x: 'couch-stretch', d: '60 s per side', note: 'Sitting shortens the hip flexor, and hip extension is where sprint force comes from. On the floor in front of the TV. Tuck the pelvis first, then squeeze the glute.' },
+    { x: 'box-breathing', d: '5 min before bed', note: 'The only thing here that changes tomorrow directly. Long exhales, nose only. It shortens the time you spend wound up after a hard day.' }
+  ]
+};
+
 /* ===========================================================
    RANGE GROUPS — the stretching screen. The whole pass, or the
    one area that actually feels tight.
@@ -4044,4 +4063,4 @@ const RANGE_GROUPS = [
     ids: ['stretch-hamstring', 'stretch-hip', 'hipflexor-block', 'stretch-groin', 'stretch-calf', 'stretch-upper'] }
 ];
 
-if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB, ROUTINES, PLAY_GROUPS, RANGE_GROUPS }; }
+if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB, ROUTINES, PLAY_GROUPS, RANGE_GROUPS, FREE_WINS }; }

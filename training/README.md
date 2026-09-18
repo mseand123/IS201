@@ -328,6 +328,47 @@ Nothing about colour changed; the validated palette and both themes are untouche
 
 ## Getting around
 
+### Today is a launchpad, not a checklist
+
+Today used to list all 23 exercises of the day across four screens, with an explanatory note under
+most rows. The player walks you through them one at a time anyway, so that list was reference
+material occupying the screen you open most. It now shows the session as four collapsed block
+headers with counts, opening on tap, and the two daily lists collapse to a single strip.
+
+| | before | after |
+|---|---|---|
+| words | 468 | 157 |
+| screens tall | 4.1 | 1.8 |
+| tappable elements | 94 | 51 |
+
+### Daily: free wins and armor are different jobs
+
+The **Desk** tab became **Daily**, with the desk routines moved inside it, because desk work is
+daily work and did not justify a tab of its own. The screen holds two lists that were previously
+conflated:
+
+- **Free Wins** — deep squat accumulation, barefoot pogos, hip CARs, a hang, toe yoga, the couch
+  stretch, breathing before bed. No warm-up, no sets, no gym. Ticked off across a day rather than
+  run as a block, stored per-day under `S.free`, and judged over months.
+- **The Daily Armor** — unchanged. Loaded isometrics aimed at the tissues most likely to end a
+  season, done properly in one sitting.
+
+Two gaps argued for building Free Wins. The deep squat's actual prescription is five minutes
+*accumulated across a day* while the Armor asked for sixty seconds, leaving the other four minutes
+unscheduled and untracked. And bouncing appeared in no daily list at all, despite reactive stiffness
+being the quality the app is named after.
+
+Row hints on both lists are hidden behind a **Show the hints** toggle — they teach the list in the
+first week and are noise afterwards. Tapping any name still opens the full how-to.
+
+### A general athlete's app with a frisbee layer
+
+Frisbee no longer takes the highlighted hero tile on the Program hub, and the hub copy now says the
+daily and range work carries any sport with Frisbee as the game-day layer on top. Every frisbee
+section is untouched: the five warm-ups, the play groups, the UFA-anchored phases and the game-model
+conditioning all stay exactly as they were. The change is framing, not content.
+
+
 The Program screen is a hub, not a scroll. Six tiles — **Frisbee**, **Weak-link blocks**, **When
 time is short**, **This week**, **The year**, **Copenhagen ladder** — each opening one section with
 a way back. Frisbee is the game-day entry point and groups everything by when you reach for it:
