@@ -27,7 +27,7 @@ Object.entries(d.SESSIONS).forEach(([k, s]) => (s.blocks || []).forEach(b => {
 }));
 d.ROUTINES.forEach(r => {
   ck(typeof r.n === 'string' && typeof r.id === 'string', 'routine needs id and name');
-  ck(['WARMUP','DESK','ARMOR','SHORT','RANGE','RECOVERY','POWER'].includes(r.tag), 'routine ' + r.id + ' has an unrendered tag: ' + r.tag);
+  ck(['WARMUP','DESK','ARMOR','SHORT','RANGE','RECOVERY','POWER','BODY'].includes(r.tag), 'routine ' + r.id + ' has an unrendered tag: ' + r.tag);
   r.items.forEach(i => check(i.x, 'routine ' + r.id));
 });
 d.ARMOR.items.forEach(i => check(i.x, 'ARMOR'));
@@ -47,6 +47,13 @@ d.RANGE_GROUPS.forEach(g => {
   ck(typeof g.n === 'string' && typeof g.sub === 'string', 'range group needs a name and a subtitle');
   g.ids.forEach(id => ck(byId.has(id), 'range group "' + g.n + '" references a missing routine: ' + id));
 });
+d.BODY_GROUPS.forEach(g => {
+  ck(typeof g.n === 'string' && typeof g.sub === 'string', 'body group needs a name and a subtitle');
+  g.ids.forEach(id => ck(byId.has(id), 'body group "' + g.n + '" references a missing routine: ' + id));
+});
+// a body-part block only exists to be found by body part
+d.ROUTINES.filter(r => r.tag === 'BODY').forEach(r =>
+  ck(d.BODY_GROUPS.some(g => g.ids.includes(r.id)), r.id + ' is a body block but appears in no body group'));
 // nothing game-day or range should be unreachable from the hub it belongs to
 const grouped = new Set(d.PLAY_GROUPS.flatMap(g => g.ids).concat(d.RANGE_GROUPS.flatMap(g => g.ids)));
 d.ROUTINES.filter(r => ['WARMUP', 'RECOVERY', 'RANGE'].includes(r.tag))

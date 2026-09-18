@@ -4032,6 +4032,102 @@ const PLAY_GROUPS = [
 
 
 /* -----------------------------------------------------------
+   BODY PART BLOCKS — the other door into the library. Same rules as
+   everything else (prime, then the heavy thing, then accessories), but
+   entered by what you want to train rather than by what the plan says.
+   ----------------------------------------------------------- */
+ROUTINES.push(
+  { id:'body-legs', n:'Legs', tag:'BODY',
+    sub:'Hinge, squat, one leg at a time, then the calves',
+    why:'A full lower body session, ordered the way the rest of the program is ordered: the ankle and the foot get opened first because dorsiflexion is what lets you squat with your heels down, then the two heavy bilateral lifts while you are fresh, then single leg work where the asymmetries actually live, then the hamstring. The trap bar comes before the squat because it is the heavier pull and the one that most rewards a clean nervous system. Single leg work is not an accessory here: it is the closest thing in the gym to how you actually run, and it is the only way to find a left-right difference before it finds you. In Home mode every barbell lift swaps for a backpack or doorway version automatically \u2014 the flag on each row tells you which.',
+    items:[
+      { x:'ball-roll-foot', g:'PRIME \u00b7 open the ankle before you load it', d:'60 s per foot' },
+      { x:'knee-to-wall', d:'10 reps + 20 s hold per side', note:'Heels down in a squat starts here. If you are under about ten centimetres, this is your limiter.' },
+      { x:'deep-squat-hold', d:'60 s', t:{ r: 15 } },
+      { x:'trap-bar-deadlift', g:'HEAVY \u00b7 while the nervous system is clean', d:'4 \u00d7 5 @ 80\u201385%', note:'Push the floor away rather than pulling the bar up. Stop the set if bar speed visibly drops.' },
+      { x:'front-squat', d:'3 \u00d7 5', note:'Elbows up. Safety-squat bar or a goblet squat if the front rack bothers the shoulder.' },
+      { x:'rfess', g:'ONE LEG \u00b7 where the asymmetries live', d:'3 \u00d7 8 per side' },
+      { x:'single-leg-rdl', d:'3 \u00d7 8 per side', note:'Hips level. A glass of water on the sacrum would not spill.' },
+      { x:'nordic-curl', g:'HAMSTRING \u00b7 low volume, high quality', d:'2 \u00d7 5', note:'Hips locked in line with the torso. The moment you break at the hip the exercise is over.' },
+      { x:'calf-raise-loaded', d:'3 \u00d7 10 straight-knee + 3 \u00d7 14 bent-knee' },
+      { x:'ham-iso-long', d:'3 \u00d7 25 s per side', t:{ r: 20 } }
+    ]},
+
+  { id:'body-push', n:'Chest, Shoulders & Push', tag:'BODY',
+    sub:'Pressing, with the shoulder looked after first',
+    why:'Pressing days go wrong at the shoulder, not the chest, so this one warms the cuff and the scapula before anything heavy happens and puts a pull in front of the first press. At 6\u20191" and 150 lb, upper body mass is one of the largest untapped levers you have, which is the honest case for an incline press sitting alongside all the athletic work. The landmine press is in here because its arc is comfortable and it forces a ribs-down, glute-on trunk position, not because you are avoiding anything: overhead barbell pressing is fine for you, since your labral tear is in the hip. The Pallof press at the end is not filler. Pressing is a trunk job, and the trunk is what stops force leaking between your hips and your hands.',
+    items:[
+      { x:'band-pull-apart', g:'PRIME \u00b7 pull before you push', d:'2 \u00d7 15' },
+      { x:'cuff-iso-er', d:'2 \u00d7 25 s each direction', t:{ r: 12 }, note:'Elbow pinned to the ribs, 60\u201370%. Submaximal and pain-free beats maximal and provocative.' },
+      { x:'pushup-scap', d:'2 \u00d7 10 scapular push-ups', note:'Arms stay straight. Push the floor away so the upper back rounds; that range is the whole drill.' },
+      { x:'db-incline-press', g:'PRESS \u00b7 the heavy work', d:'3 \u00d7 8\u201310', note:'Blades set into the bench before the first rep and kept there. Control the eccentric.' },
+      { x:'overhead-press', d:'3 \u00d7 5\u20138', note:'Ribs down, glutes on. If the low back arches, the weight is too heavy.' },
+      { x:'landmine-press', d:'3 \u00d7 8 per side', note:'Press along the arc rather than straight up. Half-kneeling keeps the trunk honest.' },
+      { x:'bottoms-up-carry', g:'FINISH \u00b7 cuff and trunk', d:'3 \u00d7 25 m per side', note:'Crush the handle. The cuff follows the grip.' },
+      { x:'pallof-press', d:'3 \u00d7 5 with 5 s holds per side' }
+    ]},
+
+  { id:'body-pull', n:'Back & Pull', tag:'BODY',
+    sub:'The half most throwing athletes are short on',
+    why:'A throwing shoulder wants at least twice as much pulling as pressing and usually gets the opposite, so this is the session that squares the ratio. Scapular work comes first because a shoulder blade that does not upwardly rotate on time makes the joint hunt for range it does not have, and that is the mechanical story behind most aching throwing shoulders. Then the two real pulls: a chin-up for absolute strength and a chest-supported row, which takes the low back and the cheating out of it so the mid-back actually does the work. Full hang at the bottom of every chin-up, because that end range is shoulder health work as much as it is strength work.',
+    items:[
+      { x:'band-pull-apart', g:'PRIME \u00b7 wake the scapula', d:'2 \u00d7 15 + 15 face pulls' },
+      { x:'prone-ytw', d:'2 \u00d7 8 each position', note:'Scapula moves first, arm second. If the traps light up at the top, the weight is too heavy.' },
+      { x:'weighted-pullup', g:'PULL \u00b7 the heavy work', d:'4 \u00d7 4\u20136', note:'Full hang each rep. Keep a little scapular engagement at the bottom rather than dumping into it.' },
+      { x:'chest-supported-row', d:'3 \u00d7 8\u201312', note:'Let the blades fully protract at the bottom for a real stretch, then lead the pull with them.' },
+      { x:'suitcase-carry', g:'FINISH \u00b7 grip and lateral trunk', d:'3 \u00d7 30 m per side', note:'Do not lean away from the weight. Shoulders square and level.' },
+      { x:'hanging-decompression', d:'3 \u00d7 30 s' }
+    ]},
+
+  { id:'body-core', n:'Core & Trunk', tag:'BODY',
+    sub:'A trunk that resists rotation, not one that produces it',
+    why:'Ultimate and every other cutting sport is full of one-sided, rotational, decelerating loads, and the trunk\u2019s actual job in all of them is to not leak force between the hips and the shoulders. So there are no sit-ups here. Everything is anti-extension, anti-rotation or anti-lateral-flexion, held rather than repped. There is a second reason for that choice which is specific to you: unlike hanging knee raises or sit-ups, none of these drive the hip into deep flexion, which is the position an acetabular labrum objects to. The dead bug leads because a pelvis that tips forward under load closes the front of the hip, so lumbopelvic control is joint protection here rather than core aesthetics.',
+    items:[
+      { x:'deadbug', g:'CONTROL \u00b7 the pelvis stays still', d:'3 \u00d7 6 per side, slow', note:'Stop the moment the low back lifts off the floor. That point is your current range.' },
+      { x:'bird-dog-iso', d:'3 \u00d7 18 s per side', note:'Reach long rather than lifting high. Hips square to the floor.' },
+      { x:'hollow-hold', g:'ANTI-EXTENSION', d:'3 \u00d7 25 s', note:'Low back glued to the floor. The moment it lifts, raise the legs.' },
+      { x:'rkc-plank', d:'3 \u00d7 20 s', note:'Maximum contraction of everything. If you can hold it a minute you are not doing it right.' },
+      { x:'pallof-press', g:'ANTI-ROTATION', d:'3 \u00d7 5 with 5 s holds per side' },
+      { x:'side-plank-iso', d:'3 \u00d7 35 s per side' },
+      { x:'suitcase-carry', d:'3 \u00d7 30 m per side' },
+      { x:'back-extension-iso', g:'POSTERIOR \u00b7 endurance, not peak force', d:'3 \u00d7 40 s' }
+    ]},
+
+  { id:'body-lowerleg', n:'Calves, Feet & Ankles', tag:'BODY',
+    sub:'The first spring in the chain, and the least trained',
+    why:'Everything you do on a field passes through a foot, and almost nobody trains one. The arch is the first spring: if it collapses passively, elastic energy leaks into the ground instead of coming back to you, and an eight-week intrinsic foot protocol measurably raises vertical propulsive force in running. Above it, the soleus takes six to eight times bodyweight per stride and is the biggest single contributor to propulsion, which is why the bent-knee isometric is in here and why it is held at mid-range where tendon load peaks rather than at the top where the joint locks out. The peroneals and the tibialis are the two nobody touches: one resists a rolling ankle, the other brakes the shin over the foot forty-seven times a game. Run this on a low day \u2014 none of it is CNS-expensive and all of it compounds.',
+    items:[
+      { x:'ball-roll-foot', g:'TISSUE', d:'90 s per foot', note:'Toe-touch test before and after. The range it buys runs up the whole back of the leg.' },
+      { x:'ball-calf-peroneal', d:'60 s per side', note:'Pump the ankle while parked. Do not skip the peroneal strip on the outside.' },
+      { x:'short-foot', g:'INTRINSIC \u00b7 the arch as a spring', d:'3 \u00d7 10 s per foot', note:'Toes stay long and flat. If they claw, you are cheating with the long flexors.' },
+      { x:'big-toe-iso', d:'5 \u00d7 10 s per foot', note:'The hallux is the last thing to leave the ground on every sprint step and every cut.' },
+      { x:'toe-yoga', d:'10 alternations per foot' },
+      { x:'tib-raise', g:'BRAKE \u00b7 the front of the shin', d:'3 \u00d7 20', note:'Slow on the way down. The eccentric is the part that has to catch you.' },
+      { x:'ankle-eversion', d:'2 \u00d7 15 each direction, per side', note:'The muscles that actively resist a rolled ankle. Compare sides honestly.' },
+      { x:'calf-iso-soleus', g:'CALF \u00b7 mid-range, where tendon load peaks', d:'3 \u00d7 40 s' },
+      { x:'calf-raise-loaded', d:'3 \u00d7 10 straight-knee + 3 \u00d7 14 bent-knee', note:'Full range at both ends, and pause at the bottom to kill the tendon bounce.' },
+      { x:'knee-to-wall', d:'10 reps + 3 \u00d7 20 s per side' },
+      { x:'barefoot-pogo-grass', g:'ELASTIC \u00b7 put the spring to work', d:'3 \u00d7 20 contacts', note:'Quiet feet. Listen rather than watch.' }
+    ]}
+);
+
+/* ===========================================================
+   BODY GROUPS — the other door in: pick the part, get the session.
+   Existing blocks are listed rather than duplicated.
+   =========================================================== */
+const BODY_GROUPS = [
+  { n: 'Lower body',
+    sub: 'The big one first, then the parts that carry your weak links.',
+    ids: ['body-legs', 'body-lowerleg', 'hip-block', 'hipflexor-block', 'groin-block', 'ham-insurance'] },
+  { n: 'Upper body',
+    sub: 'Pull-dominant on purpose: a throwing shoulder wants twice as much pulling as pressing.',
+    ids: ['body-pull', 'body-push', 'shoulder-block'] },
+  { n: 'Middle',
+    sub: 'Held rather than repped, and nothing that drives the hip into deep flexion.',
+    ids: ['body-core'] }
+];
+
+/* -----------------------------------------------------------
    FREE WINS — the daily deposits. Not a workout, and not the Armor.
    Ticked off across a day rather than run as a block.
    ----------------------------------------------------------- */
@@ -4063,4 +4159,4 @@ const RANGE_GROUPS = [
     ids: ['stretch-hamstring', 'stretch-hip', 'hipflexor-block', 'stretch-groin', 'stretch-calf', 'stretch-upper'] }
 ];
 
-if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB, ROUTINES, PLAY_GROUPS, RANGE_GROUPS, FREE_WINS }; }
+if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB, ROUTINES, PLAY_GROUPS, RANGE_GROUPS, FREE_WINS, BODY_GROUPS }; }

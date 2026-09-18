@@ -47,6 +47,7 @@ const ICONS = {
   clock: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18|M12 7v5l3 2',
   desk: 'M3 4h18v11H3z|M3 19h18|M9 15v4|M15 15v4',
   daily: 'M3 12a9 9 0 0 1 15-6.7L21 8|M21 12a9 9 0 0 1-15 6.7L3 16|M21 4v4h-4|M3 20v-4h4',
+  body: 'M12 2.5a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8|M5 10h14|M10 10l-1.4 5.6L7 21.5|M14 10l1.4 5.6L17 21.5',
   range: 'M9 4H4v5|M15 20h5v-5|M4 4l6 6|M20 20l-6-6',
   check: 'M4 12l6 6L20 6'
 };
@@ -1399,6 +1400,11 @@ function viewProgram() {
       body: () => el('div', { class: 'stack stack-xl' }, PLAY_GROUPS.map(g =>
         sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
     },
+    body: {
+      n: 'By body part', blurb: 'Pick what you want to train and get the session.',
+      body: () => el('div', { class: 'stack stack-xl' }, BODY_GROUPS.map(g =>
+        sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
+    },
     range: {
       n: 'Stretching & range', blurb: 'The whole pass, or just the bit that feels tight.',
       body: () => el('div', { class: 'stack stack-xl' }, RANGE_GROUPS.map(g =>
@@ -1488,6 +1494,7 @@ function viewProgram() {
   // The hub.
   const counts = {
     play: PLAY_GROUPS.reduce((a, g) => a + g.ids.length, 0) + ' blocks',
+    body: BODY_GROUPS.reduce((x, g) => x + g.ids.length, 0) + ' blocks',
     range: RANGE_GROUPS.reduce((x, g) => x + g.ids.length, 0) + ' blocks',
     blocks: byTag('ARMOR').length + ' blocks',
     power: byTag('POWER').length + ' blocks',
@@ -1516,6 +1523,7 @@ function viewProgram() {
     ]),
     el('div', { class: 'hub' }, [
       tile('play', ICONS.play),
+      tile('body', ICONS.body),
       tile('blocks', ICONS.armor),
       tile('range', ICONS.range),
       tile('power', ICONS.bolt),

@@ -80,6 +80,34 @@ after a session or on an off day, dosed weekly (~5 min accumulated per muscle gr
 than daily. The deep squat hold is the one static position kept in the warm-up — short, loaded, early,
 and doubling as a daily read on the hip.
 
+### By body part, the other door in
+
+The library was only reachable by the plan's logic: what today's session says, or which weak link
+you are feeding. That is the right default and a bad only-option, because sometimes the question is
+just "I want to train legs". **By body part** is a Program tile answering that directly, driven by
+`BODY_GROUPS` in the same shape as `PLAY_GROUPS` and `RANGE_GROUPS`:
+
+- **Lower body** — Legs, Calves/Feet/Ankles, plus the Hip, Hip Flexor, Groin and Hamstring blocks.
+- **Upper body** — Back & Pull, Chest/Shoulders/Push, plus the Throwing Shoulder Block.
+- **Middle** — Core & Trunk.
+
+Five blocks are new (`tag: 'BODY'`); the rest are existing blocks *listed* rather than duplicated, so
+there is one copy of the Hip Block and it shows up wherever it is relevant. Every card carries the
+standard picker, so "Legs" gives you a 45-minute session or any two exercises out of it.
+
+They are built to the same order of operations as the rest of the program rather than as exercise
+dumps. **Legs** opens the ankle before it loads it, puts the trap bar before the squat because it is
+the heavier pull, and treats single-leg work as a main course rather than an accessory since that is
+where asymmetries live. **Push** warms the cuff and scapula and puts a pull in front of the first
+press. **Pull** exists because a throwing shoulder wants at least a 2:1 pull-to-push ratio and most
+athletes run the opposite. **Core** is entirely anti-extension, anti-rotation and anti-lateral-flexion
+with no sit-ups, which is both the right training choice and the labrum-safe one, since nothing in it
+drives the hip into deep flexion.
+
+`check-data.js` gained two rules with this: `BODY` is a recognised tag, and a block tagged `BODY` must
+appear in a body group, because a body-part block that cannot be found by body part has no reason to
+exist.
+
 ### Stretching & range, as its own screen
 
 The Range Block used to live only under Frisbee → After you play, which is the wrong place to look on a
