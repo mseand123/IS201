@@ -947,3 +947,31 @@ body.running { overflow: hidden; }
 /* Home mode has to be honest on the row, not only in the dialog. */
 .pick-home { font-size: var(--t-xs); color: var(--ink-2); border-left: 2px solid var(--line-2); padding-left: .5rem; margin-top: .2rem; }
 .item-open .home-note { margin-top: .2rem; }
+
+/* ---------- the pick queue: picks from several blocks, one Run ---------- */
+.queuebar {
+  position: fixed; z-index: 70;
+  left: 50%; transform: translateX(-50%); bottom: 1.1rem;
+  width: min(640px, calc(100vw - 2rem));
+  display: flex; align-items: center; gap: .55rem;
+  padding: .55rem .6rem .55rem 1rem;
+  background: color-mix(in srgb, var(--raised) 96%, transparent);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--line); border-radius: 999px;
+  box-shadow: var(--lift);
+}
+.queuebar[hidden] { display: none; }
+.queue-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.queue-n { font-size: var(--t-sm); font-weight: 600; }
+.queue-sub, .queue-est { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.queue-run { flex: 0 0 auto; }
+.queue-run svg { width: 11px; height: 11px; fill: currentColor; stroke: currentColor; }
+.queue-clear { flex: 0 0 auto; }
+body.running .queuebar { display: none; }
+@media (max-width: 860px) {
+  .queuebar {
+    left: .6rem; right: .6rem; width: auto; transform: none;
+    bottom: calc(4.1rem + env(safe-area-inset-bottom));
+  }
+  .queue-est { display: none; }
+}

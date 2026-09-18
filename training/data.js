@@ -130,6 +130,7 @@ const EX = {
 },
 'short-foot': {
   n: 'Short Foot (Arch Doming)', cat: 'tissue', tags: ['foot','daily','iso'],
+  targets: 'Arch \u00b7 the small muscles of the foot',
   why: 'An 8-week intrinsic foot protocol increases foot muscle volume and raises vertical propulsive force in running. The arch is your first spring: if it collapses passively, elastic energy leaks into the ground instead of returning to you. Every ground contact you take at 8.6 m/s starts here.',
   setup: 'Seated or standing, foot flat, barefoot.',
   steps: [
@@ -276,6 +277,7 @@ const EX = {
 },
 'askling-extender': {
   n: 'Askling Extender', coach: 'L-protocol 1 of 3', cat: 'armor', tags: ['hamstring','rehab','mobility'],
+  targets: 'Hamstrings at length \u00b7 controlled lengthening',
   why: 'The L-protocol — Extender, Diver, Glider — returned injured athletes to sport in a mean 28 days versus 52 for conventional rehab, with lower reinjury at 2, 6 and 12 months. What makes it work is that all three load the hamstring at long lengths rather than short ones, and that is just as useful on a healed hamstring as an injured one. Weekly, as maintenance, is the cheapest insurance in the program.',
   setup: 'Lie on your back. Hold the injured-side thigh at ~90° hip flexion with both hands.',
   steps: [
@@ -387,6 +389,49 @@ const EX = {
   prog: 'Single-leg, or pause-and-hold at the top.',
   regr: 'Glute bridge from the floor.',
   timer: { w: 20, r: 60, rounds: 4, label: 'Hip thrust iso hold' }
+},
+'supine-ham-strap': {
+  n: 'Supine Hamstring Stretch \u2014 Contract-Relax', cat: 'mobility', tags: ['hamstring','daily','home','posterior'],
+  targets: 'Hamstrings \u00b7 posterior chain',
+  cost: 1,
+  why: 'The best stretch in here for a hamstring with a history, for two reasons. First, contract-relax beats holding still: you take the leg to mild tension, push it back against the strap for a few seconds, then relax, and the leg goes further than it did. The mechanism is neural rather than structural \u2014 a contraction followed by relaxation briefly lowers the reflexive resistance to being lengthened \u2014 and it reliably produces more acute range than a passive hold of the same length. Second, lying down means the floor holds your pelvis and low back where they belong, so you cannot round your back and call the extra reach hamstring length. You also control the lever entirely with your own arms or a strap, which is exactly what you want on tissue that has torn: nobody is pushing you anywhere, and you can back off instantly. Do it after a session or on an off day, not before sprinting.',
+  home: 'A towel, a belt, a dressing-gown cord or a dog lead. Or just your hands behind the thigh, which works fine and needs nothing.',
+  setup: 'On your back, one leg flat on the floor, a strap looped around the arch of the other foot. Both hips stay down.',
+  steps: [
+    'Raise the strapped leg with the knee straight-ish until you feel mild tension. Mild. Not a fight.',
+    'Keep the other leg flat on the floor \u2014 the moment it lifts, the pelvis has tipped and you are measuring the wrong thing.',
+    'Push the raised leg DOWN into the strap at about 25% effort for 5 seconds. The leg should not actually move.',
+    'Relax completely for 2 seconds, then take up the new slack. It will have given you a little.',
+    'Four cycles per side. Finish by holding the last position for 20 seconds.'
+  ],
+  cues: ['Mild tension to start, never a maximal stretch.','The down leg stays flat. That is your honest pelvis check.','Push at a quarter effort, not a hard one. This is a neural trick, not a strength exercise.'],
+  faults: ['Starting at end range, which leaves nothing to gain and makes a strained hamstring guard.','Letting the opposite leg lift off the floor.','Bending the stretched knee to reach further.','Pushing hard rather than gently \u2014 more effort does not produce more range here.'],
+  dose: '4 contract-relax cycles per side, then a 20 s hold.',
+  prog: 'Straighter knee, or add a gentle ankle dorsiflexion at the top once it is comfortable.',
+  regr: 'Bend the knee slightly, or hold behind the thigh instead of using a strap.',
+  timer: { w: 45, r: 15, rounds: 4, label: 'Contract-relax \u2014 switch sides' },
+  flag: 'With a strain history, mild is the whole instruction. A stretch that makes the muscle guard is worse than no stretch, and none of this is what durably changes length \u2014 the loading at the end of the block is.'
+},
+'standing-ham-step': {
+  n: 'Standing Elevated Hamstring Stretch', cat: 'mobility', tags: ['hamstring','daily','home','posterior'],
+  targets: 'Hamstrings \u00b7 calves \u00b7 posterior chain',
+  cost: 1,
+  why: 'The version that needs nothing and can happen anywhere: a kerb, a stair, a bench, a gym box. It earns its place over a seated toe-touch because standing lets you hinge from the hip while keeping a long spine, and the spine is where every bad hamstring stretch cheats. Two useful variables. Toes pulled up adds the calf and the neural component, so if the stretch changes a lot when you lift the toes, you are pulling on nerve rather than muscle and should be doing the glide instead. Toes pointed keeps it muscular. Also worth knowing which leg you are actually stretching \u2014 the raised one, obviously, but the standing leg\u2019s hip has to stay square, and most people let it drift back to make the reach easier.',
+  home: 'A stair, a kerb, a chair, a coffee table. Anything at shin to knee height.',
+  setup: 'One heel on a step at roughly shin height, that knee straight but not locked, standing leg soft. Hands on the front thigh.',
+  steps: [
+    'Square the hips to the raised foot before you move. Do not let the standing hip drift backward.',
+    'Hinge forward from the hip with a long spine \u2014 chest stays open, back does not round.',
+    'Stop where you feel it in the middle of the back of the thigh. Hold 45\u201360 s, breathing.',
+    'Try it with the toes pulled up, then pointed. A big difference between the two means the limiter is neural.',
+    'Both sides.'
+  ],
+  cues: ['Hinge at the hip, not the spine. Hands on the thigh help you feel the difference.','Long spine beats a deep reach every time.','Standing hip stays square and under you.'],
+  faults: ['Rounding the back to reach further, which stretches the spine instead.','A step so high the pelvis has to tip.','Locking the standing knee.','Bouncing.'],
+  dose: '2 \u00d7 45\u201360 s per side.',
+  prog: 'Higher step, or add the toes-up version as its own hold.',
+  regr: 'Lower step, or keep a soft bend in the raised knee.',
+  timer: { w: 50, r: 12, rounds: 4, label: 'Hamstring stretch \u2014 switch sides' }
 },
 'nerve-glide-sciatic': {
   n: 'Sciatic Nerve Glide', cat: 'mobility', tags: ['hamstring','neural'],
@@ -664,6 +709,7 @@ const EX = {
 },
 'wall-sit-iso': {
   n: 'Wall Sit', cat: 'iso', tags: ['iso','legs','simple'],
+  targets: 'Quads \u00b7 knees, for the way back down',
   why: 'The most accessible yielding isometric there is. Excellent as an accumulation tool and as an honest measure of quadriceps endurance under fatigue.',
   setup: 'Back flat against a wall, thighs parallel to the floor, knees at 90°, feet hip width.',
   steps: ['Slide down until the thighs are parallel.','Weight through the heels, back flat against the wall.','Hold. Breathe normally — no breath-holding.','Single-leg version: extend one leg, hold half the time.'],
@@ -1266,6 +1312,7 @@ const EX = {
 /* ============ BREATH & RECOVERY ============ */
 'box-breathing': {
   n: 'Box Breathing Down-Regulation', cat: 'breath', tags: ['recovery','cns','daily'],
+  targets: 'Nervous system \u00b7 out of fight-or-flight',
   why: 'Post-session parasympathetic switch. Two minutes of extended-exhale nasal breathing measurably shifts heart rate variability and shortens the time you spend in a sympathetic state after a hard session — which is the actual bottleneck on how often you can train hard.',
   setup: 'Lying down, knees bent, one hand on the belly.',
   steps: ['Inhale through the nose for 4 s.','Hold for 4 s.','Exhale through the nose for 6–8 s — the long exhale is the active ingredient.','Hold empty for 2 s. Repeat.'],
@@ -2517,6 +2564,7 @@ Object.assign(EX, {
 },
 'stair-calf-iso': {
   n: 'Stair Calf Isometric', cat: 'iso', tags: ['iso','home','tendon','foot'],
+  targets: 'Calves \u00b7 soleus \u00b7 Achilles',
   why: 'The soleus takes 6–8× bodyweight during running, so a single-leg bodyweight hold is genuinely heavy — you do not need a machine, you need one leg and a stair. Bent knee biases soleus, straight knee biases gastrocnemius; you want both.',
   setup: 'Forefoot on the edge of a stair, heel hanging free, one hand on the rail. Load a backpack if bodyweight gets easy.',
   steps: [
@@ -3289,11 +3337,15 @@ const ROUTINES = [
   { id:'stretch-hamstring', n:'Tight Hamstrings', tag:'RANGE',
     sub:'And working out whether they are actually tight',
     targets:'Hamstrings \u00b7 posterior chain \u00b7 sciatic nerve',
-    why:'Start by doubting the label. In someone who sprints, a "tight" hamstring is far more often protective neural tone, a stiff posterior chain or pelvic position than short tissue, and those three want different things. Two tests settle it in about a minute. Roll a ball under your foot and retest your toe-touch: if ninety seconds under the arch buys you range, the hamstring was never the restriction. Then sit, straighten one knee to your limit, and tuck your chin to your chest: if the range drops noticeably, the limiter is the nerve, and stretching harder makes it worse. What durably changes hamstring length is loading it at long length, which is the Jefferson curl here and the Nordics and the L-protocol in Hamstring Insurance. Nothing in this block is a passive hamstring stretch, and that is deliberate.',
+    why:'Start by doubting the label, then get on with it. In someone who sprints, a "tight" hamstring is far more often protective neural tone, a stiff posterior chain or pelvic position than short tissue, and those want different things \u2014 so the first minute here is two tests that change what you do next. Roll a ball under your foot and retest your toe-touch: if ninety seconds under the arch buys you range, the hamstring was never the restriction. Then sit, straighten one knee to your limit and tuck your chin to your chest: if the range drops noticeably, the limiter is the nerve and stretching harder makes it worse, so do the glide instead. After that it is real work in two halves, and the split matters. The stretches buy you range that lasts about an hour, which is worth having and is not nothing. The loading at the end is what makes range stay, because what durably changes hamstring length is force at long muscle length, not time spent hanging in a stretch. Do both. And keep everything mild \u2014 with a strain history, a stretch that makes the muscle guard has cost you rather than helped.',
     items:[
-      { x:'ball-roll-foot', g:'TEST \u00b7 before you stretch anything', d:'90 s per foot', note:'Toe-touch first and note where your fingers land, then roll and retest that side only. The difference is your answer.' },
-      { x:'nerve-glide-sciatic', d:'2 \u00d7 10 per side', note:'Do the chin-tuck test first. If range drops when you tuck, this is the right tool and stretching is the wrong one.' },
-      { x:'jefferson-curl', d:'3 \u00d7 5, very light', note:'Loaded end range, which is what actually changes length. Absurdly light, and roll down one segment at a time.' }
+      { x:'ball-roll-foot', g:'TEST \u00b7 one minute, and it changes what you do', d:'90 s per foot', note:'Toe-touch first and note where your fingers land, then roll and retest that side only. The difference is your answer.' },
+      { x:'nerve-glide-sciatic', d:'2 \u00d7 10 per side', note:'Only if the chin-tuck test dropped your range. If it did, this is the right tool and stretching is the wrong one.' },
+      { x:'standing-ham-step', g:'LENGTHEN \u00b7 the actual stretching', d:'2 \u00d7 50 s per side', note:'Heel on a step, hinge from the hip with a long spine. Try toes up and toes down \u2014 a big difference means it is neural.' },
+      { x:'supine-ham-strap', d:'4 cycles per side', note:'The best one here. Mild tension, push down into the strap at a quarter effort for 5 s, relax, take up the slack. It gives every time.' },
+      { x:'askling-extender', d:'2 \u00d7 12 per side', note:'Thigh held at 90\u00b0, slowly straighten the knee to mild tension and back. Lengthening under your own control, from the protocol with the best return-to-play record there is.' },
+      { x:'jefferson-curl', g:'LOAD \u00b7 what makes the range stay', d:'3 \u00d7 5, very light', note:'Loaded end range. Absurdly light, and roll down one segment at a time rather than folding as a block.' },
+      { x:'ham-iso-long', d:'3 \u00d7 25 s per side', t:{ r: 20 }, note:'Strength at the length that actually fails in a sprint. Shallow knee bend, heels digging back, and this is the item that makes the rest stick.' }
     ]},
 
   { id:'stretch-hip', n:'Tight Hips', tag:'RANGE',
@@ -3818,6 +3870,7 @@ Object.assign(EX, {
 },
 'balance-progression': {
   n: 'Single-Leg Balance Progression', cat: 'armor', tags: ['ankle','knee','proprioception','prevention','home'],
+  targets: 'Ankle & hip control \u00b7 single-leg balance',
   timer: { w: 40, r: 15, rounds: 6, label: 'Balance — switch legs' },
   why: 'Proprioceptive and balance training is one of the very few interventions with strong, repeatedly replicated evidence for preventing ankle sprains — particularly recurrent ones — and it carries over to the knee, because the thing that fails in a non-contact knee injury is neuromuscular control, not tissue strength. It is also the least impressive-looking exercise in this entire program, which is why almost nobody does it. Ultimate is played on uneven grass, in cleats, landing one-footed after a contested disc. That is a proprioceptive sport whether you train it as one or not.',
   home: 'Nothing at all, ideally barefoot. A folded towel or a couch cushion gives you the harder surface for level 5.',
@@ -3838,6 +3891,7 @@ Object.assign(EX, {
 },
 'ankle-eversion': {
   n: 'Banded Ankle Eversion', cat: 'armor', tags: ['ankle','prevention','armor','home'],
+  targets: 'Peroneals \u00b7 the ankle you roll',
   why: 'The lateral ankle sprain rolls the foot inward, and the peroneals are the only muscles that actively resist it. They are also the muscles nobody trains, because they do not show up in any lift. Strengthening them needs no equipment beyond a band and is the direct counter to the third most common injury site in ultimate. If you have ever rolled an ankle, they are almost certainly weaker on that side and you will feel the difference immediately.',
   home: 'Any resistance band. Without one, press the foot against your own hand or hook it against a table leg and hold — an isometric version works.',
   setup: 'Sitting, legs out. Loop a band around the outside of your forefoot and anchor the other end to something on the inside — a table leg, or your other foot.',
@@ -4276,4 +4330,86 @@ const RANGE_GROUPS = [
     ids: ['stretch-hamstring', 'stretch-hip', 'stretch-hipflexor', 'hipflexor-block', 'stretch-groin', 'stretch-calf', 'stretch-upper'] }
 ];
 
-if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB, ROUTINES, PLAY_GROUPS, RANGE_GROUPS, FREE_WINS, BODY_GROUPS }; }
+/* -----------------------------------------------------------
+   HIKING \u2014 a day on your feet is not a session, but it is load, and it
+   is the kind that goes wrong at the ankles, the knees on the way down,
+   and the front of the hip after hours of climbing. Small blocks: five
+   minutes at the trailhead, three at a break, ten at the car.
+   ----------------------------------------------------------- */
+Object.assign(EX, {
+'hike-onramp': {
+  n: 'Easy Start',
+  cat: 'cond', tags: ['warmup','raise','daily','home'], cost: 1,
+  targets: 'Whole body temperature \u00b7 heart rate',
+  why: 'The raise in RAMP, borrowed for the trail. Cold muscle is stiffer, conducts slower and produces less force, and on a hike the first climb usually arrives before you are warm \u2014 which is exactly when a cold calf or a cold hip flexor gets asked for a long stride over a rock. Five minutes of flat, easy walking fixes it for free, and it is the only part of a pre-hike routine that is genuinely non-negotiable. Everything else on this list is insurance on top of being warm.',
+  setup: 'The flattest first stretch of trail, or the car park.',
+  steps: [
+    'Walk easy for five minutes. Conversational, nose breathing if you can.',
+    'Shorter strides than feel natural to start. Let the ankles and hips find the ground.',
+    'Save the steep part for after this. If the trail climbs from the first step, walk the car park first.',
+    'Cold day, or early morning: give it eight minutes and keep a layer on.'
+  ],
+  cues: ['Warm first, everything else second.','Easy means easy \u2014 this is temperature, not fitness.'],
+  faults: ['Starting on the steep section cold.','Standing around stretching before you are warm.'],
+  dose: '5 min easy walking',
+  prog: 'Add three minutes in the cold.',
+  regr: 'Walk the flat until you feel warm, however long that takes.',
+  home: 'Works anywhere \u2014 pavement, car park, or a flat stretch of trail.',
+  timer: { w: 300, r: 0, rounds: 1, label: 'Easy walking' }
+}
+});
+
+ROUTINES.push(
+  { id:'hike-prep', n:'Before the Hike', tag:'TRAIL',
+    sub:'Twenty minutes at the trailhead \u00b7 or the first three, in eight',
+    targets:'Feet & ankles \u00b7 hips \u00b7 hip flexors \u00b7 balance',
+    why:'A hike is not a session, but it is load, and it is a strange kind: hours of low-intensity work on ground that never repeats, with the hardest mechanical part \u2014 the descent \u2014 arriving when you are most tired. The things that actually go wrong are predictable. Ankles roll on uneven ground, so the peroneals and single-leg balance get a minute. Hours of climbing with a pack holds the hip in flexion, which for a hip with a labral history is the position worth not starting stiff in. And the glutes decide whether your knees or your quads take the descent. None of it needs equipment, and the whole list is twenty minutes if you do all of it \u2014 but the top three are eight, and if you only do two things, be warm and swing your legs. Pick the rows you want; the block does not have to be run whole.',
+    items:[
+      { x:'hike-onramp', g:'THE THREE THAT MATTER \u00b7 eight minutes', d:'5 min easy walking', note:'Flat and easy before anything steep. Everything below works better warm and is close to useless cold.' },
+      { x:'leg-swings', d:'10 linear + 10 lateral per leg', note:'Hold a tree or a pole. Active range rather than a held stretch \u2014 this is the one to keep if you cut everything else.' },
+      { x:'deep-squat-hold', d:'45 s', t:{ r: 12 }, note:'One hold. If the front of the hip pinches today, stay higher and note it under Tests.' },
+      { x:'knee-to-wall', g:'FOR UNEVEN GROUND \u00b7 ankles and balance', d:'6 reps per side', note:'A tree, a rock or the car bumper instead of a wall. Uphill asks for every degree of this.' },
+      { x:'ankle-eversion', d:'12 each direction, per side', note:'No band at the trailhead: press the foot outward against your own hand and hold instead. Uneven ground is where ankles get rolled.' },
+      { x:'balance-progression', d:'30 s per leg', note:'Stand on one leg on the most uneven bit of ground you can find. That is the skill the trail is about to test.' },
+      { x:'seven-way-hips', g:'FOR A LONG CLIMB \u00b7 glutes on, hip open', d:'8 positions \u00d7 4 reps per side', note:'Standing, holding something. Fast and quiet \u2014 nobody at the trailhead will notice. The glutes decide whether your knees take the descent.' },
+      { x:'standing-hipflexor-stretch', d:'30 s per side', note:'Tuck the pelvis first, squeeze the rear glute. Short and gentle before a hike \u2014 the long version belongs at the end of the day.' }
+    ]},
+
+  { id:'hike-trail', n:'On the Trail', tag:'TRAIL',
+    sub:'Three minutes at a break, or before a long descent',
+    targets:'Hip flexors \u00b7 quads \u00b7 calves \u00b7 ankles',
+    why:'Two different jobs, both small. At a break, the front of the hip is what hours of climbing and a pack have shortened, and standing in that position for another two hours does not fix itself. Before a long descent, the job is different: going down is eccentric quad work, it is where knees ache and where a tired leg lands badly, and the difference between quads that are switched on and quads that are cold at the top of a descent is real. Thirty seconds against a tree is not a workout \u2014 it is a reminder to the muscle that it is about to be needed.',
+    items:[
+      { x:'standing-hipflexor-stretch', g:'AT A BREAK \u00b7 what climbing shortened', d:'40 s per side', note:'Pelvis tucked, rear glute on. Do it while you are drinking rather than sitting down.' },
+      { x:'deep-squat-hold', d:'45 s', t:{ r: 12 }, note:'Sit into it rather than stretching. Hips, ankles and adductors in one position.' },
+      { x:'leg-swings', d:'8 linear + 8 lateral per leg', note:'Reset the stride length. A minute, holding a pole.' },
+      { x:'wall-sit-iso', g:'BEFORE A LONG DESCENT \u00b7 wake the quads', d:'2 \u00d7 30 s', t:{ r: 20 }, note:'A tree or a rock instead of a wall. Going down is eccentric quad work, and cold quads are how knees get sore.' },
+      { x:'stair-calf-iso', d:'25 s per side', note:'Front half of the foot on a rock or a root, heel dropped. Bent knee for the soleus, which is what climbs.' }
+    ]},
+
+  { id:'hike-after', n:'After the Hike', tag:'TRAIL',
+    sub:'Ten minutes at the car, or that evening',
+    targets:'Feet \u00b7 calves \u00b7 glutes \u00b7 hip flexors \u00b7 hamstrings',
+    why:'The honest framing first: a long descent is real eccentric load. You will be sore in the quads for a day or two, that soreness is the descent and not a mistake, and the right response is to keep the next day light rather than to stretch harder now. So this block is tissue and gentle range, not loading. Feet come first because they did the most work and because plantar tissue is the thing most likely to complain the next morning. The hip flexors come last of the range work because they are what hours of climbing shortened. And box breathing is in here because a long day out is a sympathetic load as much as a muscular one, and getting out of that state is what lets you train properly the day after.',
+    items:[
+      { x:'ball-roll-foot', g:'FEET FIRST \u00b7 they did the most work', d:'90 s per foot', note:'A ball, or the edge of a water bottle. Slow. This is the single best-evidenced thing you can do for a foot after a long day on it.' },
+      { x:'short-foot', d:'3 \u00d7 10 s per foot', note:'Arch lifts, toes long. Wakes the foot back up after hours in a stiff boot.' },
+      { x:'ball-calf-peroneal', g:'TISSUE \u00b7 what carried you up and braked you down', d:'60 s per side', note:'Cross the other leg over for pressure. Work the outside of the calf too \u2014 that is the peroneals.' },
+      { x:'ball-glute', d:'90 s per side', note:'Sit on it, cross the ankle over the opposite knee. Nerve symptoms down the leg mean move off it.' },
+      { x:'half-kneel-hipflexor', g:'RANGE \u00b7 gently, nothing to prove', d:'60 s per side', note:'Something soft under the knee. Tuck first, squeeze the rear glute, then move a very small amount.' },
+      { x:'standing-ham-step', d:'45 s per side', note:'Heel on the bumper, hinge from the hip with a flat back. Easy today \u2014 tired hamstrings are not the ones to push.' },
+      { x:'deep-squat-hold', d:'60 s', t:{ r: 15 }, note:'The daily hip check. Compare it to how it felt at the trailhead.' },
+      { x:'box-breathing', g:'DOWN-REGULATE \u00b7 a long day out is a nervous system load too', d:'3 min', note:'Long exhales, lying down with the legs up if you can. This is what makes tomorrow usable.' }
+    ]}
+);
+
+const TRAIL_GROUPS = [
+  { n: 'A day on the trail',
+    sub: 'In the order the day happens. None of it needs equipment, and none of it is long.',
+    ids: ['hike-prep', 'hike-trail', 'hike-after'] },
+  { n: 'Worth stealing from elsewhere',
+    sub: 'If the hike was long or the descent was steep, these two are the ones that pay.',
+    ids: ['stretch-calf', 'stretch-hipflexor'] }
+];
+
+if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB, ROUTINES, PLAY_GROUPS, RANGE_GROUPS, FREE_WINS, BODY_GROUPS, TRAIL_GROUPS }; }

@@ -14,9 +14,9 @@ fonts load.
 |---|---|
 | **Today** | Resolves the date against the annual plan and renders that session — every block, dose and coaching note — plus a readiness check-in that auto-regulates the day, the Daily Armor, and a notes field. |
 | **Program** | This week's microcycle with CNS-cost meters, the periodised year against the UFA calendar, standalone weak-link blocks, short sessions, and the 10-week Copenhagen ladder. |
-| **Library** | 95 exercises, filterable to the 74 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
+| **Library** | 157 exercises, filterable to the 133 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
 | **Tests** | 22-test battery on a 4-week cycle, with trend charts, targets and protocols. Hip internal rotation and the FADIR score lead it. |
-| **Method** | Eleven essays: the training model, isometric taxonomy, an honest read on fascia, training without a gym, injury dossiers for the hip labrum / adductor / hamstring, throwing-shoulder load management, fuelling, the UFA game-model numbers, and sources. |
+| **Method** | Fourteen essays: the training model, isometric taxonomy, an honest read on fascia, training without a gym, injury dossiers for the hip labrum / adductor / hamstring, throwing-shoulder load management, fuelling, the UFA game-model numbers, and sources. |
 
 ## Gym / Home
 
@@ -148,6 +148,31 @@ A-skips and wall drills are technique rather than sprinting; extensive tempo is 
 the program uses it to *accelerate* recovery, while the repeat-sprint protocol next to it is rated
 taxing. `check-data.js` enforces that `cost` is 1, 2 or 3.
 
+### Picks from several blocks, one session
+
+Selecting exercises used to be a per-card affair: pick three things in Tight Hips, hit
+**Run 3 selected**, and if you also wanted one thing out of the Hip Flexor Block you ran a
+second session afterwards. Picks are now one queue. `RSEL` already remembered a selection per
+block; the missing piece was somewhere to see the total and a single Run.
+
+A bar appears at the bottom of the screen the moment anything is picked, sits above the tab bar
+on a phone, and hides itself while the player is open. It says how many exercises are picked,
+names the blocks they came from, and gives the running estimate — then **Run together** and
+**Clear**.
+
+- **Blocks run in the order you picked from them**, not the order the data lists them. `QSEQ`
+  records which block was picked from first; within a block the authored order is kept, because
+  that order is the point of a block.
+- **The player names the block on each step**, so a queue spanning three blocks still says where
+  you are, and *Next:* reads across the boundary.
+- **The picker tells you a pick is waiting elsewhere** — `+ 2 picked in other blocks` under the
+  Select all / Clear row, so you don't have to remember what you left selected two screens ago.
+- **Running the queue empties it.** A stale pick that runs by surprise a day later is worse than
+  re-picking, and the same rule already applied to the Today builder.
+
+`queueBlocks()` / `queueCount()` / `queueSteps()` are the whole API; `renderQueue()` draws the bar
+on every render, and the per-card **Run N selected** button still works exactly as it did.
+
 ### By body part, the other door in
 
 The library was only reachable by the plan's logic: what today's session says, or which weak link
@@ -201,6 +226,35 @@ how throwers create instability. It stays in the Throwing Shoulder Block, behind
 `check-data.js` enforces that anything tagged `WARMUP`, `RECOVERY` or `RANGE` is reachable from a group,
 and it now counts `RANGE_GROUPS` alongside `PLAY_GROUPS` — so a new stretching block cannot be added
 without being findable.
+
+### Hiking
+
+A hub tile of its own, because a long day on your feet is not a session but it is load, and the
+ways it goes wrong are specific and predictable: ankles on ground that never repeats, knees and
+quads on the descent, and the front of the hip after hours of climbing with a pack. Three blocks,
+in the order the day happens.
+
+| block | when | what it is |
+|---|---|---|
+| Before the Hike | at the trailhead | 8 items, 19 min — or the first three, in eight |
+| On the Trail | a break, or the top of a descent | 5 items, 8 min |
+| After the Hike | at the car, or that evening | 8 items, 19 min |
+
+Nothing in any of them needs equipment: the substitutions are written into the row notes (a tree
+instead of a wall, your own hand instead of a band, the car bumper instead of a step). One new
+exercise, **Easy Start** — five minutes of flat walking before anything steep, which is the RAMP
+"raise" borrowed for a trailhead and the only genuinely non-negotiable item in the prep block.
+The section also cross-lists Tight Calves & Ankles and Tight Hip Flexors, which are the two
+existing blocks worth stealing after a steep day.
+
+The *After the Hike* block is deliberately tissue and gentle range rather than loading, and says
+so: a long descent is real eccentric work, quad soreness for a day or two is the descent rather
+than a mistake, and the useful response is a light next day, not a harder stretch now.
+
+Trail blocks carry the tag `TRAIL` and live in `TRAIL_GROUPS`. `check-data.js` holds them to the
+warm-up standard rather than the general one: every row must carry a `targets` label, every block
+must carry a short targets summary, and every term in that summary must appear in at least one of
+its own items' targets.
 
 ## Injury prevention, against the actual data
 
@@ -516,6 +570,15 @@ duration instead; a few exercises carry an explicit `est` for the same reason.
 25 seconds, so the row, the countdown and the estimate can never describe three different
 workouts. An item can pass `t: { r: 15 }` to tighten a rest for its context (a daily circuit
 versus a dedicated block).
+
+**"Left" means left of the whole step.** The figure in the player's top bar is the remaining
+steps plus whatever is left of the one you are on, and that second part used to be read straight
+off the countdown — so a four-round, 45-second hold announced itself as "~3 s left" on the ready
+screen, because only the round in front of you was counted. `hereSeconds()` now walks the rest of
+the step: remaining rounds, the rests between them, the eight-second switch rest a per-side dose
+forces, and for a hand-counted set the estimate for the rounds you have not started. Checked
+against the estimator for all 553 steps the app can build, the ready screen now matches
+`stepSeconds` exactly.
 
 Every item has a checkbox — tick any of them and a floating bar offers to run just those, with
 a time estimate. No mode to enter. Every routine card carries the same idea on two plain

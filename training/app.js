@@ -49,6 +49,7 @@ const ICONS = {
   daily: 'M3 12a9 9 0 0 1 15-6.7L21 8|M21 12a9 9 0 0 1-15 6.7L3 16|M21 4v4h-4|M3 20v-4h4',
   body: 'M12 2.5a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8|M5 10h14|M10 10l-1.4 5.6L7 21.5|M14 10l1.4 5.6L17 21.5',
   range: 'M9 4H4v5|M15 20h5v-5|M4 4l6 6|M20 20l-6-6',
+  trail: 'M2 20h20|M5 20l5-11 4 7 2-3 4 7|M17 6a2 2 0 1 0 0-.1',
   check: 'M4 12l6 6L20 6'
 };
 
@@ -826,6 +827,34 @@ function buildRun() {
   tickRun();
 }
 
+// What is left of the step you are on — not just of the phase. A four-round hold read
+// "~3 s left" because the countdown only knows about the round in front of you.
+function hereSeconds(st, phase, leftMs, round) {
+  const left = Math.max(0, leftMs / 1000);
+  const N = Math.max(1, st.rounds || 1);
+  const r = Math.max(1, Math.min(round || 1, N));
+  const rest = Math.max(st.rest || 0, switchInfo(st) ? 8 : 0);
+  if (phase === 'restAfter') return left;
+  if (st.mode === 'timed') {
+    if (phase === 'ready') return left + N * st.work + Math.max(0, N - 1) * rest;
+    if (phase === 'work')  return left + (N - r) * (st.work + rest);
+    if (phase === 'rest')  return left + (N - r) * st.work + Math.max(0, N - r - 1) * rest;
+    return left;
+  }
+  // A hand-counted set has no countdown, but it does have an estimate — using zero
+  // made a set you were part-way through read "~0 s left".
+  const all = manualSeconds(st.x, st.dose, st.est);
+  const perRound = all / N;
+  const after = st.restAfter || 0;
+  if (phase === 'ready') return left + all + Math.max(0, N - 1) * rest + after;
+  if (phase === 'rest')  return left + (N - r) * perRound + Math.max(0, N - r - 1) * rest + after;
+  if (phase === 'manual') {
+    const elapsed = Math.max(0, -leftMs / 1000);
+    return Math.max(0, perRound - elapsed) + (N - r) * perRound + (N - r) * rest + after;
+  }
+  return left;
+}
+
 function tickRun() {
   if (!RUN.active || RUN.phase === 'done' || !RUN.ui || !RUN.ui.time) return;
   const st = RUN.step(), e = EX[st.x];
@@ -838,18 +867,8 @@ function tickRun() {
   }
 
   if (RUN.ui.left) {
-    const rest = RUN.steps.slice(RUN.i + 1).reduce((a, x) => a + stepSeconds(x), 0);
-    // A hand-counted set has no countdown, but it does have an estimate — using zero
-    // made a set you were part-way through read "~0 s left".
-    let here;
-    if (isManual) {
-      const perRound = manualSeconds(st.x, st.dose, st.est) / Math.max(1, st.rounds);
-      const elapsed = Math.max(0, -RUN.left / 1000);
-      here = perRound * (st.rounds - RUN.round) + Math.max(0, perRound - elapsed);
-    } else {
-      here = Math.max(0, RUN.left / 1000);
-    }
-    RUN.ui.left.textContent = '~' + fmtMins(rest + here) + ' left';
+    const later = RUN.steps.slice(RUN.i + 1).reduce((a, x) => a + stepSeconds(x), 0);
+    RUN.ui.left.textContent = '~' + fmtMins(later + hereSeconds(st, RUN.phase, RUN.left, RUN.round)) + ' left';
   }
   const t = isManual ? fmtClock(-RUN.left)
     : RUN.left >= 60000 ? fmtClock(RUN.left)
@@ -1443,6 +1462,11 @@ function viewProgram() {
       body: () => el('div', { class: 'stack stack-xl' }, RANGE_GROUPS.map(g =>
         sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
     },
+    trail: {
+      n: 'Hiking', blurb: 'A day on your feet, without paying for it afterwards.',
+      body: () => el('div', { class: 'stack stack-xl' }, TRAIL_GROUPS.map(g =>
+        sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
+    },
     blocks: {
       n: 'Weak-link blocks', blurb: 'One thing, done properly, rather than fitted around a session.',
       body: () => sec('Weak-link blocks',
@@ -1529,6 +1553,7 @@ function viewProgram() {
     play: PLAY_GROUPS.reduce((a, g) => a + g.ids.length, 0) + ' blocks',
     body: BODY_GROUPS.reduce((x, g) => x + g.ids.length, 0) + ' blocks',
     range: RANGE_GROUPS.reduce((x, g) => x + g.ids.length, 0) + ' blocks',
+    trail: ROUTINES.filter(r => r.tag === 'TRAIL').length + ' blocks',
     blocks: byTag('ARMOR').length + ' blocks',
     power: byTag('POWER').length + ' blocks',
     short: byTag('SHORT').length + ' blocks',
@@ -1559,6 +1584,7 @@ function viewProgram() {
       tile('body', ICONS.body),
       tile('blocks', ICONS.armor),
       tile('range', ICONS.range),
+      tile('trail', ICONS.trail),
       tile('power', ICONS.bolt),
       tile('short', ICONS.clock),
       tile('week', ICONS.today),
@@ -1580,6 +1606,31 @@ const BUILD = { keys: new Set(), q: '', cat: 'all' };
 
 const RSEL = {};
 const rsel = id => RSEL[id] || (RSEL[id] = new Set());
+// Picks are remembered per block, so picking one thing in Tight Hips and one in the Hip
+// Flexor Block is a single queue, not two sessions you have to run back to back. The bar
+// at the bottom is the only place that total is visible, which also stops a pick you made
+// three screens ago from running by surprise.
+// Blocks run in the order you picked from them, not the order the data happens to list.
+const QSEQ = [];
+function qmark(id) {
+  const at = QSEQ.indexOf(id);
+  if (rsel(id).size) { if (at < 0) QSEQ.push(id); }
+  else if (at >= 0) QSEQ.splice(at, 1);
+}
+const queueBlocks = () => ROUTINES
+  .filter(r => rsel(r.id).size)
+  .sort((a, b) => QSEQ.indexOf(a.id) - QSEQ.indexOf(b.id))
+  .map(r => ({ r: r, items: r.items.filter((_, i) => rsel(r.id).has(i)) }));
+const queueCount = () => queueBlocks().reduce((a, q) => a + q.items.length, 0);
+const queueSteps = () => queueBlocks().flatMap(q => stepsFromItems(q.items, q.r.n));
+function queueClear() { Object.keys(RSEL).forEach(k => RSEL[k].clear()); QSEQ.length = 0; render(); }
+function queueRun(date) {
+  const steps = queueSteps();
+  if (!steps.length) return;
+  Object.keys(RSEL).forEach(k => RSEL[k].clear());
+  QSEQ.length = 0;
+  RUN.open(steps, date || new Date(), 0);
+}
 // A re-render rebuilds the <details>, so remember which ones the user had open.
 const ROPEN = new Set();
 const WHYOPEN = new Set();   // rationale is collapsed by default so a list of blocks stays scannable
@@ -1601,7 +1652,7 @@ function routineCard(r, date) {
       const row = el('div', { class: 'pick-row' + (on ? ' on' : '') }, [
         el('button', {
           class: 'tick pick', 'aria-pressed': on ? 'true' : 'false', 'aria-label': 'Select ' + ex.n,
-          onclick: () => { on ? sel.delete(i) : sel.add(i); render(); }
+          onclick: () => { on ? sel.delete(i) : sel.add(i); qmark(r.id); render(); }
         }, [(() => { const g = svgEl('svg', { viewBox: '0 0 24 24' });
               g.appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' })); return g; })()]),
         el('button', { class: 'pick-body pick-open', onclick: () => openEx(it.x), 'aria-label': ex.n + ' \u2014 how-to' }, [
@@ -1622,9 +1673,13 @@ function routineCard(r, date) {
     el('div', { class: 'row', style: 'gap:.4rem' }, [
       el('button', {
         class: 'btn btn-ghost btn-sm',
-        onclick: () => { r.items.forEach((_, i) => sel.add(i)); render(); }
+        onclick: () => { r.items.forEach((_, i) => sel.add(i)); qmark(r.id); render(); }
       }, 'Select all'),
-      n ? el('button', { class: 'btn btn-ghost btn-sm', onclick: () => { sel.clear(); render(); } }, 'Clear') : null
+      n ? el('button', { class: 'btn btn-ghost btn-sm', onclick: () => { sel.clear(); qmark(r.id); render(); } }, 'Clear') : null,
+      (() => {
+        const other = queueCount() - n;
+        return other ? el('span', { class: 'xs muted' }, '+ ' + other + ' picked in other blocks') : null;
+      })()
     ])
   ]);
 
@@ -1655,7 +1710,13 @@ function routineCard(r, date) {
     el('div', { class: 'routine-actions' }, [
       el('button', {
         class: 'btn btn-primary btn-run',
-        onclick: () => RUN.open(stepsFromItems(chosen, r.n), date, 0, n ? null : { routine: r.id })
+        onclick: () => {
+          // Running a selection consumes it, the same way the queue bar does — a pick that
+          // survives being run comes back to haunt you two screens later.
+          const steps = stepsFromItems(chosen, r.n);
+          if (n) { sel.clear(); qmark(r.id); }
+          RUN.open(steps, date, 0, n ? null : { routine: r.id });
+        }
       }, [ico(ICONS.play, 'nav-ico'),
           n ? 'Run ' + n + ' selected' : 'Run all ' + r.items.length]),
       el('button', {
@@ -2109,6 +2170,26 @@ function modeToggle() {
   ]);
 }
 
+// One bar, one Run, however many blocks you picked from.
+function renderQueue() {
+  const bar = $('#queuebar');
+  if (!bar) return;
+  bar.innerHTML = '';
+  const q = queueBlocks();
+  const n = queueCount();
+  bar.hidden = !n;
+  if (!n) return;
+  const names = q.map(x => x.r.n).join(' \u00b7 ');
+  bar.appendChild(el('div', { class: 'queue-text' }, [
+    el('span', { class: 'queue-n num' }, n + (n === 1 ? ' exercise' : ' exercises')),
+    el('span', { class: 'queue-sub' }, names),
+    el('span', { class: 'queue-est num' }, '\u2248 ' + fmtMins(runSeconds(queueSteps())))
+  ]));
+  bar.appendChild(el('button', { class: 'btn btn-primary btn-sm queue-run', onclick: () => queueRun(new Date()) },
+    [ico(ICONS.play, 'nav-ico'), q.length > 1 ? 'Run together' : 'Run']));
+  bar.appendChild(el('button', { class: 'btn btn-ghost btn-sm queue-clear', onclick: () => queueClear(), 'aria-label': 'Clear every pick' }, 'Clear'));
+}
+
 function render() {
   const main = $('#main');
   main.innerHTML = '';
@@ -2121,6 +2202,7 @@ function render() {
     route === 'tests' ? viewTests() : viewMethod()
   ]);
   main.appendChild(v);
+  renderQueue();
   document.querySelectorAll('[data-route]').forEach(b => {
     b.setAttribute('aria-current', b.dataset.route === route ? 'page' : 'false');
   });
@@ -2148,6 +2230,7 @@ function buildShell() {
   }, [ico(icon, 'nav-ico'), label])));
   document.body.appendChild(el('div', { class: 'shell' }, [rail, main]));
   document.body.appendChild(tabs);
+  document.body.appendChild(el('div', { class: 'queuebar', id: 'queuebar', hidden: true, role: 'region', 'aria-label': 'Picked exercises' }));
   document.body.appendChild(runEl);
   document.body.appendChild(modalBg);
 }
