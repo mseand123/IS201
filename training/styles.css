@@ -944,3 +944,6 @@ body.running { overflow: hidden; }
 
 .pick-row { grid-template-columns: 20px 1fr auto; align-items: center; }
 .pick-row .row-start { padding: .35rem .7rem; }
+/* Home mode has to be honest on the row, not only in the dialog. */
+.pick-home { font-size: var(--t-xs); color: var(--ink-2); border-left: 2px solid var(--line-2); padding-left: .5rem; margin-top: .2rem; }
+.item-open .home-note { margin-top: .2rem; }

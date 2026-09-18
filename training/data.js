@@ -720,6 +720,88 @@ const EX = {
   regr: 'Lower knee height, hold a rail.',
   timer: { w: 18, r: 15, rounds: 6, label: 'Hip flexor iso — switch' }
 },
+'half-kneel-hipflexor': {
+  n: 'Half-Kneeling Hip Flexor Stretch', cat: 'mobility', tags: ['hip','anterior','daily','home'],
+  targets: 'Hip flexors \u00b7 psoas \u00b7 front of the hip',
+  cost: 1,
+  why: 'The one everybody pictures when they say "hip flexor stretch", and the entry point the program was missing: the couch stretch is the same idea with the rear foot elevated, which is a big jump in intensity and needs a wall or a sofa. This needs a patch of floor and nothing else. The detail that decides whether it works at all is the pelvis. Most people arch the low back, drive the hips forward, feel a pull somewhere and call it a stretch \u2014 what they actually stretched was their lumbar spine. Tuck the pelvis under first and the range collapses to almost nothing, which is the honest measure of how short the hip flexor really is. Then squeeze the rear glute: a contracting glute reciprocally inhibits the hip flexor, so the tissue lets go further than it will if you just hang on it.',
+  home: 'A patch of floor and a cushion under the knee. Nothing else, ever.',
+  setup: 'Half-kneeling: rear knee down on a cushion or folded towel, front foot flat and forward so the front shin is roughly vertical. Hands on the front thigh or the hips.',
+  steps: [
+    'Tuck the pelvis under before you move anywhere \u2014 posterior tilt, ribs down, as if starting a crunch.',
+    'Hold that tuck and squeeze the rear glute hard. You should already feel the front of the rear hip.',
+    'Only now shift a small amount forward. Small. If you can travel a long way, the pelvis has come untucked.',
+    'Hold 45\u201360 s, breathing. Then switch sides.',
+    'To go further without arching: raise the same-side arm overhead and lean gently away from the stretched side.'
+  ],
+  cues: ['Tuck first, then move. Never arch the low back to feel more.','Rear glute stays squeezed the whole hold \u2014 that is what makes the flexor let go.','Two centimetres with a tucked pelvis beats a foot of lunge with an arched one.'],
+  faults: ['Arching the low back and driving the hips forward, which stretches the spine rather than the hip.','A relaxed rear glute, so it becomes a passive hang.','Front knee collapsing inward.','Knee pain from kneeling on a hard floor \u2014 use a cushion.'],
+  dose: '2 \u00d7 45\u201360 s per side.',
+  prog: 'Overhead reach and side bend, then the rear foot up on a couch, which is the Active Couch Stretch.',
+  regr: 'Stay fully upright with just the pelvic tuck and the glute squeeze. That alone is a real stretch for most people.',
+  timer: { w: 50, r: 15, rounds: 4, label: 'Hip flexor stretch \u2014 switch sides' }
+},
+'standing-hipflexor-stretch': {
+  n: 'Standing Split-Stance Hip Flexor Stretch', cat: 'mobility', tags: ['hip','anterior','daily','home'],
+  targets: 'Hip flexors \u00b7 front of the hip \u00b7 hip extension range',
+  cost: 1,
+  why: 'The version with no floor involved, which is the only reason it exists and a good enough one. You can do this in cleats on a sideline, in an airport, in a kitchen, in work trousers. Same two rules as the kneeling one \u2014 tuck the pelvis, squeeze the rear glute \u2014 and the same fault, which is arching the back and calling it range. It is the least intense of the three hip flexor stretches in here, so it is the one to use often rather than the one to use hard. Between games it is genuinely the right pick: you have been sitting on a cooler, you do not want to kneel on wet grass, and sixty seconds a side gets the hip extension back before you sprint on it.',
+  home: 'Nothing at all. This is the one you can do anywhere, in anything.',
+  setup: 'Standing split stance, rear leg a comfortable stride back, rear heel allowed to lift. Hands on the hips so you can feel the pelvis move.',
+  steps: [
+    'Tuck the pelvis under \u2014 you should feel the low back flatten under your hands.',
+    'Squeeze the rear glute and let the rear knee soften slightly. Do not lock it.',
+    'Stay tall through the crown of the head. Do not lean forward or back.',
+    'Hold 45\u201360 s per side, breathing.',
+    'More, if you want it: reach the same-side arm overhead and side bend gently away.'
+  ],
+  cues: ['Hands on the hips so you can feel the pelvis cheat.','Tall torso. Leaning back is arching, not stretching.','Rear glute on, rear knee soft.'],
+  faults: ['Arching the low back to feel something.','A locked rear knee, which sends it to the calf instead.','Too long a stride, so it turns into a balance exercise.'],
+  dose: '2 \u00d7 45\u201360 s per side. Good several times a day.',
+  prog: 'Overhead reach and side bend, then move to the half-kneeling version.',
+  regr: 'Shorter stride, hand on a wall.',
+  timer: { w: 50, r: 12, rounds: 4, label: 'Standing stretch \u2014 switch sides' }
+},
+'banded-knee-drive': {
+  n: 'Banded Knee Drive', cat: 'strength', tags: ['hip','speed','home','power'],
+  targets: 'Hip flexors above 90\u00b0 \u00b7 knee drive \u00b7 stride frequency',
+  cost: 2,
+  why: 'The hip flexor work in this program was all isometric, which builds torque but never trains the muscle to do its actual job: moving a leg fast. Hip flexion above 90\u00b0 is what sets knee lift and stride frequency at top speed, and it is the concentric half that a standing hold cannot reach. This is the missing piece, and it is deliberately fast rather than heavy \u2014 a band you can drive through at speed teaches the nervous system something a slow, loaded rep does not. Pair it with the standing isometric and you have both ends: force at the position, and speed into it. It is also the one hip flexor exercise where the trunk matters as much as the hip, because the pelvis will happily tip backward to fake the range.',
+  home: 'A resistance band and a door anchor, or loop it around a table leg. No band: drive the knee up fast against your own hand for a count of ten, which trains the same intent at lower load.',
+  repSec: 1.2,
+  setup: 'Band anchored low behind you, looped around the thigh just above the knee. Stand tall, fingertips on a wall or a rail for balance.',
+  steps: [
+    'Stand tall on the support leg with that glute squeezed, ribs down.',
+    'Drive the banded knee up fast, past hip height, with the ankle dorsiflexed \u2014 toes pulled up.',
+    'Control it back down. The return is slower than the drive, and it is the half most people throw away.',
+    '10\u201312 fast reps per side, then switch. Quality over count: when the knee stops getting as high, the set is done.'
+  ],
+  cues: ['Fast up, controlled down.','Stand tall \u2014 if you lean back, the pelvis is doing the work rather than the hip.','Toes up. A dropped ankle on the way up means the whole leg is heavier than it needs to be.'],
+  faults: ['Leaning the torso back to lift the knee higher, which is posterior pelvic tilt faking range.','Letting the band snap the leg back down.','Going heavy enough that it becomes slow. This is a speed exercise.'],
+  dose: '3 \u00d7 10\u201312 per side, fast.',
+  prog: 'Heavier band, then add a hold at the top of the last rep of each set.',
+  regr: 'Lighter band, or no band and drive against your own hand.'
+},
+'step-up': {
+  n: 'Loaded Step-Up', cat: 'strength', tags: ['legs','unilateral','glute','home','mass'],
+  targets: 'Glutes \u00b7 quads \u00b7 single-leg drive',
+  why: 'The single-leg staple the Legs block was missing, and the one that looks most like running: one leg driving the whole body upward from a flexed hip and knee, with the other doing nothing. Split squats load one leg heavily but both feet stay on the ground; a step-up takes that away, which is why it exposes a side-to-side difference faster and why the top position demands real glute rather than a shove off the back foot. Height decides which muscle gets it: knee height or a touch below biases the glute, lower biases the quad. Keep the trailing leg genuinely passive \u2014 the whole value of this exercise leaks out through a foot that pushes off the floor.',
+  home: 'Any stair, a sturdy chair, a coffee table or a low wall, and a loaded backpack. This is one of the best things you can do at home.',
+  setup: 'A box, bench or stair at roughly knee height. Dumbbells at the sides, or a backpack on the back.',
+  steps: [
+    'Place the whole foot on the step. Heel on, not just the toes.',
+    'Shift your weight over that foot, then drive up through it until the hip is fully extended at the top.',
+    'The trailing leg does nothing. Do not push off the floor with it, and do not swing it for momentum.',
+    'Lower slowly, 3 seconds, and let the trailing toe touch down lightly before the next rep.',
+    '8\u201310 per side.'
+  ],
+  cues: ['Trailing leg is a passenger. If it is helping, lower the step.','Full hip extension at the top \u2014 stand all the way up and squeeze.','Knee tracks over the middle of the foot, not inward.'],
+  faults: ['Pushing off the trailing foot, which is the most common way this exercise gets wasted.','A step so high the hip rounds under to reach it \u2014 that is a labral position, not a step-up.','Dropping down rather than lowering.'],
+  dose: '3 \u00d7 8\u201310 per side.',
+  prog: 'Add load, then slow the lower to 4 s, then a pause at the top.',
+  regr: 'Lower step, hold a rail, bodyweight only.',
+  flag: 'HIP LABRUM: a step that is too high puts the hip into deep flexion under load. Knee height at most, and drop it if the front of the hip pinches at the bottom.'
+},
 'rkc-plank': {
   n: 'RKC Plank', cat: 'iso', tags: ['iso','core','trunk'],
   why: 'A 20-second RKC plank done properly beats a three-minute regular plank. Ultimate is full of one-sided, rotational, decelerating loads — the trunk\'s job is to not leak force between the hips and the shoulders.',
@@ -1157,6 +1239,7 @@ const EX = {
   targets: 'Shoulders overhead · spine decompression · grip',
   why: 'Builds shoulder range and grip, and decompresses the spine and hips — the traction is useful for a hip that gets compressed all day. Keep a little scapular engagement rather than hanging fully dead: a completely passive hang puts the shoulder capsule at end range with your whole bodyweight on it, which is not a habit worth building for a throwing arm.',
   setup: 'Pull-up bar, feet able to touch down.',
+  home: "A doorway pull-up bar, a beam, a stair rail from below, or the top of a door frame if it is solid \u2014 test it with a slow lean before you hang your weight on it. No bar at all: kneel and hold a table edge, then lean your weight back to get the same traction through the shoulders and spine.",
   steps: ['Grip the bar, feet lightly on the floor at first.','Let the body lengthen but keep a slight downward pull through the shoulder blades.','Breathe. 20–30 s.','Progress to a full hang only if it is completely symptom-free.'],
   cues: ['Active-ish: shoulders not fully dumped.','Breathe into the ribs.'],
   faults: ['Fully passive hanging with a cranky shoulder.','Bouncing or swinging.'],
@@ -3066,8 +3149,10 @@ const ROUTINES = [
     items:[
       { x:'walking-lunge-rotation', g:'WARM \u00b7 do not load it cold', d:'5 per side', note:'Back glute squeezed so the stretch lands in the hip flexor rather than the low back.' },
       { x:'iso-hip-flexor', g:'STRENGTHEN \u00b7 above 90\u00b0, where it is weakest', d:'3 \u00d7 18 s per side', note:'Knee above hip height, then pull higher against your own limit. Stand tall \u2014 leaning back fakes the range and trains nothing.' },
+      { x:'banded-knee-drive', d:'3 \u00d7 10 per side, fast', note:'The concentric half a hold cannot reach. Fast up, controlled down, toes pulled up. This is the one that shows up in stride frequency.' },
       { x:'reverse-nordic', d:'3 \u00d7 6, slow', note:'The only thing here that loads the hip flexor at long length. Hips stay forward: the moment you sit back toward your heels it becomes a quad stretch and the rectus femoris unloads.' },
-      { x:'couch-stretch', g:'LENGTHEN \u00b7 now that it is warm and worked', d:'2 \u00d7 60 s per side', note:'Tuck the pelvis first, then rise. Squeeze the glute on the stretched side the whole time \u2014 that is what makes it active rather than a hang.' },
+      { x:'half-kneel-hipflexor', g:'LENGTHEN \u00b7 pick one, hardest you can do honestly', d:'2 \u00d7 50 s per side', note:'The standard one. Tuck the pelvis before you move, squeeze the rear glute, then travel a very small amount. If you can go a long way, the tuck is gone.' },
+      { x:'couch-stretch', d:'2 \u00d7 60 s per side', note:'The harder version of the row above, rear foot up a wall. Only worth doing if the kneeling one has stopped giving you anything.' },
       { x:'deadbug', d:'3 \u00d7 6 per side, slow', note:'The counterpart: a short hip flexor tips the pelvis forward, and this is what teaches the trunk to stop it. Low back stays flat on the floor.' }
     ]},
   { id:'shoulder-block', n:'Throwing Shoulder Block', tag:'ARMOR',
@@ -3243,6 +3328,17 @@ const ROUTINES = [
       { x:'ball-calf-peroneal', d:'60 s per side', note:'Pump the ankle whenever you are parked. Do not skip the peroneal strip on the outside, which is the half nobody ever touches.' },
       { x:'knee-to-wall', d:'10 reps + 30 s hold per side', note:'Measure it. Heel glued down, knee over the second toe, and log the number under Tests so you can watch it move.' },
       { x:'deep-squat-hold', d:'2 \u00d7 90 s', t:{ r: 30 }, note:'Where that ankle range actually gets used. Heels flat, or a small wedge under them to start.' }
+    ]},
+
+  { id:'stretch-hipflexor', n:'Tight Hip Flexors', tag:'RANGE',
+    sub:'After a workday, or a lot of sitting',
+    targets:'Hip flexors \u00b7 front of the hip \u00b7 hip extension range',
+    why:'Three versions of the same stretch, easiest to hardest, so there is one you will actually do wherever you are. Standing needs nothing and works in trousers on a sideline. Half-kneeling is the standard and the best value. The couch stretch is the hard one and only worth reaching for once the kneeling version has stopped giving you anything. All three live or die on the same detail: tuck the pelvis first, and squeeze the glute on the side being stretched. Skip either and you are stretching your lumbar spine while your hip flexor stays exactly as short as it was. And if the goal is durable length rather than an hour of it, this block is the smaller half of the job \u2014 the Hip Flexor Block strengthens it, and strength at length is what actually holds.',
+    items:[
+      { x:'standing-hipflexor-stretch', g:'ANYWHERE \u00b7 no floor needed', d:'2 \u00d7 50 s per side', note:'Hands on the hips so you can feel the pelvis cheat. Tall torso, rear knee soft.' },
+      { x:'half-kneel-hipflexor', g:'THE STANDARD ONE', d:'2 \u00d7 50 s per side', note:'Cushion under the knee. Tuck, squeeze the rear glute, then move a very small amount.' },
+      { x:'couch-stretch', g:'THE HARD ONE \u00b7 once kneeling is easy', d:'2 \u00d7 60 s per side', note:'Rear foot up a wall or a couch. Never arch the low back to get deeper.' },
+      { x:'ninety-ninety', d:'30 s hold per side', note:'The other half of a stiff hip. Rotation, produced by you rather than done to you.' }
     ]},
 
   { id:'stretch-upper', n:'Tight Back & Shoulders', tag:'RANGE',
@@ -4067,6 +4163,7 @@ ROUTINES.push(
       { x:'trap-bar-deadlift', g:'HEAVY \u00b7 while the nervous system is clean', d:'4 \u00d7 5 @ 80\u201385%', note:'Push the floor away rather than pulling the bar up. Stop the set if bar speed visibly drops.' },
       { x:'front-squat', d:'3 \u00d7 5', note:'Elbows up. Safety-squat bar or a goblet squat if the front rack bothers the shoulder.' },
       { x:'rfess', g:'ONE LEG \u00b7 where the asymmetries live', d:'3 \u00d7 8 per side' },
+      { x:'step-up', d:'3 \u00d7 8 per side', note:'Knee height at most. The trailing leg is a passenger \u2014 if it is pushing off the floor, lower the step.' },
       { x:'single-leg-rdl', d:'3 \u00d7 8 per side', note:'Hips level. A glass of water on the sacrum would not spill.' },
       { x:'nordic-curl', g:'HAMSTRING \u00b7 low volume, high quality', d:'2 \u00d7 5', note:'Hips locked in line with the torso. The moment you break at the hip the exercise is over.' },
       { x:'calf-raise-loaded', d:'3 \u00d7 10 straight-knee + 3 \u00d7 14 bent-knee' },
@@ -4176,7 +4273,7 @@ const RANGE_GROUPS = [
     ids: ['range-block'] },
   { n: 'One area',
     sub: 'Something in particular feels tight. Five to fifteen minutes on that, instead of the whole list.',
-    ids: ['stretch-hamstring', 'stretch-hip', 'hipflexor-block', 'stretch-groin', 'stretch-calf', 'stretch-upper'] }
+    ids: ['stretch-hamstring', 'stretch-hip', 'stretch-hipflexor', 'hipflexor-block', 'stretch-groin', 'stretch-calf', 'stretch-upper'] }
 ];
 
 if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB, ROUTINES, PLAY_GROUPS, RANGE_GROUPS, FREE_WINS, BODY_GROUPS }; }

@@ -80,6 +80,43 @@ after a session or on an off day, dosed weekly (~5 min accumulated per muscle gr
 than daily. The deep squat hold is the one static position kept in the warm-up — short, loaded, early,
 and doubling as a daily read on the hip.
 
+### Home mode has to be honest
+
+Home mode swaps 24 gym lifts for backpack, doorway and furniture versions, marked HOME. What it did
+*not* do was say anything about the exercises it left alone — and several of those read as gym work.
+On a Strength A day in Home mode you would see **Yielding Split Squat Isometric** (setup: dumbbells
+or a barbell), **Nordic Hamstring Curl** (ankles under a bar or a Nordic bench) and **Copenhagen
+Adduction** (a bench), all with no indication that a backpack, a couch and a coffee table
+respectively do the job. The home notes existed on the exercises; the rows never rendered them.
+
+Rows in Home mode now show the home note whenever the exercise is not swapped, on Today, the daily
+lists and inside every picker. The Passive Hang was the one genuine hole, needing a pull-up bar with
+no home story at all, so it gained one (including the no-bar version: kneel, hold a table edge, lean
+back for the same traction). A test now walks every reachable exercise and fails if any of them needs
+equipment while offering neither a swap nor a note — currently 140 reachable, 0 without a home path.
+
+### The hip flexor toolkit, finished
+
+The hip flexor work went strength-heavy and stretch-thin: one isometric hold, one loaded lengthener
+and the couch stretch, which is the *advanced* stretch and needs a wall. Three additions close it.
+
+- **Standing Split-Stance Hip Flexor Stretch** — no floor, works in trousers on a sideline, which is
+  the whole reason it exists. The right pick between games.
+- **Half-Kneeling Hip Flexor Stretch** — the standard one, and the entry point that was missing. The
+  couch stretch is now correctly positioned as its progression rather than the only option.
+- **Banded Knee Drive** — every hip flexor exercise in here was isometric, which builds torque but
+  never trains the muscle to move a leg fast. Hip flexion above 90° sets knee lift and stride
+  frequency, and this is the concentric half a hold cannot reach.
+
+All three carry the same two rules, because both stretches fail the same way: tuck the pelvis first,
+squeeze the glute on the stretched side. Skip either and you are stretching your lumbar spine. The
+three stretches are grouped easiest-to-hardest in a new **Tight Hip Flexors** block under Stretching
+& range, so there is always one you will actually do.
+
+A **Loaded Step-Up** also joined the Legs block — the single-leg staple it was missing, and the lift
+that most resembles running, with a labrum flag because a step that is too high is deep hip flexion
+under load.
+
 ### Rows you can act on
 
 Three changes to every exercise row, in the picker and on the daily lists.

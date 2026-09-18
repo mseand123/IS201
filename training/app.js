@@ -1075,6 +1075,7 @@ function itemRow(date, key, it, i) {
   ]));
   open.appendChild(costChip(e));
   if (r.note) open.appendChild(el('div', { class: 'item-note' }, r.note));
+  if (isHome() && !r.swapped && e.home) open.appendChild(el('div', { class: 'item-note home-note' }, e.home));
   row.dataset.at = key + ':' + i;
   return row;
 }
@@ -1194,6 +1195,7 @@ function tickCard(date, blk, store, note) {
       open.appendChild(el('div', { class: 'item-dose' }, r.d + ' \u00b7 tap for how-to'));
       open.appendChild(costChip(e));
       if (r.note && hints) open.appendChild(el('div', { class: 'item-note' }, r.note));
+      if (isHome() && !r.swapped && e.home) open.appendChild(el('div', { class: 'item-note home-note' }, e.home));
       row.appendChild(el('button', {
         class: 'btn btn-sm row-start', onclick: () => RUN.open(stepsFromItems([{ x: r.x, d: r.d }], e.n), date, 0)
       }, 'Start'));
@@ -1606,7 +1608,8 @@ function routineCard(r, date) {
           el('span', { class: 'pick-name' }, ex.n),
           el('span', { class: 'pick-dose num' }, it.d + ' \u00b7 tap for how-to'),
           costChip(ex),
-          ex.targets ? el('span', { class: 'pick-targets' }, ex.targets) : null
+          ex.targets ? el('span', { class: 'pick-targets' }, ex.targets) : null,
+          isHome() && ex.home ? el('span', { class: 'pick-home' }, 'At home: ' + ex.home) : null
         ]),
         el('button', {
           class: 'btn btn-sm row-start',
