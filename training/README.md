@@ -75,10 +75,36 @@ injury-prevention effect where strength training has a large one. Two athlete-sp
 apply — passive end-range hip flexion/adduction/IR is the provocative position for a labral hip,
 and "tight hamstrings" in a sprinter is usually protective tone rather than short tissue.
 
-The static work moved to the **Range Block** (Program → Frisbee → After you play): ~18 minutes of loaded and
-actively-held positions run after a session or on an off day, dosed weekly (~5 min accumulated per
-muscle group per week) rather than daily. The deep squat hold is the one static position kept in
-the warm-up — short, loaded, early, and doubling as a daily read on the hip.
+The static work moved to the **Range Block**: ~19 minutes of loaded and actively-held positions run
+after a session or on an off day, dosed weekly (~5 min accumulated per muscle group per week) rather
+than daily. The deep squat hold is the one static position kept in the warm-up — short, loaded, early,
+and doubling as a daily read on the hip.
+
+### Stretching & range, as its own screen
+
+The Range Block used to live only under Frisbee → After you play, which is the wrong place to look on a
+Tuesday when one thing feels tight. It now has its own Program tile, **Stretching & range**, built from
+`RANGE_GROUPS` in the same shape as `PLAY_GROUPS`, and split two ways:
+
+- **The whole pass** — the Range Block, everything in one go.
+- **One area** — six short blocks for when something specific is tight: Tight Hamstrings, Tight Hips,
+  the Hip Flexor Block, Tight Groin, Tight Calves & Ankles, Tight Back & Shoulders. Five to twenty
+  minutes each.
+
+Two of them lead with a test rather than a stretch, because the diagnosis changes the treatment.
+**Tight Hamstrings** opens with the plantar roll and a toe-touch retest, then the chin-tuck test: if
+range drops when you tuck your chin, the limiter is neural and stretching harder makes it worse, so the
+block hands you the nerve glide instead. There is no passive hamstring stretch in it at all; the length
+change comes from the loaded Jefferson curl. **Tight Calves & Ankles** is built around knee-to-wall as a
+measurement, since dorsiflexion is one of the few "tight" complaints that is a number you can log.
+
+**Tight Back & Shoulders** deliberately omits the sleeper stretch. It is the right tool only above a
+measured 15° side-to-side internal rotation deficit, and stretching a capsule that is doing its job is
+how throwers create instability. It stays in the Throwing Shoulder Block, behind the number.
+
+`check-data.js` enforces that anything tagged `WARMUP`, `RECOVERY` or `RANGE` is reachable from a group,
+and it now counts `RANGE_GROUPS` alongside `PLAY_GROUPS` — so a new stretching block cannot be added
+without being findable.
 
 ## Injury prevention, against the actual data
 

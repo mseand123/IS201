@@ -46,6 +46,7 @@ const ICONS = {
   x: 'M6 6l12 12|M18 6L6 18',
   clock: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18|M12 7v5l3 2',
   desk: 'M3 4h18v11H3z|M3 19h18|M9 15v4|M15 15v4',
+  range: 'M9 4H4v5|M15 20h5v-5|M4 4l6 6|M20 20l-6-6',
   check: 'M4 12l6 6L20 6'
 };
 
@@ -1363,6 +1364,11 @@ function viewProgram() {
       body: () => el('div', { class: 'stack stack-xl' }, PLAY_GROUPS.map(g =>
         sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
     },
+    range: {
+      n: 'Stretching & range', blurb: 'The whole pass, or just the bit that feels tight.',
+      body: () => el('div', { class: 'stack stack-xl' }, RANGE_GROUPS.map(g =>
+        sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
+    },
     blocks: {
       n: 'Weak-link blocks', blurb: 'One thing, done properly, rather than fitted around a session.',
       body: () => sec('Weak-link blocks',
@@ -1447,6 +1453,7 @@ function viewProgram() {
   // The hub.
   const counts = {
     play: PLAY_GROUPS.reduce((a, g) => a + g.ids.length, 0) + ' blocks',
+    range: RANGE_GROUPS.reduce((x, g) => x + g.ids.length, 0) + ' blocks',
     blocks: byTag('ARMOR').length + ' blocks',
     power: byTag('POWER').length + ' blocks',
     short: byTag('SHORT').length + ' blocks',
@@ -1475,6 +1482,7 @@ function viewProgram() {
     el('div', { class: 'hub' }, [
       tile('play', ICONS.play, true),
       tile('blocks', ICONS.armor),
+      tile('range', ICONS.range),
       tile('power', ICONS.bolt),
       tile('short', ICONS.clock),
       tile('week', ICONS.today),

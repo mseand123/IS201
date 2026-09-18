@@ -43,8 +43,12 @@ d.PLAY_GROUPS.forEach(g => {
   ck(typeof g.n === 'string' && typeof g.sub === 'string', 'play group needs a name and a subtitle');
   g.ids.forEach(id => ck(byId.has(id), 'play group "' + g.n + '" references a missing routine: ' + id));
 });
-// nothing game-day should be unreachable from the play hub
-const grouped = new Set(d.PLAY_GROUPS.flatMap(g => g.ids));
+d.RANGE_GROUPS.forEach(g => {
+  ck(typeof g.n === 'string' && typeof g.sub === 'string', 'range group needs a name and a subtitle');
+  g.ids.forEach(id => ck(byId.has(id), 'range group "' + g.n + '" references a missing routine: ' + id));
+});
+// nothing game-day or range should be unreachable from the hub it belongs to
+const grouped = new Set(d.PLAY_GROUPS.flatMap(g => g.ids).concat(d.RANGE_GROUPS.flatMap(g => g.ids)));
 d.ROUTINES.filter(r => ['WARMUP', 'RECOVERY', 'RANGE'].includes(r.tag))
   .forEach(r => ck(grouped.has(r.id), r.id + ' is game-day but appears in no play group'));
 

@@ -51,6 +51,7 @@ const EX = {
 },
 'ball-glute': {
   n: 'Glute & Deep Rotator Ball', cat: 'tissue', tags: ['hip','glute','tissue','labrum','home'],
+  targets: 'Glutes · deep hip rotators',
   why: 'The best ball target above the foot, and the one most worth your time. The deep external rotators sit underneath the glute max, they work constantly to stop the femur rotating inward when you cut, and they are almost impossible to reach with a foam roller — a roller spans them, a ball gets into them. Expect the same class of effect as the plantar roll: a real, short-lived increase in range with no strength loss, produced neurologically rather than by changing the tissue. For a labral hip there is a second reason to like it, which is that a deep rotator group that is not braced tends to let the femur drift, and the drift is what the labrum objects to.',
   home: 'A lacrosse ball is ideal; a tennis ball is softer and the right place to start. Nothing else needed.',
   timer: { w: 90, r: 10, rounds: 2, label: 'Glute ball — switch sides' },
@@ -70,6 +71,7 @@ const EX = {
 },
 'ball-lateral-hip': {
   n: 'Lateral Hip Ball (TFL & Glute Med)', cat: 'tissue', tags: ['hip','glute','tissue','home'],
+  targets: 'Side of the hip · TFL · glute medius',
   why: 'The side of the hip does a lot of work in a sport played sideways, and it is the area people most often attack wrongly. The IT band itself is dense fascia anchored along the femur — you cannot lengthen it, and rolling directly on it is mostly just painful. What does respond is the muscular tissue at either end of it: the TFL at the front of the hip point, and the glute medius behind it. Those are worth ninety seconds; the band between them is not.',
   home: 'Against a wall with a lacrosse or tennis ball — no floor space at all. This is the one that works in a hotel room.',
   timer: { w: 60, r: 10, rounds: 2, label: 'Lateral hip — switch sides' },
@@ -89,6 +91,7 @@ const EX = {
 },
 'ball-adductor': {
   n: 'Adductor Ball', cat: 'tissue', tags: ['groin','adductor','tissue','home'],
+  targets: 'Adductors · groin · inner thigh',
   why: 'Your weak link, so treat it gently. The adductors take a real beating in a cutting sport and they respond well to a bit of pressure before loading work — but this area is also where you have a known weakness, and aggressive digging into a groin that already has a history is a bad trade. The goal here is to make the Copenhagen work feel better, not to fix anything.',
   home: 'Any ball and a patch of floor. Go softer rather than firmer here.',
   timer: { w: 60, r: 10, rounds: 2, label: 'Adductor ball — switch sides' },
@@ -107,6 +110,7 @@ const EX = {
 },
 'ball-calf-peroneal': {
   n: 'Calf & Peroneal Ball', cat: 'tissue', tags: ['calf','ankle','tissue','home'],
+  targets: 'Calves · soleus · peroneals',
   why: 'Two targets in one position. The soleus takes several times bodyweight every stride and is chronically stiff in anyone who sprints on grass in cleats. The peroneals — the strip down the outside of the lower leg — are the muscles that resist a rolling ankle, so they matter for the same reason the eversion work does, and they are usually tender on whichever side you have rolled before. Rolling neither of them makes them stronger. It makes the ankle work that follows feel better and moves range in the short term, which is the honest claim.',
   home: 'Sitting on the floor with a ball. Fine on a hotel carpet.',
   timer: { w: 60, r: 10, rounds: 2, label: 'Calf & peroneal — switch sides' },
@@ -384,6 +388,7 @@ const EX = {
 },
 'nerve-glide-sciatic': {
   n: 'Sciatic Nerve Glide', cat: 'mobility', tags: ['hamstring','neural'],
+  targets: 'Sciatic nerve · hamstring tension',
   why: 'A meaningful share of "tight hamstrings" is not muscle at all — it is neural tension. If your hamstring range changes when you tuck your chin or point your toes, the limiter is the nerve, and stretching harder makes it worse. Gliding rather than stretching is the correct tool.',
   setup: 'Seated on a chair, slumped, one leg out.',
   steps: [
@@ -468,6 +473,7 @@ const EX = {
 },
 'cossack-squat': {
   n: 'Cossack Squat', cat: 'mobility', tags: ['adductor','hip','mobility','strength'],
+  targets: 'Adductors at length · hips · ankles',
   why: 'Loaded adductor lengthening under control. Gets the groin strong at long lengths, which is exactly the position it fails in during a wide plant or a layout.',
   home: "Hold a backpack, a water jug or a heavy book at the chest as the counterweight — it lets you sit far deeper than empty hands.",
   setup: 'Wide stance, toes slightly out. Hold a light plate or kettlebell as a counterweight.',
@@ -1068,6 +1074,7 @@ const EX = {
 /* ============ MOBILITY ============ */
 'ninety-ninety': {
   n: '90/90 Hip Switch', cat: 'mobility', tags: ['hip','daily','rotation'],
+  targets: 'Hip internal & external rotation',
   why: 'Hip internal rotation is the range most field athletes lose first and the one that matters most for a clean plant. Losing IR pushes the load into the adductor and the low back — your two known weak points.',
   setup: 'Seated on the floor, front leg at 90°, back leg at 90°.',
   steps: ['Sit tall on both sit bones.','Lift both knees and rotate them to the other side under control — do not use your hands.','Pause in the middle, torso tall.','Progress: lean forward over the front shin (external rotation stretch), then lift the back knee off the floor (internal rotation strength).'],
@@ -1092,6 +1099,7 @@ const EX = {
 },
 'knee-to-wall': {
   n: 'Knee-to-Wall Ankle Mobilisation', cat: 'mobility', tags: ['ankle','daily','squat'],
+  targets: 'Ankles · dorsiflexion range',
   why: 'Ankle dorsiflexion is the most common limiter of a heels-down deep squat and of a low acceleration position. It is also a number you can track: distance from wall to big toe when the knee touches without the heel lifting. Target 10–12 cm and symmetry.',
   setup: 'Facing a wall, foot pointed straight at it.',
   steps: ['Big toe a hand-width from the wall.','Drive the knee forward over the second toe to touch the wall, heel glued down.','If it touches, move back a centimetre and repeat. Find your limit, then work there.','10 slow reps, then 3 × 20 s holds at end range. Add a band around the ankle pulling backward for a joint mobilisation.'],
@@ -1104,6 +1112,7 @@ const EX = {
 },
 'jefferson-curl': {
   n: 'Jefferson Curl', cat: 'mobility', tags: ['posterior','spine','hamstring'],
+  targets: 'Posterior chain · spine segment by segment · hamstrings',
   why: 'Loaded spinal flexion, done light and slow, builds tolerance and range through the whole posterior chain — hamstrings, erectors and the thoracolumbar fascia. It is the controlled version of the thing that scares people about bending over, and it is very good for a chronically "tight" posterior chain.',
   home: "A backpack with a few books is the right load. If it feels heavy, it is far too heavy.",
   setup: 'Stand on a box, very light weight (start with 5–10 lb, seriously).',
@@ -1117,6 +1126,7 @@ const EX = {
 },
 'thoracic-opener': {
   n: 'Thoracic Extension & Rotation', cat: 'mobility', tags: ['spine','shoulder','daily'],
+  targets: 'Mid-back extension & rotation',
   why: 'A stiff thoracic spine forces the shoulder to find range it does not have — which is exactly how a labrum gets irritated. Give the mid-back back its extension and rotation and the shoulder stops compensating.',
   home: "A tightly rolled bath towel or a water bottle on its side does the same job as a foam roller. Two tennis balls taped together is better than either.",
   setup: 'Foam roller across the mid-back, or on all fours for rotation.',
@@ -1129,6 +1139,7 @@ const EX = {
 },
 'hanging-decompression': {
   n: 'Passive Hang', cat: 'mobility', tags: ['shoulder','spine','grip'],
+  targets: 'Shoulders overhead · spine decompression · grip',
   why: 'Builds shoulder range and grip, and decompresses the spine and hips — the traction is useful for a hip that gets compressed all day. Keep a little scapular engagement rather than hanging fully dead: a completely passive hang puts the shoulder capsule at end range with your whole bodyweight on it, which is not a habit worth building for a throwing arm.',
   setup: 'Pull-up bar, feet able to touch down.',
   steps: ['Grip the bar, feet lightly on the floor at first.','Let the body lengthen but keep a slight downward pull through the shoulder blades.','Breathe. 20–30 s.','Progress to a full hang only if it is completely symptom-free.'],
@@ -1142,6 +1153,7 @@ const EX = {
 },
 'pancake-sit': {
   n: 'Active Pancake Sit', cat: 'mobility', tags: ['adductor','hip','iso'],
+  targets: 'Adductors · hamstrings at length',
   why: 'End-range adductor work in the seated straddle. Active — pressing the legs down and lifting out of the hips — rather than passive, because the adductor you need is a strong one at length, not a floppy one.',
   setup: 'Seated on the floor, legs wide, sitting on a cushion if the pelvis rolls back.',
   steps: ['Sit tall on the sit bones. If you cannot, elevate the hips.','Press the backs of the knees into the floor and hold 10 s.','Walk the hands forward with a long spine, stop when the low back starts to round.','Hold 30–45 s, breathing. Then press the hands into the floor and try to lift the hips slightly — active, not passive.'],
@@ -3162,6 +3174,7 @@ const ROUTINES = [
 
   { id:'range-block', n:'Range Block', tag:'RANGE',
     sub:'Where the static stretching actually goes',
+    targets:'Ankles \u00b7 hips \u00b7 hip flexors \u00b7 adductors \u00b7 hamstrings \u00b7 posterior chain \u00b7 shoulders',
     why:'Long passive holds do not belong in a warm-up, but they are not worthless — they are just in the wrong place. Put them here: after a session or on an off day, when a small transient loss of force costs you nothing and the tissue is already warm. The dose that matters is weekly, not daily. Roughly five minutes of accumulated stretch per muscle group per week is where measurable range starts to appear, and past about ten it stops paying. Two runs of this block covers that. Every position here is either loaded or actively held, because range you cannot produce force in is range you will not use on a field.',
     items:[
       { x:'knee-to-wall', d:'10 reps + 30 s hold per side', note:'Ankle first. If dorsiflexion is the limit, everything below inherits it — including the squat depth you are about to chase.' },
@@ -3171,6 +3184,60 @@ const ROUTINES = [
       { x:'pancake-sit', d:'3 × 45 s', t:{ r: 20 }, note:'Adductors and hamstrings at length together. Push the floor away and lift out of the hips instead of collapsing forward.' },
       { x:'jefferson-curl', d:'3 × 5 slow', note:'Light. This is loaded end-range work for the posterior chain, not a max lift — the load is there to make the tissue adapt, not to be impressive.' },
       { x:'hanging-decompression', d:'2 × 45 s', note:'Finish hanging. Costs nothing, and it is the only thing here that lengthens you from the top down.' }
+    ]},
+
+  { id:'stretch-hamstring', n:'Tight Hamstrings', tag:'RANGE',
+    sub:'And working out whether they are actually tight',
+    targets:'Hamstrings \u00b7 posterior chain \u00b7 sciatic nerve',
+    why:'Start by doubting the label. In someone who sprints, a "tight" hamstring is far more often protective neural tone, a stiff posterior chain or pelvic position than short tissue, and those three want different things. Two tests settle it in about a minute. Roll a ball under your foot and retest your toe-touch: if ninety seconds under the arch buys you range, the hamstring was never the restriction. Then sit, straighten one knee to your limit, and tuck your chin to your chest: if the range drops noticeably, the limiter is the nerve, and stretching harder makes it worse. What durably changes hamstring length is loading it at long length, which is the Jefferson curl here and the Nordics and the L-protocol in Hamstring Insurance. Nothing in this block is a passive hamstring stretch, and that is deliberate.',
+    items:[
+      { x:'ball-roll-foot', g:'TEST \u00b7 before you stretch anything', d:'90 s per foot', note:'Toe-touch first and note where your fingers land, then roll and retest that side only. The difference is your answer.' },
+      { x:'nerve-glide-sciatic', d:'2 \u00d7 10 per side', note:'Do the chin-tuck test first. If range drops when you tuck, this is the right tool and stretching is the wrong one.' },
+      { x:'jefferson-curl', d:'3 \u00d7 5, very light', note:'Loaded end range, which is what actually changes length. Absurdly light, and roll down one segment at a time.' }
+    ]},
+
+  { id:'stretch-hip', n:'Tight Hips', tag:'RANGE',
+    sub:'Deep hip, rotation, and the outside of the glute',
+    targets:'Hips \u00b7 glutes \u00b7 deep rotators \u00b7 rotation range',
+    why:'The hip loses rotation before it loses anything else, and rotation is what a plant actually asks for. Losing it pushes load into the adductor at longer lengths and into the low back, which is how a hip problem quietly becomes a groin problem. Ball work first, because the deep external rotators sit underneath the glute max where a roller simply spans them, and they are the group most responsible for the femur drifting. Then rotation you produce yourself rather than get put into, which for a labral hip is the entire point: CARs and the 90/90 switch mean you own the range instead of visiting it. Finish in the bottom of a squat. If the front of the hip pinches today that is worth knowing, and this block hands you that read for free.',
+    items:[
+      { x:'ball-glute', g:'TISSUE \u00b7 take the tone down first', d:'90 s per side', note:'Rock the crossed knee while you are parked. Buzzing or shooting down the leg is nerve, so move off it.' },
+      { x:'ball-lateral-hip', d:'60 s per side', note:'TFL in front of the hip point, glute medius behind it. Skip the flat slab in between.' },
+      { x:'hip-cars', g:'ACTIVE RANGE \u00b7 produce it, do not get put in it', d:'3 circles each direction per side', note:'Slow enough to be boring. Note where it pinches. That arc growing is your clearest sign the hip is improving.' },
+      { x:'ninety-ninety', d:'30 s hold per side', note:'Switch back and forth to find the range first, then hold. Lifting the back knee is the hard and valuable half.' },
+      { x:'deep-squat-hold', d:'2 \u00d7 90 s', t:{ r: 30 }, note:'Heels down, long spine, and never past a pinch at the front of the hip.' }
+    ]},
+
+  { id:'stretch-groin', n:'Tight Groin', tag:'RANGE',
+    sub:'Your weak link, lengthened rather than dug into',
+    targets:'Adductors \u00b7 groin \u00b7 inner thigh at length',
+    why:'Be careful what you ask of this one. The adductor is your known weak link, and aggressive pressure into a groin with a history is a bad trade: what fixes a weak adductor is Copenhagen volume, not a ball. This block is for the other half, range at length, because the groin fails during a wide plant at the end of its range rather than in the middle. So the ball work is deliberately gentle and stays out of the top third, and everything after it is either loaded or actively held. One rule worth keeping: if it is sore rather than tight, do not stretch it. Drop to the squeeze isometrics at sixty percent and reassess in a couple of days.',
+    items:[
+      { x:'ball-adductor', d:'60 s per side', note:'Gentle, and stay out of the groin crease. Most of your weight on your forearms. This is comfort, not treatment.' },
+      { x:'adductor-rockback', d:'10 rocks + 30 s hold', note:'Spine neutral. You should feel it in the inner thigh, never in the knee.' },
+      { x:'cossack-squat', d:'2 \u00d7 5 per side', note:'The straight leg keeps its heel down, which is where the stretch lives. A counterweight at the chest lets you sit deeper.' },
+      { x:'pancake-sit', d:'3 \u00d7 45 s', t:{ r: 20 }, note:'Active, not a hang. Press the backs of the knees down and lift out of the hips instead of collapsing forward.' }
+    ]},
+
+  { id:'stretch-calf', n:'Tight Calves & Ankles', tag:'RANGE',
+    sub:'The joint that quietly limits everything above it',
+    targets:'Calves \u00b7 ankles \u00b7 plantar fascia \u00b7 dorsiflexion',
+    why:'Ankle dorsiflexion is the most common limiter of a heels-down squat and of a low acceleration position, and unlike most things filed under "tight" it is a number you can measure. Knee to wall, heel down, big toe back from the wall: under about ten centimetres is a restriction worth working, and a side-to-side gap over roughly a centimetre and a half shows up as a cutting asymmetry. Work the tissue first and the joint second, because a soleus that will not lengthen and an ankle that will not glide are different problems wearing the same symptom. The plantar roll is here for a second reason as well: it is the best-evidenced item in the app, and the range it buys runs all the way up the back of the leg.',
+    items:[
+      { x:'ball-roll-foot', d:'60 s per foot', note:'Toe-touch before and after. The range it buys is not only in the foot.' },
+      { x:'ball-calf-peroneal', d:'60 s per side', note:'Pump the ankle whenever you are parked. Do not skip the peroneal strip on the outside, which is the half nobody ever touches.' },
+      { x:'knee-to-wall', d:'10 reps + 30 s hold per side', note:'Measure it. Heel glued down, knee over the second toe, and log the number under Tests so you can watch it move.' },
+      { x:'deep-squat-hold', d:'2 \u00d7 90 s', t:{ r: 30 }, note:'Where that ankle range actually gets used. Heels flat, or a small wedge under them to start.' }
+    ]},
+
+  { id:'stretch-upper', n:'Tight Back & Shoulders', tag:'RANGE',
+    sub:'After a workday, or a week of a lot of throwing',
+    targets:'Mid-back \u00b7 shoulders \u00b7 chest \u00b7 overhead range',
+    why:'A stiff mid-back makes the shoulder hunt for range it does not have, which is the mechanical story behind most aching throwing shoulders. Extension and rotation are the two a chair takes first, so they are what this gives back. The doorway opener is for the front of the shoulder, which typing shortens and which is the position a throwing arm least wants to start from: set the shoulder blade down and back before you step through, or you simply jam the joint. One deliberate omission. The sleeper stretch is not in here. It is the right tool only if you have measured a side-to-side internal rotation difference over about fifteen degrees, and stretching a capsule that is doing its job is how throwers create instability. Measure it under Tests first. It lives in the Throwing Shoulder Block for when the number says you need it.',
+    items:[
+      { x:'thoracic-opener', d:'4 positions \u00d7 5 breaths + 8 rotations per side', note:'Extend over the roller at the mid-back with the ribs down. Arching the low back is a different movement.' },
+      { x:'desk-pec-doorway', d:'2 \u00d7 30 s per side at two angles', note:'Blade set down and back first, then step through. Across the chest, never pinching in the front of the joint.' },
+      { x:'hanging-decompression', d:'3 \u00d7 30 s', note:'Keep a little scapular engagement rather than dumping fully into it. Gentle traction for the spine as well.' }
     ]}
 ];
 
@@ -3253,6 +3320,7 @@ Object.assign(EX, {
 },
 'hip-cars': {
   n: 'Hip CARs', cat: 'mobility', tags: ['hip','labrum','mobility','daily'],
+  targets: 'Hip rotation · the arc you control',
   why: 'Controlled Articular Rotations: a slow, active circle at the outer edge of what the joint can control. For a labral hip this is a daily assessment as much as an exercise — you learn exactly where in the arc the joint objects, and you can watch that arc grow over weeks. Active and slow, so the joint is never taken somewhere the muscles cannot hold it.',
   setup: 'On hands and knees, or standing holding a rail. Brace the trunk so only the hip moves.',
   steps: [
@@ -3367,6 +3435,7 @@ Object.assign(EX, {
 },
 'desk-pec-doorway': {
   n: 'Doorway Pec Opener', cat: 'mobility', tags: ['shoulder','desk','posture'], covert: 'subtle',
+  targets: 'Chest · front of the shoulder',
   why: 'Hours of typing shortens the front of the shoulder and pulls the blade forward, which is the position a throwing shoulder least wants to start from. Thirty seconds in a doorway on the way to the kitchen resets it.',
   setup: 'Forearm on a door frame, elbow at about shoulder height.',
   steps: [
@@ -3962,4 +4031,17 @@ const PLAY_GROUPS = [
 ];
 
 
-if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB, ROUTINES, PLAY_GROUPS }; }
+/* ===========================================================
+   RANGE GROUPS — the stretching screen. The whole pass, or the
+   one area that actually feels tight.
+   =========================================================== */
+const RANGE_GROUPS = [
+  { n: 'The whole pass',
+    sub: 'Everything, in one go. Twice a week covers the weekly dose that actually moves range.',
+    ids: ['range-block'] },
+  { n: 'One area',
+    sub: 'Something in particular feels tight. Five to fifteen minutes on that, instead of the whole list.',
+    ids: ['stretch-hamstring', 'stretch-hip', 'hipflexor-block', 'stretch-groin', 'stretch-calf', 'stretch-upper'] }
+];
+
+if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB, ROUTINES, PLAY_GROUPS, RANGE_GROUPS }; }
