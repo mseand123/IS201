@@ -1937,6 +1937,7 @@ const EX = {
 },
 'couch-stretch': {
   n: 'Active Couch Stretch', cat: 'mobility', tags: ['hip','anterior','daily'],
+  targets: 'Hip flexors · anterior hip · hip extension range',
   why: 'Hip flexor length directly limits hip extension, and hip extension is where sprint force comes from. The ATG version prescribes 1–2 sets of 60 seconds per side twice weekly, done actively — squeezing the glute rather than passively hanging in it.',
   setup: 'Half-kneeling with the back foot up a wall or on a couch, front foot flat.',
   steps: ['Rear knee against the wall base, shin flat up the wall.','Tuck the pelvis under — posterior tilt — before you go anywhere.','Squeeze the rear glute hard. This is the "active" part and it is what makes it work.','Rise the torso as tall as the pelvic tuck allows. Hold 60 s, breathing.'],
@@ -3348,6 +3349,7 @@ Object.assign(EX, {
 },
 'reverse-nordic': {
   n: 'Reverse Nordic', cat: 'strength', tags: ['quad','eccentric','home','knee'],
+  targets: 'Hip flexors · quads · rectus femoris at length',
   why: 'The mirror of the Nordic, and just as valuable: it loads the quadriceps — especially rectus femoris, which crosses both the hip and the knee — eccentrically at long lengths, with no equipment. Long-length quad strength protects the knee during deceleration, and you decelerate 47 times a game.',
   setup: 'Tall kneeling on a cushion, feet pointed, glutes squeezed, body in a straight line from knee to head.',
   steps: [
@@ -3888,6 +3890,17 @@ const ROUTINES = [
       { x:'deadbug', d:'3 × 6 per side, slow' },
       { x:'banded-hip-distraction', d:'2 min per side, if you have a band' }
     ]},
+  { id:'hipflexor-block', n:'Hip Flexor Block', tag:'ARMOR',
+    sub:'Strength above 90\u00b0, and length below it',
+    targets:'Hip flexors \u00b7 quads \u00b7 knee drive \u00b7 hip extension range \u00b7 pelvic control',
+    why:'The hip flexor is the one group in this program that genuinely needs both halves, and doing one without the other is the usual mistake. It is a sprint muscle: flexion above 90\u00b0 drives knee lift and stride frequency, and it is weakest exactly there, because almost nothing anyone does trains it past the range a leg raise reaches. It is also the muscle a desk shortens, and a short hip flexor limits hip extension \u2014 which is where sprint force actually comes from. Stretch it only and you own range you cannot produce force in; strengthen it only and you spend the season pulling against your own hip extension. Rectus femoris is the piece most people miss entirely: it crosses the hip and the knee, so it is only loaded at real length when the knee is bent and the hip is extended at the same time, which is the reverse Nordic and almost nothing else in the program. One note for your hip specifically \u2014 the couch stretch takes the joint into extension, the opposite end from the flexion-adduction-internal-rotation position a labrum objects to. It is one of the few anterior-hip items on your list you do not have to be careful with. Twice a week, or after any day that was mostly sitting.',
+    items:[
+      { x:'walking-lunge-rotation', g:'WARM \u00b7 do not load it cold', d:'5 per side', note:'Back glute squeezed so the stretch lands in the hip flexor rather than the low back.' },
+      { x:'iso-hip-flexor', g:'STRENGTHEN \u00b7 above 90\u00b0, where it is weakest', d:'3 \u00d7 18 s per side', note:'Knee above hip height, then pull higher against your own limit. Stand tall \u2014 leaning back fakes the range and trains nothing.' },
+      { x:'reverse-nordic', d:'3 \u00d7 6, slow', note:'The only thing here that loads the hip flexor at long length. Hips stay forward: the moment you sit back toward your heels it becomes a quad stretch and the rectus femoris unloads.' },
+      { x:'couch-stretch', g:'LENGTHEN \u00b7 now that it is warm and worked', d:'2 \u00d7 60 s per side', note:'Tuck the pelvis first, then rise. Squeeze the glute on the stretched side the whole time \u2014 that is what makes it active rather than a hang.' },
+      { x:'deadbug', d:'3 \u00d7 6 per side, slow', note:'The counterpart: a short hip flexor tips the pelvis forward, and this is what teaches the trunk to stop it. Low back stays flat on the floor.' }
+    ]},
   { id:'shoulder-block', n:'Throwing Shoulder Block', tag:'ARMOR',
     sub:'Cuff, scap, capsule — before you huck',
     why:'Maintenance for an arm that throws a lot: cuff strength, scapular control, and posterior capsule length if — and only if — you have measured a deficit. Before any throwing session, and on any day the shoulder feels off.',
@@ -4081,6 +4094,7 @@ Object.assign(EX, {
 },
 'deadbug': {
   n: 'Dead Bug', cat: 'iso', tags: ['core','hip','labrum','trunk'],
+  targets: 'Trunk · pelvic control',
   why: 'Lumbopelvic control is a pillar of non-operative labral management — a pelvis that tips forward under load pushes the socket rim into the femoral neck, which is the mechanical problem behind impingement. This teaches the trunk to hold the pelvis still while the hips move, which is the whole job.',
   setup: 'On your back, knees and hips at 90°, arms straight up over the shoulders.',
   steps: [

@@ -92,6 +92,18 @@ for frontal-plane landing control, deceleration mechanics, single-leg RDLs and t
 It is written to be run *tired* rather than fresh, because fatigue is the condition the injury
 happens in.
 
+**Hip Flexor Block** (Program → Weak-link blocks, ~20 min) exists because the hip flexor is the one
+group that needs both halves and usually gets one. It is a sprint muscle — flexion above 90° drives
+knee lift and stride frequency, and that is exactly where it is weakest, because almost nothing
+trains it past the range a leg raise reaches. It is also what a desk shortens, and a short hip flexor
+caps hip extension, which is where sprint force comes from. Stretch only and you own range you cannot
+produce force in; strengthen only and you pull against your own extension. The block runs warm →
+strengthen → lengthen: lunge with rotation, the standing isometric above 90°, a reverse Nordic (the
+only thing in the program that loads rectus femoris at real length, since it crosses both joints), the
+active couch stretch, and a dead bug for the pelvic control that a short flexor compromises. The couch
+stretch takes the hip into *extension* — the opposite end from the flexion-adduction-internal-rotation
+position a labrum objects to — so it is one of the few anterior-hip items here that needs no caution.
+
 **Sprint-Ready · Minimum** (~12 min) is the fourth warm-up: what survives when the warm-up is
 stripped to only the load-bearing parts — raise, leg swings, one hamstring long-length isometric,
 and four graded build-ups. It exists because a short warm-up that gets done beats a thorough one
@@ -259,6 +271,14 @@ carries real fallback stacks for when they cannot load.
 - **`netlify/`** — the folder. Same app plus `sw.js`, the manifest and icons as real files, so it
   installs on Android too and works with no signal. Drag the folder, or connect the repo to Netlify
   with the publish directory set to `netlify` and skip dragging entirely.
+
+### The icon
+
+`assets/icon.svg` is the source: a disc in flight, seen edge-on, in the app's own field green and
+disc yellow. `assets/icon-192.png` and `icon-512.png` are rendered from it headlessly, and `build.js`
+copies them into `netlify/`. To change the mark, edit the SVG and re-render both PNGs rather than
+editing the bitmaps. It is drawn inside the maskable safe zone (the middle 80%), so Android can crop
+it to any shape without clipping the disc, and it still reads at 32px in a browser tab.
 
 ## The look
 
