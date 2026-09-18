@@ -2492,7 +2492,7 @@ Object.assign(EX, {
 'reverse-nordic': {
   n: 'Reverse Nordic', cat: 'strength', tags: ['quad','eccentric','home','knee'],
   targets: 'Hip flexors · quads · rectus femoris at length',
-  why: 'The mirror of the Nordic, and just as valuable: it loads the quadriceps — especially rectus femoris, which crosses both the hip and the knee — eccentrically at long lengths, with no equipment. Long-length quad strength protects the knee during deceleration, and you decelerate 47 times a game.',
+  why: 'The mirror of the Nordic, and just as valuable: it loads the quadriceps — especially rectus femoris, which crosses both the hip and the knee — eccentrically at long lengths, with no equipment. That second joint is the part worth naming: rectus femoris is a hip flexor as well as a quad, so this is the one exercise in the program that loads a hip flexor at real length, which is why it sits in the Hip Flexor Block as well as here. Long-length quad strength protects the knee during deceleration, and you decelerate 47 times a game.',
   setup: 'Tall kneeling on a cushion, feet pointed, glutes squeezed, body in a straight line from knee to head.',
   steps: [
     'Squeeze the glutes and keep the hips extended — this is the whole exercise.',
