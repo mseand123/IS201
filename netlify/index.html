@@ -6121,34 +6121,6 @@ function readinessCard(date) {
   return card;
 }
 
-function armorCard(date) {
-  const d = iso(date);
-  const a = S.armor[d] || (S.armor[d] = {});
-  const doneCount = ARMOR.items.filter((_, i) => a[i]).length;
-  return el('section', { class: 'block' }, [
-    el('header', { class: 'block-head' }, [
-      el('span', { class: 'name' }, 'THE DAILY ARMOR'),
-      el('span', { class: 'why' }, doneCount + ' / ' + ARMOR.items.length + ' · every day, no exceptions')
-    ]),
-    ...ARMOR.items.map((it, i) => {
-      const r = resolve(it), e = EX[r.x];
-      const aid = 'armor:' + i, apicked = PICK.keys.has(aid);
-      const row = el('div', { class: 'item' + (a[i] ? ' done' : '') + (apicked ? ' picked' : '') });
-      const tick = el('button', {
-        class: 'tick pick', 'aria-pressed': apicked ? 'true' : 'false', 'aria-label': 'Select ' + e.n,
-        onclick: () => pickToggle(aid)
-      }, [svgEl('svg', { viewBox: '0 0 24 24' })]);
-      tick.querySelector('svg').appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' }));
-      row.appendChild(tick);
-      row.appendChild(el('div', { class: 'item-name' }, [exLink(r.x)]));
-      row.appendChild(el('div', { class: 'item-dose' }, r.d));
-      if (r.note) row.appendChild(el('div', { class: 'item-note' }, r.note));
-      if (isHome() && e.home) row.appendChild(el('div', { class: 'item-note home-note' }, e.home));
-      return row;
-    })
-  ]);
-}
-
 // A day-scoped tick list. Unlike the session checklist these are marked done by hand,
 // because the whole point is that they happen in ones and twos across a day.
 const NOTESOPEN = new Set();   // the hints teach it the first week and are noise after
