@@ -28,7 +28,7 @@ Object.entries(d.SESSIONS).forEach(([k, s]) => (s.blocks || []).forEach(b => {
 }));
 d.ROUTINES.forEach(r => {
   ck(typeof r.n === 'string' && typeof r.id === 'string', 'routine needs id and name');
-  ck(['WARMUP','DESK','ARMOR','SHORT','RANGE','RECOVERY','POWER','BODY','TRAIL','BOSS','ROOM','GOATA'].includes(r.tag), 'routine ' + r.id + ' has an unrendered tag: ' + r.tag);
+  ck(['WARMUP','DESK','ARMOR','SHORT','RANGE','RECOVERY','POWER','BODY','TRAIL','BOSS','ROOM','GOATA','GRAIL'].includes(r.tag), 'routine ' + r.id + ' has an unrendered tag: ' + r.tag);
   r.items.forEach(i => check(i.x, 'routine ' + r.id));
 });
 d.ARMOR.items.forEach(i => check(i.x, 'ARMOR'));
@@ -104,7 +104,7 @@ d.ROUTINES.filter(r => ['WARMUP', 'RECOVERY', 'RANGE'].includes(r.tag))
   .forEach(r => ck(grouped.has(r.id), r.id + ' is game-day but appears in no play group'));
 
 // every warm-up exercise says what it targets — that is the label under the name
-d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS','ROOM','GOATA'].includes(r.tag)).forEach(r => r.items.forEach(i =>
+d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS','ROOM','GOATA','GRAIL'].includes(r.tag)).forEach(r => r.items.forEach(i =>
   ck(typeof (d.EX[i.x] || {}).targets === 'string' && d.EX[i.x].targets.length > 0,
      r.id + ' › ' + i.x + ' has no targets label')));
 Object.values(d.EX).forEach(e => ck(e.targets === undefined || typeof e.targets === 'string', e.n + ' targets should be a string'));
@@ -112,7 +112,7 @@ Object.values(d.EX).forEach(e => ck(e.targets === undefined || typeof e.targets 
 // a warm-up's summary line is short and honest: required, and every term it names must
 // appear in at least one of its items' targets
 const norm = x => x.toLowerCase().replace(/[^a-z ]/g, ' ').replace(/\s+/g, ' ').trim();
-d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS','ROOM','GOATA'].includes(r.tag)).forEach(r => {
+d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS','ROOM','GOATA','GRAIL'].includes(r.tag)).forEach(r => {
   ck(typeof r.targets === 'string' && r.targets.length > 0, r.id + ' has no targets summary');
   ck(!r.targets || r.targets.split('·').length <= 9, r.id + ' targets summary is not short: ' + r.targets);
   const pool = norm(r.items.map(i => (d.EX[i.x] || {}).targets || '').join(' '));
@@ -124,7 +124,7 @@ d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS','ROOM','GOATA'].includes(r.tag))
 
 // A gym->home swap replaces the exercise, so two gym items that share a home stand-in turn one
 // block into the same exercise twice. Boss and Trail blocks are built for home and must never do it.
-d.ROUTINES.filter(r => ['BOSS', 'TRAIL', 'ROOM', 'GOATA'].includes(r.tag)).forEach(r => {
+d.ROUTINES.filter(r => ['BOSS', 'TRAIL', 'ROOM', 'GOATA', 'GRAIL'].includes(r.tag)).forEach(r => {
   const xs = r.items.map(i => d.HOME_SUB[i.x] ? d.HOME_SUB[i.x].x : i.x);
   const dup = [...new Set(xs.filter((x, i) => xs.indexOf(x) !== i))];
   ck(!dup.length, r.id + ' runs ' + dup.join(', ') + ' twice in Home mode');
@@ -143,6 +143,19 @@ d.ROUTINES.filter(r => r.rounds !== undefined).forEach(r => {
   const text = JSON.stringify(d);
   ['SLAP', 'superior labral', 'labrum-safe', 'labrum-compromised', 'Overhead barbell pressing is off']
     .forEach(w => ck(!text.includes(w), 'data mentions "' + w + '", but the labral tear is in the hip'));
+}
+
+// The Holy Grail is only useful while it stays short: one to three per body part, and a Daily Six of six.
+{
+  const list = d.ROUTINES.find(r => r.id === 'grail-list'), six = d.ROUTINES.find(r => r.id === 'grail-daily');
+  ck(list && six, 'the Holy Grail needs its list and its Daily Six');
+  if (six) ck(six.items.length === 6, 'the Daily Six has ' + six.items.length + ' moves');
+  if (six) six.items.forEach(i => ck((d.EX[i.x].cost || 2) < 3, 'the Daily Six is done every day, so ' + i.x + ' cannot be rated Taxing'));
+  if (list) {
+    const groups = []; let g = null;
+    list.items.forEach(i => { if (i.g) { g = { n: i.g, k: 0 }; groups.push(g); } g.k++; });
+    groups.forEach(x => ck(x.k >= 1 && x.k <= 3, 'the Holy Grail group ' + x.n + ' has ' + x.k + ' picks; the point is one to three'));
+  }
 }
 
 // routine ids unique

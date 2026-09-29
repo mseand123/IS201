@@ -104,9 +104,31 @@ const DATA = require('./data.js');
   await p.locator('.run button[aria-label="Exit session"]').click(); await p.waitForTimeout(300);
   ck(await p.locator('#queuebar').isHidden(), 'running the queue should empty it');
 
+  // --- the Holy Grail: first tile, the list starts open and waits for a pick, the Daily Six runs ---
+  await p.keyboard.press('3'); await p.waitForTimeout(400);
+  ck((await p.locator('.tile-n').first().innerText()).trim() === 'The Holy Grail', 'the Holy Grail should be the first tile');
+  await p.locator('.tile').filter({ hasText: 'The Holy Grail' }).first().click(); await p.waitForTimeout(400);
+  const grailList = DATA.ROUTINES.find(r => r.id === 'grail-list');
+  const gl = p.locator('.routine').filter({ has: p.locator('h3', { hasText: /^The Holy Grail$/ }) }).first();
+  ck(await gl.locator('.pick-row').count() === grailList.items.length, 'the Holy Grail list should start open with every pick showing');
+  ck(await gl.locator('.btn-run').isDisabled(), 'with nothing ticked, the list should wait for a pick rather than run an hour of everything');
+  await gl.locator('.pick-row .tick').nth(0).click(); await p.waitForTimeout(250);
+  await gl.locator('.pick-row .tick').nth(4).click(); await p.waitForTimeout(250);
+  ck(/Run 2 selected/.test(await gl.locator('.btn-run').innerText()), 'two ticks should offer to run two');
+  await gl.locator('.btn-run').click(); await p.waitForTimeout(500);
+  ck(/\/\s*2$/.test((await p.locator('#runStep').innerText()).trim()), 'the two picks should run as two steps');
+  await p.locator('.run button[aria-label="Exit session"]').click(); await p.waitForTimeout(300);
+  const six = p.locator('.routine').filter({ hasText: 'The Daily Six' }).first();
+  await six.locator('.btn-run').click(); await p.waitForTimeout(500);
+  const sixTop = (await p.locator('.run-meta').innerText()).replace(/\n/g, ' | ');
+  ck(/Round 1 of 2/.test(sixTop) && /\/\s*12$/.test(sixTop), 'the Daily Six should run 6 moves × 2 rounds, got ' + sixTop);
+  console.log('Daily Six:', sixTop);
+  await p.locator('.run button[aria-label="Exit session"]').click(); await p.waitForTimeout(300);
+  await p.locator('.back-link').click(); await p.waitForTimeout(250);
+
   // --- the Room Circuit runs as a real circuit: every move, every round, labelled ---
   await p.keyboard.press('3'); await p.waitForTimeout(400);
-  ck((await p.locator('.tile-n').first().innerText()).trim() === 'Room Circuit', 'the Room Circuit should be the first tile');
+  ck((await p.locator('.tile-n').nth(1).innerText()).trim() === 'Room Circuit', 'the Room Circuit should be the second tile');
   await p.locator('.tile').filter({ hasText: 'Room Circuit' }).first().click(); await p.waitForTimeout(400);
   const room = DATA.ROUTINES.find(r => r.id === 'room-circuit');
   await p.locator('.routine').filter({ hasText: room.n }).first().locator('.btn-run').click(); await p.waitForTimeout(600);

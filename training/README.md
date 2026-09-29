@@ -261,6 +261,30 @@ warm-up standard rather than the general one: every row must carry a `targets` l
 must carry a short targets summary, and every term in that summary must appear in at least one of
 its own items' targets.
 
+### The Holy Grail
+
+The answer to "there is too much in here": the first tile on the hub, and two cards.
+
+**The Daily Six** — six moves, two rounds, about 16 minutes, safe to repeat every day because none of
+them needs two days to recover from. The validator enforces that: nothing rated Taxing is allowed in.
+
+| move | each round | for |
+|---|---|---|
+| Split squat hold | 40 s per side | quads & glutes |
+| Push-up | 15 | chest, shoulders, arms |
+| Pull-up | 6, two short of failing | back, arms |
+| Long-length hamstring hold | 30 s per side | hamstrings |
+| One-leg couch hip thrust hold | 30 s per side | glutes |
+| Copenhagen hold | 20 s per side | groin |
+
+**The Holy Grail** — the best for each body part out of everything in the app, one to three per
+part: three for the hamstrings (Nordic, long-length hold, single-leg RDL) and the hips (hip thrust,
+Copenhagen, hip airplane) because the history earns the extra one; two for legs, push, pull, core,
+and movement & landing (two GOATA picks). Sixteen in all. It is a *menu*: a routine marked `open`
+starts with its list showing, and its Run button waits for a tick — "Tick what you want" — rather than
+offering to run an hour of everything. Picks here join picks from any other card in the queue bar.
+`check-data.js` keeps it short: one to three per group, and a Daily Six of exactly six.
+
 ### Room Circuit
 
 The simple one, and the first tile on the hub. Six moves that need a floor, a bed and a pull-up bar,

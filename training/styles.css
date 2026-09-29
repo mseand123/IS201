@@ -978,3 +978,7 @@ body.running .queuebar { display: none; }
 
 /* A picked row explains its own dose: whose number it is, and what to change. */
 .pick-note { font-size: var(--t-xs); color: var(--muted); line-height: 1.35; margin-top: .15rem; max-width: 62ch; }
+
+/* A menu's Run waits for a pick, and should look like it is waiting. */
+.btn[disabled], .btn[disabled]:hover { opacity: .55; cursor: default; }
+.btn-primary[disabled]:hover { background: var(--brand-2); border-color: var(--brand-2); color: var(--on-brand); }

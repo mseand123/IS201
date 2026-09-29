@@ -52,6 +52,7 @@ const ICONS = {
   trail: 'M2 20h20|M5 20l5-11 4 7 2-3 4 7|M17 6a2 2 0 1 0 0-.1',
   boss: 'M4 9h3v6H4z|M17 9h3v6h-3z|M7 12h10|M2 11v2|M22 11v2',
   room: 'M3 11l9-7 9 7|M5 10v10h14V10|M10 20v-5h4v5',
+  grail: 'M7 3h10v4a5 5 0 0 1-10 0z|M12 12v5|M8 21h8|M10 17h4v4h-4z|M7 5H4a3 3 0 0 0 3 4|M17 5h3a3 3 0 0 1-3 4',
   goata: 'M8 3c1.7 0 2.5 2 2.5 4.5S9.7 12 8 12 5.5 10 5.5 7.5 6.3 3 8 3|M6.5 14.5h3v2.5h-3z|M16 7c1.7 0 2.5 2 2.5 4.5S17.7 16 16 16s-2.5-2-2.5-4.5S14.3 7 16 7|M14.5 18.5h3V21h-3z',
   check: 'M4 12l6 6L20 6'
 };
@@ -1488,6 +1489,12 @@ function viewProgram() {
       body: () => el('div', { class: 'stack stack-xl' }, RANGE_GROUPS.map(g =>
         sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
     },
+    grail: {
+      n: 'The Holy Grail', blurb: 'Just the best. Two per body part, and a Daily Six.',
+      body: () => sec('The Holy Grail',
+        'Out of everything in the app, the ones worth doing. Run the Daily Six every day, and tick anything from the list on top of it.',
+        grid(byTag('GRAIL')))
+    },
     room: {
       n: 'Room Circuit', blurb: 'Six moves, a floor and a bed. Hip, hamstring, legs, push-ups, core.',
       body: () => sec('Room Circuit',
@@ -1659,6 +1666,7 @@ function viewProgram() {
     trail: ROUTINES.filter(r => r.tag === 'TRAIL').length + ' blocks',
     boss: ROUTINES.filter(r => r.tag === 'BOSS').length + ' blocks',
     room: '~' + Math.round(runSeconds(routineSteps(byId('room-circuit'))) / 60) + ' min',
+    grail: byId('grail-list').items.length + ' + 6',
     goata: ROUTINES.filter(r => r.tag === 'GOATA').length + ' blocks',
     blocks: byTag('ARMOR').length + ' blocks',
     power: byTag('POWER').length + ' blocks',
@@ -1686,6 +1694,7 @@ function viewProgram() {
         'Everything that is not today\u2019s session. The daily and range work carries any sport; Frisbee is the game-day layer on top of it.')
     ]),
     el('div', { class: 'hub' }, [
+      tile('grail', ICONS.grail),
       tile('room', ICONS.room),
       tile('play', ICONS.play),
       tile('body', ICONS.body),
@@ -1780,6 +1789,8 @@ function queueRun(date) {
 }
 // A re-render rebuilds the <details>, so remember which ones the user had open.
 const ROPEN = new Set();
+// A routine marked `open` is a menu, not a session: its list starts open so the first thing you see is the choice.
+ROUTINES.filter(r => r.open).forEach(r => ROPEN.add(r.id));
 const WHYOPEN = new Set();   // rationale is collapsed by default so a list of blocks stays scannable
 
 function routineCard(r, date) {
@@ -1840,7 +1851,8 @@ function routineCard(r, date) {
         cov ? el('span', { class: 'chip ' + cov.k, title: cov.d }, cov.l) : null,
         timesToday ? el('span', { class: 'chip good' }, '✓ ' + (timesToday > 1 ? timesToday + '×' : '') + ' today') : null
       ]),
-      el('span', { class: 'num xs muted' }, '≈ ' + fmtMins(runSeconds(routineSteps(r, chosen))))
+      // a menu has no "whole thing" to time: it shows the picks, or says to pick
+      el('span', { class: 'num xs muted' }, r.open && !n ? 'pick any' : '≈ ' + fmtMins(runSeconds(routineSteps(r, chosen))))
     ]),
     el('p', { class: 'small muted' }, r.sub),
     // A short, authored line saying what the block is for. check-data.js verifies every term
@@ -1860,6 +1872,8 @@ function routineCard(r, date) {
     el('div', { class: 'routine-actions' }, [
       el('button', {
         class: 'btn btn-primary btn-run',
+        // a menu is for choosing from; running all of it is not the point, and would be an hour
+        disabled: r.open && !n ? true : null,
         onclick: () => {
           // Running a selection consumes it, the same way the queue bar does — a pick that
           // survives being run comes back to haunt you two screens later.
@@ -1868,7 +1882,7 @@ function routineCard(r, date) {
           RUN.open(steps, date, 0, n ? null : { routine: r.id });
         }
       }, [ico(ICONS.play, 'nav-ico'),
-          n ? 'Run ' + n + ' selected' : 'Run all ' + r.items.length]),
+          n ? 'Run ' + n + ' selected' : r.open ? 'Tick what you want' : 'Run all ' + r.items.length]),
       el('button', {
         class: 'btn btn-pick', 'aria-expanded': open ? 'true' : 'false',
         onclick: () => { open ? ROPEN.delete(r.id) : ROPEN.add(r.id); render(); }

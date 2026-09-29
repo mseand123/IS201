@@ -991,6 +991,10 @@ body.running .queuebar { display: none; }
 /* A picked row explains its own dose: whose number it is, and what to change. */
 .pick-note { font-size: var(--t-xs); color: var(--muted); line-height: 1.35; margin-top: .15rem; max-width: 62ch; }
 
+/* A menu's Run waits for a pick, and should look like it is waiting. */
+.btn[disabled], .btn[disabled]:hover { opacity: .55; cursor: default; }
+.btn-primary[disabled]:hover { background: var(--brand-2); border-color: var(--brand-2); color: var(--on-brand); }
+
 </style>
 </head>
 <body>
@@ -6568,6 +6572,51 @@ const GOATA_CHECK = [
   'Hips go back, chest stays forward'
 ];
 
+/* -----------------------------------------------------------
+   THE HOLY GRAIL \u2014 the short answer to "there is too much in here".
+   The best two for each part of the body, chosen for evidence and for
+   this athlete's history, and a Daily Six that is safe to repeat every
+   day. Everything else in the app is still there; this is the page to
+   open when you just want to train.
+   ----------------------------------------------------------- */
+ROUTINES.push(
+  { id:'grail-daily', n:'The Daily Six', tag:'GRAIL', rounds: 2, roundRest: 45,
+    sub:'6 moves \u00b7 2 rounds \u00b7 safe to do every single day',
+    targets:'Quads \u00b7 chest \u00b7 back \u00b7 hamstrings \u00b7 glutes \u00b7 groin',
+    why:'Six moves you can repeat every day and keep getting better at, because none of them needs two days to recover from: holds and moderate reps, not max effort. Legs, push, pull, hamstrings, glutes and groin \u2014 and your three weak links are three of the six. To progress, add five seconds to every hold and a rep or two to the push-ups and pull-ups each week. When a hold passes about 60 seconds, add a backpack instead of more time. The heavy hitters \u2014 Nordics, heavy hip thrusts, split squats, hops \u2014 are in the list below, twice a week.',
+    items:[
+      { x:'iso-split-squat-yield', d:'40 s per side', t:{ r: 8 }, note:'Legs. Back foot on the bed, sink low and hold.' },
+      { x:'pushup', d:'15', note:'Push. On the pull-up bar on the floor for extra depth.' },
+      { x:'pullup', d:'6', note:'Pull. Easy, clean reps \u2014 stop two short of failing.' },
+      { x:'ham-iso-long', d:'30 s per side', t:{ r: 8 }, note:'Hamstrings at length. The one your strain history asks for.' },
+      { x:'couch-hip-thrust-iso', d:'30 s per side', t:{ r: 8 }, note:'Glutes. Shoulders on the couch, one leg, squeeze at the top.' },
+      { x:'copenhagen-hold', d:'20 s per side', t:{ r: 8 }, note:'Groin. Top knee on the bed edge. Your weakest link.' }
+    ]},
+
+  { id:'grail-list', n:'The Holy Grail', tag:'GRAIL', open: true,
+    sub:'The best for each part of your body \u00b7 tick any and run them',
+    targets:'Hamstrings \u00b7 glutes \u00b7 groin \u00b7 quads \u00b7 chest \u00b7 back \u00b7 trunk \u00b7 landing',
+    why:'The best for each part of your body \u2014 two for most, three for the hamstrings and hips because your history earns them the extra one \u2014 chosen for the evidence behind them, out of everything in this app. Tick the ones you want and hit Run \u2014 or tick some here and some elsewhere, and the bar at the bottom runs them together. Anything rated Light or Moderate is fine most days. The Taxing ones, the Nordic and the hops, are twice a week and never the day before a game.',
+    items:[
+      { x:'nordic-curl', g:'HAMSTRINGS', d:'3 \u00d7 5, slow', note:'The best-evidenced hamstring exercise there is: roughly half the injuries. Twice a week.' },
+      { x:'ham-iso-long', d:'3 \u00d7 30 s per side', note:'Strength at length, fine every day.' },
+      { x:'single-leg-rdl', d:'3 \u00d7 8 per side', note:'The hinge the Nordic misses: hip extension with the hamstring long. At home, the backpack version.' },
+      { x:'hip-thrust', g:'HIPS & GROIN', d:'4 \u00d7 20 s at lockout, heavy', note:'The glutes protect the hip more than anything. At home, the one-leg couch version.' },
+      { x:'copenhagen-hold', d:'3 \u00d7 20 s per side', note:'The best evidence for the groin, and your weakest link.' },
+      { x:'hip-airplane', d:'2 \u00d7 5 per side, slow', note:'Rotation strength on one loaded leg \u2014 what a hip needs to plant and cut. As far as you can control.' },
+      { x:'rfess', g:'LEGS', d:'3 \u00d7 8 per side', note:'The best single-leg strength builder. Back foot on a bench or the bed.' },
+      { x:'pogo-jumps', d:'3 \u00d7 20 contacts', note:'Springy, stiff ankles \u2014 free speed. Heels never touch.' },
+      { x:'pushup', g:'PUSH \u00b7 chest, shoulders, arms', d:'3 \u00d7 15\u201320', note:'On the pull-up bar on the floor for extra depth.' },
+      { x:'pike-pushup', d:'3 \u00d7 10', note:'Shoulders overhead. Nothing else here covers it.' },
+      { x:'pullup', g:'PULL \u00b7 back and arms', d:'3 \u00d7 6\u20138', note:'The best upper-body pull, and most of your biceps work.' },
+      { x:'table-row-iso', d:'3 \u00d7 12', t:{ w: 40, r: 60, label: 'Rows, 12 reps' }, note:'Under a sturdy table. Twice the pulling of the pushing keeps a thrower\u2019s shoulder happy.' },
+      { x:'deadbug', g:'CORE', d:'3 \u00d7 6 per side, slow', note:'Low back glued to the floor. The core exercise that carries over most.' },
+      { x:'side-plank-iso', d:'3 \u00d7 30 s per side', note:'Obliques and the side of the hip in one.' },
+      { x:'forefoot-squat-hold', g:'MOVEMENT & LANDING \u00b7 from GOATA', d:'60 s', note:'Rest in a deep squat on the balls of your feet, knees out. Any day.' },
+      { x:'sl-hop-stick', d:'3 \u00d7 4 per leg', note:'Hop, land on one foot, freeze with the knee out. The landing that keeps knees and ankles safe. Twice a week.' }
+    ]}
+);
+
 
 </script>
 <script>
@@ -6625,6 +6674,7 @@ const ICONS = {
   trail: 'M2 20h20|M5 20l5-11 4 7 2-3 4 7|M17 6a2 2 0 1 0 0-.1',
   boss: 'M4 9h3v6H4z|M17 9h3v6h-3z|M7 12h10|M2 11v2|M22 11v2',
   room: 'M3 11l9-7 9 7|M5 10v10h14V10|M10 20v-5h4v5',
+  grail: 'M7 3h10v4a5 5 0 0 1-10 0z|M12 12v5|M8 21h8|M10 17h4v4h-4z|M7 5H4a3 3 0 0 0 3 4|M17 5h3a3 3 0 0 1-3 4',
   goata: 'M8 3c1.7 0 2.5 2 2.5 4.5S9.7 12 8 12 5.5 10 5.5 7.5 6.3 3 8 3|M6.5 14.5h3v2.5h-3z|M16 7c1.7 0 2.5 2 2.5 4.5S17.7 16 16 16s-2.5-2-2.5-4.5S14.3 7 16 7|M14.5 18.5h3V21h-3z',
   check: 'M4 12l6 6L20 6'
 };
@@ -8061,6 +8111,12 @@ function viewProgram() {
       body: () => el('div', { class: 'stack stack-xl' }, RANGE_GROUPS.map(g =>
         sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
     },
+    grail: {
+      n: 'The Holy Grail', blurb: 'Just the best. Two per body part, and a Daily Six.',
+      body: () => sec('The Holy Grail',
+        'Out of everything in the app, the ones worth doing. Run the Daily Six every day, and tick anything from the list on top of it.',
+        grid(byTag('GRAIL')))
+    },
     room: {
       n: 'Room Circuit', blurb: 'Six moves, a floor and a bed. Hip, hamstring, legs, push-ups, core.',
       body: () => sec('Room Circuit',
@@ -8232,6 +8288,7 @@ function viewProgram() {
     trail: ROUTINES.filter(r => r.tag === 'TRAIL').length + ' blocks',
     boss: ROUTINES.filter(r => r.tag === 'BOSS').length + ' blocks',
     room: '~' + Math.round(runSeconds(routineSteps(byId('room-circuit'))) / 60) + ' min',
+    grail: byId('grail-list').items.length + ' + 6',
     goata: ROUTINES.filter(r => r.tag === 'GOATA').length + ' blocks',
     blocks: byTag('ARMOR').length + ' blocks',
     power: byTag('POWER').length + ' blocks',
@@ -8259,6 +8316,7 @@ function viewProgram() {
         'Everything that is not today\u2019s session. The daily and range work carries any sport; Frisbee is the game-day layer on top of it.')
     ]),
     el('div', { class: 'hub' }, [
+      tile('grail', ICONS.grail),
       tile('room', ICONS.room),
       tile('play', ICONS.play),
       tile('body', ICONS.body),
@@ -8353,6 +8411,8 @@ function queueRun(date) {
 }
 // A re-render rebuilds the <details>, so remember which ones the user had open.
 const ROPEN = new Set();
+// A routine marked `open` is a menu, not a session: its list starts open so the first thing you see is the choice.
+ROUTINES.filter(r => r.open).forEach(r => ROPEN.add(r.id));
 const WHYOPEN = new Set();   // rationale is collapsed by default so a list of blocks stays scannable
 
 function routineCard(r, date) {
@@ -8413,7 +8473,8 @@ function routineCard(r, date) {
         cov ? el('span', { class: 'chip ' + cov.k, title: cov.d }, cov.l) : null,
         timesToday ? el('span', { class: 'chip good' }, '✓ ' + (timesToday > 1 ? timesToday + '×' : '') + ' today') : null
       ]),
-      el('span', { class: 'num xs muted' }, '≈ ' + fmtMins(runSeconds(routineSteps(r, chosen))))
+      // a menu has no "whole thing" to time: it shows the picks, or says to pick
+      el('span', { class: 'num xs muted' }, r.open && !n ? 'pick any' : '≈ ' + fmtMins(runSeconds(routineSteps(r, chosen))))
     ]),
     el('p', { class: 'small muted' }, r.sub),
     // A short, authored line saying what the block is for. check-data.js verifies every term
@@ -8433,6 +8494,8 @@ function routineCard(r, date) {
     el('div', { class: 'routine-actions' }, [
       el('button', {
         class: 'btn btn-primary btn-run',
+        // a menu is for choosing from; running all of it is not the point, and would be an hour
+        disabled: r.open && !n ? true : null,
         onclick: () => {
           // Running a selection consumes it, the same way the queue bar does — a pick that
           // survives being run comes back to haunt you two screens later.
@@ -8441,7 +8504,7 @@ function routineCard(r, date) {
           RUN.open(steps, date, 0, n ? null : { routine: r.id });
         }
       }, [ico(ICONS.play, 'nav-ico'),
-          n ? 'Run ' + n + ' selected' : 'Run all ' + r.items.length]),
+          n ? 'Run ' + n + ' selected' : r.open ? 'Tick what you want' : 'Run all ' + r.items.length]),
       el('button', {
         class: 'btn btn-pick', 'aria-expanded': open ? 'true' : 'false',
         onclick: () => { open ? ROPEN.delete(r.id) : ROPEN.add(r.id); render(); }

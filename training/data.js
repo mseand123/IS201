@@ -5570,4 +5570,49 @@ const GOATA_CHECK = [
   'Hips go back, chest stays forward'
 ];
 
+/* -----------------------------------------------------------
+   THE HOLY GRAIL \u2014 the short answer to "there is too much in here".
+   The best two for each part of the body, chosen for evidence and for
+   this athlete's history, and a Daily Six that is safe to repeat every
+   day. Everything else in the app is still there; this is the page to
+   open when you just want to train.
+   ----------------------------------------------------------- */
+ROUTINES.push(
+  { id:'grail-daily', n:'The Daily Six', tag:'GRAIL', rounds: 2, roundRest: 45,
+    sub:'6 moves \u00b7 2 rounds \u00b7 safe to do every single day',
+    targets:'Quads \u00b7 chest \u00b7 back \u00b7 hamstrings \u00b7 glutes \u00b7 groin',
+    why:'Six moves you can repeat every day and keep getting better at, because none of them needs two days to recover from: holds and moderate reps, not max effort. Legs, push, pull, hamstrings, glutes and groin \u2014 and your three weak links are three of the six. To progress, add five seconds to every hold and a rep or two to the push-ups and pull-ups each week. When a hold passes about 60 seconds, add a backpack instead of more time. The heavy hitters \u2014 Nordics, heavy hip thrusts, split squats, hops \u2014 are in the list below, twice a week.',
+    items:[
+      { x:'iso-split-squat-yield', d:'40 s per side', t:{ r: 8 }, note:'Legs. Back foot on the bed, sink low and hold.' },
+      { x:'pushup', d:'15', note:'Push. On the pull-up bar on the floor for extra depth.' },
+      { x:'pullup', d:'6', note:'Pull. Easy, clean reps \u2014 stop two short of failing.' },
+      { x:'ham-iso-long', d:'30 s per side', t:{ r: 8 }, note:'Hamstrings at length. The one your strain history asks for.' },
+      { x:'couch-hip-thrust-iso', d:'30 s per side', t:{ r: 8 }, note:'Glutes. Shoulders on the couch, one leg, squeeze at the top.' },
+      { x:'copenhagen-hold', d:'20 s per side', t:{ r: 8 }, note:'Groin. Top knee on the bed edge. Your weakest link.' }
+    ]},
+
+  { id:'grail-list', n:'The Holy Grail', tag:'GRAIL', open: true,
+    sub:'The best for each part of your body \u00b7 tick any and run them',
+    targets:'Hamstrings \u00b7 glutes \u00b7 groin \u00b7 quads \u00b7 chest \u00b7 back \u00b7 trunk \u00b7 landing',
+    why:'The best for each part of your body \u2014 two for most, three for the hamstrings and hips because your history earns them the extra one \u2014 chosen for the evidence behind them, out of everything in this app. Tick the ones you want and hit Run \u2014 or tick some here and some elsewhere, and the bar at the bottom runs them together. Anything rated Light or Moderate is fine most days. The Taxing ones, the Nordic and the hops, are twice a week and never the day before a game.',
+    items:[
+      { x:'nordic-curl', g:'HAMSTRINGS', d:'3 \u00d7 5, slow', note:'The best-evidenced hamstring exercise there is: roughly half the injuries. Twice a week.' },
+      { x:'ham-iso-long', d:'3 \u00d7 30 s per side', note:'Strength at length, fine every day.' },
+      { x:'single-leg-rdl', d:'3 \u00d7 8 per side', note:'The hinge the Nordic misses: hip extension with the hamstring long. At home, the backpack version.' },
+      { x:'hip-thrust', g:'HIPS & GROIN', d:'4 \u00d7 20 s at lockout, heavy', note:'The glutes protect the hip more than anything. At home, the one-leg couch version.' },
+      { x:'copenhagen-hold', d:'3 \u00d7 20 s per side', note:'The best evidence for the groin, and your weakest link.' },
+      { x:'hip-airplane', d:'2 \u00d7 5 per side, slow', note:'Rotation strength on one loaded leg \u2014 what a hip needs to plant and cut. As far as you can control.' },
+      { x:'rfess', g:'LEGS', d:'3 \u00d7 8 per side', note:'The best single-leg strength builder. Back foot on a bench or the bed.' },
+      { x:'pogo-jumps', d:'3 \u00d7 20 contacts', note:'Springy, stiff ankles \u2014 free speed. Heels never touch.' },
+      { x:'pushup', g:'PUSH \u00b7 chest, shoulders, arms', d:'3 \u00d7 15\u201320', note:'On the pull-up bar on the floor for extra depth.' },
+      { x:'pike-pushup', d:'3 \u00d7 10', note:'Shoulders overhead. Nothing else here covers it.' },
+      { x:'pullup', g:'PULL \u00b7 back and arms', d:'3 \u00d7 6\u20138', note:'The best upper-body pull, and most of your biceps work.' },
+      { x:'table-row-iso', d:'3 \u00d7 12', t:{ w: 40, r: 60, label: 'Rows, 12 reps' }, note:'Under a sturdy table. Twice the pulling of the pushing keeps a thrower\u2019s shoulder happy.' },
+      { x:'deadbug', g:'CORE', d:'3 \u00d7 6 per side, slow', note:'Low back glued to the floor. The core exercise that carries over most.' },
+      { x:'side-plank-iso', d:'3 \u00d7 30 s per side', note:'Obliques and the side of the hip in one.' },
+      { x:'forefoot-squat-hold', g:'MOVEMENT & LANDING \u00b7 from GOATA', d:'60 s', note:'Rest in a deep squat on the balls of your feet, knees out. Any day.' },
+      { x:'sl-hop-stick', d:'3 \u00d7 4 per leg', note:'Hop, land on one foot, freeze with the knee out. The landing that keeps knees and ankles safe. Twice a week.' }
+    ]}
+);
+
 if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB, ROUTINES, PLAY_GROUPS, RANGE_GROUPS, FREE_WINS, BODY_GROUPS, TRAIL_GROUPS, BOSS_GROUPS, BOSS_LADDER, BOSS_WEEK, BOSS_OFF, GOATA_GROUPS, GOATA_RULES, GOATA_TERMS, GOATA_DAILY, GOATA_WEEK, GOATA_LADDER, GOATA_CHECK }; }
