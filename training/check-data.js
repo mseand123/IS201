@@ -151,6 +151,9 @@ d.ROUTINES.filter(r => r.rounds !== undefined).forEach(r => {
   ck(list && six, 'the Holy Grail needs its list and its Daily Six');
   if (six) ck(six.items.length === 6, 'the Daily Six has ' + six.items.length + ' moves');
   if (six) six.items.forEach(i => ck((d.EX[i.x].cost || 2) < 3, 'the Daily Six is done every day, so ' + i.x + ' cannot be rated Taxing'));
+  // it is all done at home without weights, so Gym and Home mode must show the same thing
+  [list, six].filter(Boolean).forEach(r => r.items.forEach(i =>
+    ck(!d.HOME_SUB[i.x], r.id + ' › ' + i.x + ' swaps in Home mode, but the Holy Grail is home-only already')));
   if (list) {
     const groups = []; let g = null;
     list.items.forEach(i => { if (i.g) { g = { n: i.g, k: 0 }; groups.push(g); } g.k++; });

@@ -1682,7 +1682,7 @@ const EX = {
   targets: 'Quads & glutes at length \u00b7 patellar tendon',
   why: 'Yielding isometrics — holding a position under load, typically 20–120 s — build tendon capacity, reinforce positions, and are the right tool in the early phase of a block. Hold type fatigues faster than push type at the same intensity, which is why these feel disproportionately hard. This is your tendon-thickening, position-owning work.',
   home: "Load it with a backpack full of books and water bottles, on the back or hugged to the chest. Bodyweight for 90 s is already a serious hold.",
-  setup: 'Split stance, back knee an inch off the floor, front shin roughly vertical. Dumbbells at the sides or a barbell on the back.',
+  setup: 'Split stance, back knee an inch off the floor, front shin roughly vertical. Bodyweight is a real dose here; dumbbells, a backpack or a barbell are how you load it later.',
   steps: [
     'Descend into the bottom position and stop with the back knee an inch off the floor.',
     'Front foot drives down and back into the floor; do not just balance there.',
@@ -6579,6 +6579,45 @@ const GOATA_CHECK = [
   'Hips go back, chest stays forward'
 ];
 
+Object.assign(EX, {
+'bridge-walkout': {
+  n: 'Glute Bridge Walkout', cat: 'strength', tags: ['hamstring','glute','home','prevention'], cost: 2, repSec: 6,
+  targets: 'Hamstrings, lengthening under load \u00b7 glutes',
+  why: 'A bridge that turns into a hamstring exercise. Holding the hips up while the heels walk away puts the hamstrings under load as they lengthen \u2014 the same eccentric job the Nordic trains, at a dose you can control step by step, with nothing but a floor. It is the best bodyweight hamstring move after the Nordic, and the glutes work the whole time to keep the hips from sagging.',
+  setup: 'On your back, knees bent, heels close to your backside. Arms by your sides.',
+  steps: [
+    'Bridge up: squeeze the glutes and lift the hips until knees, hips and shoulders make a line.',
+    'Keeping the hips up, walk the heels away in small steps \u2014 three or four each foot \u2014 until the legs are nearly straight.',
+    'Walk them back in the same way, hips still up. That is one rep.',
+    'Lower the hips only at the end of the set.'
+  ],
+  cues: ['Hips stay up the whole time.','Small steps out, small steps back.'],
+  faults: ['Hips sagging as the heels go out \u2014 stop the walk where they start to drop.','Arching the low back instead of squeezing the glutes.','Rushing the steps.'],
+  dose: '3 \u00d7 6',
+  prog: 'Walk further out, pause for two seconds at the far end, or do the last rep on one leg.',
+  regr: 'Shorter walks, only as far as the hips stay up.',
+  home: 'Floor only. Socks on a smooth floor turn it into a slider curl, which is harder.'
+},
+'sl-hip-thrust': {
+  n: 'Single-Leg Hip Thrust (Couch)', cat: 'strength', tags: ['glute','hip','home','accel'], cost: 2, repSec: 3.5,
+  targets: 'Glutes \u00b7 hip extension, one side at a time',
+  why: 'The single-leg glute bridge with the shoulders up on the couch, which gives the hip more range and the glute more to do. The glutes are the biggest muscle protecting the hip, and one leg at a time is how you run and cut \u2014 it also shows you a side-to-side difference the two-leg version hides. It is the no-weights answer to the barbell hip thrust, and at bodyweight it is harder than it sounds.',
+  setup: 'Upper back on the edge of a couch or bed, one foot flat on the floor under the knee, the other leg lifted. Hands on the couch or across the chest.',
+  steps: [
+    'Tuck the pelvis first \u2014 ribs down, low back flat.',
+    'Drive through the heel and lift the hips until the body is flat from shoulders to knee.',
+    'Squeeze the glute hard for two seconds at the top.',
+    'Lower under control, just short of the floor. All reps on one leg, then the other.'
+  ],
+  cues: ['Drive through the heel.','Two-second squeeze at the top.'],
+  faults: ['Arching the low back to get higher.','Hips tilting toward the lifted leg.','Pushing through the toes.'],
+  dose: '3 \u00d7 12 per side',
+  prog: 'A slower lowering, a longer squeeze, or a backpack across the hips if you ever want load.',
+  regr: 'Shoulders on the floor instead \u2014 the single-leg glute bridge \u2014 or both feet down.',
+  home: 'A couch, a bed, or the edge of a sturdy chair.'
+}
+});
+
 /* -----------------------------------------------------------
    THE HOLY GRAIL \u2014 the short answer to "there is too much in here".
    The best two for each part of the body, chosen for evidence and for
@@ -6588,11 +6627,11 @@ const GOATA_CHECK = [
    ----------------------------------------------------------- */
 ROUTINES.push(
   { id:'grail-daily', n:'The Daily Six', tag:'GRAIL', rounds: 2, roundRest: 45,
-    sub:'6 moves \u00b7 2 rounds \u00b7 safe to do every single day',
+    sub:'6 moves \u00b7 2 rounds \u00b7 at home, no weights \u00b7 safe every day',
     targets:'Quads \u00b7 chest \u00b7 back \u00b7 hamstrings \u00b7 glutes \u00b7 groin',
     why:'Six moves you can repeat every day and keep getting better at, because none of them needs two days to recover from: holds and moderate reps, not max effort. Legs, push, pull, hamstrings, glutes and groin \u2014 and your three weak links are three of the six. To progress, add five seconds to every hold and a rep or two to the push-ups and pull-ups each week. When a hold passes about 60 seconds, add a backpack instead of more time. The heavy hitters \u2014 Nordics, heavy hip thrusts, split squats, hops \u2014 are in the list below, twice a week.',
     items:[
-      { x:'iso-split-squat-yield', d:'40 s per side', t:{ r: 8 }, note:'Legs. Back foot on the bed, sink low and hold.' },
+      { x:'iso-split-squat-yield', d:'40 s per side', t:{ r: 8 }, note:'Legs. Bodyweight, back foot on the bed, sink low and hold.' },
       { x:'pushup', d:'15', note:'Push. On the pull-up bar on the floor for extra depth.' },
       { x:'pullup', d:'6', note:'Pull. Easy, clean reps \u2014 stop two short of failing.' },
       { x:'ham-iso-long', d:'30 s per side', t:{ r: 8 }, note:'Hamstrings at length. The one your strain history asks for.' },
@@ -6601,26 +6640,27 @@ ROUTINES.push(
     ]},
 
   { id:'grail-list', n:'The Holy Grail', tag:'GRAIL', open: true,
-    sub:'The best for each part of your body \u00b7 tick any and run them',
+    sub:'The best for each part of your body \u00b7 at home, no weights \u00b7 tick any and run them',
     targets:'Hamstrings \u00b7 glutes \u00b7 groin \u00b7 quads \u00b7 chest \u00b7 back \u00b7 trunk \u00b7 landing',
-    why:'The best for each part of your body \u2014 two for most, three for the hamstrings and hips because your history earns them the extra one \u2014 chosen for the evidence behind them, out of everything in this app. Tick the ones you want and hit Run \u2014 or tick some here and some elsewhere, and the bar at the bottom runs them together. Anything rated Light or Moderate is fine most days. The Taxing ones, the Nordic and the hops, are twice a week and never the day before a game.',
+    why:'The best for each part of your body \u2014 two for most, three for the hamstrings and hips because your history earns them the extra one \u2014 chosen for the evidence behind them, out of everything in this app. All of it is done at home with no weights: a floor, a couch or bed, a table and your pull-up bar. Tick the ones you want and hit Run \u2014 or tick some here and some elsewhere, and the bar at the bottom runs them together. Anything rated Light or Moderate is fine most days. The Taxing ones, the Nordic and the hops, are twice a week and never the day before a game.',
     items:[
       { x:'nordic-curl', g:'HAMSTRINGS', d:'3 \u00d7 5, slow', note:'The best-evidenced hamstring exercise there is: roughly half the injuries. Twice a week.' },
       { x:'ham-iso-long', d:'3 \u00d7 30 s per side', note:'Strength at length, fine every day.' },
-      { x:'single-leg-rdl', d:'3 \u00d7 8 per side', note:'The hinge the Nordic misses: hip extension with the hamstring long. At home, the backpack version.' },
-      { x:'hip-thrust', g:'HIPS & GROIN', d:'4 \u00d7 20 s at lockout, heavy', note:'The glutes protect the hip more than anything. At home, the one-leg couch version.' },
+      { x:'bridge-walkout', d:'3 \u00d7 6', note:'Hips up, walk the heels out and back. The best bodyweight hamstring move after the Nordic.' },
+      { x:'sl-hip-thrust', g:'HIPS & GROIN', d:'3 \u00d7 12 per side', note:'Shoulders on the couch, one leg, two-second squeeze. The glutes protect the hip more than anything.' },
       { x:'copenhagen-hold', d:'3 \u00d7 20 s per side', note:'The best evidence for the groin, and your weakest link.' },
       { x:'hip-airplane', d:'2 \u00d7 5 per side, slow', note:'Rotation strength on one loaded leg \u2014 what a hip needs to plant and cut. As far as you can control.' },
-      { x:'rfess', g:'LEGS', d:'3 \u00d7 8 per side', note:'The best single-leg strength builder. Back foot on a bench or the bed.' },
+      { x:'backpack-rfess', g:'LEGS', d:'3 \u00d7 10 per side', note:'Back foot on the bed, bodyweight. The best single-leg strength builder there is.' },
       { x:'pogo-jumps', d:'3 \u00d7 20 contacts', note:'Springy, stiff ankles \u2014 free speed. Heels never touch.' },
       { x:'pushup', g:'PUSH \u00b7 chest, shoulders, arms', d:'3 \u00d7 15\u201320', note:'On the pull-up bar on the floor for extra depth.' },
       { x:'pike-pushup', d:'3 \u00d7 10', note:'Shoulders overhead. Nothing else here covers it.' },
-      { x:'pullup', g:'PULL \u00b7 back and arms', d:'3 \u00d7 6\u20138', note:'The best upper-body pull, and most of your biceps work.' },
+      { x:'pullup', g:'PULL \u00b7 back and arms', d:'3 \u00d7 6\u20138', note:'Your pull-up bar. The best upper-body pull, and most of your biceps work.' },
       { x:'table-row-iso', d:'3 \u00d7 12', t:{ w: 40, r: 60, label: 'Rows, 12 reps' }, note:'Under a sturdy table. Twice the pulling of the pushing keeps a thrower\u2019s shoulder happy.' },
       { x:'deadbug', g:'CORE', d:'3 \u00d7 6 per side, slow', note:'Low back glued to the floor. The core exercise that carries over most.' },
       { x:'side-plank-iso', d:'3 \u00d7 30 s per side', note:'Obliques and the side of the hip in one.' },
-      { x:'forefoot-squat-hold', g:'MOVEMENT & LANDING \u00b7 from GOATA', d:'60 s', note:'Rest in a deep squat on the balls of your feet, knees out. Any day.' },
-      { x:'sl-hop-stick', d:'3 \u00d7 4 per leg', note:'Hop, land on one foot, freeze with the knee out. The landing that keeps knees and ankles safe. Twice a week.' }
+      { x:'deep-squat-hold', g:'MOVEMENT & LANDING', d:'2 min', note:'Heels down, sit as deep as you can and stay there. Any day, as often as you like.' },
+      { x:'forefoot-squat-hold', d:'60 s', note:'GOATA\u2019s version: on the balls of the feet, heels a finger up, knees out.' },
+      { x:'sl-hop-stick', d:'3 \u00d7 4 per leg', note:'From GOATA: hop, land on one foot, freeze with the knee out. The landing that keeps knees and ankles safe. Twice a week.' }
     ]}
 );
 
