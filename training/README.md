@@ -65,6 +65,30 @@ block; the arm warm-up lives in the Upper + Throw session instead. Eleven new ex
 them, including 8-way hips and clamshells, a short deep squat hold placed early, and graded
 build-up runs and cutting build-ups so the first hard plant of the day is deliberate.
 
+
+### The game-day warm-up, audited
+
+A full pass over the Frisbee Warm-Up as the player actually runs it, not as the list reads:
+
+- **The frog rock-back ran the wrong exercise.** The row said "10 rocks + 20 s hold"; the player ran
+  three 30-second holds and no rocks. It now runs one 50-second step: rock ten, then hold.
+- **It did not fit its own start time.** Thirty-nine minutes, with "start around 40 minutes before
+  pull" and "warm your throws up separately" — leaving no time for the throws. It now says to roll
+  your feet while you lace up and start about 45 minutes out, and `check-timing.js` fails any routine
+  that says when to start it and runs longer than that.
+- **The throwing arm was not warmed up at all.** A short ARM block now sits between the leg work and
+  the sprints: a rotator-cuff isometric each direction, then a throwing ladder built short to long
+  with only two or three hucks. Sprints still come last, so the final thing before the pull is
+  running fast.
+- **Twelve minutes of floor work after a three-minute jog**, with three overlapping glute moves.
+  The clamshell is gone (8-way hips covers it, standing, so you stay warm) and 8-way hips is five
+  reps a position instead of eight — the block is under ten minutes now.
+- **Stale hip caution**: the deep-squat notes no longer ask you to check for a pinch.
+
+The same "row says one thing, timer runs another" bug turned up in knee-to-wall in four other blocks
+(Range Block, Tight Calves, Legs, Before the Hike); each now runs one timed set per side matching
+its row.
+
 ## Stretching
 
 There is no static stretching in any of the three warm-ups — they are dynamic, activation and

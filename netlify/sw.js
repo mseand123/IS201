@@ -1,4 +1,4 @@
-const C = "ground-contact-bbb45bccf2";
+const C = "ground-contact-de3e2d4f5b";
 const SHELL = ["/", "/index.html", "/manifest.webmanifest", "/icon-192.png", "/icon-512.png"];
 self.addEventListener("install", e => { self.skipWaiting();
   e.waitUntil(caches.open(C).then(c => c.addAll(SHELL)).catch(() => {})); });

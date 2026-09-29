@@ -1569,6 +1569,7 @@ const EX = {
 /* ============ THE SHOULDER / LABRUM TRACK ============ */
 'cuff-iso-er': {
   n: 'Rotator Cuff Isometric — ER/IR', cat: 'iso', tags: ['shoulder','thrower','iso','daily','armor'],
+  targets: 'Rotator cuff \u00b7 throwing shoulder',
   why: 'The cheapest insurance available for a shoulder that throws hundreds of times a week. Isometrics at low abduction angles load the rotator cuff without the end-range compression that irritates a throwing shoulder, they take two minutes, and they are timed holds, which suits you. The cuff is what keeps the humeral head centred while your hips and torso generate the throw.',
   setup: 'Stand with the affected arm at your side, elbow at 90°, a rolled towel between elbow and ribs.',
   steps: [
@@ -4348,7 +4349,7 @@ const ROUTINES = [
     targets:'Ankles \u00b7 hips \u00b7 hip flexors \u00b7 adductors \u00b7 hamstrings \u00b7 posterior chain \u00b7 shoulders',
     why:'Long passive holds do not belong in a warm-up, but they are not worthless — they are just in the wrong place. Put them here: after a session or on an off day, when a small transient loss of force costs you nothing and the tissue is already warm. The dose that matters is weekly, not daily. Roughly five minutes of accumulated stretch per muscle group per week is where measurable range starts to appear, and past about ten it stops paying. Two runs of this block covers that. Every position here is either loaded or actively held, because range you cannot produce force in is range you will not use on a field.',
     items:[
-      { x:'knee-to-wall', d:'10 reps + 30 s hold per side', note:'Ankle first. If dorsiflexion is the limit, everything below inherits it — including the squat depth you are about to chase.' },
+      { x:'knee-to-wall', d:'10 reps + 30 s hold per side', t:{ w: 60, r: 8, rounds: 2, label: 'Knee to wall — switch sides' }, note:'Ankle first. If dorsiflexion is the limit, everything below inherits it — including the squat depth you are about to chase.' },
       { x:'deep-squat-hold', d:'2 × 90 s', t:{ r: 30 }, note:'Longer than the warm-up version, because nothing is sprinting after it. Sit into it and breathe rather than bracing.' },
       { x:'ninety-ninety', d:'30 s hold per side', note:'Switch back and forth a few times to find the range first, then hold. Active hip rotation, and the safest way to work a labral hip near end range \u2014 you are producing the position, not being put in it.' },
       { x:'couch-stretch', d:'2 × 45 s per side', note:'The one that undoes a workday. Squeeze the glute on the stretched side; that turns a passive hang into an active lengthening.' },
@@ -4401,7 +4402,7 @@ const ROUTINES = [
     items:[
       { x:'ball-roll-foot', d:'60 s per foot', note:'Toe-touch before and after. The range it buys is not only in the foot.' },
       { x:'ball-calf-peroneal', d:'60 s per side', note:'Pump the ankle whenever you are parked. Do not skip the peroneal strip on the outside, which is the half nobody ever touches.' },
-      { x:'knee-to-wall', d:'10 reps + 30 s hold per side', note:'Measure it. Heel glued down, knee over the second toe, and log the number under Tests so you can watch it move.' },
+      { x:'knee-to-wall', d:'10 reps + 30 s hold per side', t:{ w: 60, r: 8, rounds: 2, label: 'Knee to wall — switch sides' }, note:'Measure it. Heel glued down, knee over the second toe, and log the number under Tests so you can watch it move.' },
       { x:'deep-squat-hold', d:'2 \u00d7 90 s', t:{ r: 30 }, note:'Where that ankle range actually gets used. Heels flat, or a small wedge under them to start.' }
     ]},
 
@@ -5109,6 +5110,7 @@ Object.assign(EX, {
 },
 'disc-ladder': {
   n: 'Throwing Ladder', cat: 'throw', tags: ['warmup','shoulder','ultimate'],
+  targets: 'Throwing arm \u00b7 distance, built up in order',
   why: 'A shoulder and forearm warm-up that happens to be throwing practice. Going straight to hucks cold is how throwing shoulders start aching mid-season — and the first ten minutes of throwing is also where your release actually gets calibrated for the day.',
   setup: 'Partner, starting close.',
   steps: [
@@ -5129,22 +5131,23 @@ Object.assign(EX, {
 
 ROUTINES.unshift(
   { id:'warmup-full', n:'Frisbee Warm-Up', tag:'WARMUP',
-    targets:'Feet & calves · hip flexors · glutes · adductors · hamstrings · ankles · sprint mechanics · cutting',
-    sub:'Game day · everything the legs need to be ready to sprint',
-    why:'Built on RAMP — Raise, Mobilise, Activate, Potentiate — because the order carries more than the exercise choice does. Temperature first, then range, then the muscles that need waking, then speed. Mobility on a cold muscle is just stretching, and going from standing to a hard cut is how people strain things in warm-ups. Everything here is about the legs and hips arriving ready to sprint; warm your throws up separately on your own clock. Start it around 40 minutes before pull, and if you finish early keep moving rather than sitting down.',
+    targets:'Feet & calves · hip flexors · glutes · adductors · hamstrings · ankles · throwing shoulder · sprint mechanics · cutting',
+    sub:'Game day · legs, hips and throwing arm, ready to sprint',
+    why:'Built on RAMP — Raise, Mobilise, Activate, Potentiate — because the order carries more than the exercise choice does. Temperature first, then range, then the muscles that need waking, then speed. Mobility on a cold muscle is just stretching, and going from standing to a hard cut is how people strain things in warm-ups. Everything here gets the legs and hips ready to sprint and cut, and the throwing arm gets its own short block just before the sprints, so the last thing you do before the pull is run fast. Roll your feet while you lace up, then start about 45 minutes before pull; if you finish early, keep moving rather than sitting down.',
     items:[
       { x:'ball-roll-foot', g:'PREP · while you lace up', d:'60 s per foot', note:'Do this sitting down while you put your cleats on — it costs you no warm-up time at all. Toe-touch test before and after. The range effect fades in twenty to thirty minutes, so if you want it at game time rather than at warm-up time, take thirty seconds more just before you line up.' },
       { x:'easy-jog', g:'RAISE · get warm before anything else', d:'3 min easy' },
       { x:'leg-swings', g:'MOBILISE · range, now that you are warm', d:'10 linear + 10 lateral per leg' },
       { x:'walking-lunge-rotation', d:'5 per side' },
-      { x:'deep-squat-hold', d:'2 × 40 s', t:{ r: 15 }, note:'Early and short — this is opening the hips while you are warm, not accumulating time. Check whether the bottom pinches today; that is worth knowing before you play.' },
-      { x:'adductor-rockback', d:'10 rocks + 20 s hold' },
-      { x:'clamshell', g:'ACTIVATE · wake what has to hold you up', d:'15 per side, hold the last one 15 s' },
-      { x:'seven-way-hips', d:'8 positions × 8 reps per side' },
+      { x:'deep-squat-hold', d:'2 × 40 s', t:{ r: 15 }, note:'Early and short — this is opening the hips while you are warm, not accumulating time.' },
+      { x:'adductor-rockback', d:'10 rocks + 20 s hold', t:{ w: 50, r: 0, rounds: 1, label: 'Rock ten, then hold' }, note:'About thirty seconds of slow rocks, then sit back and hold for twenty.' },
+      { x:'seven-way-hips', g:'ACTIVATE · wake what has to hold you up', d:'8 positions × 5 reps per side', note:'Standing, so you stay warm. It covers what the clamshell did and the rest of the hip besides.' },
       { x:'glute-bridge-warm', d:'8 per side', note:'The only hip extension in the warm-up. Squeeze first, then lift \u2014 this is what stops the hamstring carrying the first few strides.' },
       { x:'iso-hip-flexor', d:'2 × 15 s per side', t:{ r: 10 }, note:'The other half of a stride. Knee up above hip height, drive into your hands or the wall, hard. This is the muscle that lifts the knee at top speed.' },
       { x:'adductor-squeeze-iso', d:'6 × 8 s', note:'Two ladders, submaximal. Wake the groin before you ask it to plant.' },
       { x:'ham-iso-long', d:'2 × 20 s per side', t:{ r: 12 }, note:'Pre-activating the hamstring at length, right before you sprint on it.' },
+      { x:'cuff-iso-er', g:'ARM · your throwing shoulder', d:'20 s each direction', t:{ r: 8 }, note:'Throwing arm, elbow at your side. Press the back of the wrist out into a teammate’s hand or your other hand, then in. Firm, not maximal.' },
+      { x:'disc-ladder', d:'Short 10 · medium 10 · long 5 · 2–3 hucks', est: 240, note:'Build the distance in that order. Only a couple of hucks — this warms the arm for game throws, it is not a throwing session.' },
       { x:'a-skip', g:'POTENTIATE · rising to full speed, in order', d:'2 × 20 m, walk back' },
       { x:'carioca', d:'2 × 20 m each direction, building, walk back' },
       { x:'pogo-jumps', d:'2 × 15 contacts, 30 s rest' },
@@ -5159,7 +5162,7 @@ ROUTINES.unshift(
       { x:'ball-roll-foot', d:'45 s per foot', note:'While you put your cleats on. Free, and the best-evidenced thing in the warm-up.' },
       { x:'easy-jog', d:'150 s easy' },
       { x:'leg-swings', d:'10 linear + 10 lateral per leg' },
-      { x:'deep-squat-hold', d:'40 s', note:'One hold. If the bottom pinches at the front of the hip today, stay higher and note it.' },
+      { x:'deep-squat-hold', d:'40 s', note:'One hold, early \u2014 opening the hips while you are warm.' },
       { x:'clamshell', d:'15 per side' },
       { x:'seven-way-hips', d:'8 positions × 6 reps per side' },
       { x:'glute-bridge-warm', d:'6 per side' },
@@ -5237,7 +5240,7 @@ ROUTINES.push(
     why:'A full lower body session, ordered the way the rest of the program is ordered: the ankle and the foot get opened first because dorsiflexion is what lets you squat with your heels down, then the two heavy bilateral lifts while you are fresh, then single leg work where the asymmetries actually live, then the hamstring. The trap bar comes before the squat because it is the heavier pull and the one that most rewards a clean nervous system. Single leg work is not an accessory here: it is the closest thing in the gym to how you actually run, and it is the only way to find a left-right difference before it finds you. In Home mode every barbell lift swaps for a backpack or doorway version automatically \u2014 the flag on each row tells you which.',
     items:[
       { x:'ball-roll-foot', g:'PRIME \u00b7 open the ankle before you load it', d:'60 s per foot' },
-      { x:'knee-to-wall', d:'10 reps + 20 s hold per side', note:'Heels down in a squat starts here. If you are under about ten centimetres, this is your limiter.' },
+      { x:'knee-to-wall', d:'10 reps + 20 s hold per side', t:{ w: 50, r: 8, rounds: 2, label: 'Knee to wall \u2014 switch sides' }, note:'Heels down in a squat starts here. If you are under about ten centimetres, this is your limiter.' },
       { x:'deep-squat-hold', d:'60 s', t:{ r: 15 } },
       { x:'trap-bar-deadlift', g:'HEAVY \u00b7 while the nervous system is clean', d:'4 \u00d7 5 @ 80\u201385%', note:'Push the floor away rather than pulling the bar up. Stop the set if bar speed visibly drops.' },
       { x:'front-squat', d:'3 \u00d7 5', note:'Elbows up. Safety-squat bar or a goblet squat if the front rack bothers the shoulder.' },
@@ -5392,8 +5395,8 @@ ROUTINES.push(
     items:[
       { x:'hike-onramp', g:'THE THREE THAT MATTER \u00b7 eight minutes', d:'5 min easy walking', note:'Flat and easy before anything steep. Everything below works better warm and is close to useless cold.' },
       { x:'leg-swings', d:'10 linear + 10 lateral per leg', note:'Hold a tree or a pole. Active range rather than a held stretch \u2014 this is the one to keep if you cut everything else.' },
-      { x:'deep-squat-hold', d:'45 s', t:{ r: 12 }, note:'One hold. If the front of the hip pinches today, stay higher and note it under Tests.' },
-      { x:'knee-to-wall', g:'FOR UNEVEN GROUND \u00b7 ankles and balance', d:'6 reps per side', note:'A tree, a rock or the car bumper instead of a wall. Uphill asks for every degree of this.' },
+      { x:'deep-squat-hold', d:'45 s', t:{ r: 12 }, note:'One hold, to open the hips before hours of climbing.' },
+      { x:'knee-to-wall', g:'FOR UNEVEN GROUND \u00b7 ankles and balance', d:'6 reps per side', t:{ w: 20, r: 8, rounds: 2, label: 'Knee to wall \u2014 switch sides' }, note:'A tree, a rock or the car bumper instead of a wall. Uphill asks for every degree of this.' },
       { x:'ankle-eversion', d:'12 each direction, per side', note:'No band at the trailhead: press the foot outward against your own hand and hold instead. Uneven ground is where ankles get rolled.' },
       { x:'balance-progression', d:'30 s per leg', note:'Stand on one leg on the most uneven bit of ground you can find. That is the skill the trail is about to test.' },
       { x:'seven-way-hips', g:'FOR A LONG CLIMB \u00b7 glutes on, hip open', d:'8 positions \u00d7 4 reps per side', note:'Standing, holding something. Fast and quiet \u2014 nobody at the trailhead will notice. The glutes decide whether your knees take the descent.' },

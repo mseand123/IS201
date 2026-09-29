@@ -93,6 +93,14 @@ d.ROUTINES.filter(r => r.rounds).forEach(r => {
 });
 walk(d.FREE_WINS.items, 'FREE_WINS');
 
+// A routine that says when to start it ("start about 45 minutes before pull") has to fit in that time.
+d.ROUTINES.forEach(r => {
+  const m = (r.why || '').match(/start (?:it )?(?:about|around) (\d+) minutes before (?:the )?pull/i);
+  if (!m) return;
+  const secs = A.routineSteps(r).reduce((a, st) => a + A.stepSeconds(st), 0);
+  ck(secs <= +m[1] * 60, r.id + ' says to start ' + m[1] + ' min before pull but runs ' + Math.round(secs / 60) + ' min');
+});
+
 console.log('steps checked:', checked, '| worst ready-screen gap:', worst ? worst.diff.toFixed(1) + ' s (' + worst.tag + ')' : 'n/a');
 if (fail.length) { console.log(fail.slice(0, 25).join('\n')); process.exit(1); }
 console.log('TIMING OK');
