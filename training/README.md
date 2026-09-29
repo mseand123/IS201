@@ -14,7 +14,7 @@ fonts load.
 |---|---|
 | **Today** | Resolves the date against the annual plan and renders that session — every block, dose and coaching note — plus a readiness check-in that auto-regulates the day, the Daily Armor, and a notes field. |
 | **Program** | This week's microcycle with CNS-cost meters, the periodised year against the UFA calendar, standalone weak-link blocks, short sessions, and the 10-week Copenhagen ladder. |
-| **Library** | 157 exercises, filterable to the 133 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
+| **Library** | 175 exercises, filterable to the 151 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
 | **Tests** | 22-test battery on a 4-week cycle, with trend charts, targets and protocols. Hip internal rotation and the FADIR score lead it. |
 | **Method** | Fourteen essays: the training model, isometric taxonomy, an honest read on fascia, training without a gym, injury dossiers for the hip labrum / adductor / hamstring, throwing-shoulder load management, fuelling, the UFA game-model numbers, and sources. |
 
@@ -130,6 +130,11 @@ dialog.
 **Each row has its own Start.** Running one exercise previously meant opening its dialog and
 finding *Run this exercise* in there. Now it is one tap from the list, which is what you want when
 the answer is "just the deep squat hold".
+
+**Each row explains its own dose.** An item's note — whose number it is, what to change, when to
+stop — used to render on a session row and nowhere else, so the routine pickers hid the one line
+that says *his number is 30 s* or *swap this if the shoulder pinches*. Notes now render in the
+picker too, under the targets label.
 
 **Each row says what it costs.** `exCost()` rates every exercise 1, 2 or 3 and renders it with the
 same three-bar load meter the session chips use, because this is the same high-low currency the
@@ -255,6 +260,51 @@ Trail blocks carry the tag `TRAIL` and live in `TRAIL_GROUPS`. `check-data.js` h
 warm-up standard rather than the general one: every row must carry a `targets` label, every block
 must carry a short targets summary, and every term in that summary must appear in at least one of
 its own items' targets.
+
+### Boss Your Game
+
+A hub tile holding nine short workouts audited off Alex's Facebook page (a soccer performance
+coach), in his own format: an isometric hold, then dynamic reps of the same joint, four to six
+items. His running and field-session work is deliberately left out — the ask was the little
+workouts. Eighteen new exercises came in with it, from line taps to the bear plank.
+
+**His number is on every row it was raised from.** He coaches a general audience, so 30-second
+holds and 10 push-ups are a floor rather than a target for a professional. Where the dose here is
+higher, the row says what his was: `3 × 40 s per side` with *His number is 30 s per leg — that is
+the floor*. Where his number is already right — single-leg hops at three a side, split squats at
+ten — it is left alone and the note says so.
+
+**Sets, not rounds, and the clock says why.** He runs each workout as a circuit: all the items,
+then repeat, three times. Every row here carries its sets instead, because that is how the rest of
+the app doses a block and it makes the card's estimate real. The section says this outright,
+including the consequence — as straight sets with a real rest between each one these run 15 to 26
+minutes rather than his 10 to 20, because in a circuit the rests overlap. Either format is fine;
+the Start button on each row is there for anyone who wants to walk the list and go again.
+
+**Two core cards, because of the hip.** Bicycles, Russian twists and seated tuck-ups are repeated
+deep hip flexion and loaded lumbar rotation, which is the one position a hip with a labral history
+is least happy in — it is why this app's own core block is built from holds. So *Core Circuit* is
+his five as he runs them, and *Core Circuit · Hip-Friendly* swaps the first three for a dead bug, a
+Pallof press and a hollow hold, keeping his bear plank and shoulder taps. Same qualities, joint out
+of deep flexion, and neither card is the lesser session.
+
+**What he never explains, explained.** His videos give fixed numbers and no progression, so the
+section carries a five-rung ladder (`BOSS_LADDER`) with the rule underneath it: *two easy sessions
+in a row is the signal to move up a rung; one hard session is not a reason to move down.* Weeks 1–2
+are two sets at his floor, 3–4 his actual prescription, 5–6 holds at 45 s and reps up about 25%,
+7–8 load rather than reps, 9+ weight and tempo only. His weekly schedule is there too
+(`BOSS_WEEK`), with the caveat it needs: this is a second program, and in season it wants one round
+of each workout rather than two, with Legs B and Hamstrings + Speed kept off the days either side
+of a game.
+
+Two other honest flags came out of the audit. Bench dips put the front of the shoulder near
+end-range extension, so the row says to swap them for close-grip push-ups if it pinches. And the
+Nordic curl is in the hamstring circuit as an addition, not an audit finding — it is the single
+best-evidenced hamstring-injury intervention there is and his page does not have it.
+
+Trail and Boss blocks are held to the warm-up standard by `check-data.js`: every row carries a
+`targets` label, every block carries a short summary, and every term in that summary has to appear
+in one of its own items' targets.
 
 ## Injury prevention, against the actual data
 
@@ -621,6 +671,18 @@ data.js         exercises, sessions, phases, tests, articles — all the content
 app.js          router, timer engine, persistence, charts
 build.js        inlines the above into standalone.html
 standalone.html generated single-file build — save it anywhere, works offline
+
+check-data.js   schema, ids, tags, group reachability, row labels, the README's own counts
+audit.js        loads the estimator and walks every step the app can build
+check-timing.js the player's "left" figure, against the estimator, for every step and phase
+check-ui.js     serves the app and drives it in Chromium: the hub, the queue, home mode
+```
+
+Run all four before committing a content change:
+
+```
+node training/check-data.js && node training/audit.js && \
+node training/check-timing.js && node training/check-ui.js
 ```
 
 After editing `data.js`, `app.js` or `styles.css`, regenerate the single-file build:

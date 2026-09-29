@@ -1,0 +1,126 @@
+#!/usr/bin/env node
+/* The interactions the other checks cannot see: the hub's sections, a queue built from two
+   different blocks, every row carrying its label, home mode telling the truth, and the player
+   opening with a real estimate. Serves the app itself and drives it in Chromium.
+   Run: node training/check-ui.js          (needs playwright; exit 1 on findings)          */
+const http = require('http'), fs = require('fs'), path = require('path');
+const root = path.join(__dirname, '..');
+let chromium;
+for (const p of ['playwright', '/opt/node22/lib/node_modules/playwright']) {
+  try { chromium = require(p).chromium; break; } catch { /* try the next one */ }
+}
+if (!chromium) { console.log('SKIPPED — playwright is not installed'); process.exit(0); }
+
+const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css',
+  '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.png': 'image/png', '.svg': 'image/svg+xml' };
+const server = http.createServer((req, res) => {
+  let f = path.join(root, decodeURIComponent(req.url.split('?')[0]));
+  if (fs.existsSync(f) && fs.statSync(f).isDirectory()) f = path.join(f, 'index.html');
+  fs.readFile(f, (err, buf) => {
+    if (err) { res.writeHead(404); return res.end('no'); }
+    res.writeHead(200, { 'Content-Type': TYPES[path.extname(f)] || 'application/octet-stream' });
+    res.end(buf);
+  });
+});
+
+const fail = []; const ck = (c, m) => { if (!c) fail.push('✗ ' + m); };
+const DATA = require('./data.js');
+
+(async () => {
+  await new Promise(r => server.listen(0, '127.0.0.1', r));
+  const base = 'http://127.0.0.1:' + server.address().port + '/training/';
+  const b = await chromium.launch();
+  const ctx = await b.newContext({ viewport: { width: 390, height: 844 } });
+  await ctx.route('https://fonts.googleapis.com/**', r => r.fulfill({ contentType: 'text/css', body: '' }));
+  await ctx.route('**/*.woff2', r => r.abort());
+  const p = await ctx.newPage();
+  p.on('pageerror', e => fail.push('PAGEERROR: ' + e.message));
+  p.on('console', m => { if (m.type() === 'error' && !/font|manifest|favicon/i.test(m.text())) fail.push('console: ' + m.text()); });
+  await p.goto(base, { waitUntil: 'load' });
+  await p.waitForTimeout(800);
+
+  // --- the hub shows every section, and each one opens ---
+  await p.keyboard.press('3'); await p.waitForTimeout(500);
+  const tiles = (await p.locator('.tile-n').allInnerTexts()).map(t => t.trim());
+  ['Frisbee', 'By body part', 'Stretching & range', 'Boss Your Game', 'Hiking', 'Weak-link blocks']
+    .forEach(n => ck(tiles.includes(n), 'the hub is missing the ' + n + ' tile'));
+  console.log('hub tiles:', tiles.length);
+
+  // every routine the hub can reach, against the data
+  const reachable = new Set();
+  for (let i = 0; i < await p.locator('.tile').count(); i++) {
+    await p.locator('.tile').nth(i).click(); await p.waitForTimeout(350);
+    (await p.locator('.routine h3').allInnerTexts()).forEach(t => reachable.add(t.trim()));
+    await p.locator('.back-link').click(); await p.waitForTimeout(250);
+  }
+  DATA.ROUTINES.filter(r => r.tag !== 'DESK').forEach(r =>
+    ck(reachable.has(r.n), r.id + ' (' + r.n + ') is in no section of the hub'));
+  console.log('routines reachable from the hub:', reachable.size);
+
+  // --- every row in a labelled block says what it targets and what it costs ---
+  const strict = ['WARMUP', 'TRAIL', 'BOSS'];
+  const sample = DATA.ROUTINES.filter(r => strict.includes(r.tag)).slice(0, 3);
+  for (const r of sample) {
+    let found = false;
+    for (let i = 0; i < await p.locator('.tile').count(); i++) {
+      await p.locator('.tile').nth(i).click(); await p.waitForTimeout(300);
+      const card = p.locator('.routine').filter({ hasText: r.n }).first();
+      if (await card.count()) {
+        await card.locator('.btn-pick').click(); await p.waitForTimeout(300);
+        const rows = card.locator('.pick-row');
+        ck(await rows.count() === r.items.length, r.id + ' should list ' + r.items.length + ' rows, got ' + await rows.count());
+        ck(await card.locator('.cost-chip').count() > 0, r.id + ' rows should show what they cost');
+        ck(await card.locator('.pick-targets').count() === r.items.length, r.id + ' every row should carry a targets label');
+        found = true;
+      }
+      await p.locator('.back-link').click(); await p.waitForTimeout(220);
+      if (found) break;
+    }
+    ck(found, r.id + ' could not be found in any section');
+  }
+
+  // --- a queue built from two different blocks runs as one session ---
+  await p.locator('.tile').filter({ hasText: 'Stretching & range' }).first().click(); await p.waitForTimeout(400);
+  const a = p.locator('.routine').first();
+  const aName = (await a.locator('h3').first().innerText()).trim();
+  await a.locator('.btn-pick').click(); await p.waitForTimeout(250);
+  await a.locator('.pick-row .tick').first().click(); await p.waitForTimeout(250);
+  ck(await p.locator('#queuebar').isVisible(), 'one pick should raise the queue bar');
+  await p.locator('.back-link').click(); await p.waitForTimeout(300);
+  await p.locator('.tile').filter({ hasText: 'Boss Your Game' }).first().click(); await p.waitForTimeout(400);
+  const c = p.locator('.routine').filter({ hasText: 'Upper Pull' }).first();
+  await c.locator('.btn-pick').click(); await p.waitForTimeout(250);
+  await c.locator('.pick-row .tick').first().click(); await p.waitForTimeout(250);
+  const bar = await p.locator('#queuebar').innerText();
+  ck(/2 exercises/.test(bar), 'the queue should total both picks, got ' + bar.replace(/\n/g, ' | '));
+  ck(bar.includes(aName) && bar.includes('Upper Pull'), 'the queue should name both blocks, got ' + bar.replace(/\n/g, ' | '));
+  await p.locator('#queuebar .queue-run').click(); await p.waitForTimeout(600);
+  const step = (await p.locator('#runStep').innerText()).trim();
+  const left = (await p.locator('#runLeft').innerText()).trim();
+  ck(/\/\s*2$/.test(step), 'the queue should run as one 2-step session, got ' + step);
+  ck(/min|\d\d\s*s/.test(left), 'the player should show a real estimate, got ' + left);
+  ck(!/^~[0-9]\s*s left$/.test(left), 'a multi-round step should not read "~3 s left", got ' + left);
+  console.log('queue across two blocks:', step, left);
+  await p.locator('.run button[aria-label="Exit session"]').click(); await p.waitForTimeout(300);
+  ck(await p.locator('#queuebar').isHidden(), 'running the queue should empty it');
+
+  // --- home mode: anything that needs a gym must say how to do it without one ---
+  // Bodyweight work needs no note; a barbell, a machine or a cable does.
+  const GYM = /barbell|bench press|smith machine|\bmachine\b|cable|lat pulldown|leg curl|leg press|trap bar|squat rack|power rack|weight (?:plate|stack)|sled|kettlebell|dumbbell/i;
+  const reached = new Set();
+  DATA.ROUTINES.forEach(r => r.items.forEach(i => reached.add(i.x)));
+  DATA.ARMOR.items.forEach(i => reached.add(i.x));
+  DATA.FREE_WINS.items.forEach(i => reached.add(i.x));
+  Object.values(DATA.SESSIONS).forEach(s => (s.blocks || []).forEach(bk => bk.items.forEach(i => reached.add(i.x))));
+  const noPath = [...reached].filter(id => {
+    const e = DATA.EX[id];
+    const needsKit = GYM.test([e.setup || '', (e.steps || []).join(' '), e.n].join(' '));
+    return needsKit && !e.home && !DATA.HOME_SUB[id];
+  });
+  ck(noPath.length === 0, 'gym exercises with no home path: ' + noPath.join(', '));
+  console.log('reachable exercises:', reached.size, '| gym ones with no home path:', noPath.length);
+
+  await b.close(); server.close();
+  console.log(fail.length ? fail.slice(0, 20).join('\n') : 'UI OK');
+  process.exit(fail.length ? 1 : 0);
+})();

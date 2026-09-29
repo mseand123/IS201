@@ -988,6 +988,9 @@ body.running .queuebar { display: none; }
   .queue-est { display: none; }
 }
 
+/* A picked row explains its own dose: whose number it is, and what to change. */
+.pick-note { font-size: var(--t-xs); color: var(--muted); line-height: 1.35; margin-top: .15rem; max-width: 62ch; }
+
 </style>
 <link rel="manifest" href="/manifest.webmanifest" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1211,6 +1214,7 @@ const EX = {
 },
 'calf-raise-loaded': {
   n: 'Loaded Calf Raise — Straight & Bent', cat: 'strength', tags: ['foot','speed','tendon'],
+  targets: 'Calves \u00b7 soleus \u00b7 Achilles',
   why: 'Straight-knee hits gastrocnemius (the sprinting spring), bent-knee hits soleus (the endurance and braking engine). You need both; most athletes train neither properly.',
   setup: 'Forefoot on a step or plate, full stretch available at the bottom.',
   steps: ['Lower slowly to a full stretch over 3 s.','Pause 1 s at the bottom without bouncing.','Drive to full plantarflexion, pause 1 s at the top.','Straight-leg set, then bent-knee set.'],
@@ -1328,6 +1332,7 @@ const EX = {
 },
 'nordic-curl': {
   n: 'Nordic Hamstring Curl', cat: 'strength', tags: ['hamstring','eccentric','armor'],
+  targets: 'Hamstrings, eccentrically \u00b7 strain insurance',
   why: 'The most robust hamstring injury-prevention exercise in sport, and the mechanism matters: eccentric — not isometric — hip-extension work is what actually lengthens biceps femoris fascicles. Longer fascicles mean the muscle reaches its danger length later in the sprint stride. Isometrics build torque; eccentrics build architecture. You need both, so this sits alongside your isometric work rather than replacing it.',
   home: "Hook your heels under a couch, a bed frame or a loaded backpack wedged against a door. A partner kneeling on your calves works too.",
   setup: 'Kneel on a pad, ankles anchored under a bar, by a partner, or in a Nordic bench. Hands ready to catch.',
@@ -1475,6 +1480,7 @@ const EX = {
 },
 'copenhagen-hold': {
   n: 'Copenhagen Hold (Short Lever)', cat: 'iso', tags: ['adductor','iso','armor'],
+  targets: 'Adductors \u00b7 groin',
   why: 'The entry point to the Copenhagen family. The Copenhagen adduction exercise consistently improves eccentric hip adduction strength, hip range of motion and dynamic balance, and reduces groin symptoms — and the effect depends on adequate volume and progressive overload, not on doing it once in a warm-up. Start with the isometric hold: it is the version you can actually recover from.',
   home: "The \"bench\" is a couch arm, a dining chair, a bed edge or a coffee table — anything sturdy at roughly hip height. No gym version of this exists that is better than the couch version.",
   setup: 'Side plank on the forearm. Top leg\'s KNEE (not ankle) rests on a bench at about hip height. Bottom leg hangs free.',
@@ -1638,6 +1644,7 @@ const EX = {
 },
 'band-pull-apart': {
   n: 'Band Pull-Apart & Face Pull', cat: 'strength', tags: ['shoulder','scap','daily'],
+  targets: 'Rear delts \u00b7 upper back \u00b7 scapular retraction',
   why: 'High-frequency, low-cost posterior shoulder volume. For a thrower, the pull-to-push ratio should be at least 2:1 and probably 3:1.',
   home: "A single long resistance band covers both movements and costs about ten dollars. It is the one piece of kit genuinely worth owning.",
   setup: 'Light band at chest height for pull-aparts; band or cable at eye height for face pulls.',
@@ -1650,6 +1657,7 @@ const EX = {
 },
 'weighted-pullup': {
   n: 'Chin-Up / Weighted Pull-Up', cat: 'strength', tags: ['upper','pull','mass'],
+  targets: 'Lats \u00b7 upper back \u00b7 grip',
   why: 'The single best upper-body strength and mass builder for a light athlete, and a shoulder-friendly one if you use a full-range hang and a neutral or supinated grip. At 150 lb, added upper-body mass is a genuine performance lever for you.',
   setup: 'Neutral or supinated grip. Full hang at the bottom.',
   steps: ['Start from a dead hang with the shoulder blades relaxed, then set them down and back.','Pull the elbows to the ribs, chest toward the bar.','Lower over 3 s to a full hang.'],
@@ -1664,6 +1672,7 @@ const EX = {
 /* ============ ISOMETRIC MAIN LIFTS ============ */
 'iso-split-squat-yield': {
   n: 'Yielding Split Squat Isometric', cat: 'iso', tags: ['iso','tendon','legs','favourite'],
+  targets: 'Quads & glutes at length \u00b7 patellar tendon',
   why: 'Yielding isometrics — holding a position under load, typically 20–120 s — build tendon capacity, reinforce positions, and are the right tool in the early phase of a block. Hold type fatigues faster than push type at the same intensity, which is why these feel disproportionately hard. This is your tendon-thickening, position-owning work.',
   home: "Load it with a backpack full of books and water bottles, on the back or hugged to the chest. Bodyweight for 90 s is already a serious hold.",
   setup: 'Split stance, back knee an inch off the floor, front shin roughly vertical. Dumbbells at the sides or a barbell on the back.',
@@ -1852,6 +1861,7 @@ const EX = {
 },
 'rkc-plank': {
   n: 'RKC Plank', cat: 'iso', tags: ['iso','core','trunk'],
+  targets: 'Whole-body tension \u00b7 deep trunk',
   why: 'A 20-second RKC plank done properly beats a three-minute regular plank. Ultimate is full of one-sided, rotational, decelerating loads — the trunk\'s job is to not leak force between the hips and the shoulders.',
   setup: 'Forearm plank, elbows slightly further forward than usual.',
   steps: ['Squeeze the glutes as hard as possible — this posteriorly tilts the pelvis.','Pull the elbows toward the toes (they will not move) to fire the lats.','Brace the abs as if about to take a punch.','Hold 15–20 s at genuine maximum. Rest 45 s.'],
@@ -1864,6 +1874,7 @@ const EX = {
 },
 'pallof-press': {
   n: 'Pallof Press & Hold', cat: 'iso', tags: ['core','anti-rotation','iso'],
+  targets: 'Trunk anti-rotation \u00b7 obliques',
   why: 'Anti-rotation strength is what lets a thrower generate hip-shoulder separation without the low back or the shoulder paying for it. Directly relevant to hucking.',
   home: "Needs a band anchored in a door. With no band, use the Bird Dog Hold instead — same anti-rotation job.",
   setup: 'Cable or band at chest height, stand side-on, feet shoulder width.',
@@ -1891,6 +1902,8 @@ const EX = {
 },
 'rfess': {
   n: 'Rear-Foot Elevated Split Squat', cat: 'strength', tags: ['legs','unilateral','mass'],
+  repSec: 4,
+  targets: 'Quads \u00b7 glutes \u00b7 single-leg strength',
   why: 'Loads one leg heavily without loading the spine heavily — perfect for a light athlete who needs leg strength but does not need to be crushed by axial load. Also exposes side-to-side differences you cannot hide.',
   setup: 'Rear foot on a bench about knee height, front foot far enough forward that the shin stays near vertical at the bottom.',
   steps: ['Torso upright, ribs down.','Descend until the back knee is just above the floor.','Pause a beat at the bottom.','Drive through the whole front foot, especially the heel.'],
@@ -3584,6 +3597,7 @@ Object.assign(EX, {
 },
 'table-row-iso': {
   n: 'Table Row & Row Hold', cat: 'strength', tags: ['upper','pull','home','shoulder'],
+  targets: 'Mid-back \u00b7 lats \u00b7 scapular retraction',
   why: 'Your home pull. A horizontal row is also the safest pulling pattern for a labrum — no overhead position, no end-range compression — and the pull-to-push ratio matters more than the absolute load for a throwing shoulder. Add the isometric hold at the top and it becomes a serious exercise without a single plate.',
   setup: 'Lie under a sturdy table, a desk, or a bar set low. Grip the edge, body in a straight line, heels on the floor.',
   steps: [
@@ -3619,6 +3633,7 @@ Object.assign(EX, {
 },
 'backpack-rfess': {
   n: 'Couch-Elevated Split Squat', cat: 'strength', tags: ['legs','unilateral','home'],
+  targets: 'Quads \u00b7 glutes \u00b7 single-leg strength',
   why: 'The best home leg exercise there is. One leg carrying your bodyweight through a full range is a real training stimulus at 150 lb, and a loaded backpack adds another 30–50%. It also exposes side-to-side differences, which is exactly what you want given a groin and a hamstring history.',
   setup: 'Rear foot on a couch, chair or bed at about knee height. Front foot far enough forward that the shin stays near vertical at the bottom. Backpack on your back or hugged to the chest.',
   steps: [
@@ -3753,6 +3768,7 @@ Object.assign(EX, {
 },
 'bird-dog-iso': {
   n: 'Bird Dog Hold', cat: 'iso', tags: ['core','anti-rotation','home','iso'],
+  targets: 'Deep trunk \u00b7 hip extension \u00b7 anti-rotation',
   why: 'Anti-rotation strength with no band and no cable. Hip-shoulder separation is where a throw comes from, and the trunk\'s job is to stop force leaking between the two. A slow bird dog with a genuine hold is a much harder exercise than its reputation suggests.',
   setup: 'On hands and knees, hands under shoulders, knees under hips. Neutral spine.',
   steps: [
@@ -4199,7 +4215,7 @@ const ROUTINES = [
     items:[
       { x:'walking-lunge-rotation', g:'WARM \u00b7 do not load it cold', d:'5 per side', note:'Back glute squeezed so the stretch lands in the hip flexor rather than the low back.' },
       { x:'iso-hip-flexor', g:'STRENGTHEN \u00b7 above 90\u00b0, where it is weakest', d:'3 \u00d7 18 s per side', note:'Knee above hip height, then pull higher against your own limit. Stand tall \u2014 leaning back fakes the range and trains nothing.' },
-      { x:'banded-knee-drive', d:'3 \u00d7 10 per side, fast', note:'The concentric half a hold cannot reach. Fast up, controlled down, toes pulled up. This is the one that shows up in stride frequency.' },
+      { x:'banded-knee-drive', d:'3 \u00d7 10 per side, fast, 45 s rest', note:'The concentric half a hold cannot reach. Fast up, controlled down, toes pulled up. This is the one that shows up in stride frequency.' },
       { x:'reverse-nordic', d:'3 \u00d7 6, slow', note:'The only thing here that loads the hip flexor at long length. Hips stay forward: the moment you sit back toward your heels it becomes a quad stretch and the rectus femoris unloads.' },
       { x:'half-kneel-hipflexor', g:'LENGTHEN \u00b7 pick one, hardest you can do honestly', d:'2 \u00d7 50 s per side', note:'The standard one. Tuck the pelvis before you move, squeeze the rear glute, then travel a very small amount. If you can go a long way, the tuck is gone.' },
       { x:'couch-stretch', d:'2 \u00d7 60 s per side', note:'The harder version of the row above, rear foot up a wall. Only worth doing if the kneeling one has stopped giving you anything.' },
@@ -4765,6 +4781,7 @@ Object.assign(EX, {
 },
 'hollow-hold': {
   n: 'Hollow Hold', cat: 'iso', tags: ['core','trunk','iso'],
+  targets: 'Anterior trunk \u00b7 anti-extension',
   why: 'Anti-extension at long lever — the trunk position that stops force leaking between your hips and your shoulders when you throw or sprint. It is also the safest hard core exercise for your hip, because unlike hanging knee raises or sit-ups it never drives the hip into deep flexion, which is the position an acetabular labrum objects to.',
   setup: 'On your back, low back pressed flat into the floor.',
   steps: [
@@ -5280,7 +5297,7 @@ ROUTINES.push(
       { x:'calf-iso-soleus', g:'CALF \u00b7 mid-range, where tendon load peaks', d:'3 \u00d7 40 s' },
       { x:'calf-raise-loaded', d:'3 \u00d7 10 straight-knee + 3 \u00d7 14 bent-knee', note:'Full range at both ends, and pause at the bottom to kill the tendon bounce.' },
       { x:'knee-to-wall', d:'10 reps + 3 \u00d7 20 s per side' },
-      { x:'barefoot-pogo-grass', g:'ELASTIC \u00b7 put the spring to work', d:'3 \u00d7 20 contacts', note:'Quiet feet. Listen rather than watch.' }
+      { x:'barefoot-pogo-grass', g:'ELASTIC \u00b7 put the spring to work', d:'3 \u00d7 20 contacts, 45 s rest', note:'Quiet feet. Listen rather than watch.' }
     ]}
 );
 
@@ -5414,6 +5431,526 @@ const TRAIL_GROUPS = [
     ids: ['stretch-calf', 'stretch-hipflexor'] }
 ];
 
+/* -----------------------------------------------------------
+   BOSS YOUR GAME \u2014 Alex's short circuits, audited off his own page and
+   then dosed for this athlete. The pattern is his: an isometric hold
+   first, dynamic reps of the same joint second, four or five items, ten
+   to twenty minutes. The numbers in his videos are a floor rather than a
+   target for a professional, so every row carries his number and the
+   working dose above it. The running side of his program is deliberately
+   left out.
+   ----------------------------------------------------------- */
+Object.assign(EX, {
+
+'line-taps': {
+  n: 'Line Foot Taps \u2014 Four Patterns', cat: 'speed', tags: ['warmup','foot','coordination','home','daily'], cost: 1,
+  targets: 'Foot speed \u00b7 ankle stiffness \u00b7 coordination',
+  why: 'His warm-up, and a better opener than it looks. Fast, low-amplitude foot contacts raise tissue temperature and wake the ankle up at the speed the session is about to ask for, which a jog does not. Four patterns cover the three planes: two single-leg, one double, one that adds a turn. It costs nothing, needs a crack in the pavement, and it is the part of a warm-up people actually keep doing.',
+  setup: 'Any line on the floor: tape, a floor seam, a crack in the sidewalk.',
+  steps: [
+    'Right foot only, quick taps back and forth across the line. About 10.',
+    'Left foot only, the same.',
+    'Two feet, side to side over the line. 10.',
+    'Quadrant: forward, sideways, backward, sideways, around one corner of the line. 10 trips.',
+    'Stay on the balls of the feet. Quiet and quick beats big and slow.'
+  ],
+  cues: ['Ankles stiff, knees soft.','Quick feet, quiet feet.'],
+  faults: ['Heels dropping and the contacts getting heavy.','Going so wide it becomes a shuffle rather than taps.'],
+  dose: '4 patterns \u00d7 10 reps',
+  prog: 'Add a fifth pattern: single-leg quadrant. Or put 10 seconds on the clock per pattern and count contacts.',
+  regr: 'Slower, and step rather than hop.',
+  home: 'A floorboard seam, a doorway threshold, a sidewalk crack. Nothing to buy.'
+},
+
+'pushup': {
+  n: 'Push-Up', cat: 'strength', tags: ['upper','push','home','mass'], cost: 2,
+  repSec: 3,
+  targets: 'Chest \u00b7 shoulders \u00b7 triceps \u00b7 trunk',
+  why: 'The one upper-body movement you will always be able to do, and at 150 lb the one where added reps turn into added mass fastest. It is also a trunk exercise wearing a chest exercise costume: the ribs-down, glutes-on position is the same position that stops force leaking between your hips and your hands when you throw. His clips assume you can do them; the useful part is what you do when 15 stops being hard.',
+  setup: 'Hands under the shoulders or slightly wider, feet together.',
+  steps: [
+    'Set the body in one line: glutes on, ribs down, head neutral.',
+    'Lower until the chest is an inch or two off the floor, elbows at roughly 45 degrees to the ribs.',
+    'Push the floor away and finish with the shoulder blades wrapping forward slightly.',
+    'Every rep the same speed. When the last two get ragged, the set is over.'
+  ],
+  cues: ['Push the floor away, do not just lift yourself.','Squeeze the glutes \u2014 it stops the hips sagging before the arms fail.'],
+  faults: ['Hips sagging or piking.','Elbows flaring straight out to the sides.','Half range once it gets hard.'],
+  dose: '3 \u00d7 15\u201320',
+  prog: 'Three-second lowers, then feet elevated, then a backpack, then archer push-ups, then clap push-ups.',
+  regr: 'Hands on a bench or a counter. Knees last, not first.',
+  home: 'The floor. This is the home exercise.'
+},
+
+'pushup-bottom-iso': {
+  n: 'Push-Up Bottom Hold', cat: 'iso', tags: ['iso','upper','push','home'], cost: 2,
+  targets: 'Chest & shoulders at length \u00b7 trunk',
+  why: 'His format applied to the upper body: hold the position that is hardest, then do the reps. The bottom of a push-up is where the chest and the front of the shoulder are longest and where most people cheat by bouncing, so a yielding hold there builds control exactly where the rep leaks. Forty seconds of it also lights the trunk up more honestly than a plank does, because the arms are loaded.',
+  setup: 'Push-up position, lowered so the chest is an inch or two off the floor.',
+  steps: [
+    'Take the same line you would hold at the top: glutes on, ribs down.',
+    'Lower to an inch off the floor and stop. Elbows stay in at about 45 degrees.',
+    'Hold. Breathe shallow through the nose rather than holding your breath.',
+    'When the hips start to sag, the hold is finished \u2014 come down rather than grinding out a worse position.'
+  ],
+  cues: ['Chest an inch off the floor, not resting on it.','Elbows in, shoulder blades flat on the ribcage.'],
+  faults: ['Sinking into the shoulders so the joint takes the load instead of the muscle.','Holding your breath, which turns a 40-second hold into a 20-second one.'],
+  dose: '3 \u00d7 40 s. His number is 30 s.',
+  prog: 'Feet elevated, or a backpack, or hold on one arm at a time with the other hand on a low step.',
+  regr: 'Hands on a bench, or hold a few inches higher.',
+  home: 'Floor only.',
+  timer: { w: 40, r: 40, rounds: 3, label: 'Bottom hold' }
+},
+
+'pike-pushup': {
+  n: 'Pike Push-Up', cat: 'strength', tags: ['upper','push','shoulder','home'], cost: 2,
+  repSec: 3.5,
+  targets: 'Shoulders overhead \u00b7 triceps',
+  why: 'The overhead press you can do without a barbell, and the reason the push day is not all chest. Pressing something over your head keeps the shoulder strong in the range throwing actually uses, and a pike push-up loads that range with the shoulder blade free to move, which a machine will not let it do. Your labral history is in the hip, so overhead work is not off the table \u2014 the only rule is to earn the range rather than force it.',
+  setup: 'Hands and feet on the floor, hips high, body in an A. Walk the feet in until the torso is close to vertical.',
+  steps: [
+    'Hips as high as you can get them, weight over the hands.',
+    'Lower the crown of the head toward a spot between and slightly in front of the hands.',
+    'Touch lightly, then press back up until the elbows lock.',
+    'Keep the ribs down. If the low back arches to get depth, walk the feet out a step.'
+  ],
+  cues: ['Head goes in front of the hands, not straight down between them.','Hips stay high the whole set.'],
+  faults: ['Turning it into a wide push-up by letting the hips drop.','Shrugging at the top instead of finishing with a long neck.'],
+  dose: '3 \u00d7 10\u201312. His number is 8\u201310.',
+  prog: 'Feet on a bench (decline pike), then a wall-supported handstand push-up.',
+  regr: 'Feet further back, or hands on a bench to reduce the angle.',
+  home: 'Floor only. A bench or a couch makes the hard version available.'
+},
+
+'bench-dip': {
+  n: 'Bench Dip', cat: 'strength', tags: ['upper','push','home'], cost: 2,
+  repSec: 3,
+  targets: 'Triceps \u00b7 front of the shoulder \u00b7 chest',
+  why: 'Cheap triceps volume off a bench, and the one item on his push list worth a caveat. The dip position puts the front of the shoulder near end-range extension, which is the position an unhappy anterior shoulder complains about first. You have a SLAP-type history, so the rule here is simple: if the front of the joint pinches or aches, this is not the exercise you need. Close-grip push-ups buy the same triceps work with none of the shoulder tax.',
+  setup: 'Hands on the edge of a bench behind you, fingers forward, feet out in front.',
+  steps: [
+    'Hips close to the bench, not drifting forward \u2014 that is what saves the shoulder.',
+    'Lower until the elbows reach about 90 degrees. No deeper.',
+    'Drive back up through the heels of the hands, elbows tracking back rather than flaring.',
+    'Stop the set the moment the front of the shoulder has an opinion.'
+  ],
+  cues: ['Elbows back, not out.','Chest tall. Rounding forward is what jams the joint.'],
+  faults: ['Sliding the hips away from the bench so the shoulder takes the whole load.','Going deeper than 90 degrees for the sake of range.'],
+  dose: '3 \u00d7 15. His number is 12.',
+  prog: 'Feet on a second bench, then a backpack on the lap, then parallel-bar dips.',
+  regr: 'Knees bent and feet close in. Or swap to close-grip push-ups, which is the right call if the shoulder talks.',
+  home: 'A chair, a couch edge, a bed frame, the second step of a staircase.',
+  flag: 'Front-of-shoulder position \u2014 swap for close-grip push-ups if it pinches.'
+},
+
+'plank-walkup': {
+  n: 'Plank to Push-Up Walk-Up', cat: 'strength', tags: ['core','trunk','upper','home'], cost: 2,
+  repSec: 2.5,
+  targets: 'Trunk anti-rotation \u00b7 shoulders',
+  why: 'His finisher, and a good one: moving from forearms to hands and back is an anti-rotation task disguised as an arm exercise. The hips want to rock every time a hand leaves the floor, and not letting them is exactly the trunk quality that matters when you are throwing off one leg. Ten of these after a plank hold is worth more than another thirty seconds of the hold.',
+  setup: 'Forearm plank, elbows under the shoulders, feet a little wider than usual.',
+  steps: [
+    'Press one hand into the floor and straighten that arm.',
+    'Follow with the other so you finish in a push-up position.',
+    'Lower back to the forearms one arm at a time, leading with the other side.',
+    'Ten total, alternating which arm leads.'
+  ],
+  cues: ['Hips do not rock. Wider feet if they do.','Squeeze the glutes for the whole set.'],
+  faults: ['Snaking the hips up and down.','Rushing so both arms move at once and the trunk stops working.'],
+  dose: '10 per round, alternating the lead arm',
+  prog: 'Feet together, or a backpack on, or add a push-up at the top of each rep.',
+  regr: 'Knees down, or fewer reps with the same quality.',
+  home: 'Floor only.'
+},
+
+'flexed-arm-hang': {
+  n: 'Chin-Over-Bar Hold', cat: 'iso', tags: ['iso','upper','pull','home'], cost: 2,
+  targets: 'Lats & upper back at short range \u00b7 grip',
+  why: 'The top of a pull-up is where almost everyone is weakest, and a hold there is the fastest way to add reps without adding sets. It is also his format again \u2014 hold first, reps second \u2014 pointed at the half of the upper body most throwing athletes are short on. A throwing shoulder wants roughly twice as much pulling as pressing, and this is pulling you can do in a doorway.',
+  setup: 'Chin over the bar, elbows bent, chest to the bar.',
+  steps: [
+    'Jump or pull to the top. Chin clearly over the bar, chest close to it.',
+    'Pull the shoulder blades down and back rather than shrugging into your ears.',
+    'Hold. When the chin drops below the bar, the hold is over.',
+    'Lower under control rather than dropping off.'
+  ],
+  cues: ['Chest to the bar, elbows down.','Squeeze the bar \u2014 grip drives the rest of the arm.'],
+  faults: ['Shrugging so the neck holds you up.','Kipping to get back up once you start to sink.'],
+  dose: '3 \u00d7 30 s. His number is 20\u201330 s.',
+  prog: 'Add weight in a backpack, or hold at 90 degrees instead of at the top, which is harder.',
+  regr: 'Feet on a chair to take some weight, or hold for shorter sets.',
+  home: 'A doorway pull-up bar, a beam, playground bars, a sturdy tree branch.',
+  timer: { w: 30, r: 60, rounds: 3, label: 'Chin-over-bar hold' }
+},
+
+'bridge-iso-bench': {
+  n: 'Feet-Elevated Glute Bridge Hold', cat: 'iso', tags: ['iso','glute','home','accel'], cost: 2,
+  targets: 'Glutes \u00b7 hip extension \u00b7 hamstrings',
+  why: 'His bridge, done properly. Putting the heels on a bench takes the quad out of it and puts the glute at the length it actually works at when you accelerate. The isometric version is the one worth holding: hip extension strength is what stops the low back from taking over on every stride, and a 45-second hold teaches you to produce it with the pelvis tucked rather than by arching.',
+  setup: 'On your back, heels on a bench, box or couch, knees bent to about 90 degrees.',
+  steps: [
+    'Tuck the pelvis first \u2014 ribs down, low back flat. This is the whole exercise.',
+    'Drive the heels down and lift the hips until the torso and thighs make a line.',
+    'Squeeze the glutes hard and hold. The low back should feel like nothing.',
+    'If you feel it in the low back, you are arching instead of extending the hip. Tuck harder and lift less.'
+  ],
+  cues: ['Squeeze the glutes, not the back.','Ribs down the whole time.'],
+  faults: ['Arching the low back to get the hips higher.','Pushing through the toes instead of the heels.','Letting the knees fall apart.'],
+  dose: '3 \u00d7 45 s. His number is 30 s.',
+  prog: 'One leg at a time, or a backpack across the hips, or both.',
+  regr: 'Heels on the floor instead of a bench.',
+  home: 'A couch, a bed, a chair or the second stair.',
+  timer: { w: 45, r: 35, rounds: 3, label: 'Bridge hold' }
+},
+
+'bridge-iso-toesup': {
+  n: 'Toes-Up Bridge Hold', cat: 'iso', tags: ['iso','hamstring','home','prevention'], cost: 2,
+  targets: 'Hamstrings \u00b7 glutes \u00b7 hip extension',
+  why: 'The same hold with the bias moved. Heels on the floor with the toes pulled up shortens the calf out of the equation and makes the hamstring do the hip extension, which is the tissue with your history. Isometrics at moderate length are the best-tolerated way to load a hamstring that has been strained before, and this one needs nothing but a floor.',
+  setup: 'On your back, knees bent, heels on the floor, toes pulled hard up toward your shins.',
+  steps: [
+    'Pull the toes up and keep them up for the whole hold \u2014 that is what shifts the work to the hamstring.',
+    'Tuck the pelvis, then drive the heels into the floor and lift the hips.',
+    'Hold with the hamstrings clearly working. Cramping there means it is doing its job; sharp pain does not.',
+    'Lower slowly rather than dropping.'
+  ],
+  cues: ['Toes up, heels down.','Hips level \u2014 no drifting to one side.'],
+  faults: ['Letting the toes flatten so it becomes a calf-and-glute exercise.','Arching the low back.'],
+  dose: '3 \u00d7 45 s. His number is 30 s.',
+  prog: 'One leg, then one leg with the heel on a low step.',
+  regr: 'Shorter holds, both legs, less height.',
+  home: 'Floor only.',
+  timer: { w: 45, r: 35, rounds: 3, label: 'Toes-up bridge hold' }
+},
+
+'bridge-leg-raise': {
+  n: 'Single-Leg Raise from the Bridge', cat: 'strength', tags: ['glute','core','home','prevention'], cost: 2,
+  repSec: 3,
+  targets: 'Glutes \u00b7 pelvic control \u00b7 hip extension',
+  why: 'The dynamic half of his bridge, and the part that actually tests something. Taking one foot away halves the base and asks the standing-side glute to keep the pelvis level, which is the same job it has in the middle of every stride. The number of reps matters much less than whether the hips stay square: a dropped hip is the exercise failing, not the rep counting.',
+  setup: 'Hold the bridge position, hips up, heels on the bench or the floor.',
+  steps: [
+    'From the top of the bridge, lift one foot off and extend the knee a little.',
+    'Hold for a beat. The hips must stay level and high.',
+    'Replace the foot and change sides.',
+    'The moment one hip drops, stop and count that as your number.'
+  ],
+  cues: ['A glass of water on your pelvis would not spill.','Keep the hips high \u2014 they sink before the leg gets tired.'],
+  faults: ['Hips dropping on the lifted side.','Pushing through the toes of the down leg.','Rushing so the pelvis swings.'],
+  dose: '8\u201310 per leg. His number is 6.',
+  prog: 'Add a two-second hold at the top of each rep, or a backpack across the hips.',
+  regr: 'Keep the hips lower, or just take the heel light instead of lifting the foot.',
+  home: 'Floor, or any couch edge.'
+},
+
+'lateral-bench-hop': {
+  n: 'Lateral Bench Hops', cat: 'plyo', tags: ['elastic','ankle','knee','home'], cost: 2,
+  targets: 'Ankle stiffness \u00b7 lateral elasticity \u00b7 calves',
+  why: 'Twenty quick side-to-side contacts over something low. This is extensive plyometric work \u2014 many contacts, small amplitude, short ground time \u2014 which is exactly the stimulus that makes the ankle and the Achilles stiffer without the nervous-system bill that a depth jump sends. Ultimate is played sideways, and this is the cheapest lateral elasticity you can buy.',
+  setup: 'A low bench, a rolled towel or a line on the floor. Low: the height is not the point.',
+  steps: [
+    'Feet together, hop side to side over the object.',
+    'Land on the balls of the feet with stiff ankles and soft knees. Quiet.',
+    'Short ground contacts \u2014 think hot floor rather than deep squat.',
+    'Twenty contacts, then rest. Stop the set when the contacts get loud.'
+  ],
+  cues: ['Quick and quiet. Ground time is the metric, not height.','Knees soft, ankles stiff, chest tall.'],
+  faults: ['Going for a high bench, which turns it into a jump and a hard landing.','Landing flat-footed and heavy.','Grinding out reps once they slow down.'],
+  dose: '20 contacts. Build to 30.',
+  prog: 'Single leg over the line, or a slightly higher object, or continuous for 20 seconds.',
+  regr: 'Over a line on the floor, or step side to side instead of hopping.',
+  home: 'A rolled towel or a floor seam. No bench needed.'
+},
+
+'split-jump': {
+  n: 'Split Lunge Jump', cat: 'plyo', tags: ['elastic','legs','hamstring','home','high-intensity'], cost: 3,
+  repSec: 2,
+  targets: 'Hip extension power \u00b7 quads \u00b7 hamstrings',
+  why: 'His most demanding leg item. Switching legs in the air trains reactive hip extension in a split stance, which is the shape sprinting actually happens in, and the arm action keeps the trunk honest. It is also the one on his list that most deserves respect from you: a switch in the air loads the hamstring eccentrically at speed, and you have a strain history there. Ten good reps beat twenty scrappy ones, and this one belongs early in a session rather than at the end of a tired one.',
+  setup: 'Split stance, front shin vertical, back knee low but off the floor.',
+  steps: [
+    'Jump up, switch the legs in the air, land back in a split stance.',
+    'Opposite arm to opposite leg, like a sprint stride.',
+    'Land on the whole front foot and absorb through the hip, not the knee.',
+    'The back knee never touches the floor. When it does, the set is finished.'
+  ],
+  cues: ['Land soft and re-set for a beat if you need to.','Chest tall \u2014 leaning forward puts it all on the front knee.'],
+  faults: ['Letting the back knee bang the floor.','Front knee collapsing inward on landing.','Adding reps while the landings get louder.'],
+  dose: '10\u201312 total. Build to 15\u201320.',
+  prog: 'More reps, then continuous rather than re-setting, then a light backpack.',
+  regr: 'Alternating split squats with no jump, or jump without switching legs.',
+  home: 'Floor only.'
+},
+
+'sl-hop-exit': {
+  n: 'Single-Leg Hops with a Lateral Exit', cat: 'plyo', tags: ['elastic','ankle','knee','change-of-direction','high-intensity'], cost: 3,
+  targets: 'Single-leg elasticity \u00b7 landing control \u00b7 change of direction',
+  why: 'His cleverest drill. Three hops on one leg, then land the third sideways and explode out two or three steps \u2014 that is a controlled version of the exact moment ankles and knees get hurt in this sport, which is a tired single-leg landing that has to turn into acceleration. Low volume on purpose: three per side is a skill dose, not a conditioning dose.',
+  setup: 'Space to hop three times and run out two or three steps.',
+  steps: [
+    'Three hops forward on the right leg, staying tall.',
+    'Land the third hop turned sideways, absorbing through the hip.',
+    'From that landing, explode out two or three steps.',
+    'That is one rep. Three per side, with real rest between them.'
+  ],
+  cues: ['Knee over the middle of the foot on the sideways landing.','Absorb, then go. The pause should be tiny but real.'],
+  faults: ['Knee diving inward on the sideways landing \u2014 stop the set if it does.','Doing them tired, which is how this stops being a skill drill.','Adding reps. Three is the dose.'],
+  dose: '3 per side',
+  prog: 'Add a step of run-in before the hops, or a partner or a call to decide which way you exit.',
+  regr: 'Two hops instead of three, or hop in place and step out.',
+  home: 'Any flat surface with a few metres of space. Grass is kinder than concrete.'
+},
+
+'bicycle-crunch': {
+  n: 'Bicycles', cat: 'strength', tags: ['core','trunk','home'], cost: 2,
+  repSec: 1.6,
+  targets: 'Obliques \u00b7 trunk rotation \u00b7 hip flexors',
+  why: 'Fifty slow ones is his opener, and the volume is the point \u2014 it is a rotation-endurance set rather than a strength set. Worth knowing what it is doing: the elbow-to-knee pattern loads the obliques, and the leg that reaches away loads the hip flexors while the low back tries not to arch. Keep the shoulder blade off the floor and move slowly and it is a decent set. Rush it and it is neck exercise.',
+  setup: 'On your back, hands light behind the head, shoulder blades off the floor.',
+  steps: [
+    'Bring one elbow toward the opposite knee while the other leg extends long and low.',
+    'Rotate from the ribcage, not by yanking the head.',
+    'Slow: about two seconds per rep. Both sides together is two reps.',
+    'Keep the low back flat on the floor. If it arches, keep the extending leg higher.'
+  ],
+  cues: ['Rotate the ribs, do not pull the head.','Slow beats fast here \u2014 this one is easy to cheat.'],
+  faults: ['Hands yanking on the neck.','Going fast so momentum does the rotating.','Low back arching as the leg extends.'],
+  dose: '50 total, slow',
+  prog: 'Slower still, with a pause at each end, or hold a light weight at the chest.',
+  regr: 'Fewer reps, feet higher, hands across the chest instead of behind the head.',
+  home: 'Floor only.',
+  flag: 'Repeated deep hip flexion \u2014 see the hip-friendly swap in the block.'
+},
+
+'russian-twist': {
+  n: 'Russian Twist', cat: 'strength', tags: ['core','trunk','home'], cost: 2,
+  repSec: 1.4,
+  targets: 'Obliques \u00b7 trunk rotation',
+  why: 'Rotation under a lean-back, which is the cheapest way to train the obliques without a cable. It earns its place in a throwing athlete\u2019s week because a huck is a rotation that starts at the hip and finishes at the hand, and the obliques are the middle of that chain. One honest caveat: this is loaded lumbar rotation, so the range should come from the ribcage turning, not from the low back wringing out.',
+  setup: 'Seated, leaning back to about 45 degrees, feet up or heels light on the floor.',
+  steps: [
+    'Hands together in front of the chest, or holding a light dumbbell.',
+    'Rotate the ribcage to one side until the hands are outside the hip, then the other.',
+    'Left and right is two reps. Controlled at both ends.',
+    'Chest stays tall. If you round and slump, you are rotating the low back.'
+  ],
+  cues: ['Turn the ribs, keep the hips still.','Tall spine, then rotate.'],
+  faults: ['Rounding the low back and wringing it out.','Swinging the arms while the torso barely moves.','Feet thrashing to create momentum.'],
+  dose: '40 total. His number is 30.',
+  prog: 'Hold a dumbbell, then straighten the legs, then slow the tempo.',
+  regr: 'Heels down, less lean, no weight.',
+  home: 'Floor. A water bottle or a backpack is the dumbbell.',
+  flag: 'Loaded lumbar rotation \u2014 rotate the ribs, not the low back.'
+},
+
+'seated-tuckup': {
+  n: 'Seated Tuck-Up ("Suitcase")', cat: 'strength', tags: ['core','trunk','home'], cost: 2,
+  repSec: 2.2,
+  targets: 'Hip flexors \u00b7 lower abs \u00b7 trunk',
+  why: 'His hardest core item: lean back, hands behind the head, pull the knees to the chest and extend. It trains the hip flexors through range with the trunk resisting extension, which is a real quality \u2014 knee drive at speed comes from hip flexors that are strong above 90 degrees. It is also the item on this list that puts your hip through the most repeated deep flexion, so read the note in the block before you add reps to it.',
+  setup: 'Seated on the floor, leaning back, hands behind the head or across the chest.',
+  steps: [
+    'Lean back until the trunk is working, feet off the floor.',
+    'Pull both knees toward the chest, then extend the legs long without letting the heels touch down.',
+    'Keep the low back from slamming into the floor at the long end \u2014 that is the trunk\u2019s job here.',
+    'Thirty reps, or the point where the technique goes, whichever comes first.'
+  ],
+  cues: ['Ribs down as the legs extend.','Smooth at both ends \u2014 no slamming.'],
+  faults: ['Bouncing the heels off the floor to get the next rep.','Low back arching hard on the extension.','Pinching in the front of the hip \u2014 stop and use the swap.'],
+  dose: '30 total',
+  prog: 'Hold a dumbbell at the chest, or slow the extension to three seconds.',
+  regr: 'One leg at a time, or a dead bug on the floor instead, which trains the same thing with the hip out of deep flexion.',
+  home: 'Floor only.',
+  flag: 'The most hip-flexion-heavy item here \u2014 swap it if the hip objects.'
+},
+
+'bear-plank-iso': {
+  n: 'Bear Plank Hold', cat: 'iso', tags: ['iso','core','trunk','home'], cost: 2,
+  targets: 'Deep trunk \u00b7 shoulders \u00b7 quads',
+  why: 'A better plank. On all fours with the knees hovering an inch off the floor, the trunk has to resist extension with a much shorter lever and the breathing gets hard fast, which is the tell that the deep trunk is actually working rather than the hip flexors hanging off the spine. It is his hold-then-reps format for the core, and the hover is the honest part: an inch is enough.',
+  setup: 'All fours, hands under the shoulders, knees under the hips, toes tucked.',
+  steps: [
+    'Round the low back very slightly and push the floor away with the hands.',
+    'Lift the knees an inch. One inch. Not six.',
+    'Hold, breathing through the nose. Back flat, hips level.',
+    'When the hips start to drift up into a pike, the hold is done.'
+  ],
+  cues: ['One inch off the floor is the whole exercise.','Push the floor away and breathe.'],
+  faults: ['Lifting the knees high so it becomes a pike hold.','Holding your breath.','Hips rocking side to side.'],
+  dose: '3 \u00d7 45 s. His number is 30 s.',
+  prog: 'Lift one hand, then one hand and the opposite foot, then add a backpack.',
+  regr: 'Knees on the floor with the same brace, or shorter holds.',
+  home: 'Floor only.',
+  timer: { w: 45, r: 35, rounds: 3, label: 'Bear plank' }
+},
+
+'bear-shoulder-tap': {
+  n: 'Bear-Plank Shoulder Taps', cat: 'strength', tags: ['core','trunk','home','shoulder'], cost: 2,
+  repSec: 1.3,
+  targets: 'Trunk anti-rotation \u00b7 shoulder stability',
+  why: 'The reps that follow the hold, and the same lesson as the walk-up: every time a hand leaves the floor the hips want to rotate, and not letting them is the point. Thirty taps with still hips is worth more than a two-minute plank, because the trunk is being asked to resist something rather than just to hold still.',
+  setup: 'Bear plank, knees hovering an inch off the floor.',
+  steps: [
+    'Take one hand off and tap the opposite shoulder.',
+    'Replace it and do the other side. Left and right is two taps.',
+    'Hips do not rock. Widen the knees a little if they do.',
+    'Keep the knees hovering the whole set \u2014 do not rest them down between taps.'
+  ],
+  cues: ['Still hips. If they rock, go slower.','Knees stay off the floor the whole set.'],
+  faults: ['Hips swinging with every tap.','Dropping the knees between reps.','Speeding up as it gets hard.'],
+  dose: '30 total',
+  prog: 'Slower taps with a pause, or a backpack, or tap the opposite knee instead.',
+  regr: 'Knees on the floor, or taps from a high push-up position.',
+  home: 'Floor only.'
+}
+
+});
+
+ROUTINES.push(
+  { id:'boss-warmup', n:'The Line Warm-Up', tag:'BOSS',
+    sub:'Six or seven minutes \u00b7 before any Boss workout',
+    targets:'Foot speed \u00b7 hips \u00b7 upper back',
+    why:'His warm-up is four foot patterns over a line \u2014 he calls it five minutes, and with the two additions below it is nearer seven. It is a better opener than it sounds: fast small contacts raise temperature and wake the ankle at the speed the session is about to use. Two things are added. Leg swings, because his version has no hip work at all and every one of his leg circuits starts in a deep split stance. And band pull-aparts in place of his arm circles, because you are a thrower and the shoulder wants the scapula switched on rather than waved around. Five minutes, and it is not optional before the jumping days.',
+    items:[
+      { x:'line-taps', d:'4 patterns \u00d7 10 reps', note:'Right foot, left foot, two feet, then the quadrant. Balls of the feet, quick and quiet.' },
+      { x:'leg-swings', d:'10 linear + 10 lateral per leg', note:'Added. His warm-up has no hip work and his leg days live in a deep split stance.' },
+      { x:'walking-lunge-rotation', d:'5 per side', note:'Added, and it doubles as the hip flexor opener you need before split squats.' },
+      { x:'band-pull-apart', d:'15', note:'Added, in place of arm circles. On a push or pull day this is the item that protects the shoulder.' }
+    ]},
+
+  { id:'boss-legs-a', n:'Legs A \u00b7 Isometric', tag:'BOSS',
+    sub:'4 items \u00b7 3 sets each \u00b7 rest 60\u201390 s',
+    targets:'Quads & glutes at length \u00b7 knee drive \u00b7 hip extension',
+    why:'His first leg circuit, and the clearest example of his pattern: hold the position, then produce force from it. The split squat hold builds tendon stiffness at the joint angle sprinting actually uses, and the knee drives immediately after are the dynamic expression of the same hip. The bridge does the back half. Two adjustments for you. The holds are 40 seconds rather than his 30, because 30 is a general-population floor and you already own that. And the knee drives are quality reps rather than a count \u2014 eight fast ones beat twelve that have slowed down.',
+    items:[
+      { x:'iso-split-squat-yield', g:'HOLD FIRST \u00b7 his format', d:'3 \u00d7 40 s per side', t:{ r: 30 }, note:'Back foot on the bench, front knee over the toes, torso tall. His number is 30 s per leg \u2014 that is the floor. Add a backpack once 40 s is comfortable.' },
+      { x:'banded-knee-drive', g:'THEN THE REPS \u00b7 same hip, now fast', d:'3 \u00d7 8 per side, explosive, 45 s rest', note:'His version is unbanded: explode the front knee up from the split stance and land soft on the toes. Band it once the unbanded ones feel easy. Stop the set when they slow down, not at a number.' },
+      { x:'bridge-iso-bench', d:'3 \u00d7 45 s', note:'Heels on the bench, hips high, pelvis tucked. Low back should feel like nothing \u2014 if it does not, tuck harder and lift less.' },
+      { x:'bridge-leg-raise', d:'3 \u00d7 8 per leg, 45 s rest', note:'Hips stay level and high. A dropped hip ends the set; his number is 6.' }
+    ]},
+
+  { id:'boss-legs-b', n:'Legs B \u00b7 Power', tag:'BOSS',
+    sub:'5 items \u00b7 3 sets each \u00b7 rest 60\u201390 s',
+    targets:'Single-leg strength \u00b7 lateral elasticity \u00b7 hip extension',
+    why:'The dynamic twin of Legs A, run on a different day so the same tissues get a strength dose and a speed dose in one week. Split squats for the reps, knee drives for the speed, and the bench hops for elasticity \u2014 twenty small quick contacts, which is extensive plyometric work and costs the nervous system very little. Keep the bench low. The height is not the point and a high box turns a cheap elastic drill into a landing you have to pay for. In Home mode the split squat swaps itself for the couch version automatically.',
+    items:[
+      { x:'rfess', g:'REPS \u00b7 the strength half', d:'3 \u00d7 10 per side', note:'Toes down, front heel planted, full depth. His number, and the right one \u2014 add a backpack rather than reps.' },
+      { x:'banded-knee-drive', d:'3 \u00d7 10 per side, fast', note:'Same as Legs A, two more reps a side. Intent over count.' },
+      { x:'lateral-bench-hop', g:'ELASTIC \u00b7 quick contacts, low height', d:'3 \u00d7 20 contacts', note:'Low bench, a rolled towel or a line. Quiet landings, stiff ankles. Loud means stop.' },
+      { x:'bridge-iso-bench', d:'3 \u00d7 45 s', note:'His 30 s is the floor.' },
+      { x:'bridge-leg-raise', d:'3 \u00d7 10 per leg, 45 s rest', note:'His number is 10 here. Hips level.' }
+    ]},
+
+  { id:'boss-core', n:'Core Circuit', tag:'BOSS',
+    sub:'5 items \u00b7 2 sets each \u00b7 rest 60 s',
+    targets:'Obliques \u00b7 trunk rotation \u00b7 deep trunk \u00b7 hip flexors',
+    why:'His core circuit as he runs it, plus the one honest caveat in this whole section. Bicycles, twists and tuck-ups are all repeated deep hip flexion and loaded lumbar rotation, and a hip with a labral history is least happy in exactly that position \u2014 it is why the app\u2019s own core block is built from holds instead. So there are two cards. This one is his five, as he runs them, for days the hip is quiet. Next to it is the hip-friendly version, which trains the same qualities with the joint out of deep flexion. Neither is a compromise \u2014 both are a real core session, and one of them simply does not poke the joint.',
+    items:[
+      { x:'bicycle-crunch', g:'HIS CIRCUIT', d:'2 \u00d7 50, slow, 30 s rest', note:'Elbow to the opposite knee, about two seconds a rep. Rotate the ribs \u2014 hands stay light on the head.' },
+      { x:'russian-twist', d:'2 \u00d7 40, 30 s rest', note:'His number is 30. Tall chest, turn the ribcage, hips still. A water bottle is the dumbbell.' },
+      { x:'seated-tuckup', d:'2 \u00d7 30, 30 s rest', note:'The most hip-flexion-heavy item here. Ribs down as the legs extend, and no bouncing the heels off the floor.' },
+      { x:'bear-plank-iso', d:'2 \u00d7 45 s', note:'Knees one inch off the floor. One inch. His number is 30 s.' },
+      { x:'bear-shoulder-tap', d:'2 \u00d7 30, 30 s rest', note:'Hips do not rock, knees stay hovering between taps.' }
+    ]},
+
+  { id:'boss-core-hip', n:'Core Circuit \u00b7 Hip-Friendly', tag:'BOSS',
+    sub:'5 items \u00b7 2 sets each \u00b7 the version for a day the hip is talking',
+    targets:'Deep trunk \u00b7 anti-rotation \u00b7 anti-extension',
+    why:'The same circuit with the hip taken out of it. His first three items \u2014 bicycles, twists, tuck-ups \u2014 are repeated deep hip flexion and loaded lumbar rotation, which is the one position a hip with a labral history is least happy in. These three train the same qualities from the other direction: the dead bug resists extension instead of flexing the hip, the Pallof resists rotation instead of producing it, and the hollow hold is the held version of a tuck-up. The last two items are his and unchanged, because a bear plank never bothered anybody\u2019s hip. Run this one whenever the joint has an opinion, and run his when it does not. Neither is the lesser session.',
+    items:[
+      { x:'deadbug', g:'INSTEAD OF HIS FIRST THREE', d:'2 \u00d7 6 per side, slow', note:'Same anti-extension job as the tuck-up, with the hip nowhere near end range. Ribs down, low back flat on the floor.' },
+      { x:'pallof-press', d:'2 \u00d7 5 with 5 s holds per side', t:{ r: 20 }, note:'Anti-rotation instead of rotation \u2014 the obliques still work, the low back is not wrung out. A band on a door handle.' },
+      { x:'hollow-hold', d:'2 \u00d7 25 s', note:'Held rather than repped. This is the version his format would have used if his hip had your history.' },
+      { x:'bear-plank-iso', g:'HIS, UNCHANGED', d:'2 \u00d7 45 s', note:'Knees one inch off the floor. His number is 30 s.' },
+      { x:'bear-shoulder-tap', d:'2 \u00d7 30', note:'Hips do not rock, knees stay hovering between taps.' }
+    ]},
+
+  { id:'boss-hams', n:'Hamstrings + Speed', tag:'BOSS',
+    sub:'5 items \u00b7 3 sets each \u00b7 the sharpest one here',
+    targets:'Hamstrings \u00b7 single-leg landing \u00b7 hip extension power',
+    why:'His hamstring circuit, combined with his speed clip and then finished with the exercise he leaves out. The bridge holds and raises are the easy part. The hops and the split jumps are not: both load the hamstring at speed, and both belong early in a session rather than at the end of a tired one. And the Nordic is here because it is the single best-evidenced hamstring-injury intervention there is \u2014 roughly a 50% reduction across the literature \u2014 and his page does not have it. Five slow lowers is a real dose. Given your strain history, this circuit does not go the day before a game.',
+    items:[
+      { x:'bridge-iso-toesup', g:'HOLD \u00b7 hamstring bias', d:'3 \u00d7 45 s', note:'Heels on the floor, toes pulled hard up. That is what moves the work off the calf and onto the hamstring. His number is 30 s.' },
+      { x:'bridge-leg-raise', d:'3 \u00d7 8 per leg, 45 s rest', note:'Hips level. His number is 6.' },
+      { x:'sl-hop-exit', g:'SPEED \u00b7 low volume, full quality', d:'2 \u00d7 3 per side', note:'Three hops, land the third sideways, explode out two or three steps. Real rest between reps. Knee diving inward ends the set. This is the one item that does not scale with the rounds \u2014 two sets is the ceiling, however good you feel.' },
+      { x:'split-jump', d:'3 \u00d7 12', note:'His number is 10 a round, building to 15. Switch in the air, back knee never touches, land soft. Do these fresh, and drop to two sets if the hamstring has any voice at all.' },
+      { x:'nordic-curl', g:'ADDED \u00b7 the one he is missing', d:'3 \u00d7 5 slow lowers', note:'Feet anchored under a couch. Lower as slowly as you can, push back up with your hands. Hips locked in line with the torso \u2014 breaking at the hip ends the rep.' }
+    ]},
+
+  { id:'boss-push', n:'Upper Push', tag:'BOSS',
+    sub:'6 items \u00b7 3 sets each \u00b7 rest 60\u201390 s',
+    targets:'Chest \u00b7 shoulders overhead \u00b7 triceps \u00b7 trunk',
+    why:'His free content has almost no upper body, so this is his format applied to pressing: the bottom hold first, then the reps, then an overhead angle, then the triceps, then a trunk finisher. At 6\u20191" and 150 lb this is the least glamorous and highest-leverage part of the whole section \u2014 upper-body mass is your biggest untapped lever, and push-ups at 18 a round are only worth it if you keep making them harder. One caution: bench dips put the front of the shoulder near end-range extension. If it pinches there, swap them for close-grip push-ups and lose nothing.',
+    items:[
+      { x:'pushup-bottom-iso', g:'HOLD FIRST', d:'3 \u00d7 40 s', note:'Chest an inch off the floor, elbows in. His number is 30 s.' },
+      { x:'pushup', g:'THEN THE REPS', d:'3 \u00d7 18, 60 s rest', note:'His number is 10\u201315. Once 18 is comfortable, go to three-second lowers or feet elevated rather than to 25 reps.' },
+      { x:'pike-pushup', d:'3 \u00d7 10, 60 s rest', note:'Hips high, head to a spot in front of the hands. His number is 8\u201310.' },
+      { x:'bench-dip', d:'3 \u00d7 15, 60 s rest', note:'Hips close to the bench, elbows back, stop at 90 degrees. Swap for close-grip push-ups if the front of the shoulder complains.' },
+      { x:'rkc-plank', g:'FINISH \u00b7 trunk', d:'3 \u00d7 30 s', note:'Maximum tension rather than a long hold \u2014 30 s of an RKC plank is harder than two minutes of a normal one.' },
+      { x:'plank-walkup', d:'3 \u00d7 10, 45 s rest', note:'Alternate the lead arm. Hips still: that is the whole exercise.' }
+    ]},
+
+  { id:'boss-pull', n:'Upper Pull', tag:'BOSS',
+    sub:'4 items \u00b7 3 sets each \u00b7 rest 90 s',
+    targets:'Lats & upper back \u00b7 grip \u00b7 shoulders overhead',
+    why:'He shows a pull-up and a dead hang in one clip and leaves it there. Built out, this is the half of the upper body a throwing athlete is usually short on: a throwing shoulder wants at least twice as much pulling as pressing and normally gets the reverse. The hang comes first because it is shoulder health as much as a warm-up, then the pull-ups while you are fresh, then the top-position hold, which is where almost everyone is weakest and the fastest way to add reps. No bar: towel rows on a door handle and backpack rows, 12 each.',
+    items:[
+      { x:'hanging-decompression', g:'HANG FIRST', d:'3 \u00d7 40 s', note:'Relaxed grip, shoulders slightly engaged rather than fully dumped. His number is 30 s.' },
+      { x:'weighted-pullup', g:'PULL', d:'3 \u00d7 8', note:'His number is 5\u20138. Add weight in a backpack before you add reps. Can\u2019t do one yet: jump up and lower over five seconds, five times.' },
+      { x:'flexed-arm-hang', d:'3 \u00d7 30 s', note:'Chin clearly over the bar, chest close to it, elbows down not shrugged.' },
+      { x:'table-row-iso', d:'3 \u00d7 12', note:'Under a sturdy table or a low bar, body straight, chest to the edge. His number is 10\u201312.' }
+    ]},
+
+  { id:'boss-ankles', n:'Ankles + Groin Mini', tag:'BOSS',
+    sub:'3 items \u00b7 5\u20138 min \u00b7 tack onto any leg day',
+    targets:'Calves & Achilles \u00b7 ankle stiffness \u00b7 adductors',
+    why:'Not his \u2014 this is the gap every soccer-style bodyweight program has, and it happens to cover two of your three weak links. Single-leg calf work off a step is the cheapest Achilles and calf insurance there is; pogos make the ankle stiffer, which is free speed; and the Copenhagen is the exercise with the best evidence base for the adductor, which is the tissue you already know is weak. Five to eight minutes on the end of Legs A or Legs B, twice a week.',
+    items:[
+      { x:'stair-calf-iso', d:'2 \u00d7 30 s per side', t:{ r: 30 }, note:'Front of the foot on a step, heel dropped, hold at the top. Bent knee hits the soleus, which is the one that matters for repeat sprinting.' },
+      { x:'calf-raise-loaded', d:'2 \u00d7 15 per side, single leg, 45 s rest', note:'Off the edge of a step for full range. Slow \u2014 two seconds up, three down.' },
+      { x:'pogo-jumps', d:'2 \u00d7 20 contacts, 45 s rest', note:'Small, stiff-ankle bounces. Ground contact is the metric, not height.' },
+      { x:'copenhagen-hold', d:'3 \u00d7 25 s per side', t:{ r: 30 }, note:'Short lever first: top knee on the bench, not the ankle. This follows the ten-week ladder under Program \u2014 do not jump ahead of it.' }
+    ]}
+);
+
+const BOSS_GROUPS = [
+  { n: 'Start here',
+    sub: 'Five minutes on a line. Not optional before the jumping days.',
+    ids: ['boss-warmup'] },
+  { n: 'Legs',
+    sub: 'His two leg circuits and the hamstring one. Legs A and Legs B on different days.',
+    ids: ['boss-legs-a', 'boss-legs-b', 'boss-hams'] },
+  { n: 'Upper body',
+    sub: 'The half his page is missing, built in his format.',
+    ids: ['boss-push', 'boss-pull'] },
+  { n: 'Core and the extras',
+    sub: 'His core circuit, the same circuit with the hip taken out of it, and the ankle and groin work no soccer program includes.',
+    ids: ['boss-core', 'boss-core-hip', 'boss-ankles'] }
+];
+
+/* His videos give fixed numbers and never explain progression. This is the ladder,
+   and the rule underneath it: two easy sessions in a row is the signal to move up.
+   One hard session is not a reason to move down. */
+const BOSS_LADDER = [
+  { w: '1\u20132', rounds: '2', holds: '30 s', reps: 'his numbers', note: 'Learn the positions at his floor. Nothing above it, even if it feels easy.' },
+  { w: '3\u20134', rounds: '3', holds: '30\u201340 s', reps: 'his numbers', note: 'His actual prescription: 3 rounds, each workout twice a week.' },
+  { w: '5\u20136', rounds: '3', holds: '45 s', reps: '+25%', note: '10 becomes 12\u201313, 30 becomes 38, 50 becomes 60. This is where the doses in the blocks above sit.' },
+  { w: '7\u20138', rounds: '3', holds: '45 s', reps: 'hold the reps', note: 'Add load instead: backpack on the split squats and bridges, single-leg bridge holds, a dumbbell on the tuck-ups, feet up for push-ups, weight on the pull-ups.' },
+  { w: '9+', rounds: '3 loaded, or 4', holds: '60 s', reps: 'hold the reps', note: 'Weight and tempo from here, not reps. Reps past about 20 buy endurance you already have from playing.' }
+];
+
+/* His week, with the running removed. Read the caveat: this is a second program, and
+   it only works if it does not land on top of the one you are already running. */
+const BOSS_WEEK = [
+  { d: 'Mon', do: 'Legs A + Ankles/Groin mini + Core', mins: '~30 min' },
+  { d: 'Tue', do: 'Upper Push + Upper Pull', mins: '~25 min' },
+  { d: 'Wed', do: 'Hamstrings + Speed, or rest', mins: '~15 min' },
+  { d: 'Thu', do: 'Legs B + Ankles/Groin mini + Core', mins: '~30 min' },
+  { d: 'Fri', do: 'Upper Push + Upper Pull', mins: '~25 min' },
+  { d: 'Sat', do: 'Hamstrings + Speed, or recovery', mins: '~15 min' },
+  { d: 'Sun', do: 'Rest', mins: '\u2014' }
+];
+
 
 </script>
 <script>
@@ -5469,6 +6006,7 @@ const ICONS = {
   body: 'M12 2.5a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8|M5 10h14|M10 10l-1.4 5.6L7 21.5|M14 10l1.4 5.6L17 21.5',
   range: 'M9 4H4v5|M15 20h5v-5|M4 4l6 6|M20 20l-6-6',
   trail: 'M2 20h20|M5 20l5-11 4 7 2-3 4 7|M17 6a2 2 0 1 0 0-.1',
+  boss: 'M4 9h3v6H4z|M17 9h3v6h-3z|M7 12h10|M2 11v2|M22 11v2',
   check: 'M4 12l6 6L20 6'
 };
 
@@ -6881,6 +7419,38 @@ function viewProgram() {
       body: () => el('div', { class: 'stack stack-xl' }, RANGE_GROUPS.map(g =>
         sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
     },
+    boss: {
+      n: 'Boss Your Game', blurb: 'Alex\u2019s short circuits: hold first, reps second.',
+      body: () => el('div', { class: 'stack stack-xl' }, [
+        sec('Boss Your Game',
+          'Nine short workouts audited off Alex\u2019s page, in his format: an isometric hold, then dynamic reps of the same joint, four to six items. His running work is deliberately left out, and every row carries his number \u2014 where the dose here is higher, his is the floor rather than the target. One structural difference: he runs each workout as a circuit, all the items and then repeat. Here each row carries its sets, so a block is the whole workout end to end and the time estimate on the card is real. Circuit it instead if you prefer \u2014 the Start button on each row lets you walk the list and go again \u2014 the week\u2019s work is identical either way. It also explains the clock: as sets with a real rest between each one these run 15 to 26 minutes rather than his ten to twenty, because in a circuit the rests overlap.',
+          el('div', { class: 'stack stack-xl' }, BOSS_GROUPS.map(g =>
+            sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))),
+        sec('How it gets harder',
+          'He gives fixed numbers and never explains progression. This is the ladder. The rule under it: two easy sessions in a row is the signal to move up a rung \u2014 one hard session is not a reason to move down.',
+          el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
+            el('thead', null, [el('tr', null, ['Week', 'Rounds', 'Holds', 'Reps', 'What changes'].map(h =>
+              el('th', null, h)))]),
+            el('tbody', null, BOSS_LADDER.map(x => el('tr', null, [
+              el('td', { class: 'n' }, x.w),
+              el('td', { class: 'n' }, x.rounds),
+              el('td', { class: 'n' }, x.holds),
+              el('td', null, x.reps),
+              el('td', { class: 'small muted' }, x.note)
+            ])))
+          ])])),
+        sec('His week, and how it fits yours',
+          'This is a second program. It only works if it does not land on top of the one you are already running: in season keep it to one round of each workout a week, put Legs B and Hamstrings + Speed on days that are not next to a game, and never stack Hamstrings + Speed on the same day as the plyometric ladder. Everything here is additive to the Daily work, not a replacement for it.',
+          el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
+            el('thead', null, [el('tr', null, ['Day', 'Workout', 'Time'].map(h => el('th', null, h)))]),
+            el('tbody', null, BOSS_WEEK.map(x => el('tr', null, [
+              el('td', null, x.d),
+              el('td', null, x.do),
+              el('td', { class: 'n' }, x.mins)
+            ])))
+          ])]))
+      ])
+    },
     trail: {
       n: 'Hiking', blurb: 'A day on your feet, without paying for it afterwards.',
       body: () => el('div', { class: 'stack stack-xl' }, TRAIL_GROUPS.map(g =>
@@ -6973,6 +7543,7 @@ function viewProgram() {
     body: BODY_GROUPS.reduce((x, g) => x + g.ids.length, 0) + ' blocks',
     range: RANGE_GROUPS.reduce((x, g) => x + g.ids.length, 0) + ' blocks',
     trail: ROUTINES.filter(r => r.tag === 'TRAIL').length + ' blocks',
+    boss: ROUTINES.filter(r => r.tag === 'BOSS').length + ' blocks',
     blocks: byTag('ARMOR').length + ' blocks',
     power: byTag('POWER').length + ' blocks',
     short: byTag('SHORT').length + ' blocks',
@@ -7003,6 +7574,7 @@ function viewProgram() {
       tile('body', ICONS.body),
       tile('blocks', ICONS.armor),
       tile('range', ICONS.range),
+      tile('boss', ICONS.boss),
       tile('trail', ICONS.trail),
       tile('power', ICONS.bolt),
       tile('short', ICONS.clock),
@@ -7079,6 +7651,9 @@ function routineCard(r, date) {
           el('span', { class: 'pick-dose num' }, it.d + ' \u00b7 tap for how-to'),
           costChip(ex),
           ex.targets ? el('span', { class: 'pick-targets' }, ex.targets) : null,
+          // The note is where the dose is explained — whose number it is, what to change, when
+          // to stop. It rendered on a session row and nowhere else, so the picker never showed it.
+          it.note ? el('span', { class: 'pick-note' }, it.note) : null,
           isHome() && ex.home ? el('span', { class: 'pick-home' }, 'At home: ' + ex.home) : null
         ]),
         el('button', {

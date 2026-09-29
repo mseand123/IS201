@@ -975,3 +975,6 @@ body.running .queuebar { display: none; }
   }
   .queue-est { display: none; }
 }
+
+/* A picked row explains its own dose: whose number it is, and what to change. */
+.pick-note { font-size: var(--t-xs); color: var(--muted); line-height: 1.35; margin-top: .15rem; max-width: 62ch; }

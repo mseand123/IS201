@@ -50,6 +50,7 @@ const ICONS = {
   body: 'M12 2.5a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8|M5 10h14|M10 10l-1.4 5.6L7 21.5|M14 10l1.4 5.6L17 21.5',
   range: 'M9 4H4v5|M15 20h5v-5|M4 4l6 6|M20 20l-6-6',
   trail: 'M2 20h20|M5 20l5-11 4 7 2-3 4 7|M17 6a2 2 0 1 0 0-.1',
+  boss: 'M4 9h3v6H4z|M17 9h3v6h-3z|M7 12h10|M2 11v2|M22 11v2',
   check: 'M4 12l6 6L20 6'
 };
 
@@ -1462,6 +1463,38 @@ function viewProgram() {
       body: () => el('div', { class: 'stack stack-xl' }, RANGE_GROUPS.map(g =>
         sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
     },
+    boss: {
+      n: 'Boss Your Game', blurb: 'Alex\u2019s short circuits: hold first, reps second.',
+      body: () => el('div', { class: 'stack stack-xl' }, [
+        sec('Boss Your Game',
+          'Nine short workouts audited off Alex\u2019s page, in his format: an isometric hold, then dynamic reps of the same joint, four to six items. His running work is deliberately left out, and every row carries his number \u2014 where the dose here is higher, his is the floor rather than the target. One structural difference: he runs each workout as a circuit, all the items and then repeat. Here each row carries its sets, so a block is the whole workout end to end and the time estimate on the card is real. Circuit it instead if you prefer \u2014 the Start button on each row lets you walk the list and go again \u2014 the week\u2019s work is identical either way. It also explains the clock: as sets with a real rest between each one these run 15 to 26 minutes rather than his ten to twenty, because in a circuit the rests overlap.',
+          el('div', { class: 'stack stack-xl' }, BOSS_GROUPS.map(g =>
+            sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))),
+        sec('How it gets harder',
+          'He gives fixed numbers and never explains progression. This is the ladder. The rule under it: two easy sessions in a row is the signal to move up a rung \u2014 one hard session is not a reason to move down.',
+          el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
+            el('thead', null, [el('tr', null, ['Week', 'Rounds', 'Holds', 'Reps', 'What changes'].map(h =>
+              el('th', null, h)))]),
+            el('tbody', null, BOSS_LADDER.map(x => el('tr', null, [
+              el('td', { class: 'n' }, x.w),
+              el('td', { class: 'n' }, x.rounds),
+              el('td', { class: 'n' }, x.holds),
+              el('td', null, x.reps),
+              el('td', { class: 'small muted' }, x.note)
+            ])))
+          ])])),
+        sec('His week, and how it fits yours',
+          'This is a second program. It only works if it does not land on top of the one you are already running: in season keep it to one round of each workout a week, put Legs B and Hamstrings + Speed on days that are not next to a game, and never stack Hamstrings + Speed on the same day as the plyometric ladder. Everything here is additive to the Daily work, not a replacement for it.',
+          el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
+            el('thead', null, [el('tr', null, ['Day', 'Workout', 'Time'].map(h => el('th', null, h)))]),
+            el('tbody', null, BOSS_WEEK.map(x => el('tr', null, [
+              el('td', null, x.d),
+              el('td', null, x.do),
+              el('td', { class: 'n' }, x.mins)
+            ])))
+          ])]))
+      ])
+    },
     trail: {
       n: 'Hiking', blurb: 'A day on your feet, without paying for it afterwards.',
       body: () => el('div', { class: 'stack stack-xl' }, TRAIL_GROUPS.map(g =>
@@ -1554,6 +1587,7 @@ function viewProgram() {
     body: BODY_GROUPS.reduce((x, g) => x + g.ids.length, 0) + ' blocks',
     range: RANGE_GROUPS.reduce((x, g) => x + g.ids.length, 0) + ' blocks',
     trail: ROUTINES.filter(r => r.tag === 'TRAIL').length + ' blocks',
+    boss: ROUTINES.filter(r => r.tag === 'BOSS').length + ' blocks',
     blocks: byTag('ARMOR').length + ' blocks',
     power: byTag('POWER').length + ' blocks',
     short: byTag('SHORT').length + ' blocks',
@@ -1584,6 +1618,7 @@ function viewProgram() {
       tile('body', ICONS.body),
       tile('blocks', ICONS.armor),
       tile('range', ICONS.range),
+      tile('boss', ICONS.boss),
       tile('trail', ICONS.trail),
       tile('power', ICONS.bolt),
       tile('short', ICONS.clock),
@@ -1660,6 +1695,9 @@ function routineCard(r, date) {
           el('span', { class: 'pick-dose num' }, it.d + ' \u00b7 tap for how-to'),
           costChip(ex),
           ex.targets ? el('span', { class: 'pick-targets' }, ex.targets) : null,
+          // The note is where the dose is explained — whose number it is, what to change, when
+          // to stop. It rendered on a session row and nowhere else, so the picker never showed it.
+          it.note ? el('span', { class: 'pick-note' }, it.note) : null,
           isHome() && ex.home ? el('span', { class: 'pick-home' }, 'At home: ' + ex.home) : null
         ]),
         el('button', {

@@ -28,7 +28,7 @@ Object.entries(d.SESSIONS).forEach(([k, s]) => (s.blocks || []).forEach(b => {
 }));
 d.ROUTINES.forEach(r => {
   ck(typeof r.n === 'string' && typeof r.id === 'string', 'routine needs id and name');
-  ck(['WARMUP','DESK','ARMOR','SHORT','RANGE','RECOVERY','POWER','BODY','TRAIL'].includes(r.tag), 'routine ' + r.id + ' has an unrendered tag: ' + r.tag);
+  ck(['WARMUP','DESK','ARMOR','SHORT','RANGE','RECOVERY','POWER','BODY','TRAIL','BOSS'].includes(r.tag), 'routine ' + r.id + ' has an unrendered tag: ' + r.tag);
   r.items.forEach(i => check(i.x, 'routine ' + r.id));
 });
 d.ARMOR.items.forEach(i => check(i.x, 'ARMOR'));
@@ -54,6 +54,18 @@ d.TRAIL_GROUPS.forEach(g => {
 });
 d.ROUTINES.filter(r => r.tag === 'TRAIL').forEach(r =>
   ck(d.TRAIL_GROUPS.some(g => g.ids.includes(r.id)), r.id + ' is a trail block but appears in no trail group'));
+d.BOSS_GROUPS.forEach(g => {
+  ck(typeof g.n === 'string' && typeof g.sub === 'string', 'boss group needs a name and a subtitle');
+  g.ids.forEach(id => ck(byId.has(id), 'boss group "' + g.n + '" references a missing routine: ' + id));
+});
+d.ROUTINES.filter(r => r.tag === 'BOSS').forEach(r =>
+  ck(d.BOSS_GROUPS.some(g => g.ids.includes(r.id)), r.id + ' is a Boss block but appears in no boss group'));
+// the ladder and the week are rendered as tables: every column has to be there
+d.BOSS_LADDER.forEach((x, i) => ['w','rounds','holds','reps','note'].forEach(f =>
+  ck(typeof x[f] === 'string' && x[f].length, 'BOSS_LADDER[' + i + '].' + f + ' should be a non-empty string')));
+d.BOSS_WEEK.forEach((x, i) => ['d','do','mins'].forEach(f =>
+  ck(typeof x[f] === 'string' && x[f].length, 'BOSS_WEEK[' + i + '].' + f + ' should be a non-empty string')));
+ck(d.BOSS_WEEK.length === 7, 'the Boss week needs seven days, got ' + d.BOSS_WEEK.length);
 d.BODY_GROUPS.forEach(g => {
   ck(typeof g.n === 'string' && typeof g.sub === 'string', 'body group needs a name and a subtitle');
   g.ids.forEach(id => ck(byId.has(id), 'body group "' + g.n + '" references a missing routine: ' + id));
@@ -67,7 +79,7 @@ d.ROUTINES.filter(r => ['WARMUP', 'RECOVERY', 'RANGE'].includes(r.tag))
   .forEach(r => ck(grouped.has(r.id), r.id + ' is game-day but appears in no play group'));
 
 // every warm-up exercise says what it targets — that is the label under the name
-d.ROUTINES.filter(r => ['WARMUP','TRAIL'].includes(r.tag)).forEach(r => r.items.forEach(i =>
+d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS'].includes(r.tag)).forEach(r => r.items.forEach(i =>
   ck(typeof (d.EX[i.x] || {}).targets === 'string' && d.EX[i.x].targets.length > 0,
      r.id + ' › ' + i.x + ' has no targets label')));
 Object.values(d.EX).forEach(e => ck(e.targets === undefined || typeof e.targets === 'string', e.n + ' targets should be a string'));
@@ -75,7 +87,7 @@ Object.values(d.EX).forEach(e => ck(e.targets === undefined || typeof e.targets 
 // a warm-up's summary line is short and honest: required, and every term it names must
 // appear in at least one of its items' targets
 const norm = x => x.toLowerCase().replace(/[^a-z ]/g, ' ').replace(/\s+/g, ' ').trim();
-d.ROUTINES.filter(r => ['WARMUP','TRAIL'].includes(r.tag)).forEach(r => {
+d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS'].includes(r.tag)).forEach(r => {
   ck(typeof r.targets === 'string' && r.targets.length > 0, r.id + ' has no targets summary');
   ck(!r.targets || r.targets.split('·').length <= 9, r.id + ' targets summary is not short: ' + r.targets);
   const pool = norm(r.items.map(i => (d.EX[i.x] || {}).targets || '').join(' '));
