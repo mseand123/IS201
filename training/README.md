@@ -1,7 +1,7 @@
 # Ground Contact
 
 An elastic-athlete training system built for one athlete: 25, 6'1", 150 lb, professional
-UFA ultimate, 4.6 DUPR pickleball, with a prior SLAP-type labral tear, a weak adductor and
+UFA ultimate, 4.6 DUPR pickleball, with a hip (acetabular) labral tear that is improving, a weak adductor and
 a hamstring strain history.
 
 Open `index.html` (or `training/` on the published site). Everything runs in the browser and
@@ -350,6 +350,28 @@ tub belongs off the Boss days.
 Trail and Boss blocks are held to the warm-up standard by `check-data.js`: every row carries a
 `targets` label, every block carries a short summary, and every term in that summary has to appear
 in one of its own items' targets.
+
+### The labral tear is the hip — and the app now says so everywhere
+
+The tear is in the hip (acetabular) and improving. The app was first written for a shoulder (SLAP)
+tear, and that premise had outlived the hip track that replaced it: the data header and this README
+still said SLAP, a dozen shoulder exercises justified themselves by "your labrum", and the Upper +
+Throw session's description said *overhead barbell pressing is off the menu* while its own push block
+programmed overhead pressing. All of it now reasons from what is true — you are a thrower — and the
+restrictions that only existed for a shoulder tear are gone (the overhead-press ban, the medicine-ball
+slam kept below shoulder height, the landmine press as a *substitute*). The cuff, scapular and
+thoracic work stays; a throwing shoulder wants it regardless. Eight shoulder exercises swapped their
+`labrum` tag for `thrower`, so a Library search for *labrum* now finds hip work only.
+
+**Hip Strength** is the new next step after the Hip Block. The Hip Block keeps a calm hip calm and is
+still the block for a flare; Hip Strength makes it strong, because strength around the joint is what
+non-operative labral care is built on. A heavy hip-thrust hold, single-leg RDL, step-ups, hip
+airplanes for rotation control, side plank, and a standing hip-flexor hold — the three groups labral
+hips test weakest in, loaded and mostly on one leg. About 30 minutes, twice a week, in both Gym and
+Home mode (the thrust and the RDL swap to their couch and backpack versions). Its rule is the dossier's
+rule: train to just short of a front-of-hip pinch, never through it, and drop back to the Hip Block for
+a week if the hip is worse the morning after. The hip dossier gained a section saying where you are
+now, and the Hip Block points forward to it.
 
 ## Injury prevention, against the actual data
 

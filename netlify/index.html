@@ -1006,7 +1006,7 @@ body.running .queuebar { display: none; }
 /* ===========================================================
    GROUND CONTACT — data layer
    Athlete: 25M · 6'1" · 150 lb · pro UFA ultimate · 4.6 DUPR pickleball
-   History: SLAP-type labral tear (slight), adductor weakness, hamstring strain
+   History: hip (acetabular) labral tear, improving; adductor weakness, hamstring strain
    Preferences: isometrics, timed work, deep squat holds, fascial work
    =========================================================== */
 
@@ -1376,6 +1376,7 @@ const EX = {
 },
 'single-leg-rdl': {
   n: 'Single-Leg RDL', cat: 'strength', tags: ['hamstring','unilateral','balance'],
+  targets: 'Hamstrings \u00b7 glutes \u00b7 hip control on one leg',
   why: 'Hamstring at length under load, plus the frontal-plane hip control that ultimate cutting demands. Unilateral loading also exposes the left/right asymmetries that predict injury.',
   setup: 'Dumbbell or kettlebell in the opposite hand to the standing leg.',
   steps: ['Soft knee, roughly 15° and locked there.','Hinge at the hip, weight tracking down the shin, free leg extending back as a counterweight.','Hips stay level — imagine a glass of water on the sacrum.','Stop when the hamstring is at end range, then drive the hip forward to stand.'],
@@ -1387,6 +1388,7 @@ const EX = {
 },
 'hip-thrust': {
   n: 'Barbell Hip Thrust', cat: 'strength', tags: ['glute','accel','power'],
+  targets: 'Glutes \u00b7 hip extension',
   why: 'Horizontal force production is what acceleration is made of, and the glutes are the primary engine. In an athlete carrying 150 lb on a 6\'1" frame, absolute hip-extension strength is one of the biggest available levers on your first three steps.',
   setup: 'Upper back on a bench, bar over the hips with a pad, feet flat, shins vertical at the top.',
   steps: ['Chin tucked, ribs down.','Drive through the heels to full hip extension.','Squeeze hard at the top for a full second — posterior pelvic tilt, no lumbar arch.','Lower under control to just above the floor.'],
@@ -1517,6 +1519,7 @@ const EX = {
 },
 'hip-airplane': {
   n: 'Hip Airplane', cat: 'mobility', tags: ['adductor','hip','control'],
+  targets: 'Hip rotation control \u00b7 glute med \u00b7 balance',
   why: 'Trains internal and external hip rotation under a single-leg load — the exact demand of planting and cutting. Adductors are powerful hip rotators, and an adductor that cannot control rotation is one that gets strained during a plant.',
   setup: 'Single-leg hinge position, torso near horizontal, hands out or on a support.',
   steps: ['Hinge into a single-leg RDL position and hold it.','Rotate the pelvis open toward the sky as far as the standing hip allows.','Rotate closed, dropping the free hip toward the floor — this is the internal rotation half and the hard one.','Move slowly; the standing foot must not move.'],
@@ -1568,7 +1571,7 @@ const EX = {
 
 /* ============ THE SHOULDER / LABRUM TRACK ============ */
 'cuff-iso-er': {
-  n: 'Rotator Cuff Isometric — ER/IR', cat: 'iso', tags: ['shoulder','labrum','iso','daily','armor'],
+  n: 'Rotator Cuff Isometric — ER/IR', cat: 'iso', tags: ['shoulder','thrower','iso','daily','armor'],
   why: 'The cheapest insurance available for a shoulder that throws hundreds of times a week. Isometrics at low abduction angles load the rotator cuff without the end-range compression that irritates a throwing shoulder, they take two minutes, and they are timed holds, which suits you. The cuff is what keeps the humeral head centred while your hips and torso generate the throw.',
   setup: 'Stand with the affected arm at your side, elbow at 90°, a rolled towel between elbow and ribs.',
   steps: [
@@ -1586,7 +1589,7 @@ const EX = {
   timer: { w: 25, r: 20, rounds: 6, label: 'Cuff iso — change direction' }
 },
 'sleeper-stretch': {
-  n: 'Sleeper Stretch (Posterior Capsule)', cat: 'mobility', tags: ['shoulder','labrum','gird'],
+  n: 'Sleeper Stretch (Posterior Capsule)', cat: 'mobility', tags: ['shoulder','thrower','gird'],
   why: 'Athletes with GIRD — glenohumeral internal rotation deficit — are roughly twice as likely to be injured over a three-year window, and posterior capsule stretching resolves it in about 90% of athletes who have it. A tight posterior capsule pushes the humeral head forward and up, which is what makes a throwing shoulder ache. This is a conditional exercise: the right tool only if you have measured the deficit.',
   setup: 'Lie on the affected side, shoulder under you, arm out at 90° of abduction, elbow bent 90°.',
   steps: [
@@ -1603,7 +1606,7 @@ const EX = {
   flag: 'Measure first, every time. Under 15° of side-to-side difference means you do not have GIRD and should skip this entirely — stretching a capsule that is doing its job is how throwers create instability.'
 },
 'prone-ytw': {
-  n: 'Prone Y-T-W', cat: 'strength', tags: ['shoulder','scap','labrum'],
+  n: 'Prone Y-T-W', cat: 'strength', tags: ['shoulder','scap','thrower'],
   why: 'If the shoulder blade does not upwardly rotate on schedule, the joint has to find range it does not have, and the soft tissue around it pays. Scapular control is the least glamorous and most reliable thing a throwing athlete can train, and it takes five minutes with almost no load.',
   home: "Face down on the floor works fine, and the floor version is harder because you have to lift against gravity from a dead stop. Use two full water bottles or nothing at all.",
   setup: 'Face down on an incline bench or on the floor. Very light or no weight — 2–5 lb is plenty.',
@@ -1620,8 +1623,8 @@ const EX = {
   regr: 'No weight, smaller range.'
 },
 'landmine-press': {
-  n: 'Half-Kneeling Landmine Press', cat: 'strength', tags: ['shoulder','labrum','press'],
-  why: 'Your labrum-safe pressing option. The landmine arc keeps the humerus in the scapular plane and stops short of full overhead, so you build pressing strength without the end-range compression and torsion that provokes a superior labral lesion.',
+  n: 'Half-Kneeling Landmine Press', cat: 'strength', tags: ['shoulder','thrower','press'],
+  why: 'A comfortable pressing arc that trains the trunk as hard as the shoulder. The landmine keeps the upper arm in the scapular plane, and the half-kneeling position makes the glute and the ribs do honest work, which is the pressing pattern a thrower gets the most from. It sits alongside overhead pressing, not in place of it.',
   setup: 'Barbell in a landmine or a corner. Half-kneeling, down knee on the same side as the pressing arm.',
   steps: ['Bar in the hand at shoulder height, elbow tucked.','Ribs down, glute of the down leg squeezed — no lumbar arch.','Press up and forward along the bar\'s arc, finishing with the arm long and the shoulder blade rotating up.','Control back to the shoulder.'],
   cues: ['Press along the arc, not straight up.','Ribs down; the range comes from the shoulder, not the spine.','Full reach at the top — let the shoulder blade travel.'],
@@ -1632,8 +1635,8 @@ const EX = {
   flag: 'Not a restriction — a preference. The half-kneeling position forces ribs-down, glute-on trunk control, which is worth having. Overhead barbell pressing is fine for you.'
 },
 'bottoms-up-carry': {
-  n: 'Bottoms-Up KB Carry', cat: 'strength', tags: ['shoulder','labrum','stability'],
-  why: 'An unstable load forces reflexive cuff co-contraction — exactly what a labrum-compromised shoulder needs — at a load light enough to be entirely safe. It also trains the grip-to-cuff irradiation that keeps the humeral head centred.',
+  n: 'Bottoms-Up KB Carry', cat: 'strength', tags: ['shoulder','thrower','stability'],
+  why: 'An unstable load forces reflexive cuff co-contraction — exactly what a throwing shoulder needs — at a load light enough to be entirely safe. It also trains the grip-to-cuff irradiation that keeps the humeral head centred.',
   setup: 'Kettlebell held upside down, elbow at 90°, bell balanced above the fist.',
   steps: ['Crush the handle.','Rib cage down, shoulder blade set.','Walk 20–30 m without letting the bell tip.','Switch hands.'],
   cues: ['Grip hard — the cuff follows the grip.','Wrist straight and stacked.','Do not lean away from the bell.'],
@@ -1927,7 +1930,7 @@ const EX = {
 'front-squat': {
   n: 'Front Squat', cat: 'strength', tags: ['legs','trunk','mass'],
   cost: 3,
-  why: 'More upright than a back squat, kinder to the shoulder than a low-bar back squat, and it forces trunk strength. If the front rack bothers the labrum, use a safety-squat bar or a heels-elevated goblet squat instead.',
+  why: 'More upright than a back squat, kinder to the shoulder than a low-bar back squat, and it forces trunk strength. If the front rack bothers the shoulder or the wrists, use a safety-squat bar or a heels-elevated goblet squat instead.',
   setup: 'Bar on the front delts, elbows high, fingertip grip or crossed arms.',
   steps: ['Elbows up throughout — if they drop, the bar goes forward.','Sit down between the hips, knees travelling forward.','Depth: hip crease below the knee if the position holds.','Drive up, elbows still high.'],
   cues: ['Elbows to the ceiling.','Big brace before descending.','Knees out.'],
@@ -1935,7 +1938,7 @@ const EX = {
   dose: '3–4 × 4–6.',
   prog: 'Load, or pause 2 s at the bottom.',
   regr: 'Goblet squat, or safety-squat bar.',
-  flag: 'The front rack loads the shoulder in flexion. If it aggravates the labrum, use straps or switch to a safety-squat bar — no reason to fight it.'
+  flag: 'The front rack loads the shoulder in flexion. If it bothers the shoulder, use straps or switch to a safety-squat bar — no reason to fight it.'
 },
 'reverse-lunge-slider': {
   n: 'Slider Reverse Lunge', cat: 'strength', tags: ['legs','control','decel'],
@@ -2201,13 +2204,12 @@ const EX = {
   n: 'Rotational Slam', cat: 'throw', tags: ['power','rotation','core'],
   why: 'Trains the deceleration side of rotation: a hard throw down and across builds the anti-rotation strength that protects the low back and the shoulder during a big pull.',
   setup: 'Non-bouncing slam ball, 4–8 kg.',
-  steps: ['Raise the ball to the outside of one shoulder — not directly overhead if the labrum is a concern.','Slam it down diagonally outside the opposite foot.','Follow through fully.'],
+  steps: ['Raise the ball above and just outside one shoulder.','Slam it down diagonally outside the opposite foot.','Follow through fully.'],
   cues: ['Diagonal, not vertical.','Exhale hard on the slam.'],
   faults: ['Going fully overhead with a symptomatic shoulder.','Rounding the low back to generate force.'],
   dose: '3 × 6 per side.',
   prog: 'Heavier ball.',
   regr: 'Lighter ball, smaller range.',
-  flag: 'Keep the ball outside the shoulder line rather than directly overhead while the labrum is a consideration.'
 },
 'throw-volume': {
   n: 'Structured Throwing Session', cat: 'throw', tags: ['ultimate','skill','shoulder'],
@@ -2285,7 +2287,7 @@ const EX = {
 'thoracic-opener': {
   n: 'Thoracic Extension & Rotation', cat: 'mobility', tags: ['spine','shoulder','daily'],
   targets: 'Mid-back extension & rotation',
-  why: 'A stiff thoracic spine forces the shoulder to find range it does not have — which is exactly how a labrum gets irritated. Give the mid-back back its extension and rotation and the shoulder stops compensating.',
+  why: 'A stiff thoracic spine forces the shoulder to find range it does not have — which is exactly how a throwing shoulder gets irritated. Give the mid-back back its extension and rotation and the shoulder stops compensating.',
   home: "A tightly rolled bath towel or a water bottle on its side does the same job as a foam roller. Two tennis balls taped together is better than either.",
   setup: 'Foam roller across the mid-back, or on all fours for rotation.',
   steps: ['Roller: hands behind head, extend over the roller at one segment for 5 breaths, then move up 2 cm. Cover 4 positions.','Rotation: on all fours, one hand behind the head, rotate the elbow up toward the ceiling, follow it with the eyes. 8 per side.','Exhale into the extension.'],
@@ -2577,7 +2579,7 @@ const SESSIONS = {
 
 'upper-throw': {
   n: 'Upper + Throw', type: 'MED', dur: 65,
-  purpose: 'Pull-dominant upper body, labrum-safe pressing, rotational power, and structured throwing volume. Overhead barbell pressing is off the menu; the landmine arc gives you the strength without the labral compression.',
+  purpose: 'Pull-dominant upper body, overhead pressing, rotational power, and structured throwing volume. Twice the pulling of the pushing, because that is the ratio a throwing shoulder stays healthy on.',
   blocks: [
     { n: 'SHOULDER PREP', why: 'Never throw or press cold', items: [
       { x: 'cuff-iso-er', d: '3 × 25 s ER + IR' },
@@ -3404,6 +3406,8 @@ const ARTICLES = [
     'Hip CARs daily, as an assessment as much as an exercise: you are mapping the arc your hip actually controls, and watching it grow.',
     'Cutting mechanics get a second reason to be trained properly. A knee that falls inward on a plant is the FADIR position under load at full speed.'
   ]},
+  {h:'Where you are now: getting stronger'},
+  {p:'The hip is doing a lot better, and at this stage the stronger the better is exactly the right instinct. Non-operative care is built on the strength of the muscles around the joint, and the athletes who return fully are the ones who reach strength symmetry, not the ones who rest longest. The Hip Block is for keeping a calm hip calm, and during a flare. Hip Strength, next to it under Weak-link blocks, is the step after: a heavy hip thrust, single-leg hinging and step-ups, rotation control, the side of the hip, and the hip flexors. The rule does not change as the loads go up: train to just short of a front-of-hip pinch, never through it. If the hip is worse the morning after than the morning before, drop back to the Hip Block for a week.'},
   {h:'The connection to your groin'},
   {p:'This is the part worth sitting with. Adductor-related groin pain and intra-articular hip pathology very frequently travel together, and the mechanism is not mysterious: a hip that cannot rotate freely makes the adductor work harder at longer lengths, and a weak adductor lets the femur drift into the positions the labrum objects to. Your weak adductor and your labral tear may not be two separate problems. Do not treat them as unrelated, and do not be surprised if the squeeze numbers and the FADIR score improve together.'},
   {h:'The metrics to watch'},
@@ -3598,7 +3602,7 @@ Object.assign(EX, {
 'table-row-iso': {
   n: 'Table Row & Row Hold', cat: 'strength', tags: ['upper','pull','home','shoulder'],
   targets: 'Mid-back \u00b7 lats \u00b7 scapular retraction',
-  why: 'Your home pull. A horizontal row is also the safest pulling pattern for a labrum — no overhead position, no end-range compression — and the pull-to-push ratio matters more than the absolute load for a throwing shoulder. Add the isometric hold at the top and it becomes a serious exercise without a single plate.',
+  why: 'Your home pull. A horizontal row is also the gentlest pulling pattern on a shoulder — no overhead position, no end-range compression — and the pull-to-push ratio matters more than the absolute load for a throwing shoulder. Add the isometric hold at the top and it becomes a serious exercise without a single plate.',
   setup: 'Lie under a sturdy table, a desk, or a bar set low. Grip the edge, body in a straight line, heels on the floor.',
   steps: [
     'Set the shoulder blades down and back BEFORE the arms do anything.',
@@ -3616,6 +3620,7 @@ Object.assign(EX, {
 },
 'backpack-hinge': {
   n: 'Backpack RDL', cat: 'strength', tags: ['hamstring','home','posterior'],
+  targets: 'Hamstrings \u00b7 glutes \u00b7 hinge strength',
   why: 'A backpack loaded with books or water bottles is a perfectly good 30–60 lb load, and a hip hinge is one of the few patterns where that is genuinely enough — especially on one leg. Hold it against the chest or by the top handle; the hamstring does not know what brand the weight is.',
   setup: 'Backpack loaded and held against the chest with both arms, or hanging from one hand for the single-leg version. Books and full water bottles stack well; 4 litres is about 9 lb.',
   steps: [
@@ -3684,6 +3689,7 @@ Object.assign(EX, {
 },
 'couch-hip-thrust-iso': {
   n: 'Couch Hip Thrust & Hold', cat: 'iso', tags: ['glute','home','iso','accel'],
+  targets: 'Glutes \u00b7 hip extension, one side at a time',
   why: 'Horizontal force production is what acceleration is made of, and the glute is the engine. Single-leg on a couch with an isometric hold at the top is a real stimulus without a barbell — and the timed hold suits how you like to train.',
   setup: 'Upper back on a couch or bed edge, feet flat, shins vertical at the top. One foot for the single-leg version; backpack across the hips to load it.',
   steps: [
@@ -3700,7 +3706,7 @@ Object.assign(EX, {
   timer: { w: 25, r: 45, rounds: 6, label: 'Thrust hold — switch legs' }
 },
 'pushup-scap': {
-  n: 'Scapular Push-Up & Push-Up Plus', cat: 'strength', tags: ['shoulder','home','labrum','scap'],
+  n: 'Scapular Push-Up & Push-Up Plus', cat: 'strength', tags: ['shoulder','home','thrower','scap'],
   why: 'Home pressing that also trains the scapula. Serratus anterior upwardly rotates and protracts the shoulder blade, and a blade that does not move on time makes the joint hunt for range. The "plus" at the top is the part that actually trains it, and almost nobody does it.',
   setup: 'Push-up position, hands under the shoulders. Knees down if the full position breaks your line.',
   steps: [
@@ -3751,6 +3757,7 @@ Object.assign(EX, {
 },
 'side-plank-iso': {
   n: 'Side Plank & Reach', cat: 'iso', tags: ['core','home','iso','lateral'],
+  targets: 'Side of the hip \u00b7 obliques',
   why: 'Anti-lateral-flexion strength — the exact demand of sprinting with one arm extended for a disc, and of holding a line through a hard cut. It is also the position that trains the lateral hip, which is the other half of a groin that keeps failing.',
   setup: 'Side plank on the forearm, elbow directly under the shoulder, feet stacked or staggered.',
   steps: [
@@ -3991,7 +3998,7 @@ Object.assign(EX, {
   timer: { w: 10, r: 8, rounds: 10, label: 'Short foot — switch feet' }
 },
 'desk-scap-set': {
-  n: 'Chair-Back Scap Set', cat: 'iso', tags: ['shoulder','scap','desk','labrum'], covert: 'invisible',
+  n: 'Chair-Back Scap Set', cat: 'iso', tags: ['shoulder','scap','desk','thrower'], covert: 'invisible',
   why: 'Eight hours of rounded desk posture drags the shoulder blade forward and down, which is the exact opposite of the position a throwing shoulder wants to work from. This is the direct, invisible counter, and it costs fifteen seconds at a time.',
   setup: 'Seated against a chair back, arms relaxed at your sides.',
   steps: [
@@ -4008,8 +4015,8 @@ Object.assign(EX, {
   timer: { w: 18, r: 10, rounds: 5, label: 'Scap set' }
 },
 'desk-cuff-iso': {
-  n: 'Desk-Edge Cuff Isometric', cat: 'iso', tags: ['shoulder','labrum','desk','iso','armor'], covert: 'invisible',
-  why: 'The daily cuff work your labrum needs, done at a desk. Low abduction angles load the cuff without the compression and torsion a superior labral lesion objects to, and non-operative management built on exactly this kind of work returns most throwers to sport.',
+  n: 'Desk-Edge Cuff Isometric', cat: 'iso', tags: ['shoulder','thrower','desk','iso','armor'], covert: 'invisible',
+  why: 'The daily cuff work a throwing shoulder needs, done at a desk. Low abduction angles load the cuff without end-range compression, and small, frequent doses of exactly this are what keep a thrower’s shoulder healthy through a season.',
   setup: 'Seated, elbow at 90° and pinned to your ribs, forearm across your body.',
   steps: [
     'External rotation: press the back of the wrist outward into the side of the desk, a wall, or a chair arm. Ramp to 60–70%, hold 20–30 s.',
@@ -4062,7 +4069,7 @@ Object.assign(EX, {
 },
 'desk-thoracic-twist': {
   n: 'Seated Thoracic Rotation', cat: 'mobility', tags: ['spine','desk','shoulder'], covert: 'subtle',
-  why: 'A stiff mid-back forces the shoulder to find range it does not have — precisely how a labrum gets irritated. Rotation is the range that disappears fastest in a chair.',
+  why: 'A stiff mid-back forces the shoulder to find range it does not have — precisely how a throwing shoulder gets irritated. Rotation is the range that disappears fastest in a chair.',
   setup: 'Seated upright, feet flat, hands crossed on the chest or lightly on the chair arm.',
   steps: ['Sit tall and lengthen through the crown of the head first.','Rotate the ribcage — not the hips — as far as it goes.','Exhale at end range and gain another inch.','Hold 3 seconds, return, alternate. 8 per side.'],
   cues: ['Hips stay square; the rotation is above the belt.','Exhale into end range.'],
@@ -4199,7 +4206,7 @@ const ROUTINES = [
     ]},
   { id:'hip-block', n:'Hip Block', tag:'ARMOR',
     sub:'Loading a labral hip without provoking it',
-    why:'Everything here loads the hip away from flexion-adduction-internal-rotation. Rotation isometrics at a neutral angle, gluteus medius so the femur stops drifting into the position that pinches, lumbopelvic control so the pelvis stops closing the front of the joint, and CARs to map the arc you own. Three times a week, and daily during a flare.',
+    why:'Everything here loads the hip away from flexion-adduction-internal-rotation. Rotation isometrics at a neutral angle, gluteus medius so the femur stops drifting into the position that pinches, lumbopelvic control so the pelvis stops closing the front of the joint, and CARs to map the arc you own. Three times a week, and daily during a flare. Once the hip has been quiet for a couple of weeks, Hip Strength is the next step.',
     items:[
       { x:'hip-cars', d:'3 circles each direction per side — note where it pinches' },
       { x:'hip-rot-iso', d:'3 × 25 s each direction per side' },
@@ -5309,7 +5316,7 @@ ROUTINES.push(
 const BODY_GROUPS = [
   { n: 'Lower body',
     sub: 'The big one first, then the parts that carry your weak links.',
-    ids: ['body-legs', 'body-lowerleg', 'hip-block', 'hipflexor-block', 'groin-block', 'ham-insurance'] },
+    ids: ['body-legs', 'body-lowerleg', 'hip-block', 'hip-strength', 'hipflexor-block', 'groin-block', 'ham-insurance'] },
   { n: 'Upper body',
     sub: 'Pull-dominant on purpose: a throwing shoulder wants twice as much pulling as pressing.',
     ids: ['body-pull', 'body-push', 'shoulder-block'] },
@@ -6055,6 +6062,28 @@ ROUTINES.push(
     targets:'Legs \u00b7 hamstrings \u00b7 hips \u00b7 chest \u00b7 trunk',
     why:'The same circuit, two rounds instead of three. Two rounds done is worth far more than three rounds skipped, which is the whole reason this card exists.',
     items: ROOM_MOVES }
+);
+
+/* -----------------------------------------------------------
+   HIP STRENGTH \u2014 the step after the Hip Block. The Hip Block loads a
+   labral hip without provoking it; this one makes it strong, because
+   strength around the joint is what non-operative care is built on and
+   "the stronger the better" is the right instinct once it is quiet.
+   ----------------------------------------------------------- */
+ROUTINES.push(
+  { id:'hip-strength', n:'Hip Strength', tag:'ARMOR',
+    sub:'The next step once the hip is quiet \u00b7 twice a week',
+    targets:'Glutes \u00b7 hip rotation control \u00b7 side of the hip \u00b7 hip flexors',
+    why:'The Hip Block keeps a labral hip calm; this one makes it strong. The muscles around the joint are what hold the ball centred in the socket under load, and people with labral tears reliably test weak in exactly three of them: the glutes that extend the hip, the side of the hip that stops the knee falling in, and the hip flexors. So this trains all three, heavy and on one leg where it can, because one leg is how you actually run and cut. The rule that keeps it safe is simple. Anything that pinches at the front of the hip is done to the range just short of the pinch, never through it. If the hip is grumpier the next morning than it was the morning before, go back to the Hip Block for a week and come back. And when a dose has been easy twice in a row, make it heavier rather than longer.',
+    items:[
+      { x:'hip-cars', g:'PRIME \u00b7 map the arc before you load it', d:'2 circles each direction per side', note:'Slow, full circles. Note where it catches today \u2014 that is the range to stay short of for the rest of the block.' },
+      { x:'hip-thrust', g:'EXTENSION \u00b7 the biggest muscle protecting the joint', d:'4 \u00d7 20 s at lockout, heavy', note:'Ribs down and pelvis tucked at the top, so the glute does it and the low back does not. At home this becomes the single-leg couch version automatically.' },
+      { x:'single-leg-rdl', g:'ONE LEG \u00b7 where the hip actually works', d:'3 \u00d7 8 per side', note:'Hips square to the floor the whole way. Hinge only as far as the back stays flat and the front of the hip stays quiet. Add weight before you add range.' },
+      { x:'step-up', d:'3 \u00d7 8 per side', note:'Knee height, and the knee tracks over the middle of the foot. The trailing leg is a passenger.' },
+      { x:'hip-airplane', d:'2 \u00d7 5 per side, slow', note:'The one move here that rotates the hip on a bent, loaded leg, which is near the position that provokes it. Rotate only as far as it is free. That range grows on its own as the hip gets stronger.' },
+      { x:'side-plank-iso', g:'SIDE AND FRONT \u00b7 the two groups that test weakest', d:'3 \u00d7 30 s per side', note:'Straight line from head to heels, hips high. The bottom hip is doing the work.' },
+      { x:'iso-hip-flexor', d:'3 \u00d7 20 s per side', note:'Knee above hip height, standing tall, pelvis level. Strong hip flexors above 90 degrees are part of a healthy hip, not a threat to it.' }
+    ]}
 );
 
 

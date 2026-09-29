@@ -120,6 +120,14 @@ d.ROUTINES.filter(r => r.rounds !== undefined).forEach(r => {
      r.id + '.roundRest should be 15\u2013240 s, got ' + r.roundRest);
 });
 
+// The labral tear is in the hip. The app was first written for a shoulder (SLAP) tear, and that
+// premise quietly outlived the correction once; it should not be able to come back.
+{
+  const text = JSON.stringify(d);
+  ['SLAP', 'superior labral', 'labrum-safe', 'labrum-compromised', 'Overhead barbell pressing is off']
+    .forEach(w => ck(!text.includes(w), 'data mentions "' + w + '", but the labral tear is in the hip'));
+}
+
 // routine ids unique
 const ids = d.ROUTINES.map(r => r.id);
 ck(new Set(ids).size === ids.length, 'routine ids must be unique: ' + ids.filter((x,i)=>ids.indexOf(x)!==i).join(', '));
