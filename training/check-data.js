@@ -28,7 +28,7 @@ Object.entries(d.SESSIONS).forEach(([k, s]) => (s.blocks || []).forEach(b => {
 }));
 d.ROUTINES.forEach(r => {
   ck(typeof r.n === 'string' && typeof r.id === 'string', 'routine needs id and name');
-  ck(['WARMUP','DESK','ARMOR','SHORT','RANGE','RECOVERY','POWER','BODY','TRAIL','BOSS','ROOM'].includes(r.tag), 'routine ' + r.id + ' has an unrendered tag: ' + r.tag);
+  ck(['WARMUP','DESK','ARMOR','SHORT','RANGE','RECOVERY','POWER','BODY','TRAIL','BOSS','ROOM','GOATA'].includes(r.tag), 'routine ' + r.id + ' has an unrendered tag: ' + r.tag);
   r.items.forEach(i => check(i.x, 'routine ' + r.id));
 });
 d.ARMOR.items.forEach(i => check(i.x, 'ARMOR'));
@@ -64,16 +64,33 @@ d.ROUTINES.filter(r => r.tag === 'BOSS').forEach(r =>
 d.BOSS_LADDER.forEach((x, i) => ['w','rounds','holds','reps','note'].forEach(f =>
   ck(typeof x[f] === 'string' && x[f].length, 'BOSS_LADDER[' + i + '].' + f + ' should be a non-empty string')));
 // each day names real Boss blocks, so its time is computed rather than written down
-d.BOSS_WEEK.forEach((x, i) => {
-  ck(typeof x.d === 'string' && x.d.length, 'BOSS_WEEK[' + i + '] needs a day');
-  ck(Array.isArray(x.ids), 'BOSS_WEEK[' + i + '].ids should be a list of routine ids');
-  (x.ids || []).forEach(id => ck(byId.has(id) && d.ROUTINES.find(r => r.id === id).tag === 'BOSS',
-    'BOSS_WEEK ' + x.d + ' names ' + id + ', which is not a Boss block'));
-  ck((x.ids || []).length || typeof x.note === 'string', 'BOSS_WEEK ' + x.d + ' has no blocks and no note');
-});
+const checkWeek = (name, week, tag) => {
+  ck(week.length === 7, name + ' needs seven days, got ' + week.length);
+  week.forEach((x, i) => {
+    ck(typeof x.d === 'string' && x.d.length, name + '[' + i + '] needs a day');
+    ck(Array.isArray(x.ids), name + '[' + i + '].ids should be a list');
+    (x.ids || []).forEach(e => {
+      const id = typeof e === 'string' ? e : e.id;
+      const r = d.ROUTINES.find(q => q.id === id);
+      ck(r && r.tag === tag, name + ' ' + x.d + ' names ' + id + ', which is not a ' + tag + ' block');
+      if (typeof e !== 'string') ck(Number.isInteger(e.rounds) && r && r.rounds && e.rounds < r.rounds,
+        name + ' ' + x.d + ' asks ' + id + ' for ' + e.rounds + ' rounds, which must be fewer than its own');
+    });
+    ck((x.ids || []).length || typeof x.note === 'string', name + ' ' + x.d + ' has no blocks and no note');
+  });
+};
+checkWeek('BOSS_WEEK', d.BOSS_WEEK, 'BOSS');
+checkWeek('GOATA_WEEK', d.GOATA_WEEK, 'GOATA');
+d.GOATA_GROUPS.forEach(g => g.ids.forEach(id => ck(byId.has(id), 'GOATA group "' + g.n + '" references a missing routine: ' + id)));
+d.ROUTINES.filter(r => r.tag === 'GOATA').forEach(r =>
+  ck(d.GOATA_GROUPS.some(g => g.ids.includes(r.id)), r.id + ' is a GOATA block but appears in no GOATA group'));
+[['GOATA_RULES', ['h','t']], ['GOATA_TERMS', ['t','d']], ['GOATA_DAILY', ['h','t']], ['GOATA_LADDER', ['w','t']]].forEach(([k, fs]) =>
+  d[k].forEach((x, i) => fs.forEach(f => ck(typeof x[f] === 'string' && x[f].length, k + '[' + i + '].' + f + ' should be a non-empty string'))));
+ck(d.GOATA_RULES.length === 6, 'he has six form rules, the data has ' + d.GOATA_RULES.length);
+d.GOATA_CHECK.forEach((x, i) => ck(typeof x === 'string' && x.length, 'GOATA_CHECK[' + i + '] should be a string'));
 d.BOSS_OFF.forEach((x, i) => ck(typeof x.h === 'string' && typeof x.t === 'string' && typeof x.his === 'boolean',
   'BOSS_OFF[' + i + '] needs a heading, text, and whether it is his'));
-ck(d.BOSS_WEEK.length === 7, 'the Boss week needs seven days, got ' + d.BOSS_WEEK.length);
+
 d.BODY_GROUPS.forEach(g => {
   ck(typeof g.n === 'string' && typeof g.sub === 'string', 'body group needs a name and a subtitle');
   g.ids.forEach(id => ck(byId.has(id), 'body group "' + g.n + '" references a missing routine: ' + id));
@@ -87,7 +104,7 @@ d.ROUTINES.filter(r => ['WARMUP', 'RECOVERY', 'RANGE'].includes(r.tag))
   .forEach(r => ck(grouped.has(r.id), r.id + ' is game-day but appears in no play group'));
 
 // every warm-up exercise says what it targets — that is the label under the name
-d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS','ROOM'].includes(r.tag)).forEach(r => r.items.forEach(i =>
+d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS','ROOM','GOATA'].includes(r.tag)).forEach(r => r.items.forEach(i =>
   ck(typeof (d.EX[i.x] || {}).targets === 'string' && d.EX[i.x].targets.length > 0,
      r.id + ' › ' + i.x + ' has no targets label')));
 Object.values(d.EX).forEach(e => ck(e.targets === undefined || typeof e.targets === 'string', e.n + ' targets should be a string'));
@@ -95,7 +112,7 @@ Object.values(d.EX).forEach(e => ck(e.targets === undefined || typeof e.targets 
 // a warm-up's summary line is short and honest: required, and every term it names must
 // appear in at least one of its items' targets
 const norm = x => x.toLowerCase().replace(/[^a-z ]/g, ' ').replace(/\s+/g, ' ').trim();
-d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS','ROOM'].includes(r.tag)).forEach(r => {
+d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS','ROOM','GOATA'].includes(r.tag)).forEach(r => {
   ck(typeof r.targets === 'string' && r.targets.length > 0, r.id + ' has no targets summary');
   ck(!r.targets || r.targets.split('·').length <= 9, r.id + ' targets summary is not short: ' + r.targets);
   const pool = norm(r.items.map(i => (d.EX[i.x] || {}).targets || '').join(' '));
@@ -107,7 +124,7 @@ d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS','ROOM'].includes(r.tag)).forEach
 
 // A gym->home swap replaces the exercise, so two gym items that share a home stand-in turn one
 // block into the same exercise twice. Boss and Trail blocks are built for home and must never do it.
-d.ROUTINES.filter(r => ['BOSS', 'TRAIL', 'ROOM'].includes(r.tag)).forEach(r => {
+d.ROUTINES.filter(r => ['BOSS', 'TRAIL', 'ROOM', 'GOATA'].includes(r.tag)).forEach(r => {
   const xs = r.items.map(i => d.HOME_SUB[i.x] ? d.HOME_SUB[i.x].x : i.x);
   const dup = [...new Set(xs.filter((x, i) => xs.indexOf(x) !== i))];
   ck(!dup.length, r.id + ' runs ' + dup.join(', ') + ' twice in Home mode');

@@ -14,7 +14,7 @@ fonts load.
 |---|---|
 | **Today** | Resolves the date against the annual plan and renders that session — every block, dose and coaching note — plus a readiness check-in that auto-regulates the day, the Daily Armor, and a notes field. |
 | **Program** | This week's microcycle with CNS-cost meters, the periodised year against the UFA calendar, standalone weak-link blocks, short sessions, and the 10-week Copenhagen ladder. |
-| **Library** | 178 exercises, filterable to the 154 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
+| **Library** | 197 exercises, filterable to the 172 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
 | **Tests** | 22-test battery on a 4-week cycle, with trend charts, targets and protocols. Hip internal rotation and the FADIR score lead it. |
 | **Method** | Fourteen essays: the training model, isometric taxonomy, an honest read on fascia, training without a gym, injury dossiers for the hip labrum / adductor / hamstring, throwing-shoulder load management, fuelling, the UFA game-model numbers, and sources. |
 
@@ -289,6 +289,49 @@ whole routine is run or timed goes through `routineSteps()`, so the card, the qu
 week all agree. `check-timing.js` walks circuits as the player runs them — 659 steps — and
 `check-data.js` bounds `rounds` to 2–6 and `roundRest` to 15–240 s.
 
+### GOATA Movement
+
+Andrew Blake's (a5blake) system, from an audit of his reels, shorts and no-talking workout clips —
+its own hub tile. Every exercise is one he showed or described; every set, rep and rest was added,
+because he almost never gives numbers. Nineteen new exercises came with it, from the low crawl to the
+two-step approach jump.
+
+| block | format | what |
+|---|---|---|
+| Groundwork Warm-Up | circuit, 2 rounds | crawl, rock-back, walk-in, forefoot squat — ~6 min |
+| Workout A · Groundwork | circuit, 3 rounds | crawls, forefoot squat strength, side shifts, sit-back rotations |
+| Workout B · Back Chain + One Leg | circuit, 3 rounds | forefoot hinge, bow-to-corner, step-ups, balance, sled |
+| Workout C · Jump + Land | sets, full rest | rocks, pogos, snap-downs, squat jumps, single-leg sticks, approach jumps |
+
+The screen also carries his six form rules, his daily habits, his week (built by the same computed,
+runnable `weekTable()` the Boss week now uses — a day can ask a block for fewer rounds, which is how
+his light Saturday is two rounds of Workout A), an eight-week ladder, a glossary of his cues and a
+weekly filming checklist.
+
+It is framed honestly. What is well supported — knees out, soft forefoot landings, crawling for the
+trunk — overlaps with the rest of the app, and Workout C is flagged as the most valuable part for
+you: landing mechanics are among the best-evidenced injury-prevention training there is. What is his
+alone — pushing off the outside edge of the foot, heels turning away — is labelled as his, a drill
+rather than a reason to rebuild how you cut mid-season. His strong anti-weightlifting position is
+named as his opinion; this app keeps lifting. And it says plainly that three programs do not stack:
+alongside the main plan and Boss, use his warm-up before anything, his rules on every rep, and one
+workout on a light day.
+
+The sled swaps to his own wall march in Home mode. Building that surfaced a bug: an item's time
+estimate followed it through a Home swap, so a 20-second wall march was timed as the sled's three
+minutes. `makeStep()` now drops an item's `est` when the exercise is swapped.
+
+### The hip is good — the app now treats it that way
+
+Your hip is doing well and the goal is strength, and your deep squat is pain-free. The app was
+written for a hip that needed protecting, and it read that way everywhere: a "HIP LABRUM RULE" flag
+on every deep squat, the Hip Block pitched as "loading a labral hip without provoking it", Hip
+Strength gated on "once the hip is quiet", the Boss core split into a normal and a "hip-friendly"
+card. Now the deep-squat flag is a one-line *check* (a front-of-hip pinch means back that rep off),
+the Hip Block is the foundation under Hip Strength and the place to go if it ever flares, Hip
+Strength is simply how it gets stronger, the Boss core default is his circuit with an
+*Anti-Movement* variation beside it, and GOATA's straight-feet rule applies at depth too.
+
 ### Boss Your Game
 
 A hub tile holding nine short workouts audited off Alex's Facebook page (a soccer performance
@@ -311,12 +354,11 @@ than his 10 to 20 minutes, because in a circuit the rests overlap. That range is
 blocks (`bossRange()`), not written into the prose, so it cannot drift. Either format is fine;
 the Start button on each row is there for anyone who wants to walk the list and go again.
 
-**Two core cards, because of the hip.** Bicycles, Russian twists and seated tuck-ups are repeated
-deep hip flexion and loaded lumbar rotation, which is the one position a hip with a labral history
-is least happy in — it is why this app's own core block is built from holds. So *Core Circuit* is
-his five as he runs them, and *Core Circuit · Hip-Friendly* swaps the first three for a dead bug, a
-Pallof press and a hollow hold, keeping his bear plank and shoulder taps. Same qualities, joint out
-of deep flexion, and neither card is the lesser session.
+**Two core cards.** *Core Circuit* is his five as he runs them, and the default. *Core Circuit ·
+Anti-Movement* trains the same qualities from the other direction — a dead bug, a Pallof press and a
+hollow hold resist extension and rotation instead of producing them — with his bear plank and
+shoulder taps kept. It is the better one to put beside a heavy lifting day, and the one to reach for
+if the hip ever has an off day.
 
 **What he never explains, explained.** His videos give fixed numbers and no progression, so the
 section carries a five-rung ladder (`BOSS_LADDER`) with the rule underneath it: *two easy sessions

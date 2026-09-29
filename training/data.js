@@ -1068,6 +1068,7 @@ const EX = {
 /* ============ SPEED ============ */
 'wall-drill': {
   n: 'Wall Drill — March / Switch', cat: 'speed', tags: ['speed','technique','accel'],
+  targets: 'Acceleration posture \u00b7 knee drive',
   cost: 1,
   est: 180,
   why: 'Teaches the acceleration body angle and the front-side mechanics that most field-sport athletes never learn. The wall removes balance from the equation so you can feel the position.',
@@ -2394,7 +2395,7 @@ const ARTICLES = [
   ]},
   {h:'What this changes in your program'},
   {ul:[
-    'Deep squat holds stay, but on a rule. Wider stance, toes turned out more, heels slightly elevated — all three open the front of the joint. Sit to the depth that is free rather than to the floor, and never past a front-of-hip pinch. A pain-free deep squat is still one of the best things you can do; a pinching one is you sanding the rim of your own socket.',
+    'Deep squat holds stay, and yours is pain-free, so any stance and any depth. The adjustments are the fix if a pinch ever appears: a wider stance, the toes turned out, the heels lifted — all three open the front of the joint — and never past a front-of-hip pinch. A pain-free deep squat is one of the best things you can do; a pinching one is you sanding the rim of your own socket.',
     'Hip rotation isometrics at a NEUTRAL angle join the Daily Armor: around 45° of flexion, submaximal, both directions. That loads the joint nowhere near the provocative position.',
     'Gluteus medius becomes a priority rather than an accessory. It is the muscle that stops the femur falling into adduction and internal rotation when you plant — which is the impingement position, produced by your own sport, forty-odd times a game.',
     'Lumbopelvic control matters more than it looks like it should. A pelvis that tips forward under load closes the front of the hip, so dead bugs and anti-rotation work are joint protection here, not core aesthetics.',
@@ -2402,7 +2403,7 @@ const ARTICLES = [
     'Cutting mechanics get a second reason to be trained properly. A knee that falls inward on a plant is the FADIR position under load at full speed.'
   ]},
   {h:'Where you are now: getting stronger'},
-  {p:'The hip is doing a lot better, and at this stage the stronger the better is exactly the right instinct. Non-operative care is built on the strength of the muscles around the joint, and the athletes who return fully are the ones who reach strength symmetry, not the ones who rest longest. The Hip Block is for keeping a calm hip calm, and during a flare. Hip Strength, next to it under Weak-link blocks, is the step after: a heavy hip thrust, single-leg hinging and step-ups, rotation control, the side of the hip, and the hip flexors. The rule does not change as the loads go up: train to just short of a front-of-hip pinch, never through it. If the hip is worse the morning after than the morning before, drop back to the Hip Block for a week.'},
+  {p:'Your hip is good now, and the goal is strength — the stronger the better. The strength of the muscles around the joint is what keeps the ball centred in the socket when you plant and cut, and it is what every athlete who comes back fully from a labral tear has in common. Hip Strength, under Weak-link blocks and Lower body, is the main tool: a heavy hip thrust, single-leg hinging and step-ups, rotation control, the side of the hip and the hip flexors, loaded and progressed. The Hip Block underneath it is the foundation work, and the place to go back to if the hip ever flares. The only check that stays with you as the loads go up: a pinch at the front of the hip is a signal to back off that rep, not something to push through.'},
   {h:'The connection to your groin'},
   {p:'This is the part worth sitting with. Adductor-related groin pain and intra-articular hip pathology very frequently travel together, and the mechanism is not mysterious: a hip that cannot rotate freely makes the adductor work harder at longer lengths, and a weak adductor lets the femur drift into the positions the labrum objects to. Your weak adductor and your labral tear may not be two separate problems. Do not treat them as unrelated, and do not be surprised if the squeeze numbers and the FADIR score improve together.'},
   {h:'The metrics to watch'},
@@ -3200,8 +3201,8 @@ const ROUTINES = [
       { x:'skater-bound', d:'3 × 5 per side' }
     ]},
   { id:'hip-block', n:'Hip Block', tag:'ARMOR',
-    sub:'Loading a labral hip without provoking it',
-    why:'Everything here loads the hip away from flexion-adduction-internal-rotation. Rotation isometrics at a neutral angle, gluteus medius so the femur stops drifting into the position that pinches, lumbopelvic control so the pelvis stops closing the front of the joint, and CARs to map the arc you own. Three times a week, and daily during a flare. Once the hip has been quiet for a couple of weeks, Hip Strength is the next step.',
+    sub:'The foundation: rotation, glute med and control',
+    why:'The foundation under Hip Strength: rotation isometrics at a neutral angle, the glute medius that keeps the femur from drifting inward when you plant, lumbopelvic control so the pelvis does not close the front of the joint, and CARs to map and own the arc. Your hip is good, so treat this as the warm-up to strength work, or as its own short session on a light day \u2014 and the block to go back to if it ever flares.',
     items:[
       { x:'hip-cars', d:'3 circles each direction per side — note where it pinches' },
       { x:'hip-rot-iso', d:'3 × 25 s each direction per side' },
@@ -3557,7 +3558,7 @@ Object.assign(EX, {
 
 /* Deep hip flexion positions: keep them, but on a rule. */
 (function annotateHipFlexion() {
-  const pinchRule = 'HIP LABRUM RULE: this is a deep hip flexion position, which is where an acetabular labral tear is most easily provoked. Test it — a deep pinch or catch at the FRONT of the hip or in the groin means back out until it disappears. A stretch in the inner thigh, the glute or the back of the hip is fine and expected. Widen the stance, turn the toes out more, or elevate the heels, all of which open the front of the joint. Never push through a front-of-hip pinch.';
+  const pinchRule = 'HIP CHECK: your deep squat is pain-free, so go as deep as you like. The one thing to watch with a labral tear is a deep pinch or catch at the FRONT of the hip or in the groin — if that ever shows up, back out until it disappears, and widen the stance, turn the toes out or lift the heels, all of which open the front of the joint. A stretch in the inner thigh, the glute or the back of the hip is fine.';
   ['deep-squat-hold','desk-squat-break','pancake-sit','adductor-rockback','cossack-squat','atg-split-squat','ninety-ninety','frog-rock'].forEach(id => {
     if (EX[id]) EX[id].flag = EX[id].flag ? EX[id].flag + ' · ' + pinchRule : pinchRule;
   });
@@ -4722,7 +4723,6 @@ Object.assign(EX, {
   prog: 'Slower still, with a pause at each end, or hold a light weight at the chest.',
   regr: 'Fewer reps, feet higher, hands across the chest instead of behind the head.',
   home: 'Floor only.',
-  flag: 'Repeated deep hip flexion \u2014 see the hip-friendly swap in the block.'
 },
 
 'russian-twist': {
@@ -4750,7 +4750,7 @@ Object.assign(EX, {
   n: 'Seated Tuck-Up ("Suitcase")', cat: 'strength', tags: ['core','trunk','home'], cost: 2,
   repSec: 2.2,
   targets: 'Hip flexors \u00b7 lower abs \u00b7 trunk',
-  why: 'His hardest core item: lean back, hands behind the head, pull the knees to the chest and extend. It trains the hip flexors through range with the trunk resisting extension, which is a real quality \u2014 knee drive at speed comes from hip flexors that are strong above 90 degrees. It is also the item on this list that puts your hip through the most repeated deep flexion, so read the note in the block before you add reps to it.',
+  why: 'His hardest core item: lean back, hands behind the head, pull the knees to the chest and extend. It trains the hip flexors through range with the trunk resisting extension, which is a real quality \u2014 knee drive at speed comes from hip flexors that are strong above 90 degrees. Your hip is good with deep flexion, so the only limits are the usual ones: smooth at both ends, and no bouncing the heels.',
   setup: 'Seated on the floor, leaning back, hands behind the head or across the chest.',
   steps: [
     'Lean back until the trunk is working, feet off the floor.',
@@ -4764,7 +4764,6 @@ Object.assign(EX, {
   prog: 'Hold a dumbbell at the chest, or slow the extension to three seconds.',
   regr: 'One leg at a time, or a dead bug on the floor instead, which trains the same thing with the hip out of deep flexion.',
   home: 'Floor only.',
-  flag: 'The most hip-flexion-heavy item here \u2014 swap it if the hip objects.'
 },
 
 'bear-plank-iso': {
@@ -4905,21 +4904,21 @@ ROUTINES.push(
   { id:'boss-core', n:'Core Circuit', tag:'BOSS',
     sub:'5 items \u00b7 2 sets each \u00b7 rest 60 s',
     targets:'Obliques \u00b7 trunk rotation \u00b7 deep trunk \u00b7 hip flexors',
-    why:'His core circuit as he runs it, plus the one honest caveat in this whole section. Bicycles, twists and tuck-ups are all repeated deep hip flexion and loaded lumbar rotation, and a hip with a labral history is least happy in exactly that position \u2014 it is why the app\u2019s own core block is built from holds instead. So there are two cards. This one is his five, as he runs them, for days the hip is quiet. Next to it is the hip-friendly version, which trains the same qualities with the joint out of deep flexion. Neither is a compromise \u2014 both are a real core session, and one of them simply does not poke the joint.',
+    why:'His core circuit as he runs it: bicycles, Russian twists, seated tuck-ups, a bear plank and shoulder taps. With your hip in good shape, this is the default. Next to it is a variation that trains the same qualities from the other direction \u2014 resisting movement instead of producing it \u2014 which is worth rotating in for variety, and worth reaching for if the hip ever has an off day.',
     items:[
       { x:'bicycle-crunch', g:'HIS CIRCUIT', d:'2 \u00d7 50, slow, 30 s rest', note:'Elbow to the opposite knee, about two seconds a rep. Rotate the ribs \u2014 hands stay light on the head.' },
       { x:'russian-twist', d:'2 \u00d7 40, 30 s rest', note:'His number is 30. Tall chest, turn the ribcage, hips still. A water bottle is the dumbbell.' },
-      { x:'seated-tuckup', d:'2 \u00d7 30, 30 s rest', note:'The most hip-flexion-heavy item here. Ribs down as the legs extend, and no bouncing the heels off the floor.' },
+      { x:'seated-tuckup', d:'2 \u00d7 30, 30 s rest', note:'Ribs down as the legs extend, and no bouncing the heels off the floor.' },
       { x:'bear-plank-iso', d:'2 \u00d7 45 s', note:'Knees one inch off the floor. One inch. His number is 30 s.' },
       { x:'bear-shoulder-tap', d:'2 \u00d7 30, 30 s rest', note:'Hips do not rock, knees stay hovering between taps.' }
     ]},
 
-  { id:'boss-core-hip', n:'Core Circuit \u00b7 Hip-Friendly', tag:'BOSS',
-    sub:'5 items \u00b7 2 sets each \u00b7 the version for a day the hip is talking',
+  { id:'boss-core-hip', n:'Core Circuit \u00b7 Anti-Movement', tag:'BOSS',
+    sub:'5 items \u00b7 2 sets each \u00b7 the same qualities, resisted instead of produced',
     targets:'Deep trunk \u00b7 anti-rotation \u00b7 anti-extension',
-    why:'The same circuit with the hip taken out of it. His first three items \u2014 bicycles, twists, tuck-ups \u2014 are repeated deep hip flexion and loaded lumbar rotation, which is the one position a hip with a labral history is least happy in. These three train the same qualities from the other direction: the dead bug resists extension instead of flexing the hip, the Pallof resists rotation instead of producing it, and the hollow hold is the held version of a tuck-up. The last two items are his and unchanged, because a bear plank never bothered anybody\u2019s hip. Run this one whenever the joint has an opinion, and run his when it does not. Neither is the lesser session.',
+    why:'The same circuit from the other direction. Instead of producing flexion and rotation, these resist it: the dead bug resists extension, the Pallof resists rotation, and the hollow hold is the held version of a tuck-up. That makes it the better core session to put next to a heavy lifting day, and a good one to rotate in. The last two items are his and unchanged.',
     items:[
-      { x:'deadbug', g:'INSTEAD OF HIS FIRST THREE', d:'2 \u00d7 6 per side, slow', note:'Same anti-extension job as the tuck-up, with the hip nowhere near end range. Ribs down, low back flat on the floor.' },
+      { x:'deadbug', g:'IN PLACE OF HIS FIRST THREE', d:'2 \u00d7 6 per side, slow', note:'Same anti-extension job as the tuck-up, with the hip nowhere near end range. Ribs down, low back flat on the floor.' },
       { x:'pallof-press', d:'2 \u00d7 5 with 5 s holds per side', t:{ r: 20, rounds: 4 }, note:'Anti-rotation instead of rotation \u2014 the obliques still work, the low back is not wrung out. A band on a door handle.' },
       { x:'hollow-hold', d:'2 \u00d7 25 s', note:'Held rather than repped. This is the version his format would have used if his hip had your history.' },
       { x:'bear-plank-iso', g:'HIS, UNCHANGED', d:'2 \u00d7 45 s', note:'Knees one inch off the floor. His number is 30 s.' },
@@ -5049,7 +5048,7 @@ ROUTINES.push(
   { id:'room-circuit', n:'The Room Circuit', tag:'ROOM', rounds: 3, roundRest: 75,
     sub:'6 moves \u00b7 3 rounds \u00b7 a floor, a bed and your pull-up bar',
     targets:'Legs \u00b7 hamstrings \u00b7 hips \u00b7 chest \u00b7 trunk',
-    why:'Simple on purpose. Six moves, each once, then a rest, then the whole thing again \u2014 three times. Legs first while they are fresh, then push-ups, then it alternates so nothing is working twice in a row. Two of the six are for the hip: the side-lying hold for the outside of it and the Copenhagen for the groin, your weakest link. Nothing here takes the hip into deep flexion under load, so it is safe to do on a day the hip is grumbling. When every move feels easy two sessions running, add a backpack to the split squats and five seconds to every hold.',
+    why:'Simple on purpose. Six moves, each once, then a rest, then the whole thing again \u2014 three times. Legs first while they are fresh, then push-ups, then it alternates so nothing is working twice in a row. Two of the six are for the hip: the side-lying hold for the outside of it and the Copenhagen for the groin, your weakest link. When every move feels easy two sessions running, add a backpack to the split squats and five seconds to every hold.',
     items: ROOM_MOVES },
 
   { id:'room-circuit-short', n:'The Room Circuit \u00b7 Short', tag:'ROOM', rounds: 2, roundRest: 60,
@@ -5067,18 +5066,508 @@ ROUTINES.push(
    ----------------------------------------------------------- */
 ROUTINES.push(
   { id:'hip-strength', n:'Hip Strength', tag:'ARMOR',
-    sub:'The next step once the hip is quiet \u00b7 twice a week',
+    sub:'Your hip is good \u2014 this is how it gets stronger \u00b7 twice a week',
     targets:'Glutes \u00b7 hip rotation control \u00b7 side of the hip \u00b7 hip flexors',
-    why:'The Hip Block keeps a labral hip calm; this one makes it strong. The muscles around the joint are what hold the ball centred in the socket under load, and people with labral tears reliably test weak in exactly three of them: the glutes that extend the hip, the side of the hip that stops the knee falling in, and the hip flexors. So this trains all three, heavy and on one leg where it can, because one leg is how you actually run and cut. The rule that keeps it safe is simple. Anything that pinches at the front of the hip is done to the range just short of the pinch, never through it. If the hip is grumpier the next morning than it was the morning before, go back to the Hip Block for a week and come back. And when a dose has been easy twice in a row, make it heavier rather than longer.',
+    why:'Your hip is good; this is how it gets stronger. The muscles around the joint are what hold the ball centred in the socket under load, and labral hips reliably test weakest in three of them: the glutes that extend the hip, the side of the hip that stops the knee falling in, and the hip flexors. So this trains all three, heavy and on one leg where it can, because one leg is how you run and cut. Progress it like any strength work: when a dose has been easy twice in a row, make it heavier rather than longer. One check rides along \u2014 a pinch at the front of the hip means back that rep off, not push through it.',
     items:[
-      { x:'hip-cars', g:'PRIME \u00b7 map the arc before you load it', d:'2 circles each direction per side', note:'Slow, full circles. Note where it catches today \u2014 that is the range to stay short of for the rest of the block.' },
+      { x:'hip-cars', g:'PRIME \u00b7 map the arc before you load it', d:'2 circles each direction per side', note:'Slow, full circles, as big as you can control. It wakes the joint up before it gets loaded.' },
       { x:'hip-thrust', g:'EXTENSION \u00b7 the biggest muscle protecting the joint', d:'4 \u00d7 20 s at lockout, heavy', note:'Ribs down and pelvis tucked at the top, so the glute does it and the low back does not. At home this becomes the single-leg couch version automatically.' },
-      { x:'single-leg-rdl', g:'ONE LEG \u00b7 where the hip actually works', d:'3 \u00d7 8 per side', note:'Hips square to the floor the whole way. Hinge only as far as the back stays flat and the front of the hip stays quiet. Add weight before you add range.' },
+      { x:'single-leg-rdl', g:'ONE LEG \u00b7 where the hip actually works', d:'3 \u00d7 8 per side', note:'Hips square to the floor the whole way. Hinge as far as the back stays flat. Add weight before you add range.' },
       { x:'step-up', d:'3 \u00d7 8 per side', note:'Knee height, and the knee tracks over the middle of the foot. The trailing leg is a passenger.' },
-      { x:'hip-airplane', d:'2 \u00d7 5 per side, slow', note:'The one move here that rotates the hip on a bent, loaded leg, which is near the position that provokes it. Rotate only as far as it is free. That range grows on its own as the hip gets stronger.' },
+      { x:'hip-airplane', d:'2 \u00d7 5 per side, slow', note:'Rotation strength on a loaded leg, which is what a hip needs to plant and cut. Rotate as far as you can control, slowly both ways.' },
       { x:'side-plank-iso', g:'SIDE AND FRONT \u00b7 the two groups that test weakest', d:'3 \u00d7 30 s per side', note:'Straight line from head to heels, hips high. The bottom hip is doing the work.' },
       { x:'iso-hip-flexor', d:'3 \u00d7 20 s per side', note:'Knee above hip height, standing tall, pelvis level. Strong hip flexors above 90 degrees are part of a healthy hip, not a threat to it.' }
     ]}
 );
 
-if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB, ROUTINES, PLAY_GROUPS, RANGE_GROUPS, FREE_WINS, BODY_GROUPS, TRAIL_GROUPS, BOSS_GROUPS, BOSS_LADDER, BOSS_WEEK, BOSS_OFF }; }
+/* -----------------------------------------------------------
+   GOATA \u2014 Andrew Blake's movement system (a5blake), from an audit of his
+   reels, shorts and no-talking workout clips. Every exercise is one he
+   showed or described; every set, rep, hold and rest is programming added
+   around it, because he almost never gives numbers. Where his rules meet
+   this athlete's hip, the hip wins.
+   ----------------------------------------------------------- */
+Object.assign(EX, {
+
+'low-crawl': {
+  n: 'Low Crawl', cat: 'mobility', tags: ['warmup','goata','core','shoulder','home'], cost: 1, repSec: 0.8,
+  targets: 'Shoulders \u00b7 trunk \u00b7 hips \u00b7 feet, together',
+  why: 'His opening move, and he calls crawling a "pre-fundamental": opposite hand and foot moving together is the same cross-body pattern as running, done slowly enough to feel. Hips low makes the shoulders, trunk and inner thighs share the work. As a warm-up it is honest \u2014 it raises temperature and wakes the shoulders, hips and feet at once, which is more than a jog does.',
+  setup: 'Hands flat under the shoulders, fingers spread. On the balls of the feet, heels up, feet hip-width. Hips low, about knee height, knees bent and pointing out.',
+  steps: [
+    'Right hand and left foot forward together, six to twelve inches.',
+    'Then left hand and right foot. Each hand or foot moving once is one step.',
+    'Keep the hips low the whole way \u2014 if they rise, it has become a walk.',
+    'Reverse it to go backward: push away with the hands, step the feet back.'
+  ],
+  cues: ['Opposite hand, opposite foot.','Hips low, heels up.'],
+  faults: ['Hips shooting up.','Same-side hand and foot moving together.','Heels dropping to the floor.'],
+  dose: '20 steps forward, 20 back',
+  prog: 'Three seconds per step, or hips even lower.',
+  regr: 'Shorter steps, hips a little higher.',
+  home: 'Fifteen feet of floor. A hallway works.'
+},
+
+'kneeling-rockback-toes': {
+  n: 'Kneeling Rock-Back, Toes Tucked', cat: 'mobility', tags: ['warmup','goata','hip','foot','home'], cost: 1, repSec: 5,
+  targets: 'Hips \u00b7 feet & toes \u00b7 "hips back"',
+  why: 'Opens the hips and the toes together and teaches the first thing he says about almost every movement: hips back. Tucking the toes stretches the sole of the foot and the big toe, which is where push-off lives. Your hip is happy in deep flexion, so the only limit is the back: rock as far as it stays flat.',
+  setup: 'Hands and knees on a mat, hands under the shoulders, knees under the hips. Toes tucked under so the balls of the feet are on the floor.',
+  steps: [
+    'Back flat, push the hips slowly back toward the heels.',
+    'Stop before the low back rounds.',
+    'Pause a second, then rock forward until the shoulders are over or just past the hands.',
+    'About two seconds each way. Back and forward is one rep.'
+  ],
+  cues: ['Flat back the whole way.','Toes stay tucked.'],
+  faults: ['Rounding the back to get further.','Letting the feet go flat.'],
+  dose: '10 slow',
+  prog: 'Hold the back position for three seconds each rep.',
+  regr: 'Pillow under the knees, and a shorter rock.',
+  home: 'A mat or a folded towel under the knees.'
+},
+
+'walk-in-squat': {
+  n: 'Hands-to-Feet Walk-In', cat: 'mobility', tags: ['warmup','goata','hamstring','home'], cost: 1, repSec: 8,
+  targets: 'Hamstrings \u00b7 calves \u00b7 crawl into squat',
+  why: 'The bridge between the crawl and the squat: walk the hands back to the feet, sink into a deep squat, lift the chest, walk out. It stretches the back of the legs under control rather than by hanging on them, which is a friendlier way to wake up a hamstring with your history.',
+  setup: 'Start in the crawl position, knees off the floor.',
+  steps: [
+    'Keep the feet still and walk the hands back toward them, one hand at a time. Bend the knees as much as you need.',
+    'When the hands reach the feet, lower the hips into a deep squat and lift the chest.',
+    'Hands back down, walk them out to the crawl. That is one rep.',
+    'Slow. This is a warm-up.'
+  ],
+  cues: ['Walk the hands, not the feet.','Chest up at the bottom.'],
+  faults: ['Toes turning out as you drop into the squat.','Rushing it.'],
+  dose: '5 slow',
+  prog: 'Keep the legs straighter as the hands walk in.',
+  regr: 'Walk the hands only halfway back.',
+  home: 'Floor only.',
+},
+
+'forefoot-squat-hold': {
+  n: 'Forefoot Deep Squat Hold', cat: 'iso', tags: ['goata','hip','ankle','daily','home'], cost: 1,
+  targets: 'Hips & ankles at depth \u00b7 feet \u00b7 quads',
+  why: 'His "can you rest in a squat?", done his way: on the balls of the feet with the heels a finger off the floor, knees pushed out. Lifting the heels takes pressure off the ankle and shifts the load into the foot and the quads, and it is one of the adjustments the hip dossier already recommends for opening the front of the joint. Your deep squat is pain-free, so do it his way, feet straight. If a pinch ever shows up at the front of the hip at the bottom, turning the toes out is the fix.',
+  setup: 'Feet hip-width. Hands laced behind the head, or out in front for balance.',
+  steps: [
+    'Sit straight down, hips toward the heels.',
+    'Let the heels lift a finger off the floor so the weight is on the balls of the feet.',
+    'Push the knees out over the toes. Chest up, eyes ahead.',
+    'Breathe slowly for the whole hold. In the warm-up, shift slowly side to side while you hold.'
+  ],
+  cues: ['Heels a finger up.','Knees out, chest up.'],
+  faults: ['Knees falling in.','Chest collapsing.','Toes turning out to make it easier.'],
+  dose: '45 s',
+  prog: 'Hands behind the head the whole time, or a light plate at the chest.',
+  regr: 'Hold a door frame, or sit higher.',
+  home: 'Floor only.',
+  timer: { w: 45, r: 0, rounds: 1, label: 'Forefoot squat' }
+},
+
+'squat-side-shift': {
+  n: 'Deep Squat Side Shifts', cat: 'mobility', tags: ['goata','hip','adductor','home'], cost: 1, repSec: 3,
+  targets: 'Adductors & glutes at depth \u00b7 "the bow"',
+  why: 'Teaches his "bow": moving your head and weight over one leg with that knee out. It is the loading half of every change of direction you make, practised at the bottom of a squat where the inner and outer hip both have to hold the knee in place. The adductor on the lengthening side gets a real stretch under control, which suits the weak link.',
+  setup: 'In the forefoot deep squat, heels up, knees out.',
+  steps: [
+    'Shift the head and hips toward the right foot until most of the weight is on it.',
+    'Right knee stays out, right heel stays up. The left leg lengthens.',
+    'Pause a second, come back through the middle, shift left.',
+    'Right and left is two shifts.'
+  ],
+  cues: ['The head travels over the foot.','Loaded knee stays out.'],
+  faults: ['Only the hips moving while the head stays put.','The loaded knee caving in.'],
+  dose: '20 shifts, alternating',
+  prog: 'Three-second pause on each side.',
+  regr: 'Stay a little higher.',
+  home: 'Floor only.',
+},
+
+'bear-crawl': {
+  n: 'Bear Crawl, Forward and Back', cat: 'iso', tags: ['goata','core','shoulder','home'], cost: 2,
+  targets: 'Trunk \u00b7 shoulders \u00b7 quads',
+  why: 'The bear plank from Boss Your Game, now moving. Knees an inch off the floor turns every step into an anti-rotation problem for the trunk \u2014 the hips want to sway each time a hand leaves the floor \u2014 and the shoulders are loaded in a closed chain, which a thrower rarely gets.',
+  setup: 'Hands under the shoulders, knees under the hips, toes tucked. Knees one inch off the floor, back flat.',
+  steps: [
+    'Right hand and left foot forward about six inches, then left and right.',
+    'Four to six steps forward, then the same back.',
+    'Keep going for the time.',
+    'A glass of water on the low back would not spill.'
+  ],
+  cues: ['One inch.','Hips level, breathe.'],
+  faults: ['Knees and hips rising.','Hips swaying.','Holding the breath.'],
+  dose: '30 s',
+  prog: 'Slower steps, or a light plate on the low back.',
+  regr: 'Hold still instead of moving \u2014 the bear plank \u2014 for 20 s.',
+  home: 'A few feet of floor.',
+  timer: { w: 30, r: 0, rounds: 1, label: 'Bear crawl' }
+},
+
+'lateral-bear-crawl': {
+  n: 'Lateral Bear Crawl', cat: 'strength', tags: ['goata','core','shoulder','hip','home'], cost: 2, repSec: 1.5,
+  targets: 'Side-to-side hip & shoulder control',
+  why: 'The same position moving sideways, which is where the hips and shoulders have to control you rather than just carry you. Hands and feet never touch as they come together, so each step is briefly on three points and the trunk has to hold.',
+  setup: 'Bear position, knees one inch off the floor.',
+  steps: [
+    'Right hand and right foot a few inches to the right.',
+    'Left hand and left foot follow, without touching.',
+    'Ten steps right, then ten back left.',
+    'Hips low and level the whole way.'
+  ],
+  cues: ['Feet straight as you step.','Stay low.'],
+  faults: ['Feet turning out.','Hips rising.'],
+  dose: '10 steps each way',
+  prog: 'Bigger, slower steps.',
+  regr: 'Fewer steps, knees down between directions.',
+  home: 'A few feet of floor.'
+},
+
+'kneeling-sitback-rotation': {
+  n: 'Kneeling Sit-Back with Plate Rotation', cat: 'strength', tags: ['goata','core','hip','home'], cost: 2, repSec: 3,
+  targets: 'Obliques \u00b7 trunk rotation \u00b7 fronts of the hips',
+  why: 'Hips back and rotation in one: sitting the hips toward the heels loads the thighs and the fronts of the hips while the trunk turns a plate side to side. Slow is the point \u2014 swinging the plate turns it into a shoulder exercise.',
+  setup: 'Tall kneeling on a mat, knees hip-width, toes tucked. A plate, dumbbell or backpack at chest height, arms slightly bent.',
+  steps: [
+    'Sit the hips back toward the heels, chest up.',
+    'Rotate the plate slowly to the right, turning the shoulders. Back to the middle, then left.',
+    'Right and left is two rotations.',
+    'Every few reps, rise back to tall kneeling and sit back again.'
+  ],
+  cues: ['Chest up.','Slow and controlled.'],
+  faults: ['Rounding forward.','Swinging the plate.'],
+  dose: '20 rotations, alternating',
+  prog: 'Heavier plate, or arms straighter.',
+  regr: 'No plate, hands together at the chest.',
+  home: 'A backpack with books, or a water jug.'
+},
+
+'crawl-leg-reach': {
+  n: 'Crawl Leg Reach-Back', cat: 'strength', tags: ['goata','glute','core','home'], cost: 1, repSec: 3,
+  targets: 'Glutes \u00b7 trunk stability \u00b7 back chain',
+  why: 'A bird dog without the arm, pushing through the ball of the foot as if pressing the wall behind you. It trains the glute to extend the hip while the trunk refuses to rotate or arch, which is the job it has at push-off.',
+  setup: 'Hands and knees, toes tucked, back flat.',
+  steps: [
+    'Hips level, reach the right leg straight back until it is in line with the body.',
+    'Push through the ball of the foot, as if pressing a wall behind you.',
+    'Hold a second, bring it back under you.',
+    'All reps on one leg, then the other.'
+  ],
+  cues: ['Both hip bones point at the floor.','Only to body height.'],
+  faults: ['Hips tilting open.','Arching the low back to lift higher.'],
+  dose: '8 per leg',
+  prog: 'Reach the opposite arm forward at the same time, or do it from the bear position.',
+  regr: 'Slide the foot back along the floor instead of lifting it.',
+  home: 'Floor only.'
+},
+
+'forefoot-hinge': {
+  n: 'Forefoot Hip Hinge with Plate', cat: 'strength', tags: ['goata','hamstring','glute','home'], cost: 2, repSec: 3.5,
+  targets: 'Hamstrings \u00b7 glutes \u00b7 back chain',
+  why: 'His main back-chain builder: a hinge with the weight toward the forefoot and the heels just light. It is a lighter cousin of the RDL, with a pause at the bottom that loads the hamstring at length \u2014 the same idea behind the isometrics this program already leans on for your strain history.',
+  setup: 'Feet hip-width and straight, heels light or just off the floor, knees soft. A plate held against the chest.',
+  steps: [
+    'Push the hips straight back, like closing a car door behind you.',
+    'Chest tips forward as the hips go back, back flat.',
+    'Down until the chest is roughly over the toes, or until the back of the legs is really stretched.',
+    'Drive the hips forward to stand, stopping at straight. On the last rep, hold the bottom for 20 seconds.'
+  ],
+  cues: ['Hips back, not down.','Feel it in the hamstrings, not the low back.'],
+  faults: ['Rounding the back.','Squatting instead of hinging.','Sitting on the heels.'],
+  dose: '12, then hold the bottom 20 s',
+  prog: 'Heavier plate, or single leg.',
+  regr: 'No plate, hands on the hips.',
+  home: 'A backpack with books held at the chest.'
+},
+
+'bow-to-corner': {
+  n: 'Split-Stance Bow-to-Corner Shifts', cat: 'mobility', tags: ['goata','knee','foot','change-of-direction','home'], cost: 1, repSec: 2.5,
+  targets: 'Front-leg loading \u00b7 knee control \u00b7 push-off',
+  why: 'The pattern he says is the key to athleticism: load the front leg with the head over it and the knee out (the bow), then push back off by rolling pressure around the outside edge of the foot (the corner). The loading half is sound and is exactly how you want a knee to take weight. The corner itself is his idea rather than established science \u2014 treat it as a drill, not as a reason to rebuild how you cut in the middle of a season.',
+  setup: 'Split stance about a walking step long, feet straight and hip-width apart side to side. Back heel up.',
+  steps: [
+    'Shift the head and body forward over the front foot. The front knee bends and points slightly out.',
+    'Let the arms swing naturally, opposite arm forward.',
+    'Push back off the front foot, rolling around its outside edge, onto the back leg.',
+    'Rhythmic, like a slow rock. All reps on one side, then switch.'
+  ],
+  cues: ['The head leads.','Front knee out, front foot straight.'],
+  faults: ['Front knee caving in.','Only the hips moving.','Front foot turning out.'],
+  dose: '10 per side',
+  prog: 'Deeper front knee bend, or a light plate at the chest.',
+  regr: 'Smaller shifts, hands on a wall.',
+  home: 'Floor only.'
+},
+
+'forefoot-balance-reach': {
+  n: 'Single-Leg Forefoot Balance with Reach', cat: 'iso', tags: ['goata','ankle','knee','foot','home'], cost: 1,
+  targets: 'Foot & ankle \u00b7 knee control on one leg \u00b7 side of the hip',
+  why: 'Balance on the ball of one foot while the other leg taps forward, sideways and back. Heel up makes the foot and calf do the balancing, and every reach tries to pull the standing knee inward, which is the thing to refuse. It is ankle insurance in his style.',
+  setup: 'On one foot, foot straight, heel slightly up, knee soft and pointing slightly out.',
+  steps: [
+    'Balance for a moment.',
+    'Reach the free foot forward and tap lightly, back to centre.',
+    'Out to the side and tap, back to centre. Behind you and tap, back to centre.',
+    'Keep cycling for the time, then switch legs.'
+  ],
+  cues: ['Standing heel stays up.','Standing knee stays out.'],
+  faults: ['The standing heel dropping.','The standing knee caving on the reach.'],
+  dose: '30 s per leg',
+  prog: 'Reach farther, or eyes closed next to a wall.',
+  regr: 'Heel flat, or a hand on the wall.',
+  home: 'Floor only.',
+  timer: { w: 30, r: 8, rounds: 2, label: 'Forefoot balance \u2014 switch legs' }
+},
+
+'sled-push-pull': {
+  n: 'Sled Push and Pull', cat: 'strength', tags: ['goata','legs','acceleration','conditioning'], cost: 2, repSec: 12,
+  targets: 'Leg drive \u00b7 glutes \u00b7 calves \u00b7 trunk',
+  why: 'His "top tier" exercise, and a genuinely good one for a sprinter: short driving steps at a 45-degree lean is the acceleration position, loaded, with almost no eccentric cost, so it builds leg drive without leaving you sore. Pulling backward works the quads and knees in the same low-soreness way.',
+  setup: 'Light to start. Hands on the tall handles, arms mostly straight, body leaning at about 45 degrees. Feet hip-width or narrower, straight, heels up.',
+  steps: [
+    'Push: short, driving steps on the balls of the feet, hips back, back flat.',
+    'Let the head sway slightly over whichever leg is pushing, kneecap out.',
+    'Pull: strap or rope, face the sled, sit the hips back and walk backward in small steps on the balls of the feet.',
+    'One length is 10 to 20 yards. Four pushing, four pulling.'
+  ],
+  cues: ['Stay leaned in.','Heels never land.'],
+  faults: ['A wide stance.','Heels hitting the ground each step.','Standing up tall.'],
+  dose: '4 lengths push + 4 lengths pull',
+  prog: 'Add weight, or push faster.',
+  regr: 'Lighter sled, shorter lengths.'
+},
+
+'jump-rocks': {
+  n: 'Jump-Technique Rocks', cat: 'mobility', tags: ['goata','jump','knee','home'], cost: 1, repSec: 3,
+  targets: 'Jump loading position \u00b7 front-knee control',
+  why: 'Rehearsal of the position he says good jumpers load into: staggered stance, weight over the front leg, hips back, front knee out. The knee part is the well-evidenced bit \u2014 a knee that collapses inward on a plant is a recognised ACL risk, and practising the opposite slowly is cheap insurance.',
+  setup: 'Staggered stance: one foot forward, the other back and slightly to the side. Front foot straight or slightly in.',
+  steps: [
+    'Shift most of the weight onto the front leg, knee bending, hips sitting back.',
+    'Front kneecap points out, head over the front foot.',
+    'Rock slowly to the back leg and return.',
+    'All the rocks on one side, then switch which foot is in front.'
+  ],
+  cues: ['Load it like a spring.','Front knee out.'],
+  faults: ['Front knee caving in.','Feet turned out.'],
+  dose: '2 \u00d7 10 per side',
+  prog: 'Deeper bend, and finish each set with one jump from the loaded position.',
+  regr: 'A shallower knee bend.',
+  home: 'Floor only.'
+},
+
+'snap-down': {
+  n: 'Snap-Down to Forefoot Stick', cat: 'plyo', tags: ['goata','landing','knee','home'], cost: 1, repSec: 6,
+  targets: 'Landing position \u00b7 knee control \u00b7 quiet feet',
+  why: 'A landing without the jump. Arms overhead, then snap them down and drop into the position you land a jump in: balls of the feet, knees out, hips back, and freeze. Landing mechanics are one of the best-supported parts of injury prevention, and this is the smallest possible dose of them \u2014 which is why it comes before the real jumps.',
+  setup: 'Tall, on the balls of the feet, arms straight overhead.',
+  steps: [
+    'Swing the arms down and back fast while dropping into a quarter squat.',
+    'Land in that athletic position on the balls of the feet, heels just off the floor.',
+    'Knees out, hips back, chest forward. Freeze for two seconds.',
+    'Stand back up. That is one rep.'
+  ],
+  cues: ['Quiet.','Freeze.'],
+  faults: ['Landing flat or on the heels.','Knees collapsing in.','The chest dropping too far.'],
+  dose: '3 \u00d7 5, 60 s rest',
+  prog: 'A small hop before the snap-down, or step off a low box and stick it.',
+  regr: 'Slowly at first, then add speed.',
+  home: 'Floor only.'
+},
+
+'squat-jump-stick': {
+  n: 'Squat Jump, Forefoot Landing', cat: 'plyo', tags: ['goata','jump','landing','home','high-intensity'], cost: 2, repSec: 8,
+  targets: 'Jump power \u00b7 landing control',
+  why: 'Full-effort jumps with his landing: quiet, on the balls of the feet, knees out, stuck for two seconds. Each rep is a reset single, which is how power is trained \u2014 fatigue is the enemy here, not the goal.',
+  setup: 'Feet hip-width and straight, weight on the balls of the feet.',
+  steps: [
+    'Sink quickly into a quarter to half squat, hips back, arms swinging back.',
+    'Jump straight up as high as you can, arms swinging up.',
+    'Land softly on the balls of the feet, knees out, and stick it for two seconds.',
+    'Reset fully before the next one.'
+  ],
+  cues: ['Every rep a full effort.','Stick it.'],
+  faults: ['Landing on the heels.','Knees caving on the landing.','Rushing reps.'],
+  dose: '3 \u00d7 5, 75 s rest',
+  prog: 'Jump onto a low box and land on the forefoot.',
+  regr: 'Smaller jumps.',
+  home: 'Floor only, and a ceiling you will not hit.'
+},
+
+'sl-hop-stick': {
+  n: 'Single-Leg Hop and Stick', cat: 'plyo', tags: ['goata','landing','knee','ankle','home'], cost: 2, repSec: 6,
+  targets: 'Single-leg landing \u00b7 knee control',
+  why: 'The most injury-relevant skill in the plan: hop forward on one leg and freeze the landing with the knee out. A controlled single-leg landing is the thing every ACL-prevention program trains, and it is exactly the moment ultimate asks of you tired.',
+  setup: 'On one foot, foot straight, slight knee bend.',
+  steps: [
+    'Hop forward one to two feet.',
+    'Land on the ball of the same foot, knee bent and pointing slightly out, hips back.',
+    'Freeze for two seconds with no wobble.',
+    'All reps on one leg, then the other.'
+  ],
+  cues: ['Land quiet.','Knee out, freeze.'],
+  faults: ['Knee caving in \u2014 use the easier version if it does.','Landing on the heel.'],
+  dose: '3 \u00d7 4 per leg, 60 s rest',
+  prog: 'Hop farther, or sideways.',
+  regr: 'Hop in place.',
+  home: 'Floor only.'
+},
+
+'approach-jump': {
+  n: 'Two-Step Approach Jump', cat: 'plyo', tags: ['goata','jump','high-intensity'], cost: 3, repSec: 12,
+  targets: 'Approach jump \u00b7 plant mechanics \u00b7 vertical',
+  why: 'Everything together: a two-step approach, a plant with the foot straight and the knee out, and a two-foot jump. For you it is the skyball \u2014 the exact plant you make going up for a disc. Full effort, full reset, few reps.',
+  setup: 'About two steps back from an open spot. A target overhead helps.',
+  steps: [
+    'Step with one foot, then a slightly longer step with the other.',
+    'On that last step, plant with the foot straight, hips back, kneecap out.',
+    'Bring the other foot down beside it and jump off both, arms swinging up hard.',
+    'Land softly on the balls of both feet and stick it. Walk back and reset.'
+  ],
+  cues: ['Straight feet on the last two steps.','Reach for something.'],
+  faults: ['Feet turned out on the plant.','Knees caving on the plant.','Heavy heel landings.'],
+  dose: '3 \u00d7 3 per side, 90 s rest',
+  prog: 'Full effort to a target \u2014 a rim, a branch, a mark on the wall.',
+  regr: 'Half-effort jumps while you learn the footwork.',
+  home: 'Outside, or anywhere with a high ceiling.'
+}
+
+});
+
+Object.assign(EX, {
+'wall-march': {
+  n: 'Wall March', cat: 'speed', tags: ['goata','acceleration','knee','home'], cost: 1,
+  targets: 'Acceleration posture \u00b7 knee drive \u00b7 forefoot',
+  why: 'The no-sled version of his sled push: the same 45-degree lean and short driving steps on the balls of the feet, against a wall instead of a load. It is the acceleration position without the resistance, which makes it a posture and rhythm drill rather than a strength one \u2014 honest, and still worth doing.',
+  setup: 'Hands on a wall at shoulder height. Walk the feet back until the body leans at about 45 degrees, a straight line from head to heels, heels up.',
+  steps: [
+    'Drive one knee up toward the wall.',
+    'Put it back down on the ball of the foot, then drive the other.',
+    'A steady march for the time.',
+    'Feet straight and close together, hips slightly back, heels never touch.'
+  ],
+  cues: ['Straight line, head to heels.','Heels stay up.'],
+  faults: ['Hips sagging or piking.','Heels touching down.','Feet drifting wide.'],
+  dose: '20 s',
+  prog: 'March faster, or switch the legs quickly in a skip.',
+  regr: 'A more upright lean.',
+  home: 'Any wall.',
+  timer: { w: 20, r: 0, rounds: 1, label: 'Wall march' }
+}
+});
+HOME_SUB['sled-push-pull'] = { x: 'wall-march', d: '20 s',
+  note: 'No sled: his wall march. Same lean and the same short steps on the balls of the feet, against a wall.' };
+
+ROUTINES.push(
+  { id:'goata-warmup', n:'Groundwork Warm-Up', tag:'GOATA', rounds: 2, roundRest: 15,
+    sub:'4 moves \u00b7 2 rounds \u00b7 before any GOATA workout, or anything else',
+    targets:'Shoulders \u00b7 trunk \u00b7 hips \u00b7 feet',
+    why:'His warm-up is on the floor, not on a treadmill: crawl, rock back, walk the hands in to a squat, and sit in it. It raises temperature like a jog does, and it also wakes the shoulders, the hips and the feet at the same time, which a jog does not. Two rounds, no rest between moves. It is a good opener before anything in this app, not only his workouts.',
+    items:[
+      { x:'low-crawl', d:'20 steps forward, 20 back', note:'Opposite hand, opposite foot, hips low, heels up.' },
+      { x:'kneeling-rockback-toes', d:'10 slow', note:'Toes tucked. Rock back as far as the back stays flat.' },
+      { x:'walk-in-squat', d:'5 slow', note:'Walk the hands to the feet, sink into the squat, chest up, walk out.' },
+      { x:'forefoot-squat-hold', d:'30 s', note:'Heels a finger up, feet straight, knees out. Shift slowly side to side while you hold.' }
+    ]},
+
+  { id:'goata-a', n:'Workout A \u00b7 Groundwork', tag:'GOATA', rounds: 3, roundRest: 60,
+    sub:'6 moves \u00b7 3 rounds \u00b7 crawling and deep squat strength',
+    targets:'Trunk \u00b7 shoulders \u00b7 hips & ankles at depth \u00b7 adductors \u00b7 glutes',
+    why:'Crawling and the bottom of a squat, which is where he thinks most athletes are missing strength. The crawls are real trunk and shoulder work in a closed chain. The squat hold and the side shifts build strength at depth and teach the bow \u2014 head and weight over the loaded leg, knee out \u2014 which is the first half of every cut you make. Your deep squat is pain-free, so the deep positions follow his rules too, straight feet included.',
+    items:[
+      { x:'bear-crawl', d:'30 s', note:'Knees one inch off the floor, back flat.' },
+      { x:'lateral-bear-crawl', d:'10 steps each way', note:'Feet straight, hips level.' },
+      { x:'forefoot-squat-hold', d:'45 s', note:'Weight on the balls of the feet, feet straight, knees out. As deep as you can rest.' },
+      { x:'squat-side-shift', d:'20 shifts, alternating', note:'The head travels over the loaded foot. That is the bow.' },
+      { x:'kneeling-sitback-rotation', d:'20 rotations, alternating', note:'Hips back, chest up, slow. A backpack works as the plate.' },
+      { x:'crawl-leg-reach', d:'8 per leg', note:'Both hip bones pointing at the floor.' }
+    ]},
+
+  { id:'goata-b', n:'Workout B \u00b7 Back Chain + One Leg', tag:'GOATA', rounds: 3, roundRest: 75,
+    sub:'5 moves \u00b7 3 rounds \u00b7 a sled if you have one, a wall if you do not',
+    targets:'Hamstrings \u00b7 glutes \u00b7 single-leg control \u00b7 leg drive',
+    why:'The back of the body and one leg at a time. The forefoot hinge loads the hamstring at length with a pause at the bottom, which suits your strain history. The bow-to-corner drill is his push-off pattern: the loading half is sound knee mechanics, and the corner is his idea rather than settled science, so treat it as a drill. The step-up finishes high on the ball of the foot like a jump, and the sled is his favourite exercise and a very good acceleration one. No sled, and Home mode swaps it for his wall march automatically.',
+    items:[
+      { x:'forefoot-hinge', d:'12, then hold the bottom 20 s', est: 62, note:'Hips back like closing a car door. Feel it in the hamstrings, not the low back.' },
+      { x:'bow-to-corner', d:'10 per side', note:'Head over the front foot, front knee out, roll off the outside edge.' },
+      { x:'step-up', d:'8 per leg, finish on the ball of the foot', note:'His version: rise onto the ball of the working foot at the top and drive the other knee to hip height. Lower slowly.' },
+      { x:'forefoot-balance-reach', d:'30 s per leg', note:'Standing heel up, standing knee out. Tap forward, side, back.' },
+      { x:'sled-push-pull', d:'4 lengths push + 4 lengths pull', est: 180, note:'Narrow stance, heels up, hips back. Light enough that the steps stay short and fast.' }
+    ]},
+
+  { id:'goata-c', n:'Workout C \u00b7 Jump + Land', tag:'GOATA',
+    sub:'6 moves \u00b7 sets with full rest \u00b7 quality over quantity',
+    targets:'Landing control \u00b7 jump power \u00b7 knee control \u00b7 ankle stiffness',
+    why:'The one worth the most to you. Landing mechanics \u2014 quiet, on the forefoot, knees out, stuck \u2014 are among the best-supported injury-prevention training there is, and this builds them from the ground up: a slow rehearsal, pogos, a landing with no jump, a jump with a landing, the same on one leg, and finally an approach jump, which for you is going up for a disc. Sets with full rest, not a circuit. Fatigue makes landings worse, which is the opposite of the point.',
+    items:[
+      { x:'jump-rocks', d:'2 \u00d7 10 per side', note:'Load the front leg like a spring, knee out.' },
+      { x:'pogo-jumps', d:'3 \u00d7 20 contacts, 60 s rest', note:'Stiff ankles, heels never touch, quick like the floor is hot.' },
+      { x:'snap-down', d:'3 \u00d7 5, 60 s rest', note:'Land on the balls of the feet, knees out, freeze two seconds.' },
+      { x:'squat-jump-stick', d:'3 \u00d7 5, 75 s rest', note:'Full effort every rep, stick every landing, reset fully.' },
+      { x:'sl-hop-stick', d:'3 \u00d7 4 per leg, 60 s rest', note:'Freeze with no wobble. If the knee caves, hop in place instead.' },
+      { x:'approach-jump', d:'3 \u00d7 3 per side, 90 s rest', note:'Straight feet on the last two steps, plant with the knee out, reach for something.' }
+    ]}
+);
+
+const GOATA_GROUPS = [
+  { n: 'Start here', sub: 'About six minutes of groundwork before any of his workouts \u2014 or before anything else in the app.', ids: ['goata-warmup'] },
+  { n: 'The three workouts', sub: 'A is the ground, B is the back chain on one leg, C is jumping and landing.', ids: ['goata-a', 'goata-b', 'goata-c'] }
+];
+
+/* His rules, with the one place this athlete's hip overrides them spelled out. */
+const GOATA_RULES = [
+  { h: 'Straight feet', t: 'Toes point forward, even slightly in, never turned out.', hip: 'Your deep squat is pain-free, so this holds at depth too. One check to keep: if a pinch ever shows up at the front of the hip at the bottom of a squat, turning the toes out is the fix.' },
+  { h: 'Kneecap out', t: 'When weight goes onto a leg, the knee tracks over or just outside the foot. Never let it cave in.' },
+  { h: 'Heels off', t: 'Train, jump and land on the balls of the feet. A quick heel touch is fine; sitting on the heel is not.' },
+  { h: 'Heels away', t: 'As you push off, the heel rotates outward. With straight feet and a good push-off it happens on its own.' },
+  { h: 'Hips back, chest forward', t: 'Load the glutes and hamstrings. Do not thrust the hips forward.' },
+  { h: 'Head follows the loaded leg', t: 'Shift the head and weight over the leg you are loading \u2014 the bow \u2014 then push off around the outside edge of the foot \u2014 the corner.' }
+];
+
+const GOATA_TERMS = [
+  { t: 'The bow', d: 'Head and weight shifted over the leg you are loading, so that side of the body looks like a drawn bow.' },
+  { t: 'The corner', d: 'Pushing off by rolling pressure around the outside edge of the foot instead of the big-toe side.' },
+  { t: 'Heels away', d: 'The heel turning outward as you push off.' },
+  { t: 'Back chain', d: 'The back of the body: glutes, hamstrings, back. "Load it" means hips back, like closing a car door with your backside.' },
+  { t: 'Forefoot', d: 'The ball of the foot, just behind the toes. "Heels up" means a finger or two off the floor, not tiptoe.' },
+  { t: 'Stick the landing', d: 'Land and freeze, no extra step, no wobble.' }
+];
+
+/* His daily habits. The deep squat is already one of the Free Wins, so it is marked as such. */
+const GOATA_DAILY = [
+  { h: 'Rest in a deep squat', t: 'Two to three minutes a day in short pieces, heels up or flat. This is already one of your Free Wins \u2014 his version just counts toward it.' },
+  { h: 'Crawl', t: 'One to two minutes a day, any mix of low crawl, bear crawl, backward and sideways. The one habit here that is new to you.' },
+  { h: 'Posture check, three times a day', t: 'Feet straight? Hips over the feet rather than pushed forward? Tall chest, ears over the shoulders? When sitting, sit up rather than sinking back.' },
+  { h: 'Walk and stand with straight feet', t: 'His biggest habit. Standing and walking are where your hip has no objection to it.' }
+];
+
+/* His week, standalone. Each day names its blocks so the time is computed, and the warm-up
+   is added to every training day. An entry can ask for fewer rounds than the block's own. */
+const GOATA_WEEK = [
+  { d: 'Mon', ids: ['goata-a'] },
+  { d: 'Tue', ids: [], note: 'Daily habits only' },
+  { d: 'Wed', ids: ['goata-b'] },
+  { d: 'Thu', ids: [], note: 'Daily habits only' },
+  { d: 'Fri', ids: ['goata-c'] },
+  { d: 'Sat', ids: [{ id: 'goata-a', rounds: 2 }], note: 'optional, light' },
+  { d: 'Sun', ids: [], note: 'Rest' }
+];
+
+const GOATA_LADDER = [
+  { w: '1\u20132', t: 'Two rounds of everything, easier versions where anything feels wrong. Learn the positions and film yourself from the front.' },
+  { w: '3\u20134', t: 'Three rounds \u2014 the workouts as written.' },
+  { w: '5\u20136', t: 'Holds 15 s longer, reps up two or three. A heavier plate or backpack on the hinge, the sit-back and the step-ups.' },
+  { w: '7\u20138', t: 'The harder version of each move (it is in each exercise\u2019s how-to). Crawls to 45 s, pogos to 30.' },
+  { w: '9+', t: 'Keep adding load or harder versions. Easy two sessions in a row is the signal to move up.' }
+];
+
+const GOATA_CHECK = [
+  'Feet point straight on every rep',
+  'Knees point out over the toes when loading, never cave in',
+  'Heels stay up on hinges, jumps and landings',
+  'Landings are quiet and on the balls of the feet',
+  'Hips go back, chest stays forward'
+];
+
+if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB, ROUTINES, PLAY_GROUPS, RANGE_GROUPS, FREE_WINS, BODY_GROUPS, TRAIL_GROUPS, BOSS_GROUPS, BOSS_LADDER, BOSS_WEEK, BOSS_OFF, GOATA_GROUPS, GOATA_RULES, GOATA_TERMS, GOATA_DAILY, GOATA_WEEK, GOATA_LADDER, GOATA_CHECK }; }

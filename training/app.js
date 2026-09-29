@@ -52,6 +52,7 @@ const ICONS = {
   trail: 'M2 20h20|M5 20l5-11 4 7 2-3 4 7|M17 6a2 2 0 1 0 0-.1',
   boss: 'M4 9h3v6H4z|M17 9h3v6h-3z|M7 12h10|M2 11v2|M22 11v2',
   room: 'M3 11l9-7 9 7|M5 10v10h14V10|M10 20v-5h4v5',
+  goata: 'M8 3c1.7 0 2.5 2 2.5 4.5S9.7 12 8 12 5.5 10 5.5 7.5 6.3 3 8 3|M6.5 14.5h3v2.5h-3z|M16 7c1.7 0 2.5 2 2.5 4.5S17.7 16 16 16s-2.5-2-2.5-4.5S14.3 7 16 7|M14.5 18.5h3V21h-3z',
   check: 'M4 12l6 6L20 6'
 };
 
@@ -364,7 +365,8 @@ function makeStep(it, blockName, key, ii) {
   return {
     ii: ii, key: key, block: blockName,
     x: r.x, dose: r.d, note: r.note || (isHome() && e.home) || e.flag || '',
-    est: it.est || null,
+    // an item's time estimate describes the gym exercise, so it does not follow a Home swap
+    est: (!r.swapped && it.est) || null,
     // A hand-counted set that says "per side" is two sets, not one. Without this it
     // ran as a single step whose Done ended the exercise, with no prompt to switch.
     mode: t ? 'timed' : 'manual',
@@ -1514,23 +1516,7 @@ function viewProgram() {
           ])])),
         sec('His week, and how it fits yours',
           'His schedule, warm-up included. The times come from the blocks above, so they run longer than his thirty minutes. Leg days too long? Move the Core Circuit to Wednesday and Saturday rather than cutting leg work. In season: each workout once a week, Legs B and Hamstrings + Speed never the day before or after a game, and never on the same day as the plyometric ladder.',
-          el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
-            el('thead', null, [el('tr', null, ['Day', 'Workout', 'Time', ''].map(h => el('th', null, h)))]),
-            el('tbody', null, BOSS_WEEK.map(x => {
-              const blocks = bossDay(x);
-              const steps = blocks.flatMap(r => routineSteps(r));
-              const names = x.ids.map(byId).filter(Boolean).map(r => r.n).join(' + ');
-              return el('tr', null, [
-                el('td', null, x.d),
-                el('td', null, [names || x.note, names && x.note ? el('span', { class: 'muted' }, ' \u00b7 ' + x.note) : null]),
-                el('td', { class: 'n', style: 'white-space:nowrap' }, steps.length ? '\u2248 ' + fmtMins(runSeconds(steps)) : '\u2014'),
-                el('td', null, steps.length ? el('button', {
-                  class: 'btn btn-sm', 'aria-label': 'Run ' + x.d + ' as one session',
-                  onclick: () => RUN.open(steps, new Date(), 0)
-                }, [ico(ICONS.play, 'nav-ico'), 'Run']) : null)
-              ]);
-            }))
-          ])])),
+          weekTable(BOSS_WEEK, 'boss-warmup')),
         sec('Off the floor',
           'The rest of his handoff. What is his is marked as his; the rest was added, and where the app already has a view it defers to it.',
           el('div', { class: 'stack stack-sm' }, BOSS_OFF.map(x => el('div', { class: 'card-flat' }, [
@@ -1540,6 +1526,43 @@ function viewProgram() {
             ]),
             el('p', { class: 'small muted', style: 'margin-top:.3rem;max-width:68ch' }, x.t)
           ]))))
+      ])
+    },
+    goata: {
+      n: 'GOATA Movement', blurb: 'Andrew Blake\u2019s groundwork, back chain and jump-and-land work.',
+      body: () => el('div', { class: 'stack stack-xl' }, [
+        sec('GOATA Movement',
+          'Andrew Blake\u2019s system, from an audit of his reels, shorts and no-talking workout clips. Every exercise is one he showed or described; every set, rep and rest is added around it, because he almost never gives numbers. What is well supported \u2014 knees out, soft forefoot landings, crawling for the trunk \u2014 overlaps with the rest of this app. What is his alone, like pushing off the outside edge of the foot, is labelled as his. He is also strongly against weightlifting; that is his opinion, not the evidence, and this app keeps lifting. The best use of it for you: the warm-up before anything, his form rules on every rep, and Workout C as your landing work.',
+          el('div', { class: 'stack stack-xl' }, GOATA_GROUPS.map(g =>
+            sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))),
+        sec('The six form rules',
+          'His, and they apply to every rep. The quick test before you start: barefoot, feet hip-width, toes straight, weight forward until the heels feel light, knees bent a little and pushed out over the pinky toes. That is the base position for almost everything here.',
+          el('ol', { class: 'stack stack-sm', style: 'padding-left:1.2em' }, GOATA_RULES.map(x => el('li', null, [
+            el('strong', null, x.h), el('span', { class: 'small' }, ' \u2014 ' + x.t),
+            x.hip ? el('p', { class: 'small muted', style: 'margin-top:.25rem' }, x.hip) : null
+          ])))),
+        sec('Every day', 'His habits, five to ten minutes spread across the day.',
+          el('div', { class: 'stack stack-sm' }, GOATA_DAILY.map(x => el('div', { class: 'card-flat' }, [
+            el('h3', { style: 'font-size:var(--t-sm);font-weight:600' }, x.h),
+            el('p', { class: 'small muted', style: 'margin-top:.25rem;max-width:68ch' }, x.t)
+          ])))),
+        sec('His week',
+          'For running his plan on its own, warm-up included and times worked out from the blocks. Alongside your main program and Boss Your Game it does not stack \u2014 three programs is too many. There, use the warm-up before anything, the rules on every rep, and one workout on a light day.',
+          weekTable(GOATA_WEEK, 'goata-warmup')),
+        sec('How it gets harder',
+          'Easy two sessions in a row is the signal to move up. Track rounds, reps, holds, weight, and a 1\u20135 score for how straight your feet and knees stayed.',
+          el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
+            el('thead', null, [el('tr', null, ['Weeks', 'What changes'].map(h => el('th', null, h)))]),
+            el('tbody', null, GOATA_LADDER.map(x => el('tr', null, [
+              el('td', { class: 'n', style: 'white-space:nowrap' }, x.w),
+              el('td', { class: 'small' }, x.t)
+            ])))
+          ])])),
+        sec('Words he uses', 'The cues in the how-tos lean on these.',
+          el('dl', { class: 'kv' }, GOATA_TERMS.flatMap(x => [el('dt', null, x.t), el('dd', { class: 'small' }, x.d)]))),
+        sec('Film it once a week',
+          'Phone propped up about eight feet in front of you, at knee height. Check these, and fix feet and knees before anything else.',
+          el('ul', { class: 'stack stack-xs small', style: 'padding-left:1.2em' }, GOATA_CHECK.map(x => el('li', null, x))))
       ])
     },
     trail: {
@@ -1636,6 +1659,7 @@ function viewProgram() {
     trail: ROUTINES.filter(r => r.tag === 'TRAIL').length + ' blocks',
     boss: ROUTINES.filter(r => r.tag === 'BOSS').length + ' blocks',
     room: '~' + Math.round(runSeconds(routineSteps(byId('room-circuit'))) / 60) + ' min',
+    goata: ROUTINES.filter(r => r.tag === 'GOATA').length + ' blocks',
     blocks: byTag('ARMOR').length + ' blocks',
     power: byTag('POWER').length + ' blocks',
     short: byTag('SHORT').length + ' blocks',
@@ -1668,6 +1692,7 @@ function viewProgram() {
       tile('blocks', ICONS.armor),
       tile('range', ICONS.range),
       tile('boss', ICONS.boss),
+      tile('goata', ICONS.goata),
       tile('trail', ICONS.trail),
       tile('power', ICONS.bolt),
       tile('short', ICONS.clock),
@@ -1689,9 +1714,35 @@ const COVERT = {
 const BUILD = { keys: new Set(), q: '', cat: 'all' };
 
 // A Boss day is the warm-up and then its blocks, in order: his rule is to always warm up first.
-function bossDay(x) {
+// A plan day is its warm-up and then its blocks, in order. A day can ask a block for fewer
+// rounds than its own ({ id, rounds }) — a light Saturday, say — without a second copy of it.
+function planDay(x, warmupId) {
   if (!x.ids.length) return [];
-  return ['boss-warmup'].concat(x.ids).map(id => ROUTINES.find(r => r.id === id)).filter(Boolean);
+  return [warmupId].concat(x.ids).map(e => {
+    const r = ROUTINES.find(q => q.id === (typeof e === 'string' ? e : e.id));
+    return r && typeof e !== 'string' && e.rounds ? Object.assign({}, r, { rounds: e.rounds }) : r;
+  }).filter(Boolean);
+}
+function weekTable(week, warmupId) {
+  return el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
+    el('thead', null, [el('tr', null, ['Day', 'Workout', 'Time', ''].map(h => el('th', null, h)))]),
+    el('tbody', null, week.map(x => {
+      const steps = planDay(x, warmupId).flatMap(r => routineSteps(r));
+      const names = x.ids.map(e => {
+        const r = ROUTINES.find(q => q.id === (typeof e === 'string' ? e : e.id));
+        return r ? r.n + (typeof e !== 'string' && e.rounds ? ' (' + e.rounds + ' rounds)' : '') : '';
+      }).filter(Boolean).join(' + ');
+      return el('tr', null, [
+        el('td', null, x.d),
+        el('td', null, [names || x.note, names && x.note ? el('span', { class: 'muted' }, ' \u00b7 ' + x.note) : null]),
+        el('td', { class: 'n', style: 'white-space:nowrap' }, steps.length ? '\u2248 ' + fmtMins(runSeconds(steps)) : '\u2014'),
+        el('td', null, steps.length ? el('button', {
+          class: 'btn btn-sm', 'aria-label': 'Run ' + x.d + ' as one session',
+          onclick: () => RUN.open(steps, new Date(), 0)
+        }, [ico(ICONS.play, 'nav-ico'), 'Run']) : null)
+      ]);
+    }))
+  ])]);
 }
 // The shortest and longest Boss workout in the current Gym/Home mode, so the prose never drifts.
 function bossRange() {

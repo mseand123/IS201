@@ -164,6 +164,23 @@ const DATA = require('./data.js');
     s.settings.mode = 'gym'; localStorage.setItem('groundcontact.v1', JSON.stringify(s)); });
   await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(600);
 
+  // --- GOATA: the screen, the rules, a runnable week, and the jump work as sets ---
+  await p.keyboard.press('3'); await p.waitForTimeout(400);
+  await p.locator('.tile').filter({ hasText: 'GOATA Movement' }).first().click(); await p.waitForTimeout(500);
+  const goTxt = await p.locator('.view').innerText();
+  ck(DATA.GOATA_RULES.every(x => goTxt.includes(x.h)), 'GOATA should show all six form rules');
+  ck(/not the evidence/.test(goTxt), 'GOATA should say his anti-lifting view is his opinion');
+  const goWeek = p.locator('table.data').filter({ hasText: 'Workout A' }).first();
+  const sat = goWeek.locator('tbody tr').filter({ hasText: 'Sat' }).first();
+  ck(/\(2 rounds\)/.test(await sat.innerText()), 'the light Saturday should be two rounds');
+  await goWeek.locator('tbody tr').first().locator('button').click(); await p.waitForTimeout(600);
+  const goMon = (await p.locator('#runStep').innerText()).trim();
+  const wantGo = 4 * 2 + 6 * 3;
+  ck(new RegExp('/\\s*' + wantGo + '$').test(goMon), 'GOATA Monday should run warm-up ×2 + A ×3 = ' + wantGo + ' steps, got ' + goMon);
+  console.log('GOATA Monday:', goMon);
+  await p.locator('.run button[aria-label="Exit session"]').click(); await p.waitForTimeout(300);
+  await p.locator('.back-link').click(); await p.waitForTimeout(250);
+
   // --- home mode: anything that needs a gym must say how to do it without one ---
   // Bodyweight work needs no note; a barbell, a machine or a cable does.
   const GYM = /barbell|bench press|smith machine|\bmachine\b|cable|lat pulldown|leg curl|leg press|trap bar|squat rack|power rack|weight (?:plate|stack)|sled|kettlebell|dumbbell/i;
