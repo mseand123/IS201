@@ -28,7 +28,7 @@ Object.entries(d.SESSIONS).forEach(([k, s]) => (s.blocks || []).forEach(b => {
 }));
 d.ROUTINES.forEach(r => {
   ck(typeof r.n === 'string' && typeof r.id === 'string', 'routine needs id and name');
-  ck(['WARMUP','DESK','ARMOR','SHORT','RANGE','RECOVERY','POWER','BODY','TRAIL','BOSS'].includes(r.tag), 'routine ' + r.id + ' has an unrendered tag: ' + r.tag);
+  ck(['WARMUP','DESK','ARMOR','SHORT','RANGE','RECOVERY','POWER','BODY','TRAIL','BOSS','ROOM'].includes(r.tag), 'routine ' + r.id + ' has an unrendered tag: ' + r.tag);
   r.items.forEach(i => check(i.x, 'routine ' + r.id));
 });
 d.ARMOR.items.forEach(i => check(i.x, 'ARMOR'));
@@ -87,7 +87,7 @@ d.ROUTINES.filter(r => ['WARMUP', 'RECOVERY', 'RANGE'].includes(r.tag))
   .forEach(r => ck(grouped.has(r.id), r.id + ' is game-day but appears in no play group'));
 
 // every warm-up exercise says what it targets — that is the label under the name
-d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS'].includes(r.tag)).forEach(r => r.items.forEach(i =>
+d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS','ROOM'].includes(r.tag)).forEach(r => r.items.forEach(i =>
   ck(typeof (d.EX[i.x] || {}).targets === 'string' && d.EX[i.x].targets.length > 0,
      r.id + ' › ' + i.x + ' has no targets label')));
 Object.values(d.EX).forEach(e => ck(e.targets === undefined || typeof e.targets === 'string', e.n + ' targets should be a string'));
@@ -95,7 +95,7 @@ Object.values(d.EX).forEach(e => ck(e.targets === undefined || typeof e.targets 
 // a warm-up's summary line is short and honest: required, and every term it names must
 // appear in at least one of its items' targets
 const norm = x => x.toLowerCase().replace(/[^a-z ]/g, ' ').replace(/\s+/g, ' ').trim();
-d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS'].includes(r.tag)).forEach(r => {
+d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS','ROOM'].includes(r.tag)).forEach(r => {
   ck(typeof r.targets === 'string' && r.targets.length > 0, r.id + ' has no targets summary');
   ck(!r.targets || r.targets.split('·').length <= 9, r.id + ' targets summary is not short: ' + r.targets);
   const pool = norm(r.items.map(i => (d.EX[i.x] || {}).targets || '').join(' '));
@@ -107,10 +107,17 @@ d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS'].includes(r.tag)).forEach(r => {
 
 // A gym->home swap replaces the exercise, so two gym items that share a home stand-in turn one
 // block into the same exercise twice. Boss and Trail blocks are built for home and must never do it.
-d.ROUTINES.filter(r => ['BOSS', 'TRAIL'].includes(r.tag)).forEach(r => {
+d.ROUTINES.filter(r => ['BOSS', 'TRAIL', 'ROOM'].includes(r.tag)).forEach(r => {
   const xs = r.items.map(i => d.HOME_SUB[i.x] ? d.HOME_SUB[i.x].x : i.x);
   const dup = [...new Set(xs.filter((x, i) => xs.indexOf(x) !== i))];
   ck(!dup.length, r.id + ' runs ' + dup.join(', ') + ' twice in Home mode');
+});
+
+// a circuit says how many rounds and how long to rest between them, as whole numbers
+d.ROUTINES.filter(r => r.rounds !== undefined).forEach(r => {
+  ck(Number.isInteger(r.rounds) && r.rounds >= 2 && r.rounds <= 6, r.id + '.rounds should be 2\u20136, got ' + r.rounds);
+  ck(r.roundRest === undefined || (Number.isInteger(r.roundRest) && r.roundRest >= 15 && r.roundRest <= 240),
+     r.id + '.roundRest should be 15\u2013240 s, got ' + r.roundRest);
 });
 
 // routine ids unique

@@ -104,6 +104,20 @@ const DATA = require('./data.js');
   await p.locator('.run button[aria-label="Exit session"]').click(); await p.waitForTimeout(300);
   ck(await p.locator('#queuebar').isHidden(), 'running the queue should empty it');
 
+  // --- the Room Circuit runs as a real circuit: every move, every round, labelled ---
+  await p.keyboard.press('3'); await p.waitForTimeout(400);
+  ck((await p.locator('.tile-n').first().innerText()).trim() === 'Room Circuit', 'the Room Circuit should be the first tile');
+  await p.locator('.tile').filter({ hasText: 'Room Circuit' }).first().click(); await p.waitForTimeout(400);
+  const room = DATA.ROUTINES.find(r => r.id === 'room-circuit');
+  await p.locator('.routine').filter({ hasText: room.n }).first().locator('.btn-run').click(); await p.waitForTimeout(600);
+  const roomTop = (await p.locator('.run-meta').innerText()).replace(/\n/g, ' | ');
+  ck(new RegExp('/\\s*' + room.items.length * room.rounds + '$').test(roomTop.split(' | ').pop()),
+     'the Room Circuit should run ' + room.items.length * room.rounds + ' steps, got ' + roomTop);
+  ck(/Round 1 of 3/.test(roomTop), 'the player should say which round, got ' + roomTop);
+  console.log('room circuit:', roomTop);
+  await p.locator('.run button[aria-label="Exit session"]').click(); await p.waitForTimeout(300);
+  await p.locator('.back-link').click(); await p.waitForTimeout(250);
+
   // --- Boss Your Game: the week is computed and runnable, and nothing is below his numbers ---
   await p.keyboard.press('3'); await p.waitForTimeout(400);
   await p.locator('.tile').filter({ hasText: 'Boss Your Game' }).first().click(); await p.waitForTimeout(500);

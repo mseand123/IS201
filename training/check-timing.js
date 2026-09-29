@@ -25,7 +25,7 @@ sandbox.window.document = sandbox.document;
 let src = fs.readFileSync(path.join(dir, 'app.js'), 'utf8');
 src = src.replace(/\(function \(\) \{\s*'use strict';/, '').replace(/\}\)\(\);\s*$/, '');
 src = src.replace(/\nload\(\);\nbuildShell\(\);\nrender\(\);\s*$/, '\n');
-src += '\n;__out = { makeStep, stepSeconds, hereSeconds, manualSeconds, switchInfo, COUNT_IN, fmtMins };';
+src += '\n;__out = { makeStep, stepSeconds, hereSeconds, manualSeconds, switchInfo, COUNT_IN, fmtMins, routineSteps };';
 sandbox.__out = null;
 vm.runInNewContext(src, sandbox, { filename: 'app.js' });
 const A = sandbox.__out;
@@ -65,7 +65,8 @@ function checkStep(st, tag) {
       }
     }
     const last = A.hereSeconds(st, 'work', 1000, N);
-    ck(last <= 2, tag + ': a second from the end it should read ~1 s, said ' + Math.round(last));
+    // a circuit's round rest still follows the last work round
+    ck(last <= 2 + (st.after || 0), tag + ': a second from the end it should read ~' + (1 + (st.after || 0)) + ' s, said ' + Math.round(last));
   } else {
     const m0 = A.hereSeconds(st, 'manual', 0, 1);
     ck(Math.abs(m0 - (total - A.COUNT_IN)) <= 2,
@@ -82,6 +83,14 @@ const walk = (items, where) => items.forEach((it, i) => {
 Object.entries(d.SESSIONS).forEach(([k, s]) => (s.blocks || []).forEach(b => walk(b.items, k + '/' + b.n)));
 d.ROUTINES.forEach(r => walk(r.items, r.id));
 walk(d.ARMOR.items, 'ARMOR');
+// circuits, as the player actually runs them: every round, with the rest between rounds
+d.ROUTINES.filter(r => r.rounds).forEach(r => {
+  const steps = A.routineSteps(r);
+  ck(steps.length === r.items.length * r.rounds, r.id + ' should run ' + r.items.length * r.rounds + ' steps, builds ' + steps.length);
+  steps.forEach((st, i) => checkStep(st, r.id + ' #' + (i + 1) + ' › ' + d.EX[st.x].n));
+  const rests = steps.filter(st => st.after).length;
+  ck(rests === r.rounds - 1, r.id + ' should rest between rounds ' + (r.rounds - 1) + ' times, rests ' + rests);
+});
 walk(d.FREE_WINS.items, 'FREE_WINS');
 
 console.log('steps checked:', checked, '| worst ready-screen gap:', worst ? worst.diff.toFixed(1) + ' s (' + worst.tag + ')' : 'n/a');

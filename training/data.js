@@ -3445,6 +3445,7 @@ Object.assign(EX, {
 },
 'glute-med-iso': {
   n: 'Side-Lying Abduction Hold', cat: 'iso', tags: ['hip','labrum','glute','iso','armor'],
+  targets: 'Glute medius \u00b7 side of the hip',
   why: 'Gluteus medius is the muscle that stops the femur falling into adduction and internal rotation during a plant — which is the exact position that pinches a hip labrum. In non-operative labral rehab, being able to hold a side-lying straight-leg raise on glute medius is a documented gate for progressing to harder work. It is also what protects your groin, since a hip that collapses inward loads the adductor at length.',
   setup: 'Lie on your side, bottom knee bent for stability, top leg straight and in line with the torso — or very slightly behind it.',
   steps: [
@@ -4474,7 +4475,7 @@ Object.assign(EX, {
   dose: '3 \u00d7 15\u201320',
   prog: 'Three-second lowers, then feet elevated, then a backpack, then archer push-ups, then clap push-ups.',
   regr: 'Hands on a bench or a counter. Knees last, not first.',
-  home: 'The floor. This is the home exercise.'
+  home: 'The floor. A pull-up bar laid on the floor works as push-up handles: straight wrists instead of bent-back ones, and your chest can sink below your hands, which is extra range at the stretched end \u2014 the part of a push-up that builds the most muscle. Wedge it against a wall or a bed frame so it cannot roll, and only go as deep as the front of the shoulder is happy.'
 },
 
 'pushup-bottom-iso': {
@@ -5020,5 +5021,35 @@ const BOSS_OFF = [
   { h: 'His five rules', his: true,
     t: 'Never talk about yourself. Smile as much as you can. No phone for the first hour of the day. No phone for the last hour. Confident posture.' }
 ];
+
+/* -----------------------------------------------------------
+   THE ROOM CIRCUIT \u2014 the simple one. Six moves that need a floor, a bed
+   and a pull-up bar, run as a real circuit: every move once, rest, go
+   again. Pulled mostly from Boss Your Game, chosen for the parts that
+   need it: two for the hip, one for the hamstring, the legs, push-ups
+   and the trunk.
+   ----------------------------------------------------------- */
+const ROOM_MOVES = [
+  { x:'backpack-rfess', d:'8 per side', note:'Back foot on the bed. Shin near vertical at the bottom. Backpack on once 10 a side is easy.' },
+  { x:'pushup', d:'15', note:'On the pull-up bar laid on the floor if you have it \u2014 straighter wrists and a deeper bottom. Wedge it so it cannot roll.' },
+  { x:'bridge-iso-toesup', d:'40 s', t:{ r: 0 }, note:'Heels on the floor, toes pulled up hard. That is what puts it in the hamstring.' },
+  { x:'glute-med-iso', d:'30 s per side', t:{ r: 8 }, note:'Top leg straight and slightly behind you, toes pointing forward. The side of the hip, which keeps the knee honest when you cut.' },
+  { x:'bear-plank-iso', d:'40 s', t:{ r: 0 }, note:'Knees one inch off the floor. Hard on the trunk, easy on the hip.' },
+  { x:'copenhagen-hold', d:'20 s per side', t:{ r: 8 }, note:'Top knee on the edge of the bed, bottom leg hanging. The groin, and your weakest link.' }
+];
+
+ROUTINES.push(
+  { id:'room-circuit', n:'The Room Circuit', tag:'ROOM', rounds: 3, roundRest: 75,
+    sub:'6 moves \u00b7 3 rounds \u00b7 a floor, a bed and your pull-up bar',
+    targets:'Legs \u00b7 hamstrings \u00b7 hips \u00b7 chest \u00b7 trunk',
+    why:'Simple on purpose. Six moves, each once, then a rest, then the whole thing again \u2014 three times. Legs first while they are fresh, then push-ups, then it alternates so nothing is working twice in a row. Two of the six are for the hip: the side-lying hold for the outside of it and the Copenhagen for the groin, your weakest link. Nothing here takes the hip into deep flexion under load, so it is safe to do on a day the hip is grumbling. When every move feels easy two sessions running, add a backpack to the split squats and five seconds to every hold.',
+    items: ROOM_MOVES },
+
+  { id:'room-circuit-short', n:'The Room Circuit \u00b7 Short', tag:'ROOM', rounds: 2, roundRest: 60,
+    sub:'Same six moves \u00b7 2 rounds \u00b7 for a busy day',
+    targets:'Legs \u00b7 hamstrings \u00b7 hips \u00b7 chest \u00b7 trunk',
+    why:'The same circuit, two rounds instead of three. Two rounds done is worth far more than three rounds skipped, which is the whole reason this card exists.',
+    items: ROOM_MOVES }
+);
 
 if (typeof module !== 'undefined') { module.exports = { EX, SESSIONS, PHASES, TESTS, ARTICLES, ARMOR, COPEN, READINESS, ATHLETE, HOME_SUB, ROUTINES, PLAY_GROUPS, RANGE_GROUPS, FREE_WINS, BODY_GROUPS, TRAIL_GROUPS, BOSS_GROUPS, BOSS_LADDER, BOSS_WEEK, BOSS_OFF }; }

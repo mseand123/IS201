@@ -261,6 +261,34 @@ warm-up standard rather than the general one: every row must carry a `targets` l
 must carry a short targets summary, and every term in that summary must appear in at least one of
 its own items' targets.
 
+### Room Circuit
+
+The simple one, and the first tile on the hub. Six moves that need a floor, a bed and a pull-up bar,
+run as a real circuit — every move once, a rest, then again:
+
+| move | per round | for |
+|---|---|---|
+| Couch-elevated split squat | 8 per side | legs |
+| Push-up | 15 | chest, shoulders, triceps |
+| Toes-up bridge hold | 40 s | hamstrings |
+| Side-lying abduction hold | 30 s per side | the side of the hip |
+| Bear plank | 40 s | trunk |
+| Copenhagen hold, off the bed | 20 s per side | groin — the weakest link |
+
+Three rounds is about 24 minutes; the *Short* card is the same six moves for two rounds, about 15.
+Nothing in it takes the hip into deep flexion under load, so it works on a day the hip is grumbling.
+The push-up row says what a pull-up bar laid on the floor buys you — straight wrists, and a chest
+that can sink below the hands for extra range at the stretched end — and to wedge it so it can't roll.
+
+**Circuits are a player feature now, not a data trick.** A routine can carry `rounds` and
+`roundRest`. The card lists each move once; `routineSteps()` builds the whole thing — every move,
+every round, the block label reading *Round 2 of 3*, and a rest after the last move of each round
+but the final one, announced as *Round 1 done. Rest.* A timed step can now carry that rest too
+(`after`), which the player, the estimator and the remaining-time maths all honour. Every place a
+whole routine is run or timed goes through `routineSteps()`, so the card, the queue and the Boss
+week all agree. `check-timing.js` walks circuits as the player runs them — 659 steps — and
+`check-data.js` bounds `rounds` to 2–6 and `roundRest` to 15–240 s.
+
 ### Boss Your Game
 
 A hub tile holding nine short workouts audited off Alex's Facebook page (a soccer performance

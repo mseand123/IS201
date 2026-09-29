@@ -51,6 +51,7 @@ const ICONS = {
   range: 'M9 4H4v5|M15 20h5v-5|M4 4l6 6|M20 20l-6-6',
   trail: 'M2 20h20|M5 20l5-11 4 7 2-3 4 7|M17 6a2 2 0 1 0 0-.1',
   boss: 'M4 9h3v6H4z|M17 9h3v6h-3z|M7 12h10|M2 11v2|M22 11v2',
+  room: 'M3 11l9-7 9 7|M5 10v10h14V10|M10 20v-5h4v5',
   check: 'M4 12l6 6L20 6'
 };
 
@@ -274,7 +275,7 @@ function stepSeconds(st) {
   if (st.mode === 'timed') {
     const sw = switchInfo(st);
     const rest = Math.max(st.rest, sw ? 8 : 0);
-    return COUNT_IN + st.work * st.rounds + rest * Math.max(0, st.rounds - 1);
+    return COUNT_IN + st.work * st.rounds + rest * Math.max(0, st.rounds - 1) + (st.after || 0);
   }
   const sw = switchInfo(st);
   const changeovers = Math.max(0, (st.rounds || 1) - 1) * Math.max(st.rest || 0, sw ? 8 : 0);
@@ -404,6 +405,26 @@ function stepsFromItems(items, blockName) {
     if (it.g) g = it.g;
     return makeStep(it, g ? g.split('\u00b7')[0].trim() : blockName, null, i);
   }).filter(Boolean);
+}
+
+// A routine with \`rounds\` is a circuit: the card lists each move once, and the player runs
+// the whole list, rests, and goes again — labelled "Round 2 of 3" so you know where you are.
+function routineSteps(r, items) {
+  const n = r.rounds || 1;
+  const list = items || r.items;
+  if (n === 1) return stepsFromItems(list, r.n);
+  const out = [];
+  for (let k = 1; k <= n; k++) {
+    const round = stepsFromItems(list, 'Round ' + k + ' of ' + n);
+    if (k < n && round.length) {
+      const last = round[round.length - 1];
+      last.after = r.roundRest || 60;
+      last.restAfter = last.after;
+      last.roundEnd = 'Round ' + k + ' done';
+    }
+    out.push.apply(out, round);
+  }
+  return out;
 }
 
 /* ---------- voice ----------
@@ -560,7 +581,7 @@ const RUN = {
       this.left = st.restAfter * 1000; this.running = true;
       beep(440, .2, .16);
       const nx = this.steps[this.i + 1];
-      say(nx ? 'Rest. Next, ' + EX[nx.x].n : 'Rest');
+      say((st.roundEnd ? st.roundEnd + '. ' : '') + (nx ? 'Rest. Next, ' + EX[nx.x].n : 'Rest'));
     } else if (phase === 'done') {
       this.running = false; this.elapsed = Date.now() - this.startedAt;
       if (this.meta && this.meta.routine) {
@@ -599,7 +620,8 @@ const RUN = {
         if (st.rest) return this.enter('rest');
         this.round++; return this.enter('work');
       }
-      return this.next();   // a timed step's own config already carries its rest
+      // a timed step's own config already carries its rest — unless it closes a circuit round
+      return st.after ? this.enter('restAfter') : this.next();
     }
     if (this.phase === 'rest') { this.round++; return this.enter(st.mode === 'timed' ? 'work' : 'manual'); }
     if (this.phase === 'restAfter') return this.next();
@@ -837,9 +859,10 @@ function hereSeconds(st, phase, leftMs, round) {
   const rest = Math.max(st.rest || 0, switchInfo(st) ? 8 : 0);
   if (phase === 'restAfter') return left;
   if (st.mode === 'timed') {
-    if (phase === 'ready') return left + N * st.work + Math.max(0, N - 1) * rest;
-    if (phase === 'work')  return left + (N - r) * (st.work + rest);
-    if (phase === 'rest')  return left + (N - r) * st.work + Math.max(0, N - r - 1) * rest;
+    const tail = st.after || 0;   // a circuit's round rest, after the last work round
+    if (phase === 'ready') return left + N * st.work + Math.max(0, N - 1) * rest + tail;
+    if (phase === 'work')  return left + (N - r) * (st.work + rest) + tail;
+    if (phase === 'rest')  return left + (N - r) * st.work + Math.max(0, N - r - 1) * rest + tail;
     return left;
   }
   // A hand-counted set has no countdown, but it does have an estimate — using zero
@@ -1309,8 +1332,8 @@ function viewToday() {
         const r = ROUTINES.find(x => x.id === id);
         if (!r) return null;
         return el('button', {
-          class: 'btn btn-sm', onclick: () => RUN.open(stepsFromItems(r.items, r.n), date, 0, { routine: r.id })
-        }, [ico(ICONS.play, 'nav-ico'), r.n + ' · ' + fmtMins(runSeconds(stepsFromItems(r.items, r.n)))]);
+          class: 'btn btn-sm', onclick: () => RUN.open(routineSteps(r), date, 0, { routine: r.id })
+        }, [ico(ICONS.play, 'nav-ico'), r.n + ' · ' + fmtMins(runSeconds(routineSteps(r)))]);
       }).filter(Boolean),
       el('button', { class: 'btn btn-ghost btn-sm', onclick: () => { go('program'); goSub('play'); } }, 'Playing today? →'),
       el('button', { class: 'btn btn-ghost btn-sm', onclick: () => go('daily') }, 'Every day →')
@@ -1463,6 +1486,12 @@ function viewProgram() {
       body: () => el('div', { class: 'stack stack-xl' }, RANGE_GROUPS.map(g =>
         sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
     },
+    room: {
+      n: 'Room Circuit', blurb: 'Six moves, a floor and a bed. Hip, hamstring, legs, push-ups, core.',
+      body: () => sec('Room Circuit',
+        'Every move once, a short rest, then round two. The player counts the rounds for you. Short on time? The two-round card is the same circuit.',
+        grid(byTag('ROOM')))
+    },
     boss: {
       n: 'Boss Your Game', blurb: 'Alex\u2019s short circuits: hold first, reps second.',
       body: () => el('div', { class: 'stack stack-xl' }, [
@@ -1489,7 +1518,7 @@ function viewProgram() {
             el('thead', null, [el('tr', null, ['Day', 'Workout', 'Time', ''].map(h => el('th', null, h)))]),
             el('tbody', null, BOSS_WEEK.map(x => {
               const blocks = bossDay(x);
-              const steps = blocks.flatMap(r => stepsFromItems(r.items, r.n));
+              const steps = blocks.flatMap(r => routineSteps(r));
               const names = x.ids.map(byId).filter(Boolean).map(r => r.n).join(' + ');
               return el('tr', null, [
                 el('td', null, x.d),
@@ -1606,6 +1635,7 @@ function viewProgram() {
     range: RANGE_GROUPS.reduce((x, g) => x + g.ids.length, 0) + ' blocks',
     trail: ROUTINES.filter(r => r.tag === 'TRAIL').length + ' blocks',
     boss: ROUTINES.filter(r => r.tag === 'BOSS').length + ' blocks',
+    room: '~' + Math.round(runSeconds(routineSteps(byId('room-circuit'))) / 60) + ' min',
     blocks: byTag('ARMOR').length + ' blocks',
     power: byTag('POWER').length + ' blocks',
     short: byTag('SHORT').length + ' blocks',
@@ -1632,6 +1662,7 @@ function viewProgram() {
         'Everything that is not today\u2019s session. The daily and range work carries any sport; Frisbee is the game-day layer on top of it.')
     ]),
     el('div', { class: 'hub' }, [
+      tile('room', ICONS.room),
       tile('play', ICONS.play),
       tile('body', ICONS.body),
       tile('blocks', ICONS.armor),
@@ -1665,7 +1696,7 @@ function bossDay(x) {
 // The shortest and longest Boss workout in the current Gym/Home mode, so the prose never drifts.
 function bossRange() {
   const mins = ROUTINES.filter(r => r.tag === 'BOSS' && r.id !== 'boss-warmup')
-    .map(r => Math.round(runSeconds(stepsFromItems(r.items, r.n)) / 60));
+    .map(r => Math.round(runSeconds(routineSteps(r)) / 60));
   return Math.min.apply(null, mins) + ' to ' + Math.max.apply(null, mins) + ' minutes';
 }
 
@@ -1687,7 +1718,7 @@ const queueBlocks = () => ROUTINES
   .sort((a, b) => QSEQ.indexOf(a.id) - QSEQ.indexOf(b.id))
   .map(r => ({ r: r, items: r.items.filter((_, i) => rsel(r.id).has(i)) }));
 const queueCount = () => queueBlocks().reduce((a, q) => a + q.items.length, 0);
-const queueSteps = () => queueBlocks().flatMap(q => stepsFromItems(q.items, q.r.n));
+const queueSteps = () => queueBlocks().flatMap(q => routineSteps(q.r, q.items));
 function queueClear() { Object.keys(RSEL).forEach(k => RSEL[k].clear()); QSEQ.length = 0; render(); }
 function queueRun(date) {
   const steps = queueSteps();
@@ -1758,7 +1789,7 @@ function routineCard(r, date) {
         cov ? el('span', { class: 'chip ' + cov.k, title: cov.d }, cov.l) : null,
         timesToday ? el('span', { class: 'chip good' }, '✓ ' + (timesToday > 1 ? timesToday + '×' : '') + ' today') : null
       ]),
-      el('span', { class: 'num xs muted' }, '≈ ' + fmtMins(runSeconds(stepsFromItems(chosen, r.n))))
+      el('span', { class: 'num xs muted' }, '≈ ' + fmtMins(runSeconds(routineSteps(r, chosen))))
     ]),
     el('p', { class: 'small muted' }, r.sub),
     // A short, authored line saying what the block is for. check-data.js verifies every term
@@ -1781,7 +1812,7 @@ function routineCard(r, date) {
         onclick: () => {
           // Running a selection consumes it, the same way the queue bar does — a pick that
           // survives being run comes back to haunt you two screens later.
-          const steps = stepsFromItems(chosen, r.n);
+          const steps = routineSteps(r, chosen);
           if (n) { sel.clear(); qmark(r.id); }
           RUN.open(steps, date, 0, n ? null : { routine: r.id });
         }
