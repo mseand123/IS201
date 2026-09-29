@@ -104,6 +104,52 @@ const DATA = require('./data.js');
   await p.locator('.run button[aria-label="Exit session"]').click(); await p.waitForTimeout(300);
   ck(await p.locator('#queuebar').isHidden(), 'running the queue should empty it');
 
+  // --- Boss Your Game: the week is computed and runnable, and nothing is below his numbers ---
+  await p.keyboard.press('3'); await p.waitForTimeout(400);
+  await p.locator('.tile').filter({ hasText: 'Boss Your Game' }).first().click(); await p.waitForTimeout(500);
+  const bossTxt = await p.locator('.view').innerText();
+  ck(/run \d+ to \d+ minutes rather than his ten to twenty/.test(bossTxt), 'the Boss intro should state the computed time range');
+  ck(/Off the floor/i.test(bossTxt) && /His five rules/.test(bossTxt), 'the off-the-floor card is missing');
+  ck(/cold water in the hours after a strength session/i.test(bossTxt), 'the cold-tub conflict should be spelled out');
+  const weekRows = p.locator('table.data').last().locator('tbody tr');
+  ck(await weekRows.count() === DATA.BOSS_WEEK.length, 'the week should have ' + DATA.BOSS_WEEK.length + ' rows');
+  const monTime = (await weekRows.first().innerText()).match(/≈\s*(\d+)\s*min/);
+  ck(monTime && +monTime[1] > 30, 'Monday should show its real length, not his ~30 min, got ' + (monTime && monTime[1]));
+  await weekRows.first().locator('button').click(); await p.waitForTimeout(600);
+  const monSteps = (await p.locator('#runStep').innerText()).trim();
+  const wantMon = ['boss-warmup'].concat(DATA.BOSS_WEEK[0].ids)
+    .reduce((a, id) => a + DATA.ROUTINES.find(r => r.id === id).items.length, 0);
+  ck(new RegExp('/\\s*' + wantMon + '$').test(monSteps), 'Monday should run warm-up + its blocks as ' + wantMon + ' steps, got ' + monSteps);
+  console.log('Boss Monday runs as one session:', monSteps, monTime && monTime[1] + ' min');
+  await p.locator('.run button[aria-label="Exit session"]').click(); await p.waitForTimeout(300);
+
+  // his minimums, read off the handoff: sets × reps per side can never be below his rounds × reps
+  const MIN = { 'sl-hop-exit': 9, 'split-jump': 30, 'bridge-leg-raise': 18, 'pushup': 30, 'pullup': 15, 'bodyweight-squat': 10 };
+  DATA.ROUTINES.filter(r => r.tag === 'BOSS').forEach(r => r.items.forEach(it => {
+    if (!MIN[it.x]) return;
+    const m = it.d.match(/^(\d+)\s*×\s*(\d+)/) || it.d.match(/^(\d+)()/);
+    const total = m[2] ? +m[1] * +m[2] : +m[1];
+    ck(total >= MIN[it.x], r.id + ' › ' + it.x + ' is ' + total + ', below his minimum of ' + MIN[it.x]);
+  }));
+
+  // Home mode must not delete the pull-ups or duplicate a row
+  await p.evaluate(() => { const s = JSON.parse(localStorage.getItem('groundcontact.v1') || '{}');
+    s.settings = Object.assign(s.settings || {}, { mode: 'home' }); localStorage.setItem('groundcontact.v1', JSON.stringify(s)); });
+  await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(700);
+  await p.keyboard.press('3'); await p.waitForTimeout(400);
+  await p.locator('.tile').filter({ hasText: 'Boss Your Game' }).first().click(); await p.waitForTimeout(500);
+  for (const id of ['boss-pull', 'boss-ankles', 'boss-core-hip']) {
+    const r = DATA.ROUTINES.find(x => x.id === id);
+    const card = p.locator('.routine').filter({ hasText: r.n }).first();
+    await card.locator('.btn-pick').click(); await p.waitForTimeout(300);
+    const names = (await card.locator('.pick-name').allInnerTexts()).map(t => t.trim());
+    ck(new Set(names).size === names.length, id + ' in Home mode lists a row twice: ' + names.join(', '));
+    if (id === 'boss-pull') ck(names.includes('Pull-Up'), 'Home mode should keep the pull-ups, got ' + names.join(', '));
+  }
+  await p.evaluate(() => { const s = JSON.parse(localStorage.getItem('groundcontact.v1') || '{}');
+    s.settings.mode = 'gym'; localStorage.setItem('groundcontact.v1', JSON.stringify(s)); });
+  await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(600);
+
   // --- home mode: anything that needs a gym must say how to do it without one ---
   // Bodyweight work needs no note; a barbell, a machine or a cable does.
   const GYM = /barbell|bench press|smith machine|\bmachine\b|cable|lat pulldown|leg curl|leg press|trap bar|squat rack|power rack|weight (?:plate|stack)|sled|kettlebell|dumbbell/i;

@@ -1467,7 +1467,7 @@ function viewProgram() {
       n: 'Boss Your Game', blurb: 'Alex\u2019s short circuits: hold first, reps second.',
       body: () => el('div', { class: 'stack stack-xl' }, [
         sec('Boss Your Game',
-          'Nine short workouts audited off Alex\u2019s page, in his format: an isometric hold, then dynamic reps of the same joint, four to six items. His running work is deliberately left out, and every row carries his number \u2014 where the dose here is higher, his is the floor rather than the target. One structural difference: he runs each workout as a circuit, all the items and then repeat. Here each row carries its sets, so a block is the whole workout end to end and the time estimate on the card is real. Circuit it instead if you prefer \u2014 the Start button on each row lets you walk the list and go again \u2014 the week\u2019s work is identical either way. It also explains the clock: as sets with a real rest between each one these run 15 to 26 minutes rather than his ten to twenty, because in a circuit the rests overlap.',
+          'Short workouts audited off Alex\u2019s page, in his format: an isometric hold, then dynamic reps of the same joint, four to six items. His running work is deliberately left out, and every row carries his number \u2014 where the dose here is higher, his is the floor rather than the target. One structural difference: he runs each workout as a circuit, all the items and then repeat. Here each row carries its sets, so a block is the whole workout end to end and the time on the card is real. Circuit it instead if you prefer \u2014 the Start button on each row lets you walk the list and go again \u2014 the work is identical either way. It also explains the clock: as sets with a real rest between each one, the workouts here run ' + bossRange() + ' rather than his ten to twenty, because in a circuit the rests overlap.',
           el('div', { class: 'stack stack-xl' }, BOSS_GROUPS.map(g =>
             sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))),
         sec('How it gets harder',
@@ -1484,15 +1484,33 @@ function viewProgram() {
             ])))
           ])])),
         sec('His week, and how it fits yours',
-          'This is a second program. It only works if it does not land on top of the one you are already running: in season keep it to one round of each workout a week, put Legs B and Hamstrings + Speed on days that are not next to a game, and never stack Hamstrings + Speed on the same day as the plyometric ladder. Everything here is additive to the Daily work, not a replacement for it.',
+          'His schedule, warm-up included. The times come from the blocks above, so they run longer than his thirty minutes. Leg days too long? Move the Core Circuit to Wednesday and Saturday rather than cutting leg work. In season: each workout once a week, Legs B and Hamstrings + Speed never the day before or after a game, and never on the same day as the plyometric ladder.',
           el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
-            el('thead', null, [el('tr', null, ['Day', 'Workout', 'Time'].map(h => el('th', null, h)))]),
-            el('tbody', null, BOSS_WEEK.map(x => el('tr', null, [
-              el('td', null, x.d),
-              el('td', null, x.do),
-              el('td', { class: 'n' }, x.mins)
-            ])))
-          ])]))
+            el('thead', null, [el('tr', null, ['Day', 'Workout', 'Time', ''].map(h => el('th', null, h)))]),
+            el('tbody', null, BOSS_WEEK.map(x => {
+              const blocks = bossDay(x);
+              const steps = blocks.flatMap(r => stepsFromItems(r.items, r.n));
+              const names = x.ids.map(byId).filter(Boolean).map(r => r.n).join(' + ');
+              return el('tr', null, [
+                el('td', null, x.d),
+                el('td', null, [names || x.note, names && x.note ? el('span', { class: 'muted' }, ' \u00b7 ' + x.note) : null]),
+                el('td', { class: 'n', style: 'white-space:nowrap' }, steps.length ? '\u2248 ' + fmtMins(runSeconds(steps)) : '\u2014'),
+                el('td', null, steps.length ? el('button', {
+                  class: 'btn btn-sm', 'aria-label': 'Run ' + x.d + ' as one session',
+                  onclick: () => RUN.open(steps, new Date(), 0)
+                }, [ico(ICONS.play, 'nav-ico'), 'Run']) : null)
+              ]);
+            }))
+          ])])),
+        sec('Off the floor',
+          'The rest of his handoff. What is his is marked as his; the rest was added, and where the app already has a view it defers to it.',
+          el('div', { class: 'stack stack-sm' }, BOSS_OFF.map(x => el('div', { class: 'card-flat' }, [
+            el('div', { class: 'row', style: 'gap:.45rem' }, [
+              el('h3', { style: 'font-size:var(--t-sm);font-weight:600' }, x.h),
+              el('span', { class: 'chip' + (x.his ? ' solid' : '') }, x.his ? 'His' : 'Added')
+            ]),
+            el('p', { class: 'small muted', style: 'margin-top:.3rem;max-width:68ch' }, x.t)
+          ]))))
       ])
     },
     trail: {
@@ -1638,6 +1656,18 @@ const COVERT = {
   private:   { l: 'Needs a moment', d: 'Fine alone; not in an open-plan office.', k: 'hard' }
 };
 const BUILD = { keys: new Set(), q: '', cat: 'all' };
+
+// A Boss day is the warm-up and then its blocks, in order: his rule is to always warm up first.
+function bossDay(x) {
+  if (!x.ids.length) return [];
+  return ['boss-warmup'].concat(x.ids).map(id => ROUTINES.find(r => r.id === id)).filter(Boolean);
+}
+// The shortest and longest Boss workout in the current Gym/Home mode, so the prose never drifts.
+function bossRange() {
+  const mins = ROUTINES.filter(r => r.tag === 'BOSS' && r.id !== 'boss-warmup')
+    .map(r => Math.round(runSeconds(stepsFromItems(r.items, r.n)) / 60));
+  return Math.min.apply(null, mins) + ' to ' + Math.max.apply(null, mins) + ' minutes';
+}
 
 const RSEL = {};
 const rsel = id => RSEL[id] || (RSEL[id] = new Set());

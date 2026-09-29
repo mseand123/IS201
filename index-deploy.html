@@ -3850,7 +3850,7 @@ const HOME_SUB = {
   'landmine-press':           { x: 'pushup-scap',               d: '2 × 10 scapular + 3 × 10 push-up plus' },
   'bottoms-up-carry':         { x: 'pushup-scap',               d: '3 × 8 slow push-up plus', note: 'The closest home stand-in for reflexive cuff control is slow, scapula-led pressing.' },
   'suitcase-carry':           { x: 'side-plank-iso',            d: '3 × 35 s per side' },
-  'pallof-press':             { x: 'bird-dog-iso',              d: '3 × 18 s per diagonal' },
+  'pallof-press':             { x: 'bird-dog-iso',              d: '3 × 18 s per side' },
   'back-extension-iso':       { x: 'superman-iso',              d: '3 × 40 s' },
   'medball-rotational':       { x: 'rotational-chop',           d: '4 × 6 per side, max intent' },
   'medball-slam-rot':         { x: 'rotational-chop',           d: '3 × 8 per side' },
@@ -5525,7 +5525,7 @@ Object.assign(EX, {
   n: 'Bench Dip', cat: 'strength', tags: ['upper','push','home'], cost: 2,
   repSec: 3,
   targets: 'Triceps \u00b7 front of the shoulder \u00b7 chest',
-  why: 'Cheap triceps volume off a bench, and the one item on his push list worth a caveat. The dip position puts the front of the shoulder near end-range extension, which is the position an unhappy anterior shoulder complains about first. You have a SLAP-type history, so the rule here is simple: if the front of the joint pinches or aches, this is not the exercise you need. Close-grip push-ups buy the same triceps work with none of the shoulder tax.',
+  why: 'Cheap triceps volume off a bench, and the one item on his push list worth a caveat. The dip position puts the front of the shoulder near end-range extension, which is the position an unhappy anterior shoulder complains about first. You throw for a living, so the rule here is simple: if the front of the joint pinches or aches, this is not the exercise you need. Close-grip push-ups buy the same triceps work with none of the shoulder tax.',
   setup: 'Hands on the edge of a bench behind you, fingers forward, feet out in front.',
   steps: [
     'Hips close to the bench, not drifting forward \u2014 that is what saves the shoulder.',
@@ -5805,16 +5805,74 @@ Object.assign(EX, {
 
 });
 
+Object.assign(EX, {
+'bodyweight-squat': {
+  n: 'Bodyweight Squat', cat: 'mobility', tags: ['warmup','legs','home','daily'], cost: 1, repSec: 2.5,
+  targets: 'Quads · glutes · ankles & hips through range',
+  why: 'Ten of these are in his warm-up for a plain reason: every leg circuit he runs starts in a deep knee bend, and the first loaded rep should not be the first time the knee and ankle have been there today. It is a rehearsal, not a set. Slow, full depth, heels down, and it doubles as a check — if the bottom pinches at the front of the hip today, you know before the split squats do.',
+  setup: 'Feet about shoulder-width, toes turned out slightly.',
+  steps: [
+    'Sit down between the heels, knees tracking over the toes.',
+    'Go as deep as you can with the heels down and the chest tall.',
+    'Pause for a beat at the bottom, then stand all the way up and squeeze the glutes.',
+    'Two seconds down, one second up. Ten reps.'
+  ],
+  cues: ['Heels heavy.','Knees follow the toes.'],
+  faults: ['Heels lifting at the bottom.','Knees caving in on the way up.','Rushing it — this is a rehearsal.'],
+  dose: '10 slow',
+  prog: 'A three-second pause at the bottom of each rep.',
+  regr: 'Hold a door frame and sit to a comfortable depth.',
+  home: 'Anywhere. Nothing needed.'
+},
+'pullup': {
+  n: 'Pull-Up', cat: 'strength', tags: ['upper','pull','home','mass'], cost: 2, repSec: 3.5,
+  targets: 'Lats · upper back · biceps · grip',
+  why: 'His pull-up, bodyweight, off a bar you can hang in a doorway. It is the single best upper-body pulling exercise available without a gym, and for a thrower it is also shoulder health: the full hang at the bottom takes the shoulder to the overhead range throwing uses, under control. Full range every rep beats more reps — a half pull-up builds half the strength and none of the range.',
+  setup: 'Hands just outside shoulder-width, palms away. Start from a full hang.',
+  steps: [
+    'Start from a dead hang, arms straight, shoulders just slightly engaged.',
+    'Pull the shoulder blades down first, then pull until the chin clears the bar.',
+    'Lower under control all the way back to a straight-arm hang.',
+    'Stop the set when the chin no longer clears the bar cleanly.'
+  ],
+  cues: ['Chest to the bar, elbows down to the ribs.','Full hang at the bottom of every rep.'],
+  faults: ['Kipping or swinging to get the last rep.','Half reps that never straighten the arms.','Shrugging into the ears.'],
+  dose: '3 × 8',
+  prog: 'Add weight in a backpack, then slow the lowering to four seconds.',
+  regr: 'Negatives: jump to the top and lower over five seconds, five reps. Or a band looped over the bar under one knee.',
+  home: 'A doorway pull-up bar. No bar at all: towel rows on a closed door (towel round both handles, lean back and pull) and backpack rows, 12 each — his own no-bar option.'
+},
+'sl-calf-raise': {
+  n: 'Single-Leg Calf Raise off a Step', cat: 'strength', tags: ['foot','tendon','home','prevention'], cost: 1, repSec: 4,
+  targets: 'Calves · soleus · Achilles',
+  why: 'His ankle finisher, and the cheapest Achilles and calf insurance there is. Off a step, the heel drops below the forefoot, so the calf works through its full length — which is where tendons adapt and where most calf raises never go. Single leg, because every stride is single leg and because it shows you a side-to-side difference the double-leg version hides.',
+  setup: 'Ball of one foot on the edge of a step, the other foot tucked behind. A finger on a wall for balance only.',
+  steps: [
+    'Rise as high as you can onto the ball of the foot.',
+    'Lower slowly until the heel is clearly below the step.',
+    'Two seconds up, three seconds down. No bouncing at the bottom.',
+    'All reps on one side, then the other.'
+  ],
+  cues: ['Straight up over the big toe, not rolling out to the little toe.','Slow on the way down — that is the half that builds the tendon.'],
+  faults: ['Bouncing out of the bottom.','Leaning on the wall to take the weight.','Half range at the top.'],
+  dose: '2 × 15 per side',
+  prog: 'Hold a backpack, or add a two-second hold at the top of each rep.',
+  regr: 'Both legs up, one leg down.',
+  home: 'Any stair, a curb or a thick book.'
+}
+});
+
 ROUTINES.push(
   { id:'boss-warmup', n:'The Line Warm-Up', tag:'BOSS',
-    sub:'Six or seven minutes \u00b7 before any Boss workout',
+    sub:'Seven or eight minutes \u00b7 before any Boss workout',
     targets:'Foot speed \u00b7 hips \u00b7 upper back',
-    why:'His warm-up is four foot patterns over a line \u2014 he calls it five minutes, and with the two additions below it is nearer seven. It is a better opener than it sounds: fast small contacts raise temperature and wake the ankle at the speed the session is about to use. Two things are added. Leg swings, because his version has no hip work at all and every one of his leg circuits starts in a deep split stance. And band pull-aparts in place of his arm circles, because you are a thrower and the shoulder wants the scapula switched on rather than waved around. Five minutes, and it is not optional before the jumping days.',
+    why:'His warm-up is four foot patterns over a line, then squats, lunges and arm circles \u2014 he calls it five minutes, and done properly with the additions below it is nearer eight. It is a better opener than it sounds: fast small contacts raise temperature and wake the ankle at the speed the session is about to use. Two changes. Leg swings are added, because his version has no active hip range and every one of his leg circuits starts in a deep split stance. And band pull-aparts replace his arm circles, because you are a thrower and the shoulder wants the scapula switched on rather than waved around. Five minutes, and it is not optional before the jumping days.',
     items:[
       { x:'line-taps', d:'4 patterns \u00d7 10 reps', note:'Right foot, left foot, two feet, then the quadrant. Balls of the feet, quick and quiet.' },
+      { x:'bodyweight-squat', d:'10 slow', note:'His number. Full depth, heels down \u2014 and if the bottom pinches at the front of the hip today, you know before the split squats do.' },
       { x:'leg-swings', d:'10 linear + 10 lateral per leg', note:'Added. His warm-up has no hip work and his leg days live in a deep split stance.' },
-      { x:'walking-lunge-rotation', d:'5 per side', note:'Added, and it doubles as the hip flexor opener you need before split squats.' },
-      { x:'band-pull-apart', d:'15', note:'Added, in place of arm circles. On a push or pull day this is the item that protects the shoulder.' }
+      { x:'walking-lunge-rotation', d:'5 per side', note:'His ten walking lunges, with a rotation added so it doubles as the hip flexor opener you need before split squats.' },
+      { x:'band-pull-apart', d:'15', note:'In place of his arm circles \u2014 on a push or pull day this is the item that protects the shoulder. No band with you: his 10 arm circles each way.' }
     ]},
 
   { id:'boss-legs-a', n:'Legs A \u00b7 Isometric', tag:'BOSS',
@@ -5834,8 +5892,8 @@ ROUTINES.push(
     why:'The dynamic twin of Legs A, run on a different day so the same tissues get a strength dose and a speed dose in one week. Split squats for the reps, knee drives for the speed, and the bench hops for elasticity \u2014 twenty small quick contacts, which is extensive plyometric work and costs the nervous system very little. Keep the bench low. The height is not the point and a high box turns a cheap elastic drill into a landing you have to pay for. In Home mode the split squat swaps itself for the couch version automatically.',
     items:[
       { x:'rfess', g:'REPS \u00b7 the strength half', d:'3 \u00d7 10 per side', note:'Toes down, front heel planted, full depth. His number, and the right one \u2014 add a backpack rather than reps.' },
-      { x:'banded-knee-drive', d:'3 \u00d7 10 per side, fast', note:'Same as Legs A, two more reps a side. Intent over count.' },
-      { x:'lateral-bench-hop', g:'ELASTIC \u00b7 quick contacts, low height', d:'3 \u00d7 20 contacts', note:'Low bench, a rolled towel or a line. Quiet landings, stiff ankles. Loud means stop.' },
+      { x:'banded-knee-drive', d:'3 \u00d7 10 per side, fast, 45 s rest', note:'Same as Legs A, two more reps a side. Intent over count.' },
+      { x:'lateral-bench-hop', g:'ELASTIC \u00b7 quick contacts, low height', d:'3 \u00d7 20 contacts, 45 s rest', note:'Low bench, a rolled towel or a line. Quiet landings, stiff ankles. Loud means stop.' },
       { x:'bridge-iso-bench', d:'3 \u00d7 45 s', note:'His 30 s is the floor.' },
       { x:'bridge-leg-raise', d:'3 \u00d7 10 per leg, 45 s rest', note:'His number is 10 here. Hips level.' }
     ]},
@@ -5858,10 +5916,10 @@ ROUTINES.push(
     why:'The same circuit with the hip taken out of it. His first three items \u2014 bicycles, twists, tuck-ups \u2014 are repeated deep hip flexion and loaded lumbar rotation, which is the one position a hip with a labral history is least happy in. These three train the same qualities from the other direction: the dead bug resists extension instead of flexing the hip, the Pallof resists rotation instead of producing it, and the hollow hold is the held version of a tuck-up. The last two items are his and unchanged, because a bear plank never bothered anybody\u2019s hip. Run this one whenever the joint has an opinion, and run his when it does not. Neither is the lesser session.',
     items:[
       { x:'deadbug', g:'INSTEAD OF HIS FIRST THREE', d:'2 \u00d7 6 per side, slow', note:'Same anti-extension job as the tuck-up, with the hip nowhere near end range. Ribs down, low back flat on the floor.' },
-      { x:'pallof-press', d:'2 \u00d7 5 with 5 s holds per side', t:{ r: 20 }, note:'Anti-rotation instead of rotation \u2014 the obliques still work, the low back is not wrung out. A band on a door handle.' },
+      { x:'pallof-press', d:'2 \u00d7 5 with 5 s holds per side', t:{ r: 20, rounds: 4 }, note:'Anti-rotation instead of rotation \u2014 the obliques still work, the low back is not wrung out. A band on a door handle.' },
       { x:'hollow-hold', d:'2 \u00d7 25 s', note:'Held rather than repped. This is the version his format would have used if his hip had your history.' },
       { x:'bear-plank-iso', g:'HIS, UNCHANGED', d:'2 \u00d7 45 s', note:'Knees one inch off the floor. His number is 30 s.' },
-      { x:'bear-shoulder-tap', d:'2 \u00d7 30', note:'Hips do not rock, knees stay hovering between taps.' }
+      { x:'bear-shoulder-tap', d:'2 \u00d7 30, 30 s rest', note:'Hips do not rock, knees stay hovering between taps.' }
     ]},
 
   { id:'boss-hams', n:'Hamstrings + Speed', tag:'BOSS',
@@ -5871,7 +5929,7 @@ ROUTINES.push(
     items:[
       { x:'bridge-iso-toesup', g:'HOLD \u00b7 hamstring bias', d:'3 \u00d7 45 s', note:'Heels on the floor, toes pulled hard up. That is what moves the work off the calf and onto the hamstring. His number is 30 s.' },
       { x:'bridge-leg-raise', d:'3 \u00d7 8 per leg, 45 s rest', note:'Hips level. His number is 6.' },
-      { x:'sl-hop-exit', g:'SPEED \u00b7 low volume, full quality', d:'2 \u00d7 3 per side', note:'Three hops, land the third sideways, explode out two or three steps. Real rest between reps. Knee diving inward ends the set. This is the one item that does not scale with the rounds \u2014 two sets is the ceiling, however good you feel.' },
+      { x:'sl-hop-exit', g:'SPEED \u00b7 low volume, full quality', d:'3 \u00d7 3 per side', note:'His number, and the one item here not raised: three hops, land the third sideways, explode out two or three steps. Real rest between reps, and a knee diving inward ends the set. Tired single-leg landings are how ankles and knees get hurt in this sport, so this stays a skill dose however good you feel.' },
       { x:'split-jump', d:'3 \u00d7 12', note:'His number is 10 a round, building to 15. Switch in the air, back knee never touches, land soft. Do these fresh, and drop to two sets if the hamstring has any voice at all.' },
       { x:'nordic-curl', g:'ADDED \u00b7 the one he is missing', d:'3 \u00d7 5 slow lowers', note:'Feet anchored under a couch. Lower as slowly as you can, push back up with your hands. Hips locked in line with the torso \u2014 breaking at the hip ends the rep.' }
     ]},
@@ -5892,23 +5950,23 @@ ROUTINES.push(
   { id:'boss-pull', n:'Upper Pull', tag:'BOSS',
     sub:'4 items \u00b7 3 sets each \u00b7 rest 90 s',
     targets:'Lats & upper back \u00b7 grip \u00b7 shoulders overhead',
-    why:'He shows a pull-up and a dead hang in one clip and leaves it there. Built out, this is the half of the upper body a throwing athlete is usually short on: a throwing shoulder wants at least twice as much pulling as pressing and normally gets the reverse. The hang comes first because it is shoulder health as much as a warm-up, then the pull-ups while you are fresh, then the top-position hold, which is where almost everyone is weakest and the fastest way to add reps. No bar: towel rows on a door handle and backpack rows, 12 each.',
+    why:'He shows a pull-up and a dead hang in one clip and leaves it there. Built out, this is the half of the upper body a throwing athlete is usually short on: a throwing shoulder wants at least twice as much pulling as pressing and normally gets the reverse. The hang comes first because it is shoulder health as much as a warm-up, then the pull-ups while you are fresh, then the top-position hold, which is where almost everyone is weakest and the fastest way to add reps. No bar: towel rows on a door handle and backpack rows, 12 each \u2014 it is written into the pull-up\u2019s at-home note.',
     items:[
       { x:'hanging-decompression', g:'HANG FIRST', d:'3 \u00d7 40 s', note:'Relaxed grip, shoulders slightly engaged rather than fully dumped. His number is 30 s.' },
-      { x:'weighted-pullup', g:'PULL', d:'3 \u00d7 8', note:'His number is 5\u20138. Add weight in a backpack before you add reps. Can\u2019t do one yet: jump up and lower over five seconds, five times.' },
+      { x:'pullup', g:'PULL', d:'3 \u00d7 8', note:'His number is 5\u20138. Add weight in a backpack before you add reps. Can\u2019t do one yet: jump up and lower over five seconds, five times.' },
       { x:'flexed-arm-hang', d:'3 \u00d7 30 s', note:'Chin clearly over the bar, chest close to it, elbows down not shrugged.' },
-      { x:'table-row-iso', d:'3 \u00d7 12', note:'Under a sturdy table or a low bar, body straight, chest to the edge. His number is 10\u201312.' }
+      { x:'table-row-iso', d:'3 \u00d7 12', t:{ w: 40, r: 60, label: 'Rows, 12 reps' }, note:'Under a sturdy table or a low bar, body straight, chest to the edge. His number is 10\u201312. The clock gives you 40 s for the twelve.' }
     ]},
 
   { id:'boss-ankles', n:'Ankles + Groin Mini', tag:'BOSS',
-    sub:'3 items \u00b7 5\u20138 min \u00b7 tack onto any leg day',
+    sub:'4 items \u00b7 one pass \u00b7 tack onto the end of Legs A or Legs B',
     targets:'Calves & Achilles \u00b7 ankle stiffness \u00b7 adductors',
-    why:'Not his \u2014 this is the gap every soccer-style bodyweight program has, and it happens to cover two of your three weak links. Single-leg calf work off a step is the cheapest Achilles and calf insurance there is; pogos make the ankle stiffer, which is free speed; and the Copenhagen is the exercise with the best evidence base for the adductor, which is the tissue you already know is weak. Five to eight minutes on the end of Legs A or Legs B, twice a week.',
+    why:'Not his \u2014 this is the gap every soccer-style bodyweight program has, and it happens to cover two of your three weak links. Single-leg calf work off a step is the cheapest Achilles and calf insurance there is; pogos make the ankle stiffer, which is free speed; and the Copenhagen is the exercise with the best evidence base for the adductor, which is the tissue you already know is weak. It is a finisher, so it is one pass rather than sets: every number is above his, and the whole thing still fits on the end of a leg day.',
     items:[
-      { x:'stair-calf-iso', d:'2 \u00d7 30 s per side', t:{ r: 30 }, note:'Front of the foot on a step, heel dropped, hold at the top. Bent knee hits the soleus, which is the one that matters for repeat sprinting.' },
-      { x:'calf-raise-loaded', d:'2 \u00d7 15 per side, single leg, 45 s rest', note:'Off the edge of a step for full range. Slow \u2014 two seconds up, three down.' },
-      { x:'pogo-jumps', d:'2 \u00d7 20 contacts, 45 s rest', note:'Small, stiff-ankle bounces. Ground contact is the metric, not height.' },
-      { x:'copenhagen-hold', d:'3 \u00d7 25 s per side', t:{ r: 30 }, note:'Short lever first: top knee on the bench, not the ankle. This follows the ten-week ladder under Program \u2014 do not jump ahead of it.' }
+      { x:'stair-calf-iso', d:'45 s per side', t:{ r: 10 }, note:'Front of the foot on a step, rise up and hold at the top. His number is 30 s. Bent knee hits the soleus, the one that matters for repeat sprinting.' },
+      { x:'sl-calf-raise', d:'20 per side, slow', note:'Straight off the hold, same step. Two seconds up, three down, heel below the step. His number is 15.' },
+      { x:'pogo-jumps', d:'30 contacts', note:'Small, stiff-ankle bounces. Ground contact is the metric, not height. His number is 20.' },
+      { x:'copenhagen-hold', d:'2 \u00d7 25 s per side', t:{ r: 30 }, note:'Short lever: top knee on the bench, not the ankle. His number is 20\u201330 s once. The ten-week ladder under Program is the progression \u2014 do not jump ahead of it here.' }
     ]}
 );
 
@@ -5931,23 +5989,40 @@ const BOSS_GROUPS = [
    and the rule underneath it: two easy sessions in a row is the signal to move up.
    One hard session is not a reason to move down. */
 const BOSS_LADDER = [
-  { w: '1\u20132', rounds: '2', holds: '30 s', reps: 'his numbers', note: 'Learn the positions at his floor. Nothing above it, even if it feels easy.' },
-  { w: '3\u20134', rounds: '3', holds: '30\u201340 s', reps: 'his numbers', note: 'His actual prescription: 3 rounds, each workout twice a week.' },
-  { w: '5\u20136', rounds: '3', holds: '45 s', reps: '+25%', note: '10 becomes 12\u201313, 30 becomes 38, 50 becomes 60. This is where the doses in the blocks above sit.' },
+  { w: '1\u20132', rounds: '2', holds: '30 s', reps: 'his numbers', note: 'For someone new to the format or back from a layoff \u2014 learn the positions at his floor. Not where you start.' },
+  { w: '3\u20134', rounds: '3', holds: '30 s', reps: 'his numbers', note: 'His actual prescription: 3 rounds, each workout twice a week. The minimum every block here is held to.' },
+  { w: '5\u20136', rounds: '3', holds: '40\u201345 s', reps: '+20\u201325%', note: 'Where the blocks above are dosed, and where you start: 10 becomes 12, 30 becomes 38. The one exception is the single-leg hops, held at his three a side on purpose.' },
   { w: '7\u20138', rounds: '3', holds: '45 s', reps: 'hold the reps', note: 'Add load instead: backpack on the split squats and bridges, single-leg bridge holds, a dumbbell on the tuck-ups, feet up for push-ups, weight on the pull-ups.' },
-  { w: '9+', rounds: '3 loaded, or 4', holds: '60 s', reps: 'hold the reps', note: 'Weight and tempo from here, not reps. Reps past about 20 buy endurance you already have from playing.' }
+  { w: '9+', rounds: '3\u20134', holds: '60 s', reps: 'hold the reps', note: 'Three loaded sets, or a fourth. Weight and tempo from here, not reps \u2014 reps past about 20 buy endurance you already have from playing.' }
 ];
 
-/* His week, with the running removed. Read the caveat: this is a second program, and
-   it only works if it does not land on top of the one you are already running. */
+/* His week, with the running removed. Each day names its blocks, so the app can work out
+   how long the day actually takes and run it as one session \u2014 his ~30 minutes was a
+   circuit at his numbers, and these are not. The warm-up is added to every training day,
+   because he says to always do it first. */
 const BOSS_WEEK = [
-  { d: 'Mon', do: 'Legs A + Ankles/Groin mini + Core', mins: '~30 min' },
-  { d: 'Tue', do: 'Upper Push + Upper Pull', mins: '~25 min' },
-  { d: 'Wed', do: 'Hamstrings + Speed, or rest', mins: '~15 min' },
-  { d: 'Thu', do: 'Legs B + Ankles/Groin mini + Core', mins: '~30 min' },
-  { d: 'Fri', do: 'Upper Push + Upper Pull', mins: '~25 min' },
-  { d: 'Sat', do: 'Hamstrings + Speed, or recovery', mins: '~15 min' },
-  { d: 'Sun', do: 'Rest', mins: '\u2014' }
+  { d: 'Mon', ids: ['boss-legs-a', 'boss-ankles', 'boss-core'] },
+  { d: 'Tue', ids: ['boss-push', 'boss-pull'] },
+  { d: 'Wed', ids: ['boss-hams'], note: 'or rest' },
+  { d: 'Thu', ids: ['boss-legs-b', 'boss-ankles', 'boss-core'] },
+  { d: 'Fri', ids: ['boss-push', 'boss-pull'] },
+  { d: 'Sat', ids: ['boss-hams'], note: 'optional, or a recovery day' },
+  { d: 'Sun', ids: [], note: 'Rest' }
+];
+
+/* Off the floor: the rest of his handoff. His rules are marked as his; anything added is
+   marked as added, and where the app already has a view (fuelling, cold water) it defers to it. */
+const BOSS_OFF = [
+  { h: 'Eat clean, no added sugar', his: true,
+    t: 'His one diet rule, and a sensible default: candy and sweetened drinks out, real food in. It is a floor, not a plan \u2014 at 150 lb and training this much, the more likely problem is eating too little, not too much sugar.' },
+  { h: 'Protein at every meal', his: false,
+    t: 'About 0.7\u20131 g per pound a day, which for you is roughly 105\u2013150 g. That matches Fuelling under Method, which has the meal structure behind it.' },
+  { h: 'Sleep 7\u20139 hours', his: false,
+    t: 'Added. The adaptation from every workout on this page happens while you sleep, and nothing else on the list is as cheap.' },
+  { h: 'Sauna, then a cold tub', his: true,
+    t: 'His routine: sauna above 172\u00b0F for 20 minutes, 10 minutes of mental work while cooling down, then a 6-minute cold tub. Optional \u2014 start shorter and hydrate. One real conflict: cold water in the hours after a strength session blunts the strength and muscle you did the session for. Keep the cold tub off the Boss days, or save it for tournament weekends, where the Recovery essay says it genuinely helps.' },
+  { h: 'His five rules', his: true,
+    t: 'Never talk about yourself. Smile as much as you can. No phone for the first hour of the day. No phone for the last hour. Confident posture.' }
 ];
 
 
@@ -7422,7 +7497,7 @@ function viewProgram() {
       n: 'Boss Your Game', blurb: 'Alex\u2019s short circuits: hold first, reps second.',
       body: () => el('div', { class: 'stack stack-xl' }, [
         sec('Boss Your Game',
-          'Nine short workouts audited off Alex\u2019s page, in his format: an isometric hold, then dynamic reps of the same joint, four to six items. His running work is deliberately left out, and every row carries his number \u2014 where the dose here is higher, his is the floor rather than the target. One structural difference: he runs each workout as a circuit, all the items and then repeat. Here each row carries its sets, so a block is the whole workout end to end and the time estimate on the card is real. Circuit it instead if you prefer \u2014 the Start button on each row lets you walk the list and go again \u2014 the week\u2019s work is identical either way. It also explains the clock: as sets with a real rest between each one these run 15 to 26 minutes rather than his ten to twenty, because in a circuit the rests overlap.',
+          'Short workouts audited off Alex\u2019s page, in his format: an isometric hold, then dynamic reps of the same joint, four to six items. His running work is deliberately left out, and every row carries his number \u2014 where the dose here is higher, his is the floor rather than the target. One structural difference: he runs each workout as a circuit, all the items and then repeat. Here each row carries its sets, so a block is the whole workout end to end and the time on the card is real. Circuit it instead if you prefer \u2014 the Start button on each row lets you walk the list and go again \u2014 the work is identical either way. It also explains the clock: as sets with a real rest between each one, the workouts here run ' + bossRange() + ' rather than his ten to twenty, because in a circuit the rests overlap.',
           el('div', { class: 'stack stack-xl' }, BOSS_GROUPS.map(g =>
             sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))),
         sec('How it gets harder',
@@ -7439,15 +7514,33 @@ function viewProgram() {
             ])))
           ])])),
         sec('His week, and how it fits yours',
-          'This is a second program. It only works if it does not land on top of the one you are already running: in season keep it to one round of each workout a week, put Legs B and Hamstrings + Speed on days that are not next to a game, and never stack Hamstrings + Speed on the same day as the plyometric ladder. Everything here is additive to the Daily work, not a replacement for it.',
+          'His schedule, warm-up included. The times come from the blocks above, so they run longer than his thirty minutes. Leg days too long? Move the Core Circuit to Wednesday and Saturday rather than cutting leg work. In season: each workout once a week, Legs B and Hamstrings + Speed never the day before or after a game, and never on the same day as the plyometric ladder.',
           el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
-            el('thead', null, [el('tr', null, ['Day', 'Workout', 'Time'].map(h => el('th', null, h)))]),
-            el('tbody', null, BOSS_WEEK.map(x => el('tr', null, [
-              el('td', null, x.d),
-              el('td', null, x.do),
-              el('td', { class: 'n' }, x.mins)
-            ])))
-          ])]))
+            el('thead', null, [el('tr', null, ['Day', 'Workout', 'Time', ''].map(h => el('th', null, h)))]),
+            el('tbody', null, BOSS_WEEK.map(x => {
+              const blocks = bossDay(x);
+              const steps = blocks.flatMap(r => stepsFromItems(r.items, r.n));
+              const names = x.ids.map(byId).filter(Boolean).map(r => r.n).join(' + ');
+              return el('tr', null, [
+                el('td', null, x.d),
+                el('td', null, [names || x.note, names && x.note ? el('span', { class: 'muted' }, ' \u00b7 ' + x.note) : null]),
+                el('td', { class: 'n', style: 'white-space:nowrap' }, steps.length ? '\u2248 ' + fmtMins(runSeconds(steps)) : '\u2014'),
+                el('td', null, steps.length ? el('button', {
+                  class: 'btn btn-sm', 'aria-label': 'Run ' + x.d + ' as one session',
+                  onclick: () => RUN.open(steps, new Date(), 0)
+                }, [ico(ICONS.play, 'nav-ico'), 'Run']) : null)
+              ]);
+            }))
+          ])])),
+        sec('Off the floor',
+          'The rest of his handoff. What is his is marked as his; the rest was added, and where the app already has a view it defers to it.',
+          el('div', { class: 'stack stack-sm' }, BOSS_OFF.map(x => el('div', { class: 'card-flat' }, [
+            el('div', { class: 'row', style: 'gap:.45rem' }, [
+              el('h3', { style: 'font-size:var(--t-sm);font-weight:600' }, x.h),
+              el('span', { class: 'chip' + (x.his ? ' solid' : '') }, x.his ? 'His' : 'Added')
+            ]),
+            el('p', { class: 'small muted', style: 'margin-top:.3rem;max-width:68ch' }, x.t)
+          ]))))
       ])
     },
     trail: {
@@ -7593,6 +7686,18 @@ const COVERT = {
   private:   { l: 'Needs a moment', d: 'Fine alone; not in an open-plan office.', k: 'hard' }
 };
 const BUILD = { keys: new Set(), q: '', cat: 'all' };
+
+// A Boss day is the warm-up and then its blocks, in order: his rule is to always warm up first.
+function bossDay(x) {
+  if (!x.ids.length) return [];
+  return ['boss-warmup'].concat(x.ids).map(id => ROUTINES.find(r => r.id === id)).filter(Boolean);
+}
+// The shortest and longest Boss workout in the current Gym/Home mode, so the prose never drifts.
+function bossRange() {
+  const mins = ROUTINES.filter(r => r.tag === 'BOSS' && r.id !== 'boss-warmup')
+    .map(r => Math.round(runSeconds(stepsFromItems(r.items, r.n)) / 60));
+  return Math.min.apply(null, mins) + ' to ' + Math.max.apply(null, mins) + ' minutes';
+}
 
 const RSEL = {};
 const rsel = id => RSEL[id] || (RSEL[id] = new Set());

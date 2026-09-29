@@ -63,8 +63,16 @@ d.ROUTINES.filter(r => r.tag === 'BOSS').forEach(r =>
 // the ladder and the week are rendered as tables: every column has to be there
 d.BOSS_LADDER.forEach((x, i) => ['w','rounds','holds','reps','note'].forEach(f =>
   ck(typeof x[f] === 'string' && x[f].length, 'BOSS_LADDER[' + i + '].' + f + ' should be a non-empty string')));
-d.BOSS_WEEK.forEach((x, i) => ['d','do','mins'].forEach(f =>
-  ck(typeof x[f] === 'string' && x[f].length, 'BOSS_WEEK[' + i + '].' + f + ' should be a non-empty string')));
+// each day names real Boss blocks, so its time is computed rather than written down
+d.BOSS_WEEK.forEach((x, i) => {
+  ck(typeof x.d === 'string' && x.d.length, 'BOSS_WEEK[' + i + '] needs a day');
+  ck(Array.isArray(x.ids), 'BOSS_WEEK[' + i + '].ids should be a list of routine ids');
+  (x.ids || []).forEach(id => ck(byId.has(id) && d.ROUTINES.find(r => r.id === id).tag === 'BOSS',
+    'BOSS_WEEK ' + x.d + ' names ' + id + ', which is not a Boss block'));
+  ck((x.ids || []).length || typeof x.note === 'string', 'BOSS_WEEK ' + x.d + ' has no blocks and no note');
+});
+d.BOSS_OFF.forEach((x, i) => ck(typeof x.h === 'string' && typeof x.t === 'string' && typeof x.his === 'boolean',
+  'BOSS_OFF[' + i + '] needs a heading, text, and whether it is his'));
 ck(d.BOSS_WEEK.length === 7, 'the Boss week needs seven days, got ' + d.BOSS_WEEK.length);
 d.BODY_GROUPS.forEach(g => {
   ck(typeof g.n === 'string' && typeof g.sub === 'string', 'body group needs a name and a subtitle');
@@ -95,6 +103,14 @@ d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS'].includes(r.tag)).forEach(r => {
     const words = term.replace(/&/g, ' ').split(' ').filter(w => w.length > 2 && !['and','the'].includes(w));
     ck(words.some(w => pool.includes(w.replace(/s$/, ''))), r.id + ' summary claims "' + term + '" but no item targets it');
   });
+});
+
+// A gym->home swap replaces the exercise, so two gym items that share a home stand-in turn one
+// block into the same exercise twice. Boss and Trail blocks are built for home and must never do it.
+d.ROUTINES.filter(r => ['BOSS', 'TRAIL'].includes(r.tag)).forEach(r => {
+  const xs = r.items.map(i => d.HOME_SUB[i.x] ? d.HOME_SUB[i.x].x : i.x);
+  const dup = [...new Set(xs.filter((x, i) => xs.indexOf(x) !== i))];
+  ck(!dup.length, r.id + ' runs ' + dup.join(', ') + ' twice in Home mode');
 });
 
 // routine ids unique

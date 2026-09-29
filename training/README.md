@@ -14,7 +14,7 @@ fonts load.
 |---|---|
 | **Today** | Resolves the date against the annual plan and renders that session — every block, dose and coaching note — plus a readiness check-in that auto-regulates the day, the Daily Armor, and a notes field. |
 | **Program** | This week's microcycle with CNS-cost meters, the periodised year against the UFA calendar, standalone weak-link blocks, short sessions, and the 10-week Copenhagen ladder. |
-| **Library** | 175 exercises, filterable to the 151 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
+| **Library** | 178 exercises, filterable to the 154 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
 | **Tests** | 22-test battery on a 4-week cycle, with trend charts, targets and protocols. Hip internal rotation and the FADIR score lead it. |
 | **Method** | Fourteen essays: the training model, isometric taxonomy, an honest read on fascia, training without a gym, injury dossiers for the hip labrum / adductor / hamstring, throwing-shoulder load management, fuelling, the UFA game-model numbers, and sources. |
 
@@ -266,19 +266,21 @@ its own items' targets.
 A hub tile holding nine short workouts audited off Alex's Facebook page (a soccer performance
 coach), in his own format: an isometric hold, then dynamic reps of the same joint, four to six
 items. His running and field-session work is deliberately left out — the ask was the little
-workouts. Eighteen new exercises came in with it, from line taps to the bear plank.
+workouts. Twenty-one new exercises came in with it, from line taps to the bear plank.
 
 **His number is on every row it was raised from.** He coaches a general audience, so 30-second
 holds and 10 push-ups are a floor rather than a target for a professional. Where the dose here is
 higher, the row says what his was: `3 × 40 s per side` with *His number is 30 s per leg — that is
 the floor*. Where his number is already right — single-leg hops at three a side, split squats at
-ten — it is left alone and the note says so.
+ten — it is left alone and the note says so. Nothing is below his number: every row is held to
+his three-round minimum (two for the core, which is his own 2–3).
 
 **Sets, not rounds, and the clock says why.** He runs each workout as a circuit: all the items,
 then repeat, three times. Every row here carries its sets instead, because that is how the rest of
 the app doses a block and it makes the card's estimate real. The section says this outright,
-including the consequence — as straight sets with a real rest between each one these run 15 to 26
-minutes rather than his 10 to 20, because in a circuit the rests overlap. Either format is fine;
+including the consequence — as straight sets with a real rest between each one these run longer
+than his 10 to 20 minutes, because in a circuit the rests overlap. That range is computed from the
+blocks (`bossRange()`), not written into the prose, so it cannot drift. Either format is fine;
 the Start button on each row is there for anyone who wants to walk the list and go again.
 
 **Two core cards, because of the hip.** Bicycles, Russian twists and seated tuck-ups are repeated
@@ -293,7 +295,9 @@ section carries a five-rung ladder (`BOSS_LADDER`) with the rule underneath it: 
 in a row is the signal to move up a rung; one hard session is not a reason to move down.* Weeks 1–2
 are two sets at his floor, 3–4 his actual prescription, 5–6 holds at 45 s and reps up about 25%,
 7–8 load rather than reps, 9+ weight and tempo only. His weekly schedule is there too
-(`BOSS_WEEK`), with the caveat it needs: this is a second program, and in season it wants one round
+(`BOSS_WEEK`). Each day names its blocks rather than a time, so the table works out the real
+length — the warm-up plus the blocks, 30 to 56 minutes rather than the handoff's ~30 — and every
+day has a **Run** button that plays it as one session. And it carries the caveat it needs: this is a second program, and in season it wants one round
 of each workout rather than two, with Legs B and Hamstrings + Speed kept off the days either side
 of a game.
 
@@ -301,6 +305,19 @@ Two other honest flags came out of the audit. Bench dips put the front of the sh
 end-range extension, so the row says to swap them for close-grip push-ups if it pinches. And the
 Nordic curl is in the hamstring circuit as an addition, not an audit finding — it is the single
 best-evidenced hamstring-injury intervention there is and his page does not have it.
+
+**It survives Home mode.** A gym→home swap replaces the exercise *and* its dose, so the first
+version quietly broke at home: the pull-up (a weighted-chin-up entry) swapped to table rows, leaving
+rows twice and no pull-ups, and the loaded calf raise swapped to a duplicate of the calf hold. Both
+now use bodyweight entries of their own (`pullup`, `sl-calf-raise`) that have nothing to swap, and
+the pull-up's at-home note carries his no-bar option. The one swap that remains is the one intended:
+the rear-foot split squat becomes the couch version.
+
+**Off the floor.** The rest of the handoff — no added sugar, protein, sleep, his sauna-and-cold-tub
+routine and his five rules — sits in a card at the bottom, each marked *His* or *Added*. One real
+conflict is spelled out rather than smoothed over: cold water in the hours after a strength session
+blunts the adaptation the session was for, which is the Recovery essay's position too, so the cold
+tub belongs off the Boss days.
 
 Trail and Boss blocks are held to the warm-up standard by `check-data.js`: every row carries a
 `targets` label, every block carries a short summary, and every term in that summary has to appear
