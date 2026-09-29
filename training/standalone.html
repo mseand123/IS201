@@ -1720,7 +1720,7 @@ const EX = {
 },
 'wall-sit-iso': {
   n: 'Wall Sit', cat: 'iso', tags: ['iso','legs','simple'],
-  targets: 'Quads \u00b7 knees, for the way back down',
+  targets: 'Quads \u00b7 knees \u00b7 patellar tendon',
   why: 'The most accessible yielding isometric there is. Excellent as an accumulation tool and as an honest measure of quadriceps endurance under fatigue.',
   setup: 'Back flat against a wall, thighs parallel to the floor, knees at 90°, feet hip width.',
   steps: ['Slide down until the thighs are parallel.','Weight through the heels, back flat against the wall.','Hold. Breathe normally — no breath-holding.','Single-leg version: extend one leg, hold half the time.'],
@@ -6611,6 +6611,27 @@ Object.assign(EX, {
 }
 });
 
+Object.assign(EX, {
+'sl-ham-bridge': {
+  n: 'Single-Leg Hamstring Bridge', cat: 'strength', tags: ['hamstring','glute','home','prevention'], cost: 2, repSec: 3.5,
+  targets: 'Hamstrings \u00b7 glutes \u00b7 one side at a time',
+  why: 'The single-leg bridge in its hamstring version: heel up on the couch with the knee only slightly bent, so the hamstring has to lift the hips rather than the glute doing it alone. It doubles as a test. In professional footballers, the players who scored lower on this bridge were more likely to strain a hamstring \u2014 which makes it one of the most useful single exercises for a hamstring with your history, and the number of clean reps on each side is worth tracking.',
+  setup: 'On your back, one heel on the edge of the couch or bed, knee bent about 20 degrees. The other leg straight up or held off to the side. Arms across the chest.',
+  steps: [
+    'Drive the heel down into the couch and lift the hips until they are level with the knee.',
+    'Lower until the hips just touch the floor, then go again.',
+    'Keep the hips level \u2014 the lifted side should not drop.',
+    'All reps on one leg, then the other. Count the clean ones on each side.'
+  ],
+  cues: ['Heel down, hips up.','Knee only slightly bent \u2014 that is what makes it a hamstring exercise.'],
+  faults: ['Bending the knee a lot, which turns it back into a glute bridge.','Hips twisting toward the free leg.','Pushing through the toes.'],
+  dose: '3 \u00d7 10 per side',
+  prog: 'A two-second pause at the top, a straighter knee, or more reps until the sides match.',
+  regr: 'Both heels on the couch, or a lower surface.',
+  home: 'A couch, a bed or a chair. The test version is reps to failure, heel on a knee-height box.'
+}
+});
+
 /* -----------------------------------------------------------
    THE HOLY GRAIL \u2014 the short answer to "there is too much in here".
    The best two for each part of the body, chosen for evidence and for
@@ -6634,16 +6655,18 @@ ROUTINES.push(
 
   { id:'grail-list', n:'The Holy Grail', tag:'GRAIL', open: true,
     sub:'The best for each part of your body \u00b7 at home, no weights \u00b7 tick any and run them',
-    targets:'Hamstrings \u00b7 glutes \u00b7 groin \u00b7 quads \u00b7 chest \u00b7 back \u00b7 trunk \u00b7 landing',
+    targets:'Hamstrings \u00b7 glutes \u00b7 groin \u00b7 quads \u00b7 calves \u00b7 chest \u00b7 back \u00b7 trunk \u00b7 landing',
     why:'The best for each part of your body \u2014 two for most, three for the hamstrings and hips because your history earns them the extra one \u2014 chosen for the evidence behind them, out of everything in this app. All of it is done at home with no weights: a floor, a couch or bed, a table and your pull-up bar. Tick the ones you want and hit Run \u2014 or tick some here and some elsewhere, and the bar at the bottom runs them together. Anything rated Light or Moderate is fine most days. The Taxing ones, the Nordic and the hops, are twice a week and never the day before a game.',
     items:[
       { x:'nordic-curl', g:'HAMSTRINGS', d:'3 \u00d7 5, slow', note:'The best-evidenced hamstring exercise there is: roughly half the injuries. Twice a week.' },
-      { x:'ham-iso-long', d:'3 \u00d7 30 s per side', note:'Strength at length, fine every day.' },
       { x:'bridge-walkout', d:'3 \u00d7 6', note:'Hips up, walk the heels out and back. The best bodyweight hamstring move after the Nordic.' },
+      { x:'sl-ham-bridge', d:'3 \u00d7 10 per side', note:'Heel on the couch, one leg, hips up. Also a test: count the clean reps each side. The long-length hold is in the Daily Six.' },
       { x:'sl-hip-thrust', g:'HIPS & GROIN', d:'3 \u00d7 12 per side', note:'Shoulders on the couch, one leg, two-second squeeze. The glutes protect the hip more than anything.' },
       { x:'copenhagen-hold', d:'3 \u00d7 20 s per side', note:'The best evidence for the groin, and your weakest link.' },
       { x:'hip-airplane', d:'2 \u00d7 5 per side, slow', note:'Rotation strength on one loaded leg \u2014 what a hip needs to plant and cut. As far as you can control.' },
       { x:'backpack-rfess', g:'LEGS', d:'3 \u00d7 10 per side', note:'Back foot on the bed, bodyweight. The best single-leg strength builder there is.' },
+      { x:'wall-sit-iso', d:'3 \u00d7 45 s', t:{ r: 45 }, note:'Thighs parallel, back flat on the wall. Quads and knees, and it burns honestly.' },
+      { x:'sl-calf-raise', g:'CALVES & ANKLES', d:'3 \u00d7 15 per side, 15 s rest', note:'Alternate legs, so one side rests while the other works. Off a stair, heel below the step, slow on the way down. Calf and Achilles strength \u2014 the thing pogos alone do not build.' },
       { x:'pogo-jumps', d:'3 \u00d7 20 contacts', note:'Springy, stiff ankles \u2014 free speed. Heels never touch.' },
       { x:'pushup', g:'PUSH \u00b7 chest, shoulders, arms', d:'3 \u00d7 15\u201320', note:'On the pull-up bar on the floor for extra depth.' },
       { x:'pike-pushup', d:'3 \u00d7 10', note:'Shoulders overhead. Nothing else here covers it.' },

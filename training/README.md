@@ -14,7 +14,7 @@ fonts load.
 |---|---|
 | **Today** | Resolves the date against the annual plan and renders that session — every block, dose and coaching note — plus a readiness check-in that auto-regulates the day, the Daily Armor, and a notes field. |
 | **Program** | This week's microcycle with CNS-cost meters, the periodised year against the UFA calendar, standalone weak-link blocks, short sessions, and the 10-week Copenhagen ladder. |
-| **Library** | 199 exercises, filterable to the 174 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
+| **Library** | 200 exercises, filterable to the 175 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
 | **Tests** | 22-test battery on a 4-week cycle, with trend charts, targets and protocols. Hip internal rotation and the FADIR score lead it. |
 | **Method** | Fourteen essays: the training model, isometric taxonomy, an honest read on fascia, training without a gym, injury dossiers for the hip labrum / adductor / hamstring, throwing-shoulder load management, fuelling, the UFA game-model numbers, and sources. |
 
@@ -282,13 +282,20 @@ part, **all at home with no weights**: a floor, a couch or bed, a table and a pu
 
 | part | picks |
 |---|---|
-| Hamstrings | Nordic (feet under the couch) · long-length hold · glute bridge walkout |
+| Hamstrings | Nordic (feet under the couch) · glute bridge walkout · single-leg hamstring bridge |
 | Hips & groin | single-leg hip thrust off the couch · Copenhagen off the bed · hip airplane |
-| Legs | couch-elevated split squat, bodyweight · pogo hops |
+| Legs | couch-elevated split squat, bodyweight · wall sit |
+| Calves & ankles | single-leg calf raise off a step · pogo hops |
 | Push | push-ups · pike push-ups |
 | Pull | pull-ups · table rows |
 | Core | dead bug · side plank |
 | Movement & landing | deep squat hold · GOATA's forefoot squat hold · single-leg hop and stick |
+
+The **single-leg hamstring bridge** (heel on the couch, knee only slightly bent) took the long-length
+hold's slot — the hold is still done daily in the Daily Six — and it doubles as a test: lower scores
+on it went with more hamstring strains in professional footballers. A wall sit joined Legs, and a
+single-leg calf raise started a Calves & Ankles group with the pogos, because pogos build stiffness
+but not calf and Achilles strength.
 
 Two new exercises came with the no-weights rule: the **glute bridge walkout** (bridge up, walk the
 heels out and back — the best bodyweight hamstring move after the Nordic) and the **single-leg hip
@@ -298,7 +305,7 @@ default rather than dumbbells. `check-data.js` fails any Holy Grail item that ha
 Gym and Home mode always show the same list.
 
 It is a *menu*: a routine marked `open` starts with its list showing, and its Run button waits for a
-tick — "Tick what you want" — rather than offering to run all seventeen. Picks here join picks from
+tick — "Tick what you want" — rather than offering to run all nineteen. Picks here join picks from
 any other card in the queue bar. `check-data.js` keeps it short: one to three per group, and a Daily
 Six of exactly six.
 
