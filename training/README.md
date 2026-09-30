@@ -14,7 +14,7 @@ fonts load.
 |---|---|
 | **Today** | Resolves the date against the annual plan and renders that session — every block, dose and coaching note — plus a readiness check-in that auto-regulates the day, the Daily Armor, and a notes field. |
 | **Train** | Six pages, a few complete workouts on each: **The Holy Grail** (the Daily Six, the best-of list, the Room Circuit), **Legs**, **Upper & Core**, **Fascia & Flow**, **Stretch** and **Frisbee**. |
-| **Library** | 140 exercises, filterable to the 117 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
+| **Library** | 141 exercises, filterable to the 118 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
 | **More** | Your plan — this week's microcycle with CNS-cost meters, the periodised year against the UFA calendar, and the 10-week Copenhagen ladder — then the 22-test battery on a 4-week cycle, fourteen essays (the training model, isometrics, an honest read on fascia, training without a gym, injury dossiers for the hip labrum / adductor / hamstring, the throwing shoulder, fuelling, the UFA numbers, sources), and backup. |
 
 ## The lean cut
@@ -251,7 +251,7 @@ or if a page grows past eight workouts.
 | page | workouts (minutes, at home) |
 |---|---|
 | The Holy Grail | The Daily Six (14) · the Holy Grail list (pick any) · the Room Circuit (21) |
-| Legs | Legs · Full (45) · Legs · Quick (16) · Hip & Groin Insurance (16) · Knee & Ankle Insurance (16) · Hamstring Insurance (17) · Hamstring Strength (25) · Plyometric Ladder (36) |
+| Legs | Legs · Full (45) · Legs · Quick (16) · Hip & Groin Insurance (16) · Knee & Ankle Insurance (16) · Hamstring Insurance (17) · Hamstring Strength (26) · Plyometric Ladder (36) |
 | Upper & Core | Upper Body · Quick (16) · Chest, Shoulders & Push (29) · Back & Pull (22) · Core & Trunk (18) |
 | Fascia & Flow | Fascia Flow (10) · Ball Work · Legs & Hips (12) · Groundwork (6) |
 | Stretch | Range Block (18) · Tight Hamstrings, Hips, Hip Flexors, Groin, Calves & Ankles, Back & Shoulders (8–24) |
@@ -261,9 +261,10 @@ or if a page grows past eight workouts.
 **Upper Body · Quick** is five moves for three rounds with a
 pull-up bar and the floor — two pushes, two pulls and a trunk move.
 
-**Hamstring Strength** is the step after Hamstring Insurance: the Nordic for lengthening strength
-through the knee, and the Askling Diver, single-leg bridge and walkout for hip extension with the knee
-nearly straight — the job the biceps femoris does, and where it strains. Insurance daily while the
+**Hamstring Strength** is the step after Hamstring Insurance: the Nordic and an exercise-ball leg curl
+for strength through the knee, and the Askling Diver and single-leg bridge for hip extension with the
+knee nearly straight — the job the biceps femoris does, and where it strains. Knee-flexion work leans
+on the semitendinosus and hip-extension work on the biceps femoris (Bourne 2017), so it keeps both. Insurance daily while the
 hamstring is cranky; Strength twice a week once it is calm; full-speed sprinting again once the
 single-leg bridge reps are within about 10% side to side.
 

@@ -4988,12 +4988,12 @@ ROUTINES.push(
   { id:'ham-strength', n:'Hamstring Strength', tag:'BODY',
     sub:'Twice a week once it is calm · the biceps femoris, from both ends',
     targets:'Hamstrings · biceps femoris · glutes',
-    why:'The step after Hamstring Insurance. The biceps femoris — the hamstring that strains in sprinters, and yours — needs two kinds of strength: lengthening strength through the knee, which is the Nordic, and hip-extension strength with the knee nearly straight, which is the Diver and the single-leg bridge. Research suggests the Nordic builds the other hamstrings more and hip-extension work builds the biceps femoris more, which is why both are here. Coming back from a flare-up: Hamstring Insurance daily until jogging and a full-effort long hold are pain-free, then this twice a week, starting the Nordic at 2 × 4 and building to 3 × 6. Up to about 3/10 during is fine if it is gone by the next morning; worse the next morning means drop back for a few days. Go back to full-speed sprinting when your single-leg bridge reps are within about 10% side to side.',
+    why:'The step after Hamstring Insurance. The biceps femoris — the hamstring that strains in sprinters, and yours — needs two kinds of strength: strength through the knee, which is the Nordic and the ball curl, and hip-extension strength with the knee nearly straight, which is the Diver and the single-leg bridge. Research suggests the Nordic builds the other hamstrings more and hip-extension work builds the biceps femoris more, which is why both are here. Coming back from a flare-up: Hamstring Insurance daily until jogging and a full-effort long hold are pain-free, then this twice a week, starting the Nordic at 2 × 4 and building to 3 × 6, and keeping the ball curl on two legs until 3 × 12 is easy. Up to about 3/10 during is fine if it is gone by the next morning; worse the next morning means drop back for a few days. Go back to full-speed sprinting when your single-leg bridge reps are within about 10% side to side.',
     items:[
       { x:'nordic-curl', g:'LENGTHENING · through the knee', d:'3 × 5, slow', note:'Coming back from a flare-up: 2 × 4, then build. Hips locked in line with the trunk.' },
       { x:'askling-diver', g:'HIP EXTENSION · the biceps femoris end', d:'3 × 6 per side', note:'A single-leg hinge, arms reaching forward. Slow and controlled.' },
       { x:'sl-ham-bridge', d:'3 × 10 per side', note:'Count the clean reps each side — this is also your readiness test.' },
-      { x:'bridge-walkout', d:'3 × 6', note:'Hips up the whole time, walk the heels out and back.' },
+      { x:'ball-leg-curl', d:'3 × 10, 3 s out', note:'Hips up the whole set. When 3 × 12 is easy, roll in with two legs and out with one.' },
       { x:'ham-iso-long', g:'FINISH · strength at length', d:'2 × 30 s per side', t:{ r: 20 } }
     ]},
 
@@ -5036,6 +5036,25 @@ ROUTINES.push(
    built from the prevention programmes elite sport actually uses.
    ----------------------------------------------------------- */
 Object.assign(EX, {
+'ball-leg-curl': {
+  n: 'Exercise Ball Hamstring Curl', cat: 'strength', tags: ['hamstring','glute','eccentric','home','prevention'],
+  cost: 2, repSec: 5,
+  targets: 'Hamstrings through the knee \u00b7 glutes holding the bridge',
+  why: 'A leg curl you can do at home. The hips stay up the whole set, so the hamstrings bend the knee while the glutes hold the hip straight, and the slow roll back out trains the lengthening half \u2014 the half that protects a hamstring. Exercises that bend the knee, like the Nordic, lean on the semitendinosus; hip-extension moves lean more on the biceps femoris (Bourne 2017). This one bends the knee with the hip held straight, so it sits with the Nordic \u2014 which is why your hamstring work keeps both kinds. It scales from two legs to one, and to a slow one-leg lowering, so it is also the step between the bridges and heavier Nordics. The ball adds a little balance work for the hips and trunk for free.',
+  setup: 'On your back, heels and lower calves on top of an exercise ball, arms out wide on the floor, palms down.',
+  steps: [
+    'Squeeze the glutes and lift the hips until you are a straight line from shoulders to heels.',
+    'Keep the hips up and pull the heels in, rolling the ball toward you until the knees are bent to about 90\u00b0.',
+    'Squeeze for a second, then roll it back out slowly \u2014 about three seconds \u2014 until the legs are straight again.',
+    'The hips stay up for the whole set. Lower them only when the set is done.'
+  ],
+  cues: ['Hips high the whole time \u2014 the moment they drop, the hamstring unloads.','Pull with the heels, toes pointing up.','Slow on the way out. That is the part doing the protecting.'],
+  faults: ['The hips sagging as the ball rolls out.','Arching the low back to fake hip height.','Letting the ball roll out fast.'],
+  dose: '3 \u00d7 8\u201312, 3 s out.',
+  prog: 'Roll in with two legs and out with one, slowly; then one leg for the whole rep; then a two-second pause with the heels in.',
+  regr: 'Hips down to the floor between reps, or a shorter range.',
+  home: 'An exercise ball, 55\u201365 cm. No ball: the Slider Leg Curl, with a towel on a smooth floor, is the same exercise.'
+},
 'balance-progression': {
   n: 'Single-Leg Balance Progression', cat: 'armor', tags: ['ankle','knee','proprioception','prevention','home'],
   targets: 'Ankle & hip control \u00b7 single-leg balance',
