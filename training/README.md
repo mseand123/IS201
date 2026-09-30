@@ -13,10 +13,33 @@ fonts load.
 | View | What it does |
 |---|---|
 | **Today** | Resolves the date against the annual plan and renders that session — every block, dose and coaching note — plus a readiness check-in that auto-regulates the day, the Daily Armor, and a notes field. |
-| **Program** | Grouped by what you came to do. **Train**: the Holy Grail, Legs, Upper Body, Core, the Room Circuit, elastic work and short sessions. **Play & recover**: Frisbee, Hiking, Stretching & range. **Programs**: Boss Your Game and GOATA. **Your plan**: this week's microcycle with CNS-cost meters, the periodised year against the UFA calendar, and the 10-week Copenhagen ladder. |
-| **Library** | 201 exercises, filterable to the 176 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
-| **Tests** | 22-test battery on a 4-week cycle, with trend charts, targets and protocols. Hip internal rotation and the FADIR score lead it. |
-| **Method** | Fourteen essays: the training model, isometric taxonomy, an honest read on fascia, training without a gym, injury dossiers for the hip labrum / adductor / hamstring, throwing-shoulder load management, fuelling, the UFA game-model numbers, and sources. |
+| **Train** | Six pages, a few complete workouts on each: **The Holy Grail** (the Daily Six, the best-of list, the Room Circuit), **Legs**, **Upper & Core**, **Fascia & Flow**, **Stretch** and **Frisbee**. |
+| **Library** | 138 exercises, filterable to the 115 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
+| **More** | Your plan — this week's microcycle with CNS-cost meters, the periodised year against the UFA calendar, and the 10-week Copenhagen ladder — then the 22-test battery on a 4-week cycle, fourteen essays (the training model, isometrics, an honest read on fascia, training without a gym, injury dossiers for the hip labrum / adductor / hamstring, the throwing shoulder, fuelling, the UFA numbers, sources), and backup. |
+
+## The lean cut
+
+The app had grown to six tabs, thirteen Program tiles, 65 workouts and 201 exercises, and the best of
+it was hard to find. It is now four tabs, six Train pages, 29 workouts and 138 exercises. What stayed
+is what gets used: the Holy Grail, complete leg and upper-body workouts at sensible lengths, the
+hamstring work, the plyometric ladder, the stretching, game day, and a new **Fascia & Flow** page.
+
+What went, and where its best parts landed:
+
+- **Boss Your Game** and **GOATA** — their best moves were already in the Holy Grail, the Room
+  Circuit and the body workouts. GOATA's floor warm-up survives as **Groundwork** on Fascia & Flow.
+- **Hiking**, the **desk sessions**, **Hotel Room**, **Elastic Primer**, the two isometric-contrast
+  blocks, and the one-area blocks (Hip, Hip Strength, Hip Flexor, Groin, Knee & Ankle, Calves/Feet &
+  Ankles, Throwing Shoulder, Upper & Trunk) — the complete workouts cover the same ground.
+- **The Daily tab** — the Daily Armor still runs with Today's session; the free wins became the
+  **Fascia Flow** workout.
+- **Tests** and the **Method** essays moved under **More**, with the week, the year, the Copenhagen
+  ladder and backup — which, until now, was only reachable from the desktop sidebar.
+- Every exercise nothing used any more — 63 of them — left the Library.
+
+Rows got lighter too. An exercise row is its name, its dose and the one note that explains the dose;
+what it targets, what it costs and the full how-to are one tap away. A card's targets line moved into
+its *About this workout* fold. Everything cut is in git history if any of it is wanted back.
 
 ## Gym / Home
 
@@ -28,7 +51,7 @@ whole Daily Armor were never gym work and are unchanged.
 
 The map lives in `HOME_SUB` in `data.js`: `gymExerciseId → { x: homeExerciseId, d: dose }`.
 Anything not in that map already works at home. The Library has a **No gym needed** filter that
-reads the same map, and the Method section has an essay on what a home track actually costs.
+reads the same map, and More → Read has an essay on what a home track actually costs.
 
 ## Guided session
 
@@ -58,13 +81,12 @@ session — every block, then the Daily Armor — one exercise at a time:
 
 ## Warm-up
 
-Three RAMP-ordered warm-ups lead the Program screen and sit on the Today quick-start row:
-**Frisbee Warm-Up** (~38 min, game day), **Warm-Up · Short** (~24 min), **Sprint-Ready · Minimum**
-(~12 min) and **Half-Time Top-Up** (~5 min). They are legs-and-hips only — getting the body ready to sprint — with no throwing
-block; the arm warm-up lives in the Upper + Throw session instead. Eleven new exercises back
+The RAMP-ordered warm-ups open Train → Frisbee, and the full one sits on the Today quick-start row:
+**Frisbee Warm-Up** (~41 min, game day), **Warm-Up · Short** (~25 min), **Sprint-Ready · Minimum**
+(~12 min) and **Half-Time Top-Up** (~5 min). The full one also warms the throwing arm (see the audit
+below); the shorter ones are legs and hips — getting the body ready to sprint. Eleven new exercises back
 them, including 8-way hips and clamshells, a short deep squat hold placed early, and graded
 build-up runs and cutting build-ups so the first hard plant of the day is deliberate.
-
 
 ### The game-day warm-up, audited
 
@@ -86,20 +108,20 @@ A full pass over the Frisbee Warm-Up as the player actually runs it, not as the 
 - **Stale hip caution**: the deep-squat notes no longer ask you to check for a pinch.
 
 The same "row says one thing, timer runs another" bug turned up in knee-to-wall in four other blocks
-(Range Block, Tight Calves, Legs, Before the Hike); each now runs one timed set per side matching
+(Range Block, Tight Calves, Legs, and a hiking block since cut); each now runs one timed set per side matching
 its row.
 
 ## Stretching
 
 There is no static stretching in any of the three warm-ups — they are dynamic, activation and
-potentiation only. The reasoning is in the Method screen under **Stretching, Static and Dynamic**:
+potentiation only. The reasoning is in More → Read, under **Stretching, Static and Dynamic**:
 the acute force loss is real but small and dose-dependent (meaningful past ~60 s per muscle,
 trivial below), and the more important point is that stretching has no demonstrated
 injury-prevention effect where strength training has a large one. Two athlete-specific cautions
 apply — passive end-range hip flexion/adduction/IR is the provocative position for a labral hip,
 and "tight hamstrings" in a sprinter is usually protective tone rather than short tissue.
 
-The static work moved to the **Range Block**: ~19 minutes of loaded and actively-held positions run
+The static work moved to the **Range Block**, the first card on Train → Stretch: ~18 minutes of loaded and actively-held positions run
 after a session or on an off day, dosed weekly (~5 min accumulated per muscle group per week) rather
 than daily. The deep squat hold is the one static position kept in the warm-up — short, loaded, early,
 and doubling as a daily read on the hip.
@@ -113,23 +135,22 @@ or a barbell), **Nordic Hamstring Curl** (ankles under a bar or a Nordic bench) 
 Adduction** (a bench), all with no indication that a backpack, a couch and a coffee table
 respectively do the job. The home notes existed on the exercises; the rows never rendered them.
 
-Rows in Home mode now show the home note whenever the exercise is not swapped, on Today, the daily
-lists and inside every picker. The Passive Hang was the one genuine hole, needing a pull-up bar with
+Rows in Home mode now show the home note when the exercise is not swapped and its set-up needs kit —
+a bench, a bar, a band — on Today and inside every picker; "Floor only" on a bodyweight row was noise. The Passive Hang was the one genuine hole, needing a pull-up bar with
 no home story at all, so it gained one (including the no-bar version: kneel, hold a table edge, lean
 back for the same traction). A test now walks every reachable exercise and fails if any of them needs
-equipment while offering neither a swap nor a note — currently 140 reachable, 0 without a home path.
+equipment while offering neither a swap nor a note — currently 125 reachable, 0 without a home path.
 
 ### Home mode lists what you will do
 
 The lists still showed the gym. A block's picker named the gym lift — **Trap Bar Deadlift** on a
 Home-mode leg page — and swapped it only once you pressed Run. Every list now goes through the same
 `resolve()` as the player, so it names the exercise you will actually do, with its own dose, note and
-how-to, and a swapped row says so: *HOME instead of Rear-Foot Elevated Split Squat*.
+how-to, and a swapped row carries a **HOME** chip on its name.
 
 Showing the real names exposed the next problem: swaps landing on something the block already did —
-five presses all becoming the same push-up. Ten `HOME_SUB` entries now point somewhere better: the
-incline press becomes feet-up push-ups, the overhead press pike push-ups, the landmine press a push-up
-bottom hold, the weighted pull-up a bodyweight one, the bottoms-up carry plank walk-ups, the hip
+five presses all becoming the same push-up. Ten `HOME_SUB` entries were pointed somewhere better: the
+incline press becomes feet-up push-ups, the overhead press pike push-ups, the weighted pull-up a bodyweight one, the bottoms-up carry plank walk-ups, the hip
 thrust the single-leg couch thrust, the loaded calf raise the single-leg one off a step, the suitcase
 carry a bear crawl, hurdle hops lateral bench hops and the post-session foam roll a ball on the glute.
 Where the general swap is right almost everywhere but wrong in one block, the item carries its own
@@ -137,7 +158,7 @@ Where the general swap is right almost everywhere but wrong in one block, the it
 Lift session becomes a backpack hinge, the Pallof press in Core & Trunk bear-plank shoulder taps.
 
 `check-data.js` fails any routine or session that Home mode gives a duplicate row (one that is already
-a duplicate in Gym mode is the block's own business). `check-ui.js` opens the Legs page in Home mode and
+a duplicate in Gym mode is the block's own business). `check-ui.js` opens the Legs and Upper & Core pages in Home mode and
 fails if a gym exercise with a swap is listed, if any row appears twice, or if the wall sits are
 missing. Its first run caught one more: the Plyometric Ladder listed Pogo Jumps twice, the second
 being the single-leg version, which is now its own exercise, **Single-Leg Pogos**.
@@ -145,33 +166,26 @@ being the single-leg version, which is now its own exercise, **Single-Leg Pogos*
 ### The hip flexor toolkit, finished
 
 The hip flexor work went strength-heavy and stretch-thin: one isometric hold, one loaded lengthener
-and the couch stretch, which is the *advanced* stretch and needs a wall. Three additions close it.
+and the couch stretch, which is the *advanced* stretch and needs a wall. Two additions close it.
 
 - **Standing Split-Stance Hip Flexor Stretch** — no floor, works in trousers on a sideline, which is
   the whole reason it exists. The right pick between games.
 - **Half-Kneeling Hip Flexor Stretch** — the standard one, and the entry point that was missing. The
   couch stretch is now correctly positioned as its progression rather than the only option.
-- **Banded Knee Drive** — every hip flexor exercise in here was isometric, which builds torque but
-  never trains the muscle to move a leg fast. Hip flexion above 90° sets knee lift and stride
-  frequency, and this is the concentric half a hold cannot reach.
 
-All three carry the same two rules, because both stretches fail the same way: tuck the pelvis first,
+Both carry the same two rules, because both stretches fail the same way: tuck the pelvis first,
 squeeze the glute on the stretched side. Skip either and you are stretching your lumbar spine. The
-three stretches are grouped easiest-to-hardest in a new **Tight Hip Flexors** block under Stretching
-& range, so there is always one you will actually do.
-
-A **Loaded Step-Up** also joined the Legs block — the single-leg staple it was missing, and the lift
-that most resembles running, with a labrum flag because a step that is too high is deep hip flexion
-under load.
+three stretches are grouped easiest-to-hardest in the **Tight Hip Flexors** block on Train → Stretch,
+so there is always one you will actually do. The strength half is the standing hip-flexor hold in the
+warm-ups.
 
 ### Rows you can act on
 
-Three changes to every exercise row, in the picker and on the daily lists.
+The changes to every exercise row, in the pickers and on Today.
 
 **The whole row opens the how-to.** It used to be the name text only, which is a small target on
-a phone and gives no hint that there is anything to tap. The name, dose, cost and targets now sit
-inside one button, and the dose line says `· tap for how-to` so the affordance is stated rather
-than guessed. The tick stays a separate control: it selects, or marks done, and never opens the
+a phone and gives no hint that there is anything to tap. The name, the dose and the note now sit
+inside one button. The tick stays a separate control: it selects, or marks done, and never opens the
 dialog.
 
 **Each row has its own Start.** Running one exercise previously meant opening its dialog and
@@ -181,10 +195,10 @@ the answer is "just the deep squat hold".
 **Each row explains its own dose.** An item's note — whose number it is, what to change, when to
 stop — used to render on a session row and nowhere else, so the routine pickers hid the one line
 that says *his number is 30 s* or *swap this if the shoulder pinches*. Notes now render in the
-picker too, under the targets label.
+picker too, under the dose.
 
-**Each row says what it costs.** `exCost()` rates every exercise 1, 2 or 3 and renders it with the
-same three-bar load meter the session chips use, because this is the same high-low currency the
+**Each exercise says what it costs.** `exCost()` rates every exercise 1, 2 or 3 and the how-to shows
+it under the name, with the same three-bar load meter the session chips use, because this is the same high-low currency the
 whole program runs on:
 
 | | meaning |
@@ -203,7 +217,7 @@ taxing. `check-data.js` enforces that `cost` is 1, 2 or 3.
 ### Picks from several blocks, one session
 
 Selecting exercises used to be a per-card affair: pick three things in Tight Hips, hit
-**Run 3 selected**, and if you also wanted one thing out of the Hip Flexor Block you ran a
+**Run 3 selected**, and if you also wanted one thing out of Legs · Quick you ran a
 second session afterwards. Picks are now one queue. `RSEL` already remembered a selection per
 block; the missing piece was somewhere to see the total and a single Run.
 
@@ -225,17 +239,20 @@ names the blocks they came from, and gives the running estimate — then **Run t
 `queueBlocks()` / `queueCount()` / `queueSteps()` are the whole API; `renderQueue()` draws the bar
 on every render, and the per-card **Run N selected** button still works exactly as it did.
 
-### Legs, Upper Body and Core
+### Train: six pages
 
-The question is usually "I want to train legs", so that is the front door. **Legs**, **Upper Body**
-and **Core** are the first tiles under Train after the Holy Grail, driven by `BODY_PAGES` in
-`data.js`. Each page opens with complete workouts at a sensible length, then the targeted blocks:
+`TRAIN_PAGES` in `data.js` is the whole Train tab. Each page is a title, one line on how to use it,
+and a few complete workouts; `check-data.js` fails the build if a routine sits on no page or on two,
+or if a page grows past eight workouts.
 
-| page | complete workouts first (time at home) | then |
-|---|---|---|
-| Legs | Legs · Full (~36 min) · Legs · Quick (~16 min) | Hamstrings · One area · Spring |
-| Upper Body | Chest, Shoulders & Push (~29 min) · Back & Pull (~22 min) · Upper Body · Quick (~16 min) | Throwing shoulder · Upper & Trunk |
-| Core | Core & Trunk (~18 min) · Boss Your Game's two core circuits (~13–15 min) | — |
+| page | workouts (minutes, at home) |
+|---|---|
+| The Holy Grail | The Daily Six (14) · the Holy Grail list (pick any) · the Room Circuit (21) |
+| Legs | Legs · Full (36) · Legs · Quick (16) · Hamstring Insurance (17) · Hamstring Strength (25) · Plyometric Ladder (36) |
+| Upper & Core | Upper Body · Quick (16) · Chest, Shoulders & Push (29) · Back & Pull (22) · Core & Trunk (18) |
+| Fascia & Flow | Fascia Flow (10) · Ball Work · Legs & Hips (12) · Groundwork (6) |
+| Stretch | Range Block (18) · Tight Hamstrings, Hips, Hip Flexors, Groin, Calves & Ankles, Back & Shoulders (8–24) |
+| Frisbee | Frisbee Warm-Up (41) · Warm-Up · Short (25) · Sprint-Ready · Minimum (12) · Half-Time Top-Up (5) · Between Games (18) · Post-Game Flush (17) · Tournament Night (22) |
 
 **Legs · Full** is eight moves for everything from the hips down, twice a week: the deep squat hold,
 one-leg quads and glutes (split squat, hip thrust), the hamstring's two jobs (the Nordic, then the
@@ -251,70 +268,18 @@ nearly straight — the job the biceps femoris does, and where it strains. Insur
 hamstring is cranky; Strength twice a week once it is calm; full-speed sprinting again once the
 single-leg bridge reps are within about 10% side to side.
 
-The **Weak-link blocks** tile is gone: each of its blocks now lives on the page for its body part — the
-Hip, Hip Flexor, Groin and Knee & Ankle blocks under Legs → One area, the Throwing Shoulder Block under
-Upper Body — listed rather than copied. `check-data.js` fails the build if a `BODY` or `ARMOR` block is
-on none of the three pages. **This week**, **The year** and the **Copenhagen ladder** became one tile
-under Your plan.
-
-### Stretching & range, as its own screen
-
-The Range Block used to live only under Frisbee → After you play, which is the wrong place to look on a
-Tuesday when one thing feels tight. It now has its own Program tile, **Stretching & range**, built from
-`RANGE_GROUPS` in the same shape as `PLAY_GROUPS`, and split two ways:
-
-- **The whole pass** — the Range Block, everything in one go.
-- **One area** — six short blocks for when something specific is tight: Tight Hamstrings, Tight Hips,
-  the Hip Flexor Block, Tight Groin, Tight Calves & Ankles, Tight Back & Shoulders. Five to twenty
-  minutes each.
-
-Two of them lead with a test rather than a stretch, because the diagnosis changes the treatment.
-**Tight Hamstrings** opens with the plantar roll and a toe-touch retest, then the chin-tuck test: if
-range drops when you tuck your chin, the limiter is neural and stretching harder makes it worse, so the
-block hands you the nerve glide instead. There is no passive hamstring stretch in it at all; the length
-change comes from the loaded Jefferson curl. **Tight Calves & Ankles** is built around knee-to-wall as a
-measurement, since dorsiflexion is one of the few "tight" complaints that is a number you can log.
-
-**Tight Back & Shoulders** deliberately omits the sleeper stretch. It is the right tool only above a
-measured 15° side-to-side internal rotation deficit, and stretching a capsule that is doing its job is
-how throwers create instability. It stays in the Throwing Shoulder Block, behind the number.
-
-`check-data.js` enforces that anything tagged `WARMUP`, `RECOVERY` or `RANGE` is reachable from a group,
-and it now counts `RANGE_GROUPS` alongside `PLAY_GROUPS` — so a new stretching block cannot be added
-without being findable.
-
-### Hiking
-
-A hub tile of its own, because a long day on your feet is not a session but it is load, and the
-ways it goes wrong are specific and predictable: ankles on ground that never repeats, knees and
-quads on the descent, and the front of the hip after hours of climbing with a pack. Three blocks,
-in the order the day happens.
-
-| block | when | what it is |
-|---|---|---|
-| Before the Hike | at the trailhead | 8 items, 19 min — or the first three, in eight |
-| On the Trail | a break, or the top of a descent | 5 items, 8 min |
-| After the Hike | at the car, or that evening | 8 items, 19 min |
-
-Nothing in any of them needs equipment: the substitutions are written into the row notes (a tree
-instead of a wall, your own hand instead of a band, the car bumper instead of a step). One new
-exercise, **Easy Start** — five minutes of flat walking before anything steep, which is the RAMP
-"raise" borrowed for a trailhead and the only genuinely non-negotiable item in the prep block.
-The section also cross-lists Tight Calves & Ankles and Tight Hip Flexors, which are the two
-existing blocks worth stealing after a steep day.
-
-The *After the Hike* block is deliberately tissue and gentle range rather than loading, and says
-so: a long descent is real eccentric work, quad soreness for a day or two is the descent rather
-than a mistake, and the useful response is a light next day, not a harder stretch now.
-
-Trail blocks carry the tag `TRAIL` and live in `TRAIL_GROUPS`. `check-data.js` holds them to the
-warm-up standard rather than the general one: every row must carry a `targets` label, every block
-must carry a short targets summary, and every term in that summary must appear in at least one of
-its own items' targets.
+**Fascia & Flow** is the tissue and movement page. **Fascia Flow** (~10 min, any day) is the old
+free wins turned into one pass: the plantar ball roll, two minutes of rebound bounces, hip circles, a
+90-second deep squat, two hangs from the pull-up bar, and two minutes of box breathing. It is honest
+about what it is — the effect on the tissue is short-lived, so it works because it is daily. **Ball
+Work** is the same rolling trick further up the leg, after training, and **Groundwork** is Andrew
+Blake's (GOATA) floor warm-up — crawl, rock back, walk in to a squat, sit in it — as an opener before
+anything.
 
 ### The Holy Grail
 
-The answer to "there is too much in here": the first tile on the hub, and two cards.
+The answer to "there is too much in here": the first page of Train, with the Daily Six, the list and the
+Room Circuit.
 
 **The Daily Six** — six moves, two rounds, about 14 minutes, at home with no weights, and safe to
 repeat every day because none of them needs two days to recover from. The validator enforces that: nothing rated Taxing is allowed in.
@@ -362,7 +327,7 @@ Six of exactly six.
 
 ### Room Circuit
 
-The simple one, under Train on the hub. Six moves that need a floor, a bed and a pull-up bar,
+The simple one, on the Holy Grail page. Six moves that need a floor, a bed and a pull-up bar,
 run as a real circuit — every move once, a rest, then again:
 
 | move | per round | for |
@@ -374,7 +339,7 @@ run as a real circuit — every move once, a rest, then again:
 | Bear plank | 40 s | trunk |
 | Copenhagen hold, off the bed | 20 s per side | groin — the weakest link |
 
-Three rounds is about 21 minutes; the *Short* card is the same six moves for two rounds, about 13.
+Three rounds is about 21 minutes; stop after two on a short day.
 Nothing in it takes the hip into deep flexion under load, so it works on a day the hip is grumbling.
 The push-up row says what a pull-up bar laid on the floor buys you — straight wrists, and a chest
 that can sink below the hands for extra range at the stretched end — and to wedge it so it can't roll.
@@ -384,115 +349,20 @@ that can sink below the hands for extra range at the stretched end — and to we
 every round, the block label reading *Round 2 of 3*, and a rest after the last move of each round
 but the final one, announced as *Round 1 done. Rest.* A timed step can now carry that rest too
 (`after`), which the player, the estimator and the remaining-time maths all honour. Every place a
-whole routine is run or timed goes through `routineSteps()`, so the card, the queue and the Boss
-week all agree. `check-timing.js` walks circuits as the player runs them — 659 steps — and
+whole routine is run or timed goes through `routineSteps()`, so the card, the queue and the player
+all agree. `check-timing.js` walks circuits as the player runs them, and
 `check-data.js` bounds `rounds` to 2–6 and `roundRest` to 15–240 s. Inside a round the rest between
 moves is only the changeover, capped at 15 s (`CIRCUIT_MOVE`), because moving on to a different
 exercise *is* the rest; the real rest comes at the end of the round.
-
-### GOATA Movement
-
-Andrew Blake's (a5blake) system, from an audit of his reels, shorts and no-talking workout clips —
-its own hub tile. Every exercise is one he showed or described; every set, rep and rest was added,
-because he almost never gives numbers. Nineteen new exercises came with it, from the low crawl to the
-two-step approach jump.
-
-| block | format | what |
-|---|---|---|
-| Groundwork Warm-Up | circuit, 2 rounds | crawl, rock-back, walk-in, forefoot squat — ~6 min |
-| Workout A · Groundwork | circuit, 3 rounds | crawls, forefoot squat strength, side shifts, sit-back rotations |
-| Workout B · Back Chain + One Leg | circuit, 3 rounds | forefoot hinge, bow-to-corner, step-ups, balance, sled |
-| Workout C · Jump + Land | sets, full rest | rocks, pogos, snap-downs, squat jumps, single-leg sticks, approach jumps |
-
-The screen also carries his six form rules, his daily habits, his week (built by the same computed,
-runnable `weekTable()` the Boss week now uses — a day can ask a block for fewer rounds, which is how
-his light Saturday is two rounds of Workout A), an eight-week ladder, a glossary of his cues and a
-weekly filming checklist.
-
-It is framed honestly. What is well supported — knees out, soft forefoot landings, crawling for the
-trunk — overlaps with the rest of the app, and Workout C is flagged as the most valuable part for
-you: landing mechanics are among the best-evidenced injury-prevention training there is. What is his
-alone — pushing off the outside edge of the foot, heels turning away — is labelled as his, a drill
-rather than a reason to rebuild how you cut mid-season. His strong anti-weightlifting position is
-named as his opinion; this app keeps lifting. And it says plainly that three programs do not stack:
-alongside the main plan and Boss, use his warm-up before anything, his rules on every rep, and one
-workout on a light day.
-
-The sled swaps to his own wall march in Home mode. Building that surfaced a bug: an item's time
-estimate followed it through a Home swap, so a 20-second wall march was timed as the sled's three
-minutes. `makeStep()` now drops an item's `est` when the exercise is swapped.
 
 ### The hip is good — the app now treats it that way
 
 Your hip is doing well and the goal is strength, and your deep squat is pain-free. The app was
 written for a hip that needed protecting, and it read that way everywhere: a "HIP LABRUM RULE" flag
-on every deep squat, the Hip Block pitched as "loading a labral hip without provoking it", Hip
-Strength gated on "once the hip is quiet", the Boss core split into a normal and a "hip-friendly"
-card. Now the deep-squat flag is a one-line *check* (a front-of-hip pinch means back that rep off),
-the Hip Block is the foundation under Hip Strength and the place to go if it ever flares, Hip
-Strength is simply how it gets stronger, the Boss core default is his circuit with an
-*Anti-Movement* variation beside it, and GOATA's straight-feet rule applies at depth too.
-
-### Boss Your Game
-
-A hub tile holding nine short workouts audited off Alex's Facebook page (a soccer performance
-coach), in his own format: an isometric hold, then dynamic reps of the same joint, four to six
-items. His running and field-session work is deliberately left out — the ask was the little
-workouts. Twenty-one new exercises came in with it, from line taps to the bear plank.
-
-**His number is on every row it was raised from.** He coaches a general audience, so 30-second
-holds and 10 push-ups are a floor rather than a target for a professional. Where the dose here is
-higher, the row says what his was: `3 × 40 s per side` with *His number is 30 s per leg — that is
-the floor*. Where his number is already right — single-leg hops at three a side, split squats at
-ten — it is left alone and the note says so. Nothing is below his number: every row is held to
-his three-round minimum (two for the core, which is his own 2–3).
-
-**Sets, not rounds, and the clock says why.** He runs each workout as a circuit: all the items,
-then repeat, three times. Every row here carries its sets instead, because that is how the rest of
-the app doses a block and it makes the card's estimate real. The section says this outright,
-including the consequence — as straight sets with a real rest between each one these run longer
-than his 10 to 20 minutes, because in a circuit the rests overlap. That range is computed from the
-blocks (`bossRange()`), not written into the prose, so it cannot drift. Either format is fine;
-the Start button on each row is there for anyone who wants to walk the list and go again.
-
-**Two core cards.** *Core Circuit* is his five as he runs them, and the default. *Core Circuit ·
-Anti-Movement* trains the same qualities from the other direction — a dead bug, a Pallof press and a
-hollow hold resist extension and rotation instead of producing them — with his bear plank and
-shoulder taps kept. It is the better one to put beside a heavy lifting day, and the one to reach for
-if the hip ever has an off day.
-
-**What he never explains, explained.** His videos give fixed numbers and no progression, so the
-section carries a five-rung ladder (`BOSS_LADDER`) with the rule underneath it: *two easy sessions
-in a row is the signal to move up a rung; one hard session is not a reason to move down.* Weeks 1–2
-are two sets at his floor, 3–4 his actual prescription, 5–6 holds at 45 s and reps up about 25%,
-7–8 load rather than reps, 9+ weight and tempo only. His weekly schedule is there too
-(`BOSS_WEEK`). Each day names its blocks rather than a time, so the table works out the real
-length — the warm-up plus the blocks, 30 to 56 minutes rather than the handoff's ~30 — and every
-day has a **Run** button that plays it as one session. And it carries the caveat it needs: this is a second program, and in season it wants one round
-of each workout rather than two, with Legs B and Hamstrings + Speed kept off the days either side
-of a game.
-
-Two other honest flags came out of the audit. Bench dips put the front of the shoulder near
-end-range extension, so the row says to swap them for close-grip push-ups if it pinches. And the
-Nordic curl is in the hamstring circuit as an addition, not an audit finding — it is the single
-best-evidenced hamstring-injury intervention there is and his page does not have it.
-
-**It survives Home mode.** A gym→home swap replaces the exercise *and* its dose, so the first
-version quietly broke at home: the pull-up (a weighted-chin-up entry) swapped to table rows, leaving
-rows twice and no pull-ups, and the loaded calf raise swapped to a duplicate of the calf hold. Both
-now use bodyweight entries of their own (`pullup`, `sl-calf-raise`) that have nothing to swap, and
-the pull-up's at-home note carries his no-bar option. The one swap that remains is the one intended:
-the rear-foot split squat becomes the couch version.
-
-**Off the floor.** The rest of the handoff — no added sugar, protein, sleep, his sauna-and-cold-tub
-routine and his five rules — sits in a card at the bottom, each marked *His* or *Added*. One real
-conflict is spelled out rather than smoothed over: cold water in the hours after a strength session
-blunts the adaptation the session was for, which is the Recovery essay's position too, so the cold
-tub belongs off the Boss days.
-
-Trail and Boss blocks are held to the warm-up standard by `check-data.js`: every row carries a
-`targets` label, every block carries a short summary, and every term in that summary has to appear
-in one of its own items' targets.
+on every deep squat, and hip blocks pitched as "loading a labral hip without provoking it". Now the
+deep-squat flag is a one-line *check* (a front-of-hip pinch means back that rep off), and hip strength
+comes from the complete workouts: the single-leg hip thrust, the split squat, the Copenhagen and the
+hip airplane, loaded and progressed.
 
 ### The labral tear is the hip — and the app now says so everywhere
 
@@ -506,39 +376,23 @@ slam kept below shoulder height, the landmine press as a *substitute*). The cuff
 thoracic work stays; a throwing shoulder wants it regardless. Eight shoulder exercises swapped their
 `labrum` tag for `thrower`, so a Library search for *labrum* now finds hip work only.
 
-**Hip Strength** is the new next step after the Hip Block. The Hip Block keeps a calm hip calm and is
-still the block for a flare; Hip Strength makes it strong, because strength around the joint is what
-non-operative labral care is built on. A heavy hip-thrust hold, single-leg RDL, step-ups, hip
-airplanes for rotation control, side plank, and a standing hip-flexor hold — the three groups labral
-hips test weakest in, loaded and mostly on one leg. About 30 minutes, twice a week, in both Gym and
-Home mode (the thrust and the RDL swap to their couch and backpack versions). Its rule is the dossier's
-rule: train to just short of a front-of-hip pinch, never through it, and drop back to the Hip Block for
-a week if the hip is worse the morning after. The hip dossier gained a section saying where you are
-now, and the Hip Block points forward to it.
-
 ## Injury prevention, against the actual data
 
 The published epidemiology for ultimate points at the knee first (19.5–39.7% of lower-limb
 injuries), the thigh second (11.9–31.9%) and the ankle third (15.5–30.1%), with a mechanism that
-is overwhelmingly non-contact: decelerating, cutting and landing under accumulated fatigue. The
-thigh was already covered by the Nordics, the Askling L-protocol and the long-length isometrics.
-**Knee & Ankle Insurance** (Program → Legs → One area, ~25 min) covers the other two — a
-single-leg balance progression, banded ankle eversion for the peroneals, lateral bound-and-stick
-for frontal-plane landing control, deceleration mechanics, single-leg RDLs and tibialis raises.
-It is written to be run *tired* rather than fresh, because fatigue is the condition the injury
-happens in.
+is overwhelmingly non-contact: decelerating, cutting and landing under accumulated fatigue.
 
-**Hip Flexor Block** (Program → Legs → One area, ~27 min) exists because the hip flexor is the one
-group that needs both halves and usually gets one. It is a sprint muscle — flexion above 90° drives
-knee lift and stride frequency, and that is exactly where it is weakest, because almost nothing
-trains it past the range a leg raise reaches. It is also what a desk shortens, and a short hip flexor
-caps hip extension, which is where sprint force comes from. Stretch only and you own range you cannot
-produce force in; strengthen only and you pull against your own extension. The block runs warm →
-strengthen → lengthen: lunge with rotation, the standing isometric above 90°, a reverse Nordic (the
-only thing in the program that loads rectus femoris at real length, since it crosses both joints), the
-active couch stretch, and a dead bug for the pelvic control that a short flexor compromises. The couch
-stretch takes the hip into *extension* — the opposite end from the flexion-adduction-internal-rotation
-position a labrum objects to — so it is one of the few anterior-hip items here that needs no caution.
+The thigh is covered by the Nordics, the Askling protocol and the long-length isometrics — Hamstring
+Insurance and Hamstring Strength on the Legs page, and the long hold in the Daily Six. The knee and
+ankle get their landing work from the Plyometric Ladder's stuck landings, the single-leg hop and stick
+in the Holy Grail, and the wall sit and calf raises in Legs · Full, and the end of every warm-up
+rehearses deceleration with build-ups and cutting build-ups.
+
+The hip flexor needs both halves and usually gets one. It is a sprint muscle — flexion above 90°
+drives knee lift and stride frequency — and a short one caps hip extension, which is where sprint
+force comes from. Its strength comes from the standing hip-flexor hold in the warm-ups and its length
+from Tight Hip Flexors. The couch stretch takes the hip into *extension* — the opposite end from the
+flexion-adduction-internal-rotation position a labrum objects to — so it needs no caution.
 
 **Sprint-Ready · Minimum** (~12 min) is the fourth warm-up: what survives when the warm-up is
 stripped to only the load-bearing parts — raise, leg swings, one hamstring long-length isometric,
@@ -547,7 +401,7 @@ that gets skipped.
 
 ## After the game, and between games
 
-Three separate problems, three blocks, on the Program screen:
+Three separate problems, three blocks, on Train → Frisbee:
 
 - **Post-Game Flush** (~17 min) — after a single game. Deliberately narrow, because the evidence
   for active cool-downs is weak: the best review of the question found them largely ineffective
@@ -563,7 +417,7 @@ Three separate problems, three blocks, on the Program screen:
   specifically, because it improves next-day sprint recovery at a tournament while blunting
   adaptation when used after ordinary strength training.
 
-The reasoning, including what is theatre, is in the Method screen under **Recovery, Honestly**.
+The reasoning, including what is theatre, is in More → Read, under **Recovery, Honestly**.
 
 ## Ball work
 
@@ -575,10 +429,9 @@ which is the opposite of what that line asks for. `buildSteps` now moves the arm
 front of a session, or drops it when the session already prescribes one, so the written rule and
 the actual running order agree.
 
-
 Plantar rolling is the best-evidenced item in the program — a large-effect improvement in hamstring
 and lumbar range without stretching the hamstring at all — and it sits in the Daily Armor, the
-warm-ups and under the desk. **Ball Work · Legs & Hips** (~12 min) applies the same trick to the
+warm-ups and Fascia Flow. **Ball Work · Legs & Hips** (~12 min, Train → Fascia & Flow) applies the same trick to the
 four targets above the ankle worth having: glute and deep rotators, lateral hip (TFL and glute
 medius), adductor, and calf plus peroneals.
 
@@ -597,7 +450,7 @@ routine and article ids, and that no routine carries a tag no screen renders. Ru
 Two validators run without a browser:
 
 - `node training/check-data.js` — content schema: field types, referenced ids, unique ids, every
-  routine tag renders, every game-day routine sits in a play group.
+  routine tag renders, every routine sits on exactly one Train page.
 - `node training/audit.js` — loads the app's own estimator in a Node `vm` sandbox and walks every
   step the app can build (every session block, routine, the armor): doses the estimator cannot
   read, per-side doses whose round count would leave sides unbalanced, per-side steps with no
@@ -617,21 +470,16 @@ end to end, and starts all 24 sessions, failing on any page error.
 ## Elastic and isometric
 
 The app is named after ground contact and had no block devoted to it — plyometrics lived as
-garnish inside lifting sessions. Program now has an **Elastic & isometric** tile:
+garnish inside lifting sessions. The **Plyometric Ladder** (~36 min, Train → Legs → Spring) fixes
+that: extensive to intensive — prime, pogos, single-leg pogos, low hurdle rebounds, skater bounds,
+alternating bounds, stuck broad jumps, then depth jumps behind a gate. The gate is a countermovement
+jump within 10% of the logged best; below it, the ladder ends after the bounds. Phase labels render in
+the list and the player. (The isometric-contrast blocks that sat beside it went in the lean cut.)
 
-- **Plyometric Ladder** (~35 min) — extensive to intensive: prime, pogos, single-leg pogos, low
-  hurdle rebounds, skater bounds, alternating bounds, stuck broad jumps, then depth jumps behind a
-  gate. The gate is a countermovement jump within 10% of the logged best; below it, the ladder
-  ends after the bounds. Phase labels render in the list and the player.
-- **Iso → Elastic Contrast** (~22 min) — four pairs of a maximal isometric and the plyometric it
-  feeds (yielding and overcoming split-squat isos, the long-length hamstring iso, the soleus iso),
-  with the 2–4 minute rests that post-activation potentiation depends on written into the block.
-- **Overcoming Isometrics** moved here from "When time is short".
-
-**Ground Contact: Plyometrics, Properly** is the Method article behind it: fast vs slow
-stretch-shortening cycle, RSI as the number that matters (it is the Drop Jump test under Tests),
-contacts not sets, box height by rebound not by height, the 48-hour rule, landing quality tied
-to the knee data, and the honest size of the potentiation effect. Flanagan & Comyns, the
+**Ground Contact: Plyometrics, Properly** is the article behind it, under More → Read: fast vs slow
+stretch-shortening cycle, RSI as the number that matters (it is the Drop Jump test under More →
+Tests), contacts not sets, box height by rebound not by height, the 48-hour rule, landing quality
+tied to the knee data, and the honest size of the potentiation effect. Flanagan & Comyns, the
 Ramirez-Campillo plyometric reviews and Seitz & Haff are in Sources.
 
 ## Sides on hand-counted sets
@@ -656,9 +504,9 @@ steps.
 ## What each thing is for
 
 Exercises can carry a `targets` string — plain language, not tags: "Glute max · hip extension",
-"Achilles & calves · ankle stiffness". It renders in three places: under the exercise name in a
-routine's pick list, under the dose in the player (so mid-set you know what you are supposed to
-feel), and as a short authored **Targets** line on the routine card. The card line is written, not
+"Achilles & calves · ankle stiffness". It renders in three places: under the name in the how-to,
+under the dose in the player (so mid-set you know what you are supposed to feel), and as a short
+authored **Targets** line inside a routine card's *About this workout* fold. The card line is written, not
 derived — a union of seventeen items is a paragraph, not a label — and `check-data.js` verifies
 every term in it against the items' own targets, so it cannot claim something the block does not do. `check-data.js`
 requires it on every warm-up item. The Frisbee Warm-Up also gained a **Standing Hip Flexor
@@ -731,7 +579,7 @@ The pass was restraint, not a restyle:
   lift (`--lift`). Surfaces sit on the ground by contrast, so their edge is `--edge` — the line
   token at 60% — instead of a full hairline. List rows keep their separators; cards do not.
 - **Header on a phone.** One line: the mark, today's session, the Gym/Home toggle. Phase and
-  week live on Program, where they are already shown.
+  week live on Today and under More → Your plan, where they are already shown.
 - The dotted "trace" rule under headings is retired (kept in the DOM, `display: none`).
 
 Nothing about colour changed; the validated palette and both themes are untouched.
@@ -743,7 +591,7 @@ Nothing about colour changed; the validated palette and both themes are untouche
 Today used to list all 23 exercises of the day across four screens, with an explanatory note under
 most rows. The player walks you through them one at a time anyway, so that list was reference
 material occupying the screen you open most. It now shows the session as four collapsed block
-headers with counts, opening on tap, and the two daily lists collapse to a single strip.
+headers with counts, opening on tap, and the Daily Armor runs at the end of the session.
 
 | | before | after |
 |---|---|---|
@@ -751,49 +599,28 @@ headers with counts, opening on tap, and the two daily lists collapse to a singl
 | screens tall | 4.1 | 1.8 |
 | tappable elements | 94 | 51 |
 
-### Daily: free wins and armor are different jobs
-
-The **Desk** tab became **Daily**, with the desk routines moved inside it, because desk work is
-daily work and did not justify a tab of its own. The screen holds two lists that were previously
-conflated:
-
-- **Free Wins** — deep squat accumulation, barefoot pogos, hip CARs, a hang, toe yoga, the couch
-  stretch, breathing before bed. No warm-up, no sets, no gym. Ticked off across a day rather than
-  run as a block, stored per-day under `S.free`, and judged over months.
-- **The Daily Armor** — unchanged. Loaded isometrics aimed at the tissues most likely to end a
-  season, done properly in one sitting.
-
-Two gaps argued for building Free Wins. The deep squat's actual prescription is five minutes
-*accumulated across a day* while the Armor asked for sixty seconds, leaving the other four minutes
-unscheduled and untracked. And bouncing appeared in no daily list at all, despite reactive stiffness
-being the quality the app is named after.
-
-Row hints on both lists are hidden behind a **Show the hints** toggle — they teach the list in the
-first week and are noise afterwards. Tapping any name still opens the full how-to.
-
 ### A general athlete's app with a frisbee layer
 
-Frisbee no longer takes the highlighted hero tile on the Program hub, and the hub copy now says the
-daily and range work carries any sport with Frisbee as the game-day layer on top. Every frisbee
+Frisbee is one page of six rather than the front door, because the daily and range work carries any
+sport and Frisbee is the game-day layer on top. Every frisbee
 section is untouched: the five warm-ups, the play groups, the UFA-anchored phases and the game-model
 conditioning all stay exactly as they were. The change is framing, not content.
 
-
-The Program screen is a hub, not a scroll: tiles grouped under **Train**, **Play & recover**,
-**Programs** and **Your plan**, each opening one section with a way back. Frisbee is the game-day entry point and groups everything by when you reach for it:
-**Before you play**, **Between games**, **After you play**. That last group is where the cool-down,
-the ball work, the stretching and the tournament-evening block all live, which is where they were
-impossible to find before. `PLAY_GROUPS` in `data.js` defines the grouping, and `check-data.js`
-fails the build if a game-day routine appears in no group.
+The Train tab is a hub, not a scroll: six doors, each opening one page with a way back. Frisbee is the
+game-day page and groups everything by when you reach for it: **Before you play**, **Between games**,
+**After you play**. `TRAIN_PAGES` in `data.js` defines every page, and `check-data.js` fails the build
+if a routine is on none of them.
 
 Three things follow from treating this as a phone app rather than a document:
 
-- A routine's rationale is collapsed behind **Why this block exists**, so a list of blocks stays
-  scannable. Open state persists across re-renders.
+- A routine's rationale and targets are collapsed behind **About this workout**, so a list of
+  blocks stays scannable. Open state persists across re-renders.
 - The Library is two tabs, **Browse** and **Build a session**. It used to render all 149 exercise
   cards *and* 149 builder cards on one page — roughly 39 phone screens. Search and the category
   chips are sticky, so they stay reachable inside a long list.
 - Tapping the tab you are already on returns to that screen's top level.
+
+Keyboard — app: `1`–`4` switch tabs. Player: `Space` pause/done, `←` `→` step, `Esc` exit.
 
 ## Not following the plan
 
@@ -802,7 +629,7 @@ type and computed length, marks the planned one, and flags any choice that would
 CNS-expensive days back to back against the day before or after. The override is stored per date
 in `S.override`, so the week grid, estimates and weekly balance all follow it.
 
-The Program screen carries a **weekly balance** panel — high days, max-velocity exposures,
+**More → Your plan** carries a **weekly balance** panel — high days, max-velocity exposures,
 Copenhagen sessions, Nordic sessions — measured against what *this phase* plans rather than a
 fixed target, so a restoration block with no high days reads as correct instead of a shortfall.
 Plus a warning naming any back-to-back high days. That is the check that keeps improvisation honest: day order is
@@ -812,8 +639,8 @@ flexible, weekly structure is not.
 
 The player speaks each exercise, each rest and every side switch. It ranks the browser's
 available voices and picks the best English one rather than the default, preferring enhanced /
-premium / neural voices and demoting the novelty ones. **Change voice** (in the player, or in the
-sidebar) lists them with a tap-to-hear preview, three speeds, and an off switch. On iOS the best
+premium / neural voices and demoting the novelty ones. **Change voice** (in the player, under More → Backup &
+voice, or in the desktop sidebar) lists them with a tap-to-hear preview, three speeds, and an off switch. On iOS the best
 voices are a free download under Settings › Accessibility › Spoken Content › Voices.
 
 ## Durations
@@ -860,17 +687,6 @@ the Daily Armor; the readiness check-in has its own hip flag that pulls deep fle
 full-speed cutting for the day. Shoulder work remains, reframed as throwing-volume maintenance
 rather than labral rehab.
 
-## Desk track
-
-27 exercises tagged `desk`, each labelled by how visible it is — `invisible` (nobody can tell),
-`subtle` (reads as fidgeting), `private` (fine alone, not in an open-plan office). Nine desk
-routines in the Desk view run them as guided circuits, from a three-minute hourly reset to
-**The Full Desk Session** — ~43 minutes covering hip, groin, hamstring, foot, shoulder, posture
-and breathing without leaving a chair. The rationale: the armor protocols respond to
-frequency more than intensity, and a workday is the largest unused training window available.
-
-Keyboard — app: `1`–`6` switch views. Player: `Space` pause/done, `←` `→` step, `Esc` exit.
-
 ## Files
 
 ```
@@ -881,10 +697,10 @@ app.js          router, timer engine, persistence, charts
 build.js        inlines the above into standalone.html
 standalone.html generated single-file build — save it anywhere, works offline
 
-check-data.js   schema, ids, tags, group reachability, row labels, the README's own counts
+check-data.js   schema, ids, tags, every routine on exactly one Train page, the README's own counts
 audit.js        loads the estimator and walks every step the app can build
 check-timing.js the player's "left" figure, against the estimator, for every step and phase
-check-ui.js     serves the app and drives it in Chromium: the hub, the queue, home mode
+check-ui.js     drives the app in Chromium: four tabs, the six Train pages, the queue, slim rows, Home mode
 ```
 
 Run all four before committing a content change:
@@ -903,7 +719,7 @@ node training/build.js
 ## Data
 
 Everything lives in `localStorage` under `groundcontact.v1`, on the device that wrote it.
-**Copy backup** puts a JSON blob on the clipboard; **Restore backup** takes it back. Do that
+**Copy backup** (More → Backup & voice) puts a JSON blob on the clipboard; **Restore backup** takes it back. Do that
 before clearing site data, and after any test battery you care about.
 
 ## Scope

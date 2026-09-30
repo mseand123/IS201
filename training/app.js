@@ -57,6 +57,9 @@ const ICONS = {
   legs: 'M7 3h10|M9 3l-1 8 1 9|M15 3l1 8-1 9|M6 20h3|M15 20h3',
   upper: 'M3 3h18|M7 3l3 6h4l3-6|M12 5.4a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2|M12 9v6|M12 15l-2 6|M12 15l2 6',
   core: 'M8 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z|M12 3v18|M6 9h12|M6 15h12',
+  flow: 'M2 9c2.5-3 5-3 7.5 0s5 3 7.5 0 3.5-2.2 5-1.5|M2 15c2.5-3 5-3 7.5 0s5 3 7.5 0 3.5-2.2 5-1.5',
+  more: 'M5 10.6a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8|M12 10.6a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8|M19 10.6a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8',
+  save: 'M5 3h11l3 3v15H5z|M8 3v5h8V3|M8 14h8v7H8z',
   check: 'M4 12l6 6L20 6'
 };
 
@@ -955,6 +958,11 @@ function costChip(e) {
   ]);
 }
 
+// A row only needs its home hint when the set-up reads like gym kit. "Floor only" on every
+// bodyweight row was noise; "hook your heels under a couch" on the Nordic is the point.
+const KIT = /\b(bench|bar|barbell|dumbbells?|kettlebells?|cable|machine|rack|plates?|sled|box|band|strap|roller)\b/i;
+const homeHint = e => isHome() && !!e.home && KIT.test(e.setup || '');
+
 function exLink(id, label) {
   return el('button', { type: 'button', onclick: () => openEx(id) }, label || EX[id].n);
 }
@@ -980,7 +988,8 @@ function openEx(id) {
     el('div', { class: 'stack stack-xs' }, [
       el('div', { class: 'eyebrow' }, e.cat.toUpperCase() + (e.coach ? ' · ' + e.coach : '')),
       el('h2', { class: 'display', style: 'font-size:var(--t-xl)' }, e.n),
-      el('div', { class: 'row', style: 'margin-top:.35rem' }, (e.tags || []).map(t => el('span', { class: 'chip' }, t)))
+      e.targets ? el('p', { class: 'small', style: 'color:var(--ink-2)' }, e.targets) : null,
+      costChip(e)
     ]),
     RUN.active
       ? el('details', { class: 'why-fold' }, [el('summary', { class: 'xs muted' }, 'Why this is here'),
@@ -990,10 +999,6 @@ function openEx(id) {
     e.home ? el('div', { class: 'callout' }, [el('div', { class: 'h' }, 'At home'), el('p', { class: 'small' }, e.home)]) : null,
     e.warmup ? el('div', { class: 'callout' }, [
       el('div', { class: 'h' }, 'In a warm-up'), el('p', { class: 'small' }, e.warmup)
-    ]) : null,
-    e.covert ? el('div', { class: 'callout' }, [
-      el('div', { class: 'h' }, 'At a desk · ' + COVERT[e.covert].l),
-      el('p', { class: 'small' }, COVERT[e.covert].d)
     ]) : null,
     HOME_SUB[id] ? el('div', { class: 'callout' }, [
       el('div', { class: 'h' }, 'Needs a gym'),
@@ -1129,9 +1134,8 @@ function itemRow(date, key, it, i) {
     e.flag && /HIP LABRUM RULE/.test(e.flag)
       ? el('span', { class: 'chip warn flagchip' }, 'Hip rule') : null
   ]));
-  open.appendChild(costChip(e));
   if (r.note) open.appendChild(el('div', { class: 'item-note' }, r.note));
-  if (isHome() && !r.swapped && e.home) open.appendChild(el('div', { class: 'item-note home-note' }, e.home));
+  if (!r.swapped && homeHint(e)) open.appendChild(el('div', { class: 'item-note home-note' }, e.home));
   row.dataset.at = key + ':' + i;
   return row;
 }
@@ -1222,66 +1226,6 @@ function readinessCard(date) {
   return card;
 }
 
-// A day-scoped tick list. Unlike the session checklist these are marked done by hand,
-// because the whole point is that they happen in ones and twos across a day.
-const NOTESOPEN = new Set();   // the hints teach it the first week and are noise after
-function tickCard(date, blk, store, note) {
-  const d = iso(date);
-  const map = S[store][d] || (S[store][d] = {});
-  const doneN = blk.items.filter((_, i) => map[i]).length;
-  const hints = NOTESOPEN.has(store);
-  return el('section', { class: 'block' }, [
-    el('header', { class: 'block-head' }, [
-      el('span', { class: 'name' }, blk.n),
-      el('span', { class: 'why' }, doneN + ' / ' + blk.items.length + (note ? ' \u00b7 ' + note : ''))
-    ]),
-    ...blk.items.map((it, i) => {
-      const r = resolve(it), e = EX[r.x];
-      if (!e) return null;
-      const row = el('div', { class: 'item' + (map[i] ? ' done' : '') });
-      const tick = el('button', {
-        class: 'tick', 'aria-pressed': map[i] ? 'true' : 'false', 'aria-label': 'Mark ' + e.n + ' done',
-        onclick: () => { map[i] ? delete map[i] : map[i] = 1; save(); render(); }
-      }, [svgEl('svg', { viewBox: '0 0 24 24' })]);
-      tick.querySelector('svg').appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' }));
-      row.appendChild(tick);
-      const open = el('button', { class: 'item-open', onclick: () => openEx(r.x), 'aria-label': e.n + ' \u2014 how-to' });
-      row.appendChild(open);
-      open.appendChild(el('div', { class: 'item-name' }, e.n));
-      open.appendChild(el('div', { class: 'item-dose' }, r.d + ' \u00b7 tap for how-to'));
-      open.appendChild(costChip(e));
-      if (r.note && hints) open.appendChild(el('div', { class: 'item-note' }, r.note));
-      if (isHome() && !r.swapped && e.home) open.appendChild(el('div', { class: 'item-note home-note' }, e.home));
-      row.appendChild(el('button', {
-        class: 'btn btn-sm row-start', onclick: () => RUN.open(stepsFromItems([{ x: r.x, d: r.d }], e.n), date, 0)
-      }, 'Start'));
-      return row;
-    }).filter(Boolean),
-    el('div', { class: 'tick-foot' }, [
-      el('button', {
-        class: 'why-toggle', 'aria-expanded': hints ? 'true' : 'false',
-        onclick: () => { hints ? NOTESOPEN.delete(store) : NOTESOPEN.add(store); render(); }
-      }, hints ? 'Hide the hints' : 'Show the hints'),
-      el('span', { class: 'xs muted' }, 'Tap any name for the full how-to.')
-    ])
-  ]);
-}
-
-// Today shows how the day is going in one line instead of two full lists.
-function dailyStrip(date) {
-  const d = iso(date);
-  const a = S.armor[d] || {}, f = S.free[d] || {};
-  const an = ARMOR.items.filter((_, i) => a[i]).length;
-  const fn = FREE_WINS.items.filter((_, i) => f[i]).length;
-  const pill = (label, n, total) => el('span', { class: 'chip' + (n >= total ? ' good' : '') }, label + ' ' + n + '/' + total);
-  return el('button', { class: 'daily-strip', onclick: () => go('daily') }, [
-    el('span', { class: 'eyebrow' }, 'Every day'),
-    pill('Free wins', fn, FREE_WINS.items.length),
-    pill('Armor', an, ARMOR.items.length),
-    el('span', { class: 'daily-strip-go' }, '\u203a')
-  ]);
-}
-
 function viewToday() {
   const date = viewDate;
   const pl = planFor(date);
@@ -1337,19 +1281,17 @@ function viewToday() {
       ]),
       ...s.blocks.map((b, i) => blockCard(date, b, i))
     ]),
-    dailyStrip(date),
     pickBar(date),
     el('div', { class: 'shortcut' }, [
       el('span', { class: 'eyebrow' }, 'Quick start'),
-      ...['warmup-full', 'warmup-short', 'desk-reset'].map(id => {
+      ...['warmup-full', 'grail-daily', 'fascia-flow'].map(id => {
         const r = ROUTINES.find(x => x.id === id);
         if (!r) return null;
         return el('button', {
           class: 'btn btn-sm', onclick: () => RUN.open(routineSteps(r), date, 0, { routine: r.id })
         }, [ico(ICONS.play, 'nav-ico'), r.n + ' · ' + fmtMins(runSeconds(routineSteps(r)))]);
       }).filter(Boolean),
-      el('button', { class: 'btn btn-ghost btn-sm', onclick: () => { go('program'); goSub('play'); } }, 'Playing today? →'),
-      el('button', { class: 'btn btn-ghost btn-sm', onclick: () => go('daily') }, 'Every day →')
+      el('button', { class: 'btn btn-ghost btn-sm', onclick: () => { go('program'); goSub('play'); } }, 'Playing today? →')
     ]),
     el('div', { class: 'stack stack-sm' }, [
       el('div', { class: 'eyebrow' }, 'Session notes'),
@@ -1433,11 +1375,11 @@ function balancePanel(monday) {
   ]);
 }
 
-function viewProgram() {
+// Your plan: the week, the year and the Copenhagen ladder, under More.
+function planView() {
   const today = new Date();
   const mon = mondayOf(viewDate);
   const cur = phaseFor(today);
-
   const weekGrid = el('div', { class: 'week' }, DOW.map((dw, i) => {
     const dt = addDays(mon, i);
     const pl = planFor(dt);
@@ -1456,7 +1398,6 @@ function viewProgram() {
         + (dn ? ' · ' + dn + ' done' : '')),
     ]);
   }));
-
   const first = parse(PHASES[0].start), last = parse(PHASES[PHASES.length - 1].end);
   const span = daysBetween(first, last) || 1;
   const timeline = el('div', { class: 'phase-bar' }, PHASES.map(p => {
@@ -1470,294 +1411,147 @@ function viewProgram() {
       ])
     ]);
   }));
+  return el('div', { class: 'stack stack-xl' }, [
+    pageSec('This week',
+      'Week of ' + fmtShort(mon) + ' · ' + cur.n + '. Bars show CNS cost: one bar is a low day, three is a high day. Never two threes back to back.',
+      el('div', { class: 'stack stack-md' }, [
+        balancePanel(mon),
+        el('div', { class: 'row' }, [
+          el('button', { class: 'btn btn-sm', onclick: () => { viewDate = addDays(mon, -7); render(); } }, '‹ Previous week'),
+          el('button', { class: 'btn btn-sm', onclick: () => { viewDate = new Date(); render(); } }, 'This week'),
+          el('button', { class: 'btn btn-sm', onclick: () => { viewDate = addDays(mon, 7); render(); } }, 'Next week ›')
+        ]),
+        weekGrid
+      ])),
+    pageSec('The year',
+      'Anchored to the UFA calendar: the 2026 season closed at Championship Weekend on August 28, and the 2027 season opens in late April. Everything counts backward from there.',
+      el('div', { class: 'stack stack-md' }, [
+        timeline,
+        el('div', { class: 'stack stack-sm' }, PHASES.map(p => el('div', {
+          class: 'card', style: p.id === cur.id ? 'border-color:var(--hi-fill)' : ''
+        }, [
+          el('div', { class: 'spread' }, [
+            el('div', { class: 'row' }, [
+              el('span', { class: 'eyebrow' }, p.tag),
+              el('h3', { class: 'display', style: 'font-size:var(--t-md)' }, p.n),
+              p.id === cur.id ? el('span', { class: 'chip solid' }, 'Current') : null
+            ]),
+            el('span', { class: 'num xs muted' }, fmtShort(parse(p.start)) + ' → ' + fmtShort(parse(p.end)))
+          ]),
+          el('p', { class: 'small', style: 'margin-top:.4rem;max-width:70ch' }, p.focus),
+          el('ul', { class: 'small muted', style: 'margin-top:.4rem' }, p.keys.map(k => el('li', null, k))),
+          el('div', { class: 'row', style: 'margin-top:.5rem' }, p.micro.map((sid, i) =>
+            el('span', { class: 'chip', title: SESSIONS[sid].n }, DOW[i] + ' · ' + SESSIONS[sid].n)))
+        ])))
+      ])),
+    pageSec('Copenhagen ladder',
+      'Volume drives the outcome, so the jumps are deliberately small — most people who fail this exercise failed the progression, not the exercise.',
+      el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
+        el('thead', null, [el('tr', null, [el('th', null, 'Wk'), el('th', null, 'Exercise'), el('th', null, 'Dose'), el('th', null, 'Freq'), el('th', null, 'Note')])]),
+        el('tbody', null, COPEN.map(c => {
+          const now = copenWeekFor(new Date());
+          return el('tr', { style: now && now.w === c.w ? 'background:var(--warn-bg)' : '' }, [
+            el('td', { class: 'n' }, String(c.w)),
+            el('td', null, [exLink(c.ex)]),
+            el('td', null, c.d), el('td', null, c.f),
+            el('td', { class: 'small muted' }, c.note)
+          ]);
+        }))
+      ])]))
+  ]);
+}
 
-  /* ---- the sections, each self-contained so the hub can show one at a time ---- */
-  const sec = (title, blurb, body) => el('div', { class: 'stack stack-md' }, [
+// A section heading: the name, then one quiet line under it.
+function pageSec(title, blurb, body) {
+  return el('div', { class: 'stack stack-md' }, [
     el('div', { class: 'sec-head' }, [
       el('h2', null, title), el('div', { class: 'trace' }),
       blurb ? el('p', { class: 'small muted', style: 'max-width:72ch' }, blurb) : null
     ]),
     body
   ]);
-  const grid = rs => el('div', { class: 'routine-grid' }, rs.map(r => routineCard(r, today)));
-  const byTag = t => ROUTINES.filter(r => r.tag === t);
-  const byId = id => ROUTINES.find(r => r.id === id);
+}
 
-  const SECTIONS = {
-    play: {
-      n: 'Frisbee', blurb: 'Game day, in the order it happens. Warm-ups, between games, after.',
-      body: () => el('div', { class: 'stack stack-xl' }, PLAY_GROUPS.map(g =>
-        sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
-    },
-    range: {
-      n: 'Stretching & range', blurb: 'The whole pass, or just the bit that feels tight.',
-      body: () => el('div', { class: 'stack stack-xl' }, RANGE_GROUPS.map(g =>
-        sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
-    },
-    grail: {
-      n: 'The Holy Grail', blurb: 'Just the best. One to three per body part, and a Daily Six.',
-      body: () => sec('The Holy Grail',
-        'Out of everything in the app, the ones worth doing. Run the Daily Six every day, and tick anything from the list on top of it.',
-        grid(byTag('GRAIL')))
-    },
-    room: {
-      n: 'Room Circuit', blurb: 'Six moves, a floor and a bed. Hip, hamstring, legs, push-ups, core.',
-      body: () => sec('Room Circuit',
-        'Every move once, a short rest, then round two. The player counts the rounds for you. Short on time? The two-round card is the same circuit.',
-        grid(byTag('ROOM')))
-    },
-    boss: {
-      n: 'Boss Your Game', blurb: 'Alex\u2019s short circuits: hold first, reps second.',
-      body: () => el('div', { class: 'stack stack-xl' }, [
-        sec('Boss Your Game',
-          'Short workouts audited off Alex\u2019s page, in his format: an isometric hold, then dynamic reps of the same joint, four to six items. His running work is deliberately left out, and every row carries his number \u2014 where the dose here is higher, his is the floor rather than the target. One structural difference: he runs each workout as a circuit, all the items and then repeat. Here each row carries its sets, so a block is the whole workout end to end and the time on the card is real. Circuit it instead if you prefer \u2014 the Start button on each row lets you walk the list and go again \u2014 the work is identical either way. It also explains the clock: as sets with a real rest between each one, the workouts here run ' + bossRange() + ' rather than his ten to twenty, because in a circuit the rests overlap.',
-          el('div', { class: 'stack stack-xl' }, BOSS_GROUPS.map(g =>
-            sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))),
-        sec('How it gets harder',
-          'He gives fixed numbers and never explains progression. This is the ladder. The rule under it: two easy sessions in a row is the signal to move up a rung \u2014 one hard session is not a reason to move down.',
-          el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
-            el('thead', null, [el('tr', null, ['Week', 'Rounds', 'Holds', 'Reps', 'What changes'].map(h =>
-              el('th', null, h)))]),
-            el('tbody', null, BOSS_LADDER.map(x => el('tr', null, [
-              el('td', { class: 'n' }, x.w),
-              el('td', { class: 'n' }, x.rounds),
-              el('td', { class: 'n' }, x.holds),
-              el('td', null, x.reps),
-              el('td', { class: 'small muted' }, x.note)
-            ])))
-          ])])),
-        sec('His week, and how it fits yours',
-          'His schedule, warm-up included. The times come from the blocks above, so they run longer than his thirty minutes. Leg days too long? Move the Core Circuit to Wednesday and Saturday rather than cutting leg work. In season: each workout once a week, Legs B and Hamstrings + Speed never the day before or after a game, and never on the same day as the plyometric ladder.',
-          weekTable(BOSS_WEEK, 'boss-warmup')),
-        sec('Off the floor',
-          'The rest of his handoff. What is his is marked as his; the rest was added, and where the app already has a view it defers to it.',
-          el('div', { class: 'stack stack-sm' }, BOSS_OFF.map(x => el('div', { class: 'card-flat' }, [
-            el('div', { class: 'row', style: 'gap:.45rem' }, [
-              el('h3', { style: 'font-size:var(--t-sm);font-weight:600' }, x.h),
-              el('span', { class: 'chip' + (x.his ? ' solid' : '') }, x.his ? 'His' : 'Added')
-            ]),
-            el('p', { class: 'small muted', style: 'margin-top:.3rem;max-width:68ch' }, x.t)
-          ]))))
-      ])
-    },
-    goata: {
-      n: 'GOATA Movement', blurb: 'Andrew Blake\u2019s groundwork, back chain and jump-and-land work.',
-      body: () => el('div', { class: 'stack stack-xl' }, [
-        sec('GOATA Movement',
-          'Andrew Blake\u2019s system, from an audit of his reels, shorts and no-talking workout clips. Every exercise is one he showed or described; every set, rep and rest is added around it, because he almost never gives numbers. What is well supported \u2014 knees out, soft forefoot landings, crawling for the trunk \u2014 overlaps with the rest of this app. What is his alone, like pushing off the outside edge of the foot, is labelled as his. He is also strongly against weightlifting; that is his opinion, not the evidence, and this app keeps lifting. The best use of it for you: the warm-up before anything, his form rules on every rep, and Workout C as your landing work.',
-          el('div', { class: 'stack stack-xl' }, GOATA_GROUPS.map(g =>
-            sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))),
-        sec('The six form rules',
-          'His, and they apply to every rep. The quick test before you start: barefoot, feet hip-width, toes straight, weight forward until the heels feel light, knees bent a little and pushed out over the pinky toes. That is the base position for almost everything here.',
-          el('ol', { class: 'stack stack-sm', style: 'padding-left:1.2em' }, GOATA_RULES.map(x => el('li', null, [
-            el('strong', null, x.h), el('span', { class: 'small' }, ' \u2014 ' + x.t),
-            x.hip ? el('p', { class: 'small muted', style: 'margin-top:.25rem' }, x.hip) : null
-          ])))),
-        sec('Every day', 'His habits, five to ten minutes spread across the day.',
-          el('div', { class: 'stack stack-sm' }, GOATA_DAILY.map(x => el('div', { class: 'card-flat' }, [
-            el('h3', { style: 'font-size:var(--t-sm);font-weight:600' }, x.h),
-            el('p', { class: 'small muted', style: 'margin-top:.25rem;max-width:68ch' }, x.t)
-          ])))),
-        sec('His week',
-          'For running his plan on its own, warm-up included and times worked out from the blocks. Alongside your main program and Boss Your Game it does not stack \u2014 three programs is too many. There, use the warm-up before anything, the rules on every rep, and one workout on a light day.',
-          weekTable(GOATA_WEEK, 'goata-warmup')),
-        sec('How it gets harder',
-          'Easy two sessions in a row is the signal to move up. Track rounds, reps, holds, weight, and a 1\u20135 score for how straight your feet and knees stayed.',
-          el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
-            el('thead', null, [el('tr', null, ['Weeks', 'What changes'].map(h => el('th', null, h)))]),
-            el('tbody', null, GOATA_LADDER.map(x => el('tr', null, [
-              el('td', { class: 'n', style: 'white-space:nowrap' }, x.w),
-              el('td', { class: 'small' }, x.t)
-            ])))
-          ])])),
-        sec('Words he uses', 'The cues in the how-tos lean on these.',
-          el('dl', { class: 'kv' }, GOATA_TERMS.flatMap(x => [el('dt', null, x.t), el('dd', { class: 'small' }, x.d)]))),
-        sec('Film it once a week',
-          'Phone propped up about eight feet in front of you, at knee height. Check these, and fix feet and knees before anything else.',
-          el('ul', { class: 'stack stack-xs small', style: 'padding-left:1.2em' }, GOATA_CHECK.map(x => el('li', null, x))))
-      ])
-    },
-    trail: {
-      n: 'Hiking', blurb: 'A day on your feet, without paying for it afterwards.',
-      body: () => el('div', { class: 'stack stack-xl' }, TRAIL_GROUPS.map(g =>
-        sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
-    },
-    power: {
-      n: 'Elastic & isometric', blurb: 'Plyometrics with a gate at the top, and the isometric pairings.',
-      body: () => sec('Elastic & isometric',
-        'The quality the app is named after, trained on its own. Contact time over height, contacts counted not sets, and the depth jumps earned by a jump test every session. Read Ground Contact under Method first.',
-        grid(byTag('POWER')))
-    },
-    short: {
-      n: 'When time is short', blurb: 'Not the whole session — the part with the highest return.',
-      body: () => sec('When time is short', 'Not the whole session — the part of it with the highest return.', grid(byTag('SHORT')))
-    },
-    plan: {
-      n: 'This week', blurb: 'The week\u2019s sessions, the year\u2019s phases, and the Copenhagen ladder.',
-      body: () => el('div', { class: 'stack stack-xl' }, [
-        sec('This week',
-          'Week of ' + fmtShort(mon) + ' · ' + cur.n + '. Bars show CNS cost: one bar is a low day, three is a high day. Never two threes back to back.',
-          el('div', { class: 'stack stack-md' }, [
-            balancePanel(mon),
-            el('div', { class: 'row' }, [
-              el('button', { class: 'btn btn-sm', onclick: () => { viewDate = addDays(mon, -7); render(); } }, '\u2039 Previous week'),
-              el('button', { class: 'btn btn-sm', onclick: () => { viewDate = new Date(); render(); } }, 'This week'),
-              el('button', { class: 'btn btn-sm', onclick: () => { viewDate = addDays(mon, 7); render(); } }, 'Next week \u203a')
-            ]),
-            weekGrid
-          ])),
-        sec('The year',
-          'Anchored to the UFA calendar: the 2026 season closed at Championship Weekend on August 28, and the 2027 season opens in late April. Everything counts backward from there.',
-          el('div', { class: 'stack stack-md' }, [
-            timeline,
-            el('div', { class: 'stack stack-sm' }, PHASES.map(p => el('div', {
-              class: 'card', style: p.id === cur.id ? 'border-color:var(--hi-fill)' : ''
-            }, [
-              el('div', { class: 'spread' }, [
-                el('div', { class: 'row' }, [
-                  el('span', { class: 'eyebrow' }, p.tag),
-                  el('h3', { class: 'display', style: 'font-size:var(--t-md)' }, p.n),
-                  p.id === cur.id ? el('span', { class: 'chip solid' }, 'Current') : null
-                ]),
-                el('span', { class: 'num xs muted' }, fmtShort(parse(p.start)) + ' \u2192 ' + fmtShort(parse(p.end)))
-              ]),
-              el('p', { class: 'small', style: 'margin-top:.4rem;max-width:70ch' }, p.focus),
-              el('ul', { class: 'small muted', style: 'margin-top:.4rem' }, p.keys.map(k => el('li', null, k))),
-              el('div', { class: 'row', style: 'margin-top:.5rem' }, p.micro.map((sid, i) =>
-                el('span', { class: 'chip', title: SESSIONS[sid].n }, DOW[i] + ' \u00b7 ' + SESSIONS[sid].n)))
-            ])))
-          ])),
-        sec('Copenhagen ladder',
-          'Volume drives the outcome, so the jumps are deliberately small — most people who fail this exercise failed the progression, not the exercise.',
-          el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
-            el('thead', null, [el('tr', null, [el('th', null, 'Wk'), el('th', null, 'Exercise'), el('th', null, 'Dose'), el('th', null, 'Freq'), el('th', null, 'Note')])]),
-            el('tbody', null, COPEN.map(c => {
-              const now = copenWeekFor(new Date());
-              return el('tr', { style: now && now.w === c.w ? 'background:var(--warn-bg)' : '' }, [
-                el('td', { class: 'n' }, String(c.w)),
-                el('td', null, [exLink(c.ex)]),
-                el('td', null, c.d), el('td', null, c.f),
-                el('td', { class: 'small muted' }, c.note)
-              ]);
-            }))
-          ])]))
-      ])
-    }
-  };
-  // Legs, Upper Body and Core: each page's complete workouts first, then the targeted blocks.
-  // A page with a single group needs no second heading.
-  BODY_PAGES.forEach(pg => {
-    const part = g => grid(g.ids.map(byId).filter(Boolean));
-    SECTIONS[pg.id] = {
-      n: pg.n, blurb: pg.blurb,
-      body: () => sec(pg.n, pg.intro || pg.blurb, pg.groups.length === 1 ? part(pg.groups[0])
-        : el('div', { class: 'stack stack-xl' }, pg.groups.map(g => sec(g.n, g.sub, part(g)))))
-    };
-  });
-
-  // A section is open: show it with a way back.
-  if (sub && SECTIONS[sub]) {
-    return el('div', { class: 'stack stack-lg' }, [
-      el('button', { class: 'btn btn-sm back-link', onclick: () => goSub(null) }, '\u2039 All of Program'),
-      SECTIONS[sub].body()
-    ]);
-  }
-
-  // The hub.
-  const counts = {
-    play: PLAY_GROUPS.reduce((a, g) => a + g.ids.length, 0) + ' blocks',
-    range: RANGE_GROUPS.reduce((x, g) => x + g.ids.length, 0) + ' blocks',
-    trail: ROUTINES.filter(r => r.tag === 'TRAIL').length + ' blocks',
-    boss: ROUTINES.filter(r => r.tag === 'BOSS').length + ' blocks',
-    room: '~' + Math.round(runSeconds(routineSteps(byId('room-circuit'))) / 60) + ' min',
-    grail: byId('grail-list').items.length + ' + 6',
-    goata: ROUTINES.filter(r => r.tag === 'GOATA').length + ' blocks',
-    power: byTag('POWER').length + ' blocks',
-    short: byTag('SHORT').length + ' blocks',
-    plan: fmtShort(mon)
-  };
-  BODY_PAGES.forEach(pg => { counts[pg.id] = pg.groups.reduce((x, g) => x + g.ids.length, 0) + ' blocks'; });
-  const tile = (key, icon, hi) => el('button', {
-    class: 'tile' + (hi ? ' tile-hi' : ''), onclick: () => goSub(key)
-  }, [
+// A door on a hub: an icon, a name, one line, and what is behind it.
+function hubTile(n, icon, blurb, meta, onclick) {
+  return el('button', { class: 'tile', onclick: onclick }, [
     el('span', { class: 'tile-ico' }, [ico(icon, 'nav-ico')]),
     el('span', { class: 'tile-body' }, [
-      el('span', { class: 'tile-n' }, SECTIONS[key].n),
-      el('span', { class: 'tile-sub' }, SECTIONS[key].blurb)
+      el('span', { class: 'tile-n' }, n),
+      el('span', { class: 'tile-sub' }, blurb)
     ]),
-    el('span', { class: 'tile-meta num' }, counts[key])
-  ]);
-
-  // Grouped by what you came to do, training by body part first.
-  const HUB = [
-    { h: 'Train', tiles: [['grail', ICONS.grail], ['legs', ICONS.legs], ['upper', ICONS.upper], ['core', ICONS.core],
-      ['room', ICONS.room], ['power', ICONS.bolt], ['short', ICONS.clock]] },
-    { h: 'Play & recover', tiles: [['play', ICONS.play], ['trail', ICONS.trail], ['range', ICONS.range]] },
-    { h: 'Programs', tiles: [['boss', ICONS.boss], ['goata', ICONS.goata]] },
-    { h: 'Your plan', tiles: [['plan', ICONS.today]] }
-  ];
-
-  return el('div', { class: 'stack stack-lg' }, [
-    el('div', { class: 'sec-head' }, [
-      el('h2', null, 'Program'),
-      el('div', { class: 'trace' }),
-      el('p', { class: 'small muted', style: 'max-width:72ch' },
-        'Everything that is not today\u2019s session, grouped by what you came to do.')
-    ]),
-    ...HUB.map(g => el('section', { class: 'hub-group' }, [
-      el('h3', { class: 'eyebrow' }, g.h),
-      el('div', { class: 'hub' }, g.tiles.map(t => tile(t[0], t[1])))
-    ]))
+    meta ? el('span', { class: 'tile-meta num' }, meta) : null
   ]);
 }
 
 /* ===========================================================
-   VIEW: QUICK — routines and a build-your-own picker
+   VIEW: TRAIN — six pages, a few complete workouts on each
    =========================================================== */
-const COVERT = {
-  invisible: { l: 'Invisible', d: 'Nobody can tell you are doing this.', k: 'good' },
-  subtle:    { l: 'Subtle', d: 'Reads as fidgeting or a stretch.', k: 'warn' },
-  private:   { l: 'Needs a moment', d: 'Fine alone; not in an open-plan office.', k: 'hard' }
-};
-const BUILD = { keys: new Set(), q: '', cat: 'all' };
+function viewTrain() {
+  const today = new Date();
+  const grid = ids => el('div', { class: 'routine-grid' },
+    ids.map(id => ROUTINES.find(r => r.id === id)).filter(Boolean).map(r => routineCard(r, today)));
 
-// A Boss day is the warm-up and then its blocks, in order: his rule is to always warm up first.
-// A plan day is its warm-up and then its blocks, in order. A day can ask a block for fewer
-// rounds than its own ({ id, rounds }) — a light Saturday, say — without a second copy of it.
-function planDay(x, warmupId) {
-  if (!x.ids.length) return [];
-  return [warmupId].concat(x.ids).map(e => {
-    const r = ROUTINES.find(q => q.id === (typeof e === 'string' ? e : e.id));
-    return r && typeof e !== 'string' && e.rounds ? Object.assign({}, r, { rounds: e.rounds }) : r;
-  }).filter(Boolean);
-}
-function weekTable(week, warmupId) {
-  return el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
-    el('thead', null, [el('tr', null, ['Day', 'Workout', 'Time', ''].map(h => el('th', null, h)))]),
-    el('tbody', null, week.map(x => {
-      const steps = planDay(x, warmupId).flatMap(r => routineSteps(r));
-      const names = x.ids.map(e => {
-        const r = ROUTINES.find(q => q.id === (typeof e === 'string' ? e : e.id));
-        return r ? r.n + (typeof e !== 'string' && e.rounds ? ' (' + e.rounds + ' rounds)' : '') : '';
-      }).filter(Boolean).join(' + ');
-      return el('tr', null, [
-        el('td', null, x.d),
-        el('td', null, [names || x.note, names && x.note ? el('span', { class: 'muted' }, ' \u00b7 ' + x.note) : null]),
-        el('td', { class: 'n', style: 'white-space:nowrap' }, steps.length ? '\u2248 ' + fmtMins(runSeconds(steps)) : '\u2014'),
-        el('td', null, steps.length ? el('button', {
-          class: 'btn btn-sm', 'aria-label': 'Run ' + x.d + ' as one session',
-          onclick: () => RUN.open(steps, new Date(), 0)
-        }, [ico(ICONS.play, 'nav-ico'), 'Run']) : null)
-      ]);
+  // A page is open: its name, one line on how to use it, and its workouts.
+  const pg = TRAIN_PAGES.find(x => x.id === sub);
+  if (pg) {
+    return el('div', { class: 'stack stack-lg' }, [
+      el('button', { class: 'btn btn-sm back-link', onclick: () => goSub(null) }, '‹ Train'),
+      el('div', { class: 'page-head' }, [
+        el('h1', { class: 'display page-title' }, pg.n),
+        pg.intro ? el('p', { class: 'page-intro' }, pg.intro) : null
+      ]),
+      ...(pg.groups.length === 1 ? [grid(pg.groups[0].ids)] : pg.groups.map(g => el('section', { class: 'page-group' }, [
+        el('h2', { class: 'group-h' }, g.n),
+        g.sub ? el('p', { class: 'group-sub' }, g.sub) : null,
+        grid(g.ids)
+      ])))
+    ]);
+  }
+
+  return el('div', { class: 'stack stack-lg' }, [
+    el('div', { class: 'page-head' }, [
+      el('h1', { class: 'display page-title' }, 'Train'),
+      el('p', { class: 'page-intro' }, 'Six places. A few complete workouts in each.')
+    ]),
+    el('div', { class: 'hub' }, TRAIN_PAGES.map(p => {
+      const n = p.groups.reduce((a, g) => a + g.ids.length, 0);
+      return hubTile(p.n, ICONS[p.icon], p.blurb, n + (n === 1 ? ' workout' : ' workouts'), () => goSub(p.id));
     }))
-  ])]);
+  ]);
 }
-// The shortest and longest Boss workout in the current Gym/Home mode, so the prose never drifts.
-function bossRange() {
-  const mins = ROUTINES.filter(r => r.tag === 'BOSS' && r.id !== 'boss-warmup')
-    .map(r => Math.round(runSeconds(routineSteps(r)) / 60));
-  return Math.min.apply(null, mins) + ' to ' + Math.max.apply(null, mins) + ' minutes';
+
+/* ===========================================================
+   VIEW: MORE — the plan, the tests, the reading, your data
+   =========================================================== */
+const MORE = [
+  { id: 'plan', n: 'Your plan', icon: 'today', blurb: 'This week, the year, and the Copenhagen ladder.', view: () => planView() },
+  { id: 'tests', n: 'Tests', icon: 'tests', blurb: 'The battery every four weeks, and your results.', view: () => viewTests() },
+  { id: 'read', n: 'Read', icon: 'method', blurb: 'Why the program is built the way it is.', view: () => viewMethod() },
+  { id: 'data', n: 'Backup & voice', icon: 'save', blurb: 'Save your data. Change the coaching voice.', view: () => dataView() }
+];
+function dataView() {
+  return pageSec('Backup & voice',
+    'Everything is saved on this phone only. Copy a backup now and then — into a note, or an email to yourself — and before clearing the browser.',
+    el('div', { class: 'row' }, [
+      el('button', { class: 'btn', onclick: exportData }, 'Copy backup'),
+      el('button', { class: 'btn', onclick: importData }, 'Restore backup'),
+      el('button', { class: 'btn', onclick: () => voiceDialog() }, 'Coaching voice')
+    ]));
 }
+function viewMore() {
+  const m = MORE.find(x => x.id === sub);
+  if (m) return el('div', { class: 'stack stack-lg' }, [
+    el('button', { class: 'btn btn-sm back-link', onclick: () => goSub(null) }, '‹ More'),
+    m.view()
+  ]);
+  return el('div', { class: 'stack stack-lg' }, [
+    el('div', { class: 'page-head' }, [el('h1', { class: 'display page-title' }, 'More')]),
+    el('div', { class: 'hub' }, MORE.map(x => hubTile(x.n, ICONS[x.icon], x.blurb, null, () => goSub(x.id))))
+  ]);
+}
+
+const BUILD = { keys: new Set(), q: '', cat: 'all' };
 
 const RSEL = {};
 const rsel = id => RSEL[id] || (RSEL[id] = new Set());
@@ -1796,7 +1590,6 @@ function routineCard(r, date) {
   const log = S.routineLog || [];
   const today = iso(new Date());
   const timesToday = log.filter(x => x.d === today && x.id === r.id).length;
-  const cov = r.covert ? COVERT[r.covert] : null;
   const sel = rsel(r.id);
   const n = sel.size;
   const chosen = n ? r.items.filter((_, i) => sel.has(i)) : r.items;
@@ -1815,16 +1608,14 @@ function routineCard(r, date) {
           onclick: () => { on ? sel.delete(i) : sel.add(i); qmark(r.id); render(); }
         }, [(() => { const g = svgEl('svg', { viewBox: '0 0 24 24' });
               g.appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' })); return g; })()]),
+        // A row is the name, the dose, and the note that explains the dose. What it targets, what it
+        // costs and the full how-to are one tap away, so a list stays easy to read on a phone.
         el('button', { class: 'pick-body pick-open', onclick: () => openEx(rr.x), 'aria-label': ex.n + ' \u2014 how-to' }, [
           el('span', { class: 'pick-name' }, ex.n),
-          rr.swapped ? el('span', { class: 'pick-swap' }, [el('span', { class: 'chip swap' }, 'HOME'), ' instead of ' + EX[rr.from].n]) : null,
-          el('span', { class: 'pick-dose num' }, rr.d + ' \u00b7 tap for how-to'),
-          costChip(ex),
-          ex.targets ? el('span', { class: 'pick-targets' }, ex.targets) : null,
-          // The note is where the dose is explained — whose number it is, what to change, when
-          // to stop. It rendered on a session row and nowhere else, so the picker never showed it.
+          el('span', { class: 'pick-dose num' }, [
+            rr.swapped ? el('span', { class: 'chip swap', title: 'Instead of ' + EX[rr.from].n }, 'HOME') : null, rr.d]),
           rr.note ? el('span', { class: 'pick-note' }, rr.note) : null,
-          isHome() && !rr.swapped && ex.home ? el('span', { class: 'pick-home' }, 'At home: ' + ex.home) : null
+          !rr.swapped && homeHint(ex) ? el('span', { class: 'pick-home' }, 'At home: ' + ex.home) : null
         ]),
         el('button', {
           class: 'btn btn-sm row-start',
@@ -1851,23 +1642,22 @@ function routineCard(r, date) {
     el('div', { class: 'spread' }, [
       el('div', { class: 'row', style: 'gap:.4rem' }, [
         el('h3', { style: 'font-size:var(--t-md);font-weight:600' }, r.n),
-        cov ? el('span', { class: 'chip ' + cov.k, title: cov.d }, cov.l) : null,
         timesToday ? el('span', { class: 'chip good' }, '✓ ' + (timesToday > 1 ? timesToday + '×' : '') + ' today') : null
       ]),
       // a menu has no "whole thing" to time: it shows the picks, or says to pick
       el('span', { class: 'num xs muted', style: 'white-space:nowrap' }, r.open && !n ? 'pick any' : '≈ ' + fmtMins(runSeconds(routineSteps(r, chosen))))
     ]),
     el('p', { class: 'small muted' }, r.sub),
-    // A short, authored line saying what the block is for. check-data.js verifies every term
-    // against the items' own targets, so it stays honest without becoming a list of everything.
-    r.targets ? el('p', { class: 'routine-targets' }, [el('span', { class: 'eyebrow' }, 'Targets'), ' ' + r.targets]) : null,
+    // What it targets and why it exists are worth reading once, so both sit behind one fold.
+    // check-data.js verifies every targets term against the items' own targets.
     (() => {
       const shown = WHYOPEN.has(r.id);
       return el('div', { class: 'why-fold' }, [
         el('button', {
           class: 'why-toggle', 'aria-expanded': shown ? 'true' : 'false',
           onclick: () => { shown ? WHYOPEN.delete(r.id) : WHYOPEN.add(r.id); render(); }
-        }, shown ? 'Hide the reasoning' : 'Why this block exists'),
+        }, shown ? 'Hide' : 'About this workout'),
+        shown && r.targets ? el('p', { class: 'routine-targets', style: 'margin-top:.45rem' }, [el('span', { class: 'eyebrow' }, 'Targets'), ' ' + r.targets]) : null,
         shown ? el('p', { class: 'small', style: 'margin-top:.45rem' }, r.why) : null
       ]);
     })(),
@@ -1895,83 +1685,12 @@ function routineCard(r, date) {
   ]);
 }
 
-function viewDaily() {
-  const date = new Date();
-  return el('div', { class: 'stack stack-xl' }, [
-    el('div', { class: 'stack stack-md' }, [
-      el('div', { class: 'sec-head' }, [
-        el('h2', null, 'Every day'),
-        el('div', { class: 'trace' }),
-        el('p', { class: 'small muted', style: 'max-width:72ch' },
-          'Two different jobs. Free wins cost almost nothing and are judged over months \u2014 tick them off as the day goes rather than sitting down to do them. The Armor is medicine, aimed at the tissues most likely to end a season, and it wants doing properly in one sitting.')
-      ]),
-      tickCard(date, FREE_WINS, 'free'),
-      el('div', { class: 'row', style: 'gap:.4rem' }, [
-        el('button', {
-          class: 'btn btn-sm',
-          onclick: () => RUN.open(stepsFromItems(FREE_WINS.items, FREE_WINS.n), date, 0)
-        }, [ico(ICONS.play, 'nav-ico'), 'Run them as a block instead']),
-        el('button', { class: 'btn btn-ghost btn-sm', onclick: () => {
-          const d = iso(date), m = S.free[d] || (S.free[d] = {});
-          const all = FREE_WINS.items.every((_, i) => m[i]);
-          FREE_WINS.items.forEach((_, i) => { if (all) delete m[i]; else m[i] = 1; });
-          save(); render();
-        } }, 'Tick all')
-      ]),
-      tickCard(date, ARMOR, 'armor', 'no exceptions'),
-      el('div', { class: 'row', style: 'gap:.4rem' }, [
-        el('button', {
-          class: 'btn btn-sm', onclick: () => startArmorRun(date)
-        }, [ico(ICONS.play, 'nav-ico'), 'Run the Armor \u00b7 ' + fmtMins(runSeconds(buildSteps(null, date, { armor: true })))])
-      ])
-    ]),
-    viewDesk()
-  ]);
-}
-
-function viewDesk() {
-  const date = new Date();
-  const deskEx = Object.keys(EX).filter(id => (EX[id].tags || []).includes('desk'));
-  const byCovert = k => deskEx.filter(id => EX[id].covert === k);
-  return el('div', { class: 'stack stack-xl' }, [
-    el('div', { class: 'stack stack-md' }, [
-      el('div', { class: 'sec-head' }, [
-        el('h2', null, 'At your desk'),
-        el('div', { class: 'trace' }),
-        el('p', { class: 'small muted', style: 'max-width:72ch' },
-          'Isometrics and tissue work you can run in a chair, in a meeting, on a call. Both the Copenhagen and the non-operative hip labrum literature point the same way: the armor protocols respond to accumulated frequency far more than to intensity. A workday is the largest unused training window you have.')
-      ]),
-      el('div', { class: 'routine-grid' }, ROUTINES.filter(r => r.tag === 'DESK').map(r => routineCard(r, date)))
-    ]),
-    el('div', { class: 'stack stack-md' }, [
-      el('div', { class: 'sec-head' }, [
-        el('h2', null, 'How visible each one is'),
-        el('div', { class: 'trace' })
-      ]),
-      ...[['invisible', 'Nobody can tell'], ['subtle', 'Reads as fidgeting or a stretch'], ['private', 'Fine alone, not in an open-plan office']]
-        .map(([k, label]) => {
-          const list = byCovert(k);
-          if (!list.length) return null;
-          return el('div', { class: 'stack stack-sm' }, [
-            el('div', { class: 'row' }, [
-              el('span', { class: 'chip ' + COVERT[k].k }, COVERT[k].l),
-              el('span', { class: 'small muted' }, label)
-            ]),
-            el('div', { class: 'row', style: 'gap:.3rem' }, list.map(id =>
-              el('button', { class: 'mini', onclick: () => openEx(id) }, EX[id].n)))
-          ]);
-        }).filter(Boolean)
-    ])
-  ]);
-}
-
 function viewBuild() {
   const date = new Date();
   const ids = Object.keys(EX).filter(id => {
     const e = EX[id];
     const q = BUILD.q.trim().toLowerCase();
     const catOk = BUILD.cat === 'all' ? true
-      : BUILD.cat === '__desk' ? (e.tags || []).includes('desk')
       : BUILD.cat === '__home' ? !HOME_SUB[id]
       : (e.cat === BUILD.cat || (e.tags || []).includes(BUILD.cat));
     return catOk && (!q || e.n.toLowerCase().includes(q) || (e.tags || []).join(' ').includes(q));
@@ -1993,7 +1712,7 @@ function viewBuild() {
             const n = document.querySelector('.build-search'); if (n) { n.focus(); n.setSelectionRange(pos, pos); }
           }, class: 'build-search'
         }),
-        ...[['all', 'All'], ['__desk', 'Desk'], ['__home', 'No gym'], ['iso', 'Isometrics'],
+        ...[['all', 'All'], ['__home', 'No gym'], ['iso', 'Isometrics'],
             ['armor', 'Rehab'], ['tissue', 'Tissue'], ['mobility', 'Mobility'], ['plyo', 'Plyos'], ['strength', 'Strength']]
           .map(([k, label]) => el('button', {
             class: 'btn btn-sm', 'aria-pressed': BUILD.cat === k ? 'true' : 'false',
@@ -2008,10 +1727,7 @@ function viewBuild() {
         }, [
           el('span', { class: 'n' }, EX[id].n),
           el('span', { class: 'd' }, EX[id].dose),
-          el('div', { class: 'row', style: 'gap:.25rem;margin-top:.15rem' }, [
-            EX[id].covert ? el('span', { class: 'chip ' + COVERT[EX[id].covert].k }, COVERT[EX[id].covert].l) : null,
-            ...(EX[id].tags || []).slice(0, 2).map(t => el('span', { class: 'chip' }, t))
-          ])
+          el('div', { class: 'row', style: 'gap:.25rem;margin-top:.15rem' }, (EX[id].tags || []).slice(0, 2).map(t => el('span', { class: 'chip' }, t)))
         ]);
       })),
       picked.length ? el('div', { class: 'pick-bar' }, [
@@ -2033,7 +1749,7 @@ function viewBuild() {
 let libFilter = 'all', libQuery = '';
 let libTab = 'browse';   // the builder is its own tab, not 149 more cards below the library
 const CATS = [
-  ['all', 'All'], ['__desk', 'Desk'], ['__home', 'No gym needed'], ['iso', 'Isometrics'], ['speed', 'Speed'], ['plyo', 'Plyometrics'],
+  ['all', 'All'], ['__home', 'No gym needed'], ['iso', 'Isometrics'], ['speed', 'Speed'], ['plyo', 'Plyometrics'],
   ['strength', 'Strength'], ['armor', 'Rehab'], ['tissue', 'Tissue & fascia'],
   ['mobility', 'Mobility'], ['cond', 'Conditioning'], ['throw', 'Throwing'], ['breath', 'Breath']
 ];
@@ -2041,7 +1757,6 @@ function viewLibrary() {
   const ids = Object.keys(EX).filter(id => {
     const e = EX[id];
     const catOk = libFilter === 'all' ? true
-      : libFilter === '__desk' ? (e.tags || []).includes('desk')
       : libFilter === '__home' ? !HOME_SUB[id]
       : (e.cat === libFilter || (e.tags || []).includes(libFilter));
     const q = libQuery.trim().toLowerCase();
@@ -2277,14 +1992,12 @@ function viewMethod() {
    =========================================================== */
 const NAV = [
   ['today', 'Today', ICONS.today, '1'],
-  ['daily', 'Daily', ICONS.daily, '2'],
-  ['program', 'Program', ICONS.program, '3'],
-  ['library', 'Library', ICONS.library, '4'],
-  ['tests', 'Tests', ICONS.tests, '5'],
-  ['method', 'Method', ICONS.method, '6']
+  ['program', 'Train', ICONS.program, '2'],
+  ['library', 'Library', ICONS.library, '3'],
+  ['more', 'More', ICONS.more, '4']
 ];
 let route = 'today';
-let sub = null;   // the open Program section, or null for its hub
+let sub = null;   // the open Train page or More section, or null for the tab's hub
 // Tapping the tab you are already on returns to that screen's top level,
 // the way every phone app behaves.
 function go(r) { sub = null; route = r; window.scrollTo(0, 0); render(); }
@@ -2363,10 +2076,8 @@ function render() {
   main.appendChild(strip());
   const v = el('div', { class: 'view' }, [
     route === 'today' ? viewToday() :
-    route === 'daily' ? viewDaily() :
-    route === 'program' ? viewProgram() :
-    route === 'library' ? viewLibrary() :
-    route === 'tests' ? viewTests() : viewMethod()
+    route === 'program' ? viewTrain() :
+    route === 'library' ? viewLibrary() : viewMore()
   ]);
   main.appendChild(v);
   renderQueue();

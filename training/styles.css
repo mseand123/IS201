@@ -603,11 +603,6 @@ body.running { overflow: hidden; }
 .routine { display: flex; flex-direction: column; gap: .5rem; }
 .routine .btn-run { margin-top: auto; justify-content: center; padding: .55rem; }
 .routine .btn-run svg { width: 13px; height: 13px; fill: currentColor; stroke: currentColor; }
-.mini {
-  background: var(--surface); border: 1px solid var(--line); border-radius: 999px; cursor: pointer;
-  font-size: var(--t-xs); color: var(--muted); padding: .15rem .5rem;
-}
-.mini:hover { color: var(--brand); border-color: var(--brand); }
 
 .build-card.picked { border-color: var(--hi-fill); box-shadow: inset 0 0 0 1px var(--hi-fill); }
 
@@ -622,7 +617,6 @@ body.running { overflow: hidden; }
 }
 .shortcut .eyebrow { margin-right: .2rem; }
 .shortcut .btn-sm svg { width: 11px; height: 11px; fill: currentColor; stroke: currentColor; }
-
 
 /* ---------- simplified Today ---------- */
 .start-row { gap: .6rem; }
@@ -719,9 +713,6 @@ body.running { overflow: hidden; }
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: .55rem;
 }
-/* A heading and its tiles: what you came to do, then where it is. */
-.hub-group { display: flex; flex-direction: column; gap: .5rem; }
-.hub-group > .eyebrow { margin: 0; }
 .tile {
   display: flex;
   align-items: center;
@@ -832,7 +823,6 @@ body.running { overflow: hidden; }
 /* ---------- what a block, and each exercise in it, is actually for ---------- */
 .routine-targets { font-size: var(--t-xs); color: var(--ink-2); line-height: 1.4; }
 .routine-targets .eyebrow { margin-right: .35rem; }
-.pick-targets { font-size: var(--t-xs); color: var(--faint); line-height: 1.3; }
 .run-targets { font-size: var(--t-sm); color: var(--muted); margin-top: -.3rem; max-width: 34ch; }
 
 /* ===========================================================
@@ -865,29 +855,7 @@ body.running { overflow: hidden; }
   max-width: 68ch;
 }
 
-.daily-strip {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  flex-wrap: wrap;
-  width: 100%;
-  padding: .7rem .9rem;
-  border: 1px solid var(--edge);
-  border-radius: var(--r-md);
-  background: var(--raised);
-  box-shadow: var(--lift);
-  cursor: pointer;
-  font: inherit;
-  color: var(--ink);
-  text-align: left;
-}
-.daily-strip:hover { border-color: var(--brand); background: var(--surface); }
-.daily-strip:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
-.daily-strip .eyebrow { margin-right: .1rem; }
-.daily-strip-go { margin-left: auto; color: var(--faint); font-size: var(--t-md); line-height: 1; }
-
 @media (prefers-reduced-motion: reduce) { .block-caret { transition: none; } }
-.tick-foot { display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap; padding: .6rem .9rem; border-top: 1px solid var(--line); }
 /* the daily lists are read on a phone: the name must not wrap behind its own count */
 .block-head .name { white-space: nowrap; }
 
@@ -986,6 +954,18 @@ body.running .queuebar { display: none; }
 .btn[disabled], .btn[disabled]:hover { opacity: .55; cursor: default; }
 .btn-primary[disabled]:hover { background: var(--brand-2); border-color: var(--brand-2); color: var(--on-brand); }
 
-/* In Home mode a list row says it is the home version, and of what. */
-.pick-swap { display: flex; align-items: center; gap: .35rem; font-size: var(--t-xs); color: var(--ink-2); margin: .1rem 0; }
-.pick-swap .chip.swap { margin-left: 0; padding: .05rem .4rem; }
+/* ===========================================================
+   Train and More: a page is a title, one line, then its workouts.
+   =========================================================== */
+.page-head { display: flex; flex-direction: column; gap: .35rem; }
+.page-title { font-size: var(--t-xl); }
+.page-intro { font-size: var(--t-sm); color: var(--muted); max-width: 60ch; line-height: 1.45; }
+.page-group { display: flex; flex-direction: column; gap: .6rem; }
+.page-group + .page-group { margin-top: .6rem; }
+.group-h { font-family: var(--display); font-weight: 700; font-size: var(--t-md); letter-spacing: -.01em; }
+.group-sub { font-size: var(--t-xs); color: var(--muted); margin-top: -.35rem; max-width: 60ch; }
+/* the home hint is a reminder, not the how-to: one line, and the tap opens the rest */
+.pick-home { display: -webkit-box; -webkit-line-clamp: 1; line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.pick-dose .chip.swap { margin: 0 .45rem 0 0; padding: .02rem .4rem; font-family: var(--body); vertical-align: 1px; }
+.pick-row { padding: .45rem 0; }
+.item-open .home-note { display: -webkit-box; -webkit-line-clamp: 1; line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }

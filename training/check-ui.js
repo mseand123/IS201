@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-/* The interactions the other checks cannot see: the hub's sections, a queue built from two
-   different blocks, every row carrying its label, home mode telling the truth, and the player
-   opening with a real estimate. Serves the app itself and drives it in Chromium.
+/* The interactions the other checks cannot see: four tabs, the six Train pages, a queue built
+   from two different pages, slim rows, home mode telling the truth, and the player opening with
+   a real estimate. Serves the app itself and drives it in Chromium.
    Run: node training/check-ui.js          (needs playwright; exit 1 on findings)          */
 const http = require('http'), fs = require('fs'), path = require('path');
 const root = path.join(__dirname, '..');
@@ -39,86 +39,76 @@ const DATA = require('./data.js');
   await p.goto(base, { waitUntil: 'load' });
   await p.waitForTimeout(800);
 
-  // --- the hub: grouped by what you came to do, the body parts first, and each section opens ---
-  await p.keyboard.press('3'); await p.waitForTimeout(500);
+  // --- four tabs, and Train is six doors ---
+  const tabs = (await p.locator('.tabbar button').allInnerTexts()).map(t => t.trim());
+  ck(tabs.join('|') === 'Today|Train|Library|More', 'the tabs should be Today, Train, Library, More; got ' + tabs.join(', '));
+  await p.keyboard.press('2'); await p.waitForTimeout(500);
   const tiles = (await p.locator('.tile-n').allInnerTexts()).map(t => t.trim());
-  ['The Holy Grail', 'Legs', 'Upper Body', 'Core', 'Room Circuit', 'Frisbee', 'Stretching & range', 'Boss Your Game',
-   'GOATA Movement', 'Hiking', 'This week'].forEach(n => ck(tiles.includes(n), 'the hub is missing the ' + n + ' tile'));
-  ['By body part', 'Weak-link blocks', 'The year', 'Copenhagen ladder'].forEach(n =>
-    ck(!tiles.includes(n), 'the ' + n + ' tile should have folded into another section'));
-  const heads = (await p.locator('.hub-group > .eyebrow').allInnerTexts()).map(t => t.trim().toLowerCase());
-  ck(heads.join('|') === 'train|play & recover|programs|your plan',
-     'the hub headings should be Train, Play & recover, Programs, Your plan; got ' + heads.join(', '));
-  const train = (await p.locator('.hub-group').first().locator('.tile-n').allInnerTexts()).map(t => t.trim());
-  ck(train.slice(0, 4).join('|') === 'The Holy Grail|Legs|Upper Body|Core',
-     'Train should open with the Holy Grail and the three body pages, got ' + train.join(', '));
-  ck(train.includes('Room Circuit'), 'the Room Circuit should be under Train');
-  console.log('hub:', heads.join(' / '), '|', tiles.length, 'tiles');
+  ck(tiles.join('|') === DATA.TRAIN_PAGES.map(pg => pg.n).join('|'),
+     'Train should show the six pages in order, got ' + tiles.join(', '));
+  ck(tiles[0] === 'The Holy Grail', 'the Holy Grail should be the first door');
+  console.log('train:', tiles.join(' / '));
 
-  // every routine the hub can reach, against the data
+  // every routine is on a page, and every page opens onto it
+  const esc = t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const reachable = new Set();
   for (let i = 0; i < await p.locator('.tile').count(); i++) {
     await p.locator('.tile').nth(i).click(); await p.waitForTimeout(350);
     (await p.locator('.routine h3').allInnerTexts()).forEach(t => reachable.add(t.trim()));
     await p.locator('.back-link').click(); await p.waitForTimeout(250);
   }
-  DATA.ROUTINES.filter(r => r.tag !== 'DESK').forEach(r =>
-    ck(reachable.has(r.n), r.id + ' (' + r.n + ') is in no section of the hub'));
-  console.log('routines reachable from the hub:', reachable.size);
+  DATA.ROUTINES.forEach(r => ck(reachable.has(r.n), r.id + ' (' + r.n + ') is on no Train page'));
+  console.log('routines reachable from Train:', reachable.size, 'of', DATA.ROUTINES.length);
+  const openPage = async name => {
+    await p.keyboard.press('2'); await p.waitForTimeout(300);
+    if (await p.locator('.back-link').count()) { await p.locator('.back-link').click(); await p.waitForTimeout(250); }
+    await p.locator('.tile').filter({ has: p.locator('.tile-n', { hasText: new RegExp('^' + esc(name) + '$') }) }).first().click();
+    await p.waitForTimeout(400);
+  };
+  const cardOf = name => p.locator('.routine').filter({ has: p.locator('h3', { hasText: new RegExp('^' + esc(name) + '$') }) }).first();
 
-  // --- every row in a labelled block says what it targets and what it costs ---
-  const strict = ['WARMUP', 'TRAIL', 'BOSS'];
-  const sample = DATA.ROUTINES.filter(r => strict.includes(r.tag)).slice(0, 3);
-  for (const r of sample) {
-    let found = false;
-    for (let i = 0; i < await p.locator('.tile').count(); i++) {
-      await p.locator('.tile').nth(i).click(); await p.waitForTimeout(300);
-      const card = p.locator('.routine').filter({ hasText: r.n }).first();
-      if (await card.count()) {
-        await card.locator('.btn-pick').click(); await p.waitForTimeout(300);
-        const rows = card.locator('.pick-row');
-        ck(await rows.count() === r.items.length, r.id + ' should list ' + r.items.length + ' rows, got ' + await rows.count());
-        ck(await card.locator('.cost-chip').count() > 0, r.id + ' rows should show what they cost');
-        ck(await card.locator('.pick-targets').count() === r.items.length, r.id + ' every row should carry a targets label');
-        found = true;
-      }
-      await p.locator('.back-link').click(); await p.waitForTimeout(220);
-      if (found) break;
-    }
-    ck(found, r.id + ' could not be found in any section');
-  }
+  // --- rows are slim: the name, the dose, a note; what it targets and costs is in the how-to ---
+  await openPage('Frisbee');
+  const wu = DATA.ROUTINES.find(r => r.id === 'warmup-full');
+  await cardOf(wu.n).locator('.btn-pick').click(); await p.waitForTimeout(300);
+  const wrows = cardOf(wu.n).locator('.pick-row');
+  ck(await wrows.count() === wu.items.length, 'the warm-up should list ' + wu.items.length + ' rows, got ' + await wrows.count());
+  ck(await cardOf(wu.n).locator('.cost-chip, .pick-targets').count() === 0, 'rows should not carry cost or targets lines any more');
+  ck(await cardOf(wu.n).locator('.routine-targets').count() === 0, 'a card keeps its targets inside the fold until asked');
+  await wrows.first().locator('.pick-open').click(); await p.waitForTimeout(300);
+  const how = await p.locator('.modal').innerText();
+  ck(how.includes(DATA.EX[wu.items[0].x].targets), 'the how-to should say what the exercise targets');
+  await p.locator('.modal-close').click(); await p.waitForTimeout(200);
 
-  // --- a queue built from two different blocks runs as one session ---
-  await p.locator('.tile').filter({ hasText: 'Stretching & range' }).first().click(); await p.waitForTimeout(400);
+  // --- a queue built from two different pages runs as one session ---
+  await openPage('Stretch');
   const a = p.locator('.routine').first();
   const aName = (await a.locator('h3').first().innerText()).trim();
   await a.locator('.btn-pick').click(); await p.waitForTimeout(250);
   await a.locator('.pick-row .tick').first().click(); await p.waitForTimeout(250);
   ck(await p.locator('#queuebar').isVisible(), 'one pick should raise the queue bar');
-  await p.locator('.back-link').click(); await p.waitForTimeout(300);
-  await p.locator('.tile').filter({ hasText: 'Boss Your Game' }).first().click(); await p.waitForTimeout(400);
-  const c = p.locator('.routine').filter({ hasText: 'Upper Pull' }).first();
+  await openPage('Legs');
+  const c = cardOf('Legs · Quick');
   await c.locator('.btn-pick').click(); await p.waitForTimeout(250);
   await c.locator('.pick-row .tick').first().click(); await p.waitForTimeout(250);
   const bar = await p.locator('#queuebar').innerText();
   ck(/2 exercises/.test(bar), 'the queue should total both picks, got ' + bar.replace(/\n/g, ' | '));
-  ck(bar.includes(aName) && bar.includes('Upper Pull'), 'the queue should name both blocks, got ' + bar.replace(/\n/g, ' | '));
+  ck(bar.includes(aName) && bar.includes('Legs · Quick'), 'the queue should name both blocks, got ' + bar.replace(/\n/g, ' | '));
   await p.locator('#queuebar .queue-run').click(); await p.waitForTimeout(600);
   const step = (await p.locator('#runStep').innerText()).trim();
   const left = (await p.locator('#runLeft').innerText()).trim();
-  ck(/\/\s*2$/.test(step), 'the queue should run as one 2-step session, got ' + step);
+  // a pick from a circuit keeps the circuit's rounds
+  const wantQ = [aName, 'Legs · Quick'].reduce((x, n) => x + (DATA.ROUTINES.find(r => r.n === n).rounds || 1), 0);
+  ck(new RegExp('/\\s*' + wantQ + '$').test(step), 'the queue should run as one ' + wantQ + '-step session, got ' + step);
   ck(/min|\d\d\s*s/.test(left), 'the player should show a real estimate, got ' + left);
-  ck(!/^~[0-9]\s*s left$/.test(left), 'a multi-round step should not read "~3 s left", got ' + left);
-  console.log('queue across two blocks:', step, left);
+  console.log('queue across two pages:', step, left);
   await p.locator('.run button[aria-label="Exit session"]').click(); await p.waitForTimeout(300);
   ck(await p.locator('#queuebar').isHidden(), 'running the queue should empty it');
 
-  // --- the Holy Grail: first tile, the list starts open and waits for a pick, the Daily Six runs ---
-  await p.keyboard.press('3'); await p.waitForTimeout(400);
-  ck((await p.locator('.tile-n').first().innerText()).trim() === 'The Holy Grail', 'the Holy Grail should be the first tile');
-  await p.locator('.tile').filter({ hasText: 'The Holy Grail' }).first().click(); await p.waitForTimeout(400);
+  // --- the Holy Grail: the list waits for a pick, the Daily Six and the Room Circuit run as circuits ---
+  await openPage('The Holy Grail');
   const grailList = DATA.ROUTINES.find(r => r.id === 'grail-list');
-  const gl = p.locator('.routine').filter({ has: p.locator('h3', { hasText: /^The Holy Grail$/ }) }).first();
+  const gl = cardOf('The Holy Grail');
   ck(await gl.locator('.pick-row').count() === grailList.items.length, 'the Holy Grail list should start open with every pick showing');
   ck(await gl.locator('.btn-run').isDisabled(), 'with nothing ticked, the list should wait for a pick rather than run an hour of everything');
   await gl.locator('.pick-row .tick').nth(0).click(); await p.waitForTimeout(250);
@@ -127,120 +117,72 @@ const DATA = require('./data.js');
   await gl.locator('.btn-run').click(); await p.waitForTimeout(500);
   ck(/\/\s*2$/.test((await p.locator('#runStep').innerText()).trim()), 'the two picks should run as two steps');
   await p.locator('.run button[aria-label="Exit session"]').click(); await p.waitForTimeout(300);
-  const six = p.locator('.routine').filter({ hasText: 'The Daily Six' }).first();
-  await six.locator('.btn-run').click(); await p.waitForTimeout(500);
-  const sixTop = (await p.locator('.run-meta').innerText()).replace(/\n/g, ' | ');
-  ck(/Round 1 of 2/.test(sixTop) && /\/\s*12$/.test(sixTop), 'the Daily Six should run 6 moves × 2 rounds, got ' + sixTop);
-  console.log('Daily Six:', sixTop);
-  await p.locator('.run button[aria-label="Exit session"]').click(); await p.waitForTimeout(300);
-  await p.locator('.back-link').click(); await p.waitForTimeout(250);
+  for (const [id, want] of [['grail-daily', 'Round 1 of 2'], ['room-circuit', 'Round 1 of 3']]) {
+    const r = DATA.ROUTINES.find(x => x.id === id);
+    await cardOf(r.n).locator('.btn-run').click(); await p.waitForTimeout(500);
+    const top = (await p.locator('.run-meta').innerText()).replace(/\n/g, ' | ');
+    ck(top.includes(want) && new RegExp('/\\s*' + r.items.length * r.rounds + '$').test(top),
+       r.n + ' should run ' + r.items.length + ' moves × ' + r.rounds + ' rounds, got ' + top);
+    console.log(r.n + ':', top);
+    await p.locator('.run button[aria-label="Exit session"]').click(); await p.waitForTimeout(300);
+  }
 
-  // --- the Room Circuit runs as a real circuit: every move, every round, labelled ---
-  await p.keyboard.press('3'); await p.waitForTimeout(400);
-  await p.locator('.tile').filter({ hasText: 'Room Circuit' }).first().click(); await p.waitForTimeout(400);
-  const room = DATA.ROUTINES.find(r => r.id === 'room-circuit');
-  await p.locator('.routine').filter({ hasText: room.n }).first().locator('.btn-run').click(); await p.waitForTimeout(600);
-  const roomTop = (await p.locator('.run-meta').innerText()).replace(/\n/g, ' | ');
-  ck(new RegExp('/\\s*' + room.items.length * room.rounds + '$').test(roomTop.split(' | ').pop()),
-     'the Room Circuit should run ' + room.items.length * room.rounds + ' steps, got ' + roomTop);
-  ck(/Round 1 of 3/.test(roomTop), 'the player should say which round, got ' + roomTop);
-  console.log('room circuit:', roomTop);
-  await p.locator('.run button[aria-label="Exit session"]').click(); await p.waitForTimeout(300);
-  await p.locator('.back-link').click(); await p.waitForTimeout(250);
-
-  // --- Boss Your Game: the week is computed and runnable, and nothing is below his numbers ---
-  await p.keyboard.press('3'); await p.waitForTimeout(400);
-  await p.locator('.tile').filter({ hasText: 'Boss Your Game' }).first().click(); await p.waitForTimeout(500);
-  const bossTxt = await p.locator('.view').innerText();
-  ck(/run \d+ to \d+ minutes rather than his ten to twenty/.test(bossTxt), 'the Boss intro should state the computed time range');
-  ck(/Off the floor/i.test(bossTxt) && /His five rules/.test(bossTxt), 'the off-the-floor card is missing');
-  ck(/cold water in the hours after a strength session/i.test(bossTxt), 'the cold-tub conflict should be spelled out');
-  const weekRows = p.locator('table.data').last().locator('tbody tr');
-  ck(await weekRows.count() === DATA.BOSS_WEEK.length, 'the week should have ' + DATA.BOSS_WEEK.length + ' rows');
-  const monTime = (await weekRows.first().innerText()).match(/≈\s*(\d+)\s*min/);
-  ck(monTime && +monTime[1] > 30, 'Monday should show its real length, not his ~30 min, got ' + (monTime && monTime[1]));
-  await weekRows.first().locator('button').click(); await p.waitForTimeout(600);
-  const monSteps = (await p.locator('#runStep').innerText()).trim();
-  const wantMon = ['boss-warmup'].concat(DATA.BOSS_WEEK[0].ids)
-    .reduce((a, id) => a + DATA.ROUTINES.find(r => r.id === id).items.length, 0);
-  ck(new RegExp('/\\s*' + wantMon + '$').test(monSteps), 'Monday should run warm-up + its blocks as ' + wantMon + ' steps, got ' + monSteps);
-  console.log('Boss Monday runs as one session:', monSteps, monTime && monTime[1] + ' min');
+  // --- Fascia & Flow: the three cards, and Fascia Flow runs every move ---
+  await openPage('Fascia & Flow');
+  const flowPage = DATA.TRAIN_PAGES.find(pg => pg.id === 'flow');
+  const flowCards = (await p.locator('.routine h3').allInnerTexts()).map(t => t.trim());
+  ck(flowCards.join('|') === flowPage.groups[0].ids.map(id => DATA.ROUTINES.find(r => r.id === id).n).join('|'),
+     'Fascia & Flow should show its three cards, got ' + flowCards.join(', '));
+  const ff = DATA.ROUTINES.find(r => r.id === 'fascia-flow');
+  await cardOf(ff.n).locator('.btn-run').click(); await p.waitForTimeout(500);
+  const ffTop = (await p.locator('#runStep').innerText()).trim();
+  ck(new RegExp('/\\s*' + ff.items.length + '$').test(ffTop), 'Fascia Flow should run ' + ff.items.length + ' steps, got ' + ffTop);
   await p.locator('.run button[aria-label="Exit session"]').click(); await p.waitForTimeout(300);
 
-  // his minimums, read off the handoff: sets × reps per side can never be below his rounds × reps
-  const MIN = { 'sl-hop-exit': 9, 'split-jump': 30, 'bridge-leg-raise': 18, 'pushup': 30, 'pullup': 15, 'bodyweight-squat': 10 };
-  DATA.ROUTINES.filter(r => r.tag === 'BOSS').forEach(r => r.items.forEach(it => {
-    if (!MIN[it.x]) return;
-    const m = it.d.match(/^(\d+)\s*×\s*(\d+)/) || it.d.match(/^(\d+)()/);
-    const total = m[2] ? +m[1] * +m[2] : +m[1];
-    ck(total >= MIN[it.x], r.id + ' › ' + it.x + ' is ' + total + ', below his minimum of ' + MIN[it.x]);
-  }));
+  // --- More: the plan, the tests, the reading and the backup each open ---
+  await p.keyboard.press('4'); await p.waitForTimeout(400);
+  const more = (await p.locator('.tile-n').allInnerTexts()).map(t => t.trim());
+  ck(more.join('|') === 'Your plan|Tests|Read|Backup & voice', 'More should hold the plan, tests, reading and backup; got ' + more.join(', '));
+  for (let i = 0; i < more.length; i++) {
+    await p.locator('.tile').nth(i).click(); await p.waitForTimeout(350);
+    ck(await p.locator('.view h2').count() > 0, more[i] + ' should open onto something');
+    await p.locator('.back-link').click(); await p.waitForTimeout(250);
+  }
+  await p.locator('.tile').filter({ hasText: 'Your plan' }).first().click(); await p.waitForTimeout(350);
+  const planTxt = await p.locator('.view').innerText();
+  ck(/This week/.test(planTxt) && /The year/.test(planTxt) && /Copenhagen ladder/.test(planTxt), 'Your plan should hold the week, the year and the Copenhagen ladder');
 
-  // Home mode must not delete the pull-ups or duplicate a row
+  // --- Home mode: the Legs page lists what you will do, wall sits are on it, no gym lift survives ---
   await p.evaluate(() => { const s = JSON.parse(localStorage.getItem('groundcontact.v1') || '{}');
     s.settings = Object.assign(s.settings || {}, { mode: 'home' }); localStorage.setItem('groundcontact.v1', JSON.stringify(s)); });
   await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(700);
-  await p.keyboard.press('3'); await p.waitForTimeout(400);
-  await p.locator('.tile').filter({ hasText: 'Boss Your Game' }).first().click(); await p.waitForTimeout(500);
-  for (const id of ['boss-pull', 'boss-ankles', 'boss-core-hip']) {
-    const r = DATA.ROUTINES.find(x => x.id === id);
-    const card = p.locator('.routine').filter({ hasText: r.n }).first();
-    await card.locator('.btn-pick').click(); await p.waitForTimeout(300);
-    const names = (await card.locator('.pick-name').allInnerTexts()).map(t => t.trim());
-    ck(new Set(names).size === names.length, id + ' in Home mode lists a row twice: ' + names.join(', '));
-    if (id === 'boss-pull') ck(names.includes('Pull-Up'), 'Home mode should keep the pull-ups, got ' + names.join(', '));
-  }
-  await p.locator('.back-link').click(); await p.waitForTimeout(250);
-
-  // --- the Legs page at home: it lists what you will do, wall sits are on it, no gym lift survives,
-  // and it opens with complete workouts at a sensible length ---
-  const esc = t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  await p.locator('.tile').filter({ has: p.locator('.tile-n', { hasText: /^Legs$/ }) }).first().click(); await p.waitForTimeout(500);
-  const legs = DATA.BODY_PAGES.find(pg => pg.id === 'legs');
-  const legTxt = await p.locator('.view').innerText();
-  ck(legTxt.indexOf(legs.groups[0].n) >= 0 && legTxt.indexOf(legs.groups[0].n) < legTxt.indexOf(legs.groups[1].n),
-     'the Legs page should open with ' + legs.groups[0].n);
-  const legNames = new Set(); let swaps = 0;
-  for (const id of legs.groups.flatMap(g => g.ids)) {
-    const r = DATA.ROUTINES.find(x => x.id === id);
-    const card = p.locator('.routine').filter({ has: p.locator('h3', { hasText: new RegExp('^' + esc(r.n) + '$') }) }).first();
-    if (!(await card.locator('.pick-row').count())) { await card.locator('.btn-pick').click(); await p.waitForTimeout(250); }
-    const names = (await card.locator('.pick-name').allInnerTexts()).map(t => t.trim());
-    ck(names.length === r.items.length, id + ' should list ' + r.items.length + ' rows at home, got ' + names.length);
-    ck(new Set(names).size === names.length, id + ' lists a row twice at home: ' + names.join(', '));
-    names.forEach(n => legNames.add(n));
-    swaps += await card.locator('.pick-swap').count();
-    if (legs.groups[0].ids.includes(id)) {
-      const mins = +(((await card.locator('.spread > .num').first().innerText()).match(/(\d+)\s*min/) || [])[1] || 0);
-      ck(mins > 0 && mins <= 40, r.n + ' should be a complete workout of 40 minutes or less at home, got ' + mins);
+  for (const pgId of ['legs', 'upper']) {
+    const pg = DATA.TRAIN_PAGES.find(x => x.id === pgId);
+    await openPage(pg.n);
+    const names = new Set(); let swaps = 0;
+    for (const id of pg.groups.flatMap(g => g.ids)) {
+      const r = DATA.ROUTINES.find(x => x.id === id);
+      const card = cardOf(r.n);
+      if (!(await card.locator('.pick-row').count())) { await card.locator('.btn-pick').click(); await p.waitForTimeout(250); }
+      const rows = (await card.locator('.pick-name').allInnerTexts()).map(t => t.trim());
+      ck(rows.length === r.items.length, id + ' should list ' + r.items.length + ' rows at home, got ' + rows.length);
+      ck(new Set(rows).size === rows.length, id + ' lists a row twice at home: ' + rows.join(', '));
+      rows.forEach(n => names.add(n));
+      swaps += await card.locator('.pick-dose .chip.swap').count();
+      if (pg.groups[0].ids.includes(id)) {
+        const mins = +(((await card.locator('.spread > .num').first().innerText()).match(/(\d+)\s*min/) || [])[1] || 0);
+        ck(mins > 0 && mins <= 40, r.n + ' should be a complete workout of 40 minutes or less at home, got ' + mins);
+      }
     }
+    const gymNames = Object.keys(DATA.HOME_SUB).map(k => DATA.EX[k].n).filter(n => names.has(n));
+    ck(!gymNames.length, 'the ' + pg.n + ' page lists gym exercises in Home mode: ' + gymNames.join(', '));
+    ck(swaps > 0, 'a swapped row on ' + pg.n + ' should say HOME');
+    if (pgId === 'legs') ck(names.has('Wall Sit'), 'the Legs page should have wall sits');
+    console.log(pg.n + ' at home:', names.size, 'exercises,', swaps, 'swapped, gym ones listed:', gymNames.length);
   }
-  const gymNames = Object.keys(DATA.HOME_SUB).map(k => DATA.EX[k].n).filter(n => legNames.has(n));
-  ck(!gymNames.length, 'the Legs page lists gym exercises in Home mode: ' + gymNames.join(', '));
-  ck(legNames.has('Wall Sit'), 'the Legs page should have wall sits');
-  ck(swaps > 0, 'a swapped row should say HOME and what it replaced');
-  console.log('Legs page at home:', legNames.size, 'exercises,', swaps, 'swapped, gym ones listed:', gymNames.length);
-
   await p.evaluate(() => { const s = JSON.parse(localStorage.getItem('groundcontact.v1') || '{}');
     s.settings.mode = 'gym'; localStorage.setItem('groundcontact.v1', JSON.stringify(s)); });
   await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(600);
-
-  // --- GOATA: the screen, the rules, a runnable week, and the jump work as sets ---
-  await p.keyboard.press('3'); await p.waitForTimeout(400);
-  await p.locator('.tile').filter({ hasText: 'GOATA Movement' }).first().click(); await p.waitForTimeout(500);
-  const goTxt = await p.locator('.view').innerText();
-  ck(DATA.GOATA_RULES.every(x => goTxt.includes(x.h)), 'GOATA should show all six form rules');
-  ck(/not the evidence/.test(goTxt), 'GOATA should say his anti-lifting view is his opinion');
-  const goWeek = p.locator('table.data').filter({ hasText: 'Workout A' }).first();
-  const sat = goWeek.locator('tbody tr').filter({ hasText: 'Sat' }).first();
-  ck(/\(2 rounds\)/.test(await sat.innerText()), 'the light Saturday should be two rounds');
-  await goWeek.locator('tbody tr').first().locator('button').click(); await p.waitForTimeout(600);
-  const goMon = (await p.locator('#runStep').innerText()).trim();
-  const wantGo = 4 * 2 + 6 * 3;
-  ck(new RegExp('/\\s*' + wantGo + '$').test(goMon), 'GOATA Monday should run warm-up ×2 + A ×3 = ' + wantGo + ' steps, got ' + goMon);
-  console.log('GOATA Monday:', goMon);
-  await p.locator('.run button[aria-label="Exit session"]').click(); await p.waitForTimeout(300);
-  await p.locator('.back-link').click(); await p.waitForTimeout(250);
 
   // --- home mode: anything that needs a gym must say how to do it without one ---
   // Bodyweight work needs no note; a barbell, a machine or a cable does.
@@ -248,7 +190,6 @@ const DATA = require('./data.js');
   const reached = new Set();
   DATA.ROUTINES.forEach(r => r.items.forEach(i => reached.add(i.x)));
   DATA.ARMOR.items.forEach(i => reached.add(i.x));
-  DATA.FREE_WINS.items.forEach(i => reached.add(i.x));
   Object.values(DATA.SESSIONS).forEach(s => (s.blocks || []).forEach(bk => bk.items.forEach(i => reached.add(i.x))));
   const noPath = [...reached].filter(id => {
     const e = DATA.EX[id];

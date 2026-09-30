@@ -91,7 +91,6 @@ d.ROUTINES.filter(r => r.rounds).forEach(r => {
   const rests = steps.filter(st => st.after).length;
   ck(rests === r.rounds - 1, r.id + ' should rest between rounds ' + (r.rounds - 1) + ' times, rests ' + rests);
 });
-walk(d.FREE_WINS.items, 'FREE_WINS');
 
 // A routine that says when to start it ("start about 45 minutes before pull") has to fit in that time.
 d.ROUTINES.forEach(r => {

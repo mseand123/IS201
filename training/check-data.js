@@ -3,7 +3,7 @@ const d = require('./data.js');
 const fail = [];
 const ck = (c, m) => { if (!c) fail.push('✗ ' + m); };
 
-const STR = ['n','cat','why','setup','dose','prog','regr','flag','home','warmup','covert'];
+const STR = ['n','cat','why','setup','dose','prog','regr','flag','home','warmup'];
 const ARR = ['tags','steps','cues','faults'];
 const NUM = ['est','repSec','cost'];
 
@@ -15,7 +15,7 @@ Object.entries(d.EX).forEach(([k, e]) => {
   ck(typeof e.cat === 'string', k + ' needs a category');
   if (e.timer) ['w','r','rounds'].forEach(f => ck(typeof e.timer[f] === 'number', k + '.timer.' + f + ' should be a number'));
   (e.steps || []).forEach((st, i) => ck(typeof st === 'string', k + '.steps[' + i + '] should be a string'));
-  if (e.covert) ck(['invisible','subtle','private'].includes(e.covert), k + '.covert has an unknown value: ' + e.covert);
+  ck(e.covert === undefined, k + ' still says how covert it is at a desk; the desk sessions are gone');
   if (e.cost !== undefined) ck([1,2,3].includes(e.cost), k + '.cost should be 1, 2 or 3, got ' + e.cost);
 });
 
@@ -28,7 +28,7 @@ Object.entries(d.SESSIONS).forEach(([k, s]) => (s.blocks || []).forEach(b => {
 }));
 d.ROUTINES.forEach(r => {
   ck(typeof r.n === 'string' && typeof r.id === 'string', 'routine needs id and name');
-  ck(['WARMUP','DESK','ARMOR','SHORT','RANGE','RECOVERY','POWER','BODY','TRAIL','BOSS','ROOM','GOATA','GRAIL'].includes(r.tag), 'routine ' + r.id + ' has an unrendered tag: ' + r.tag);
+  ck(['WARMUP','ARMOR','RANGE','RECOVERY','POWER','BODY','ROOM','GRAIL','FLOW'].includes(r.tag), 'routine ' + r.id + ' has an unrendered tag: ' + r.tag);
   r.items.forEach(i => check(i.x, 'routine ' + r.id));
 });
 d.ARMOR.items.forEach(i => check(i.x, 'ARMOR'));
@@ -38,83 +38,31 @@ Object.entries(d.HOME_SUB).forEach(([k, v]) => { check(k, 'HOME_SUB key'); check
 d.ROUTINES.forEach(r => r.items.forEach(i =>
   ck(i.g === undefined || typeof i.g === 'string', r.id + ' has a non-string group label')));
 
-// every play-group id must resolve to a routine
+// The Train tab is six pages, each a few complete workouts. Every page and group is well-formed,
+// every routine sits on exactly one page — a workout nothing can reach has no reason to exist —
+// and no page grows back into a wall of cards.
 const byId = new Set(d.ROUTINES.map(r => r.id));
-d.PLAY_GROUPS.forEach(g => {
-  ck(typeof g.n === 'string' && typeof g.sub === 'string', 'play group needs a name and a subtitle');
-  g.ids.forEach(id => ck(byId.has(id), 'play group "' + g.n + '" references a missing routine: ' + id));
-});
-d.RANGE_GROUPS.forEach(g => {
-  ck(typeof g.n === 'string' && typeof g.sub === 'string', 'range group needs a name and a subtitle');
-  g.ids.forEach(id => ck(byId.has(id), 'range group "' + g.n + '" references a missing routine: ' + id));
-});
-d.TRAIL_GROUPS.forEach(g => {
-  ck(typeof g.n === 'string' && typeof g.sub === 'string', 'trail group needs a name and a subtitle');
-  g.ids.forEach(id => ck(byId.has(id), 'trail group "' + g.n + '" references a missing routine: ' + id));
-});
-d.ROUTINES.filter(r => r.tag === 'TRAIL').forEach(r =>
-  ck(d.TRAIL_GROUPS.some(g => g.ids.includes(r.id)), r.id + ' is a trail block but appears in no trail group'));
-d.BOSS_GROUPS.forEach(g => {
-  ck(typeof g.n === 'string' && typeof g.sub === 'string', 'boss group needs a name and a subtitle');
-  g.ids.forEach(id => ck(byId.has(id), 'boss group "' + g.n + '" references a missing routine: ' + id));
-});
-d.ROUTINES.filter(r => r.tag === 'BOSS').forEach(r =>
-  ck(d.BOSS_GROUPS.some(g => g.ids.includes(r.id)), r.id + ' is a Boss block but appears in no boss group'));
-// the ladder and the week are rendered as tables: every column has to be there
-d.BOSS_LADDER.forEach((x, i) => ['w','rounds','holds','reps','note'].forEach(f =>
-  ck(typeof x[f] === 'string' && x[f].length, 'BOSS_LADDER[' + i + '].' + f + ' should be a non-empty string')));
-// each day names real Boss blocks, so its time is computed rather than written down
-const checkWeek = (name, week, tag) => {
-  ck(week.length === 7, name + ' needs seven days, got ' + week.length);
-  week.forEach((x, i) => {
-    ck(typeof x.d === 'string' && x.d.length, name + '[' + i + '] needs a day');
-    ck(Array.isArray(x.ids), name + '[' + i + '].ids should be a list');
-    (x.ids || []).forEach(e => {
-      const id = typeof e === 'string' ? e : e.id;
-      const r = d.ROUTINES.find(q => q.id === id);
-      ck(r && r.tag === tag, name + ' ' + x.d + ' names ' + id + ', which is not a ' + tag + ' block');
-      if (typeof e !== 'string') ck(Number.isInteger(e.rounds) && r && r.rounds && e.rounds < r.rounds,
-        name + ' ' + x.d + ' asks ' + id + ' for ' + e.rounds + ' rounds, which must be fewer than its own');
-    });
-    ck((x.ids || []).length || typeof x.note === 'string', name + ' ' + x.d + ' has no blocks and no note');
-  });
-};
-checkWeek('BOSS_WEEK', d.BOSS_WEEK, 'BOSS');
-checkWeek('GOATA_WEEK', d.GOATA_WEEK, 'GOATA');
-d.GOATA_GROUPS.forEach(g => g.ids.forEach(id => ck(byId.has(id), 'GOATA group "' + g.n + '" references a missing routine: ' + id)));
-d.ROUTINES.filter(r => r.tag === 'GOATA').forEach(r =>
-  ck(d.GOATA_GROUPS.some(g => g.ids.includes(r.id)), r.id + ' is a GOATA block but appears in no GOATA group'));
-[['GOATA_RULES', ['h','t']], ['GOATA_TERMS', ['t','d']], ['GOATA_DAILY', ['h','t']], ['GOATA_LADDER', ['w','t']]].forEach(([k, fs]) =>
-  d[k].forEach((x, i) => fs.forEach(f => ck(typeof x[f] === 'string' && x[f].length, k + '[' + i + '].' + f + ' should be a non-empty string'))));
-ck(d.GOATA_RULES.length === 6, 'he has six form rules, the data has ' + d.GOATA_RULES.length);
-d.GOATA_CHECK.forEach((x, i) => ck(typeof x === 'string' && x.length, 'GOATA_CHECK[' + i + '] should be a string'));
-d.BOSS_OFF.forEach((x, i) => ck(typeof x.h === 'string' && typeof x.t === 'string' && typeof x.his === 'boolean',
-  'BOSS_OFF[' + i + '] needs a heading, text, and whether it is his'));
-
-// Legs, Upper Body and Core are the front door: every page and group is well-formed, every body
-// block and every weak-link block has a home on one of them (the Weak-link tile is gone), and each
-// page opens with complete workouts short enough to be the obvious choice.
-d.BODY_PAGES.forEach(pg => {
-  ck(typeof pg.id === 'string' && typeof pg.n === 'string' && typeof pg.blurb === 'string', 'a body page needs an id, a name and a blurb');
+ck(Array.isArray(d.TRAIN_PAGES) && d.TRAIN_PAGES.length === 6, 'the Train tab is six pages');
+const placed = {};
+d.TRAIN_PAGES.forEach(pg => {
+  ck(['id', 'n', 'icon', 'blurb'].every(f => typeof pg[f] === 'string' && pg[f].length), 'a Train page needs an id, a name, an icon and a blurb');
   ck(pg.intro === undefined || typeof pg.intro === 'string', pg.id + ' intro should be text');
-  ck(pg.groups.length > 1 || typeof pg.intro === 'string', pg.id + ' has one group, so its intro stands in for the group subtitle and must be set');
-  (pg.groups || []).forEach(g => {
-    ck(typeof g.n === 'string' && typeof g.sub === 'string', pg.id + ' group needs a name and a subtitle');
-    g.ids.forEach(id => ck(byId.has(id), pg.id + ' group "' + g.n + '" references a missing routine: ' + id));
+  ck(pg.groups.length > 1 || typeof pg.intro === 'string', pg.id + ' has one group, so its intro stands in for the group heading and must be set');
+  const n = pg.groups.reduce((x, g) => x + g.ids.length, 0);
+  ck(n >= 1 && n <= 8, pg.id + ' holds ' + n + ' workouts; a page is meant to be a few');
+  pg.groups.forEach(g => {
+    ck(typeof g.n === 'string' && (g.sub === undefined || typeof g.sub === 'string'), pg.id + ' group needs a name, and any subtitle as text');
+    g.ids.forEach(id => {
+      ck(byId.has(id), pg.id + ' group "' + g.n + '" references a missing routine: ' + id);
+      ck(!placed[id], id + ' is on both ' + placed[id] + ' and ' + pg.id);
+      placed[id] = pg.id;
+    });
   });
 });
-{
-  const onPages = new Set(d.BODY_PAGES.flatMap(pg => pg.groups.flatMap(g => g.ids)));
-  d.ROUTINES.filter(r => ['BODY', 'ARMOR'].includes(r.tag)).forEach(r =>
-    ck(onPages.has(r.id), r.id + ' is a ' + r.tag + ' block but is on none of the Legs, Upper Body or Core pages'));
-}
-// nothing game-day or range should be unreachable from the hub it belongs to
-const grouped = new Set(d.PLAY_GROUPS.flatMap(g => g.ids).concat(d.RANGE_GROUPS.flatMap(g => g.ids)));
-d.ROUTINES.filter(r => ['WARMUP', 'RECOVERY', 'RANGE'].includes(r.tag))
-  .forEach(r => ck(grouped.has(r.id), r.id + ' is game-day but appears in no play group'));
+d.ROUTINES.forEach(r => ck(placed[r.id], r.id + ' is on none of the Train pages, so nothing can reach it'));
 
 // every warm-up exercise says what it targets — that is the label under the name
-d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS','ROOM','GOATA','GRAIL'].includes(r.tag)).forEach(r => r.items.forEach(i =>
+d.ROUTINES.filter(r => ['WARMUP','ROOM','GRAIL','FLOW'].includes(r.tag)).forEach(r => r.items.forEach(i =>
   ck(typeof (d.EX[i.x] || {}).targets === 'string' && d.EX[i.x].targets.length > 0,
      r.id + ' › ' + i.x + ' has no targets label')));
 Object.values(d.EX).forEach(e => ck(e.targets === undefined || typeof e.targets === 'string', e.n + ' targets should be a string'));
@@ -122,7 +70,7 @@ Object.values(d.EX).forEach(e => ck(e.targets === undefined || typeof e.targets 
 // a warm-up's summary line is short and honest: required, and every term it names must
 // appear in at least one of its items' targets
 const norm = x => x.toLowerCase().replace(/[^a-z ]/g, ' ').replace(/\s+/g, ' ').trim();
-d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS','ROOM','GOATA','GRAIL'].includes(r.tag)).forEach(r => {
+d.ROUTINES.filter(r => ['WARMUP','ROOM','GRAIL','FLOW'].includes(r.tag)).forEach(r => {
   ck(typeof r.targets === 'string' && r.targets.length > 0, r.id + ' has no targets summary');
   ck(!r.targets || r.targets.split('·').length <= 9, r.id + ' targets summary is not short: ' + r.targets);
   const pool = norm(r.items.map(i => (d.EX[i.x] || {}).targets || '').join(' '));
@@ -204,12 +152,13 @@ try {
     ck(+lib[1] === Object.keys(d.EX).length, 'README says ' + lib[1] + ' exercises; there are ' + Object.keys(d.EX).length);
     ck(+lib[2] === nogym, 'README says ' + lib[2] + ' need no gym; there are ' + nogym);
   }
-  const WORDS = ['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen','Twenty'];
-  const ess = rd.match(/\*\*Method\*\* \| ([A-Za-z]+) essays/);
-  ck(!ess || WORDS[d.ARTICLES.length] === ess[1],
-     'README says ' + (ess && ess[1]) + ' essays; there are ' + d.ARTICLES.length + ' (' + WORDS[d.ARTICLES.length] + ')');
-  const tst = rd.match(/\*\*Tests\*\* \| (\d+)-test battery/);
-  ck(!tst || +tst[1] === d.TESTS.length, 'README says a ' + (tst && tst[1]) + '-test battery; there are ' + d.TESTS.length);
+  const WORDS = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];
+  const more = rd.match(/\*\*More\*\* \|.*?the (\d+)-test battery.*?\b([A-Za-z]+) essays/);
+  ck(!!more, 'README no longer states the test and essay counts in the form check-data reads');
+  if (more) {
+    ck(+more[1] === d.TESTS.length, 'README says a ' + more[1] + '-test battery; there are ' + d.TESTS.length);
+    ck(WORDS[d.ARTICLES.length] === more[2].toLowerCase(), 'README says ' + more[2] + ' essays; there are ' + d.ARTICLES.length);
+  }
 } catch { /* README is optional to the app */ }
 
 console.log('exercises:', Object.keys(d.EX).length, '| referenced:', seen.size, '| routines:', d.ROUTINES.length, '| articles:', d.ARTICLES.length);
