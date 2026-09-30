@@ -1170,6 +1170,7 @@ const EX = {
 },
 'tib-raise': {
   n: 'Tibialis Raise', cat: 'strength', tags: ['foot','decel','knee'],
+  targets: 'Shins \u00b7 tibialis anterior',
   why: 'Ultimate is 47 decelerations a game. The anterior tibialis is a primary braking muscle for the shin over the foot, and it is almost never trained directly. Building it buys you shin-splint insurance and a better brake.',
   setup: 'Back against a wall, heels 20–30 cm out from the wall, legs straight-ish.',
   steps: [
@@ -1187,6 +1188,7 @@ const EX = {
 },
 'calf-iso-soleus': {
   n: 'Bent-Knee Soleus Isometric', cat: 'iso', tags: ['iso','tendon','speed','achilles'],
+  targets: 'Soleus \u00b7 Achilles',
   why: 'The soleus takes 6–8× bodyweight during running and is the biggest single contributor to vertical propulsion. Heavy, mid-duration isometrics at a bent knee are the highest-yield way to build Achilles/soleus stiffness without adding impact — exactly the "short, high-intensity isometric" prescription that supports tendon stiffness and readiness for high loading rates.',
   setup: 'Seated calf raise machine, or a barbell/heavy dumbbells across the knees while seated with the forefoot on a plate.',
   steps: [
@@ -3716,6 +3718,7 @@ Object.assign(EX, {
 },
 'heels-elevated-squat': {
   n: 'Heels-Elevated Squat', cat: 'strength', tags: ['legs','home','knee','mobility'],
+  targets: 'Quads \u00b7 knees through their full range',
   why: 'Elevating the heels borrows ankle range, which lets you sit into a genuinely deep, upright squat and load the quad through its full length. It is also the friendliest way into the deep positions you like, and a loaded backpack turns it into real strength work.',
   setup: 'Heels on a 2–5 cm book, plate or wedge. Feet shoulder width, toes slightly out. Backpack hugged to the chest to load it.',
   steps: [
@@ -3935,6 +3938,7 @@ Object.assign(EX, {
 
 'hip-rot-iso': {
   n: 'Hip Rotation Isometrics', cat: 'iso', tags: ['hip','labrum','iso','daily','armor'],
+  targets: 'Hip rotators \u00b7 the deep hip',
   why: 'The safest way to load a hip with a labral tear: isometric rotation at a neutral hip angle, nowhere near the flexion-adduction-internal-rotation position that provokes it. Isometric hip strength — hip extension especially — correlates with better short-term outcomes in non-operative labral management, and rotation strength is what controls the femoral head inside the socket during a plant. Timed holds, which suits you, and completely pain-free by design.',
   setup: 'Lie on your back, one knee bent to about 45° (not 90° — stay out of deep flexion), foot flat.',
   steps: [
@@ -4419,20 +4423,20 @@ ROUTINES.push(
   { id:'body-legs', n:'Legs · Full', tag:'BODY',
     sub:'8 moves · everything from the hips down · twice a week',
     targets:'Quads · glutes · hamstrings · groin · knees · calves',
-    why:'One session that trains everything below the waist, in the order that makes sense: open the hips, the single-leg strength work while you are fresh, the glutes, the hamstrings twice — once as the Nordic and once as a hip-extension move, because they train different hamstrings — then the groin, a wall sit for the knees, and the calves. In Home mode every row shows its home version, all bodyweight or a backpack. The heavy two-leg lifts, the trap bar and the front squat, live on the strength days of your weekly plan, which is why they are not repeated here. If your hamstring is cranky, skip the Nordic and run Hamstring Insurance until it settles.',
+    why:'The session that builds the legs, twice a week: two quad movements, the glutes, the hamstrings twice \u2014 once as the Nordic and once as a hip-extension move, because they train different hamstrings \u2014 then the groin, the knees and both halves of the calf. Single-leg work carries most of it, and that is not a compromise: in academy rugby players, five weeks of rear-foot-elevated split squats improved strength, sprint and agility as much as back squats did (Speirs 2016). What builds muscle is taking sets close to failure \u2014 stop one to three reps short, not five \u2014 and a lighter load taken that close builds as much as a heavy one (Schoenfeld 2017). When every set reaches the top of its range, add books to the backpack or slow the lowering down. The Nordic and the Copenhagen here are the two exercises with the strongest injury-prevention evidence in sport: about half the hamstring injuries (van Dyk 2019) and about 40% fewer groin problems (Harøy 2019). The heavy two-leg lifts, the trap bar and the front squat, live on the strength days of your weekly plan.',
     items:[
-      { x:'deep-squat-hold', g:'OPEN UP', d:'60 s', note:'Sit into it. Hips, ankles and groin ready before anything loads them.' },
+      { x:'heels-elevated-squat', g:'QUADS', d:'3 × 12, 3 s down', note:'Heels on a book, backpack hugged to the chest. Let the knees travel forward over the toes \u2014 that is what loads the quads.' },
       { x:'rfess', g:'QUADS & GLUTES · one leg at a time', d:'3 × 8 per side', note:'Back foot on a bench. The best single-leg strength builder there is.',
         atHome: { x:'backpack-rfess', d:'3 × 10 per side', note:'Back foot on the bed. Bodyweight until 10 a side is easy, then a backpack.' } },
       { x:'hip-thrust', d:'4 × 20 s at lockout, heavy', note:'Ribs down, glutes squeezed hard at the top.',
         atHome: { x:'sl-hip-thrust', d:'3 × 12 per side, 30 s rest', note:'Shoulders on the couch, one leg, two-second squeeze at the top. Alternate legs.' } },
-      { x:'nordic-curl', g:'HAMSTRINGS · two different jobs', d:'3 × 5, slow', note:'Lengthening strength through the knee. Skip it while the hamstring is cranky.' },
-      { x:'single-leg-rdl', d:'3 × 8 per side', note:'Hip extension with the hamstring long — where the biceps femoris does its work.',
+      { x:'nordic-curl', g:'HAMSTRINGS · two different jobs', d:'3 × 5, slow', note:'Lengthening strength through the knee. Skip it while the hamstring is cranky, and in weeks you are doing Hamstring Strength \u2014 that has its own.' },
+      { x:'single-leg-rdl', d:'3 × 8 per side', note:'Hip extension with the hamstring long \u2014 where the biceps femoris does its work.',
         atHome: { x:'sl-ham-bridge', d:'3 × 10 per side, 30 s rest', note:'Heel on the couch, knee barely bent: hip extension with the hamstring long, without weights. Alternate legs.' } },
       { x:'copenhagen-hold', g:'GROIN, KNEES & CALVES', d:'3 × 20 s per side', t:{ r: 15 }, note:'Top knee on the bench or the bed edge. Your weakest link.' },
-      { x:'wall-sit-iso', d:'2 × 45 s', t:{ r: 30 }, note:'Thighs parallel, back flat on the wall. Quads and knees.' },
-      { x:'calf-raise-loaded', d:'2 × 12 per side, 15 s rest', note:'One leg at a time off a step, alternating, slow on the way down.',
-        atHome: { x:'sl-calf-raise', d:'2 × 15 per side, 15 s rest', note:'Off a stair, alternate legs, heel below the step.' } }
+      { x:'wall-sit-iso', d:'3 × 60 s', t:{ r: 45 }, note:'Thighs parallel. The last ten seconds should be a fight. When 60 s is easy: 75, then 90, then one leg at a time.' },
+      { x:'calf-raise-loaded', d:'3 × 12 per side, 15 s rest', note:'One leg at a time off a step, slow on the way down. Last set with the knee bent: that is the soleus.',
+        atHome: { x:'sl-calf-raise', d:'3 × 12 per side, 15 s rest', note:'Off a stair, alternate legs, heel below the step. Last set with the knee bent: that is the soleus, which does most of the calf\u2019s work when you run.' } }
     ]},
 
   { id:'body-push', n:'Chest, Shoulders & Push', tag:'BODY',
@@ -4954,7 +4958,7 @@ ROUTINES.push(
       { x:'copenhagen-hold', d:'3 \u00d7 20 s per side', note:'The best evidence for the groin, and your weakest link.' },
       { x:'hip-airplane', d:'2 \u00d7 5 per side, slow', note:'Rotation strength on one loaded leg \u2014 what a hip needs to plant and cut. As far as you can control.' },
       { x:'backpack-rfess', g:'LEGS', d:'3 \u00d7 10 per side', note:'Back foot on the bed, bodyweight. The best single-leg strength builder there is.' },
-      { x:'wall-sit-iso', d:'3 \u00d7 45 s', t:{ r: 45 }, note:'Thighs parallel, back flat on the wall. Quads and knees, and it burns honestly.' },
+      { x:'wall-sit-iso', d:'3 \u00d7 60 s', t:{ r: 60 }, note:'Thighs parallel, back flat on the wall. The last ten seconds should be a fight; then 75, 90, one leg.' },
       { x:'sl-calf-raise', g:'CALVES & ANKLES', d:'3 \u00d7 15 per side, 15 s rest', note:'Alternate legs, so one side rests while the other works. Off a stair, heel below the step, slow on the way down. Calf and Achilles strength \u2014 the thing pogos alone do not build.' },
       { x:'pogo-jumps', d:'3 \u00d7 20 contacts', note:'Springy, stiff ankles \u2014 free speed. Heels never touch.' },
       { x:'pushup', g:'PUSH \u00b7 chest, shoulders, arms', d:'3 \u00d7 15\u201320', note:'On the pull-up bar on the floor for extra depth.' },
@@ -4982,7 +4986,7 @@ ROUTINES.push(
       { x:'backpack-rfess', d:'8 per side', note:'Back foot on the bed or a bench.' },
       { x:'sl-hip-thrust', d:'8 per side', note:'Shoulders on the couch, squeeze at the top.' },
       { x:'sl-ham-bridge', d:'6 per side', note:'Heel on the couch, knee barely bent.' },
-      { x:'wall-sit-iso', d:'40 s', t:{ r: 0 } },
+      { x:'wall-sit-iso', d:'60 s', t:{ r: 0 }, note:'Thighs parallel. Fight the last ten seconds.' },
       { x:'copenhagen-hold', d:'15 s per side', t:{ r: 8 } },
       { x:'sl-calf-raise', d:'10 per side', note:'Off a stair, alternate legs.' }
     ]},
@@ -5032,6 +5036,83 @@ ROUTINES.push(
     ]}
 );
 
+
+/* -----------------------------------------------------------
+   LEG INSURANCE — the short blocks that keep the legs on the field,
+   built from the prevention programmes elite sport actually uses.
+   ----------------------------------------------------------- */
+Object.assign(EX, {
+'balance-progression': {
+  n: 'Single-Leg Balance Progression', cat: 'armor', tags: ['ankle','knee','proprioception','prevention','home'],
+  targets: 'Ankle & hip control \u00b7 single-leg balance',
+  timer: { w: 40, r: 15, rounds: 6, label: 'Balance — switch legs' },
+  why: 'Proprioceptive and balance training is one of the very few interventions with strong, repeatedly replicated evidence for preventing ankle sprains — particularly recurrent ones — and it carries over to the knee, because the thing that fails in a non-contact knee injury is neuromuscular control, not tissue strength. It is also the least impressive-looking exercise in this entire program, which is why almost nobody does it. Ultimate is played on uneven grass, in cleats, landing one-footed after a contested disc. That is a proprioceptive sport whether you train it as one or not.',
+  home: 'Nothing at all, ideally barefoot. A folded towel or a couch cushion gives you the harder surface for level 5.',
+  setup: 'Barefoot, on grass or a firm floor. One leg, soft knee, weight spread across the whole foot rather than gripping with the toes.',
+  steps: [
+    'Level 1 — Stand on one leg, eyes open, 30 s. If that is easy, do not linger here.',
+    'Level 2 — Eyes closed, 30 s. This is a large jump; most people fail it the first time.',
+    'Level 3 — Eyes closed while you slowly turn your head side to side, then nod up and down.',
+    'Level 4 — Eyes closed, reaching the free foot out to the front, side and behind you without touching down.',
+    'Level 5 — Someone taps you lightly at the shoulder and hip at random, or you do it on a cushion or folded towel.',
+    'Work at the level where you are wobbling but not falling. That is the level that trains.'
+  ],
+  cues: ['Wobble is the point. If you are perfectly still, the level is too easy and you are not training anything.','Correct from the ankle and hip, not by windmilling your arms.','Do not claw the floor with your toes — spread the load through the whole foot.'],
+  faults: ['Staying at eyes-open forever because it feels like you are doing it right.','Holding onto something. If you need to, drop a level.','Doing it in shoes, which removes most of the information you are trying to train.'],
+  dose: '3 × 40 s per leg at your level',
+  prog: 'Move up a level, or add a ball toss.',
+  regr: 'Drop a level. Eyes open on a cushion is a legitimate place to be.'
+},
+'bound-stick': {
+  n: 'Lateral Bound & Stick', cat: 'plyo', tags: ['knee','landing','prevention','decel','home'],
+  cost: 2,
+  targets: 'Side-to-side landing \u00b7 knee control',
+  why: 'The knee is the most injured site in ultimate, and the mechanism is almost never contact — it is a decelerating, rotating landing that the athlete could not control. Continuous skater bounds train the elastic push. This trains the opposite half: absorbing a sideways landing on one leg and holding it. Sticking the landing is what turns a plyometric into landing-quality work, and landing quality under fatigue is the thing that separates athletes who tear knees from athletes who do not.',
+  home: 'Grass or any flat surface with a body length of room. No equipment.',
+  repSec: 4,
+  setup: 'Grass or a forgiving surface. Space to move sideways about a body length.',
+  steps: [
+    'Push laterally off one leg and land on the other, out to the side.',
+    'Stick it. Absorb through the hip, knee tracking over the middle of the foot, and hold completely still for a full three-count before you move.',
+    'If your knee dives inward on landing, or you have to hop to catch yourself, the distance was too far. Shorten it.',
+    'Push back the other way and stick that one. That is one rep each side.'
+  ],
+  cues: ['The hold is the exercise. Anyone can jump sideways; the three-second freeze is what you are actually training.','Land hip first — sit into it — rather than catching it with a stiff knee.','Knee over the second toe. Watch it, or film a set from the front.'],
+  faults: ['Turning it into continuous bounds because the stick feels slow and boring.','Landing with the knee collapsing inward, which is the exact position you are trying to train out.','Going for distance. Distance is the plyo version; this is the control version.'],
+  dose: '3 × 5 per side, stick each one',
+  prog: 'Land with your eyes shut, or have someone toss you a disc mid-flight so you are catching rather than watching your feet.',
+  regr: 'Shorter bound, or step out and stick instead of jumping.'
+}
+});
+
+ROUTINES.push(
+  { id:'hip-groin', n:'Hip & Groin Insurance', tag:'ARMOR',
+    sub:'6 moves · twice a week · adductors, the side of the hip, rotation and hip flexors',
+    targets:'Adductors \u00b7 glute medius \u00b7 hip rotators \u00b7 hip flexors',
+    why:'Hip and groin problems are among the most common in sports that cut and change direction, and yours has history on both sides \u2014 a labral hip and a weak adductor. Hips like yours test weakest in four places: adduction, hip flexion, external rotation and abduction (Casartelli 2011). This block trains exactly those four. The adductor squeeze doubles as the check: the Copenhagen five-second squeeze is the test elite football uses to track groin readiness (Thorborg 2017), and if yours drops or hurts, ease off the Copenhagens that week. Adductor strengthening is also what fixes long-standing groin pain \u2014 79% of athletes back to sport against 14% with passive treatment (Hölmich 1999). Side-lying abduction produced the highest glute medius activation of the exercises it was tested against (Distefano 2009), and eight weeks of hip-flexor training made athletes faster over 40 yards (Deane 2005). The Copenhagen itself lives in Legs \u00b7 Full, so the groin gets it twice a week without doubling up here.',
+    items:[
+      { x:'adductor-squeeze-iso', g:'ADDUCTORS', d:'2 ladders', note:'Ball between the knees: 10 s easy, 10 s harder, 10 s all-out. The all-out one is your check \u2014 note how it feels.' },
+      { x:'cossack-squat', d:'2 \u00d7 6 per side, slow', note:'Backpack at the chest as a counterweight. Adductor strength at length, which is where groins strain.' },
+      { x:'glute-med-iso', g:'SIDE OF THE HIP', d:'2 \u00d7 30 s per side', t:{ r: 10 }, note:'Top leg straight and slightly behind you, toes forward. What stops the knee caving in when you cut.' },
+      { x:'hip-rot-iso', g:'ROTATION', d:'2 \u00d7 15 s each direction, per side', t:{ r: 6 }, note:'Push the knee in, then out, against your own hand. Hard but pain-free.' },
+      { x:'hip-airplane', d:'2 \u00d7 5 per side, slow', note:'Rotation on one loaded leg \u2014 the plant-and-cut action. A hand on the wall is fine.' },
+      { x:'iso-hip-flexor', g:'HIP FLEXORS', d:'3 \u00d7 20 s per side', t:{ r: 8 }, note:'Knee above hip height, and hold it there. The muscle that drives your knee when you sprint.' }
+    ]},
+
+  { id:'knee-ankle', n:'Knee & Ankle Insurance', tag:'ARMOR',
+    sub:'5 moves · twice a week · after practice is ideal',
+    targets:'Ankles \u00b7 knees \u00b7 landing control \u00b7 soleus \u00b7 shins',
+    why:'In ultimate the knee is the most injured joint and the ankle the third, and the mechanism is almost never contact: a landing, a cut or a deceleration the athlete could not control, usually late in a game. This is the neuromuscular core of the programmes that protect them in elite sport. The FIFA 11+ warm-up, built on exactly this kind of balance and landing work, cut football injuries by about a third across trials (Thorborg 2017), and balance training on its own cut ankle sprains by 35\u201340% (McGuine 2006; Hupperets 2009). Balance first, then single-leg landings you freeze, then the calf and shin that absorb every step \u2014 the soleus does more of the work of holding you up when you run than any other muscle (Dorn 2012). Run it after practice when you can: tired is when knees and ankles go.',
+    items:[
+      { x:'balance-progression', g:'BALANCE', d:'2 \u00d7 40 s per leg at your level', note:'Barefoot. Eyes open, then closed, then on a cushion \u2014 work where you wobble but do not fall.' },
+      { x:'sl-hop-stick', g:'LANDING', d:'2 \u00d7 4 per leg, 30 s rest', note:'Hop, land soft on one foot and freeze for two seconds, knee over the toes.' },
+      { x:'bound-stick', d:'2 \u00d7 4 per side, stick each one', note:'Sideways off one leg onto the other. Freeze every landing \u2014 no rebound.' },
+      { x:'calf-iso-soleus', g:'CALF & SHIN', d:'3 \u00d7 40 s', t:{ r: 20 }, note:'Knee bent: the soleus and the Achilles.',
+        atHome: { x:'stair-calf-iso', d:'2 \u00d7 40 s per side, knee bent', note:'Forefoot on a stair, knee bent, heel just below the step. Hold. A backpack when it gets easy.' } },
+      { x:'tib-raise', d:'2 \u00d7 20', note:'Back to a wall, heels out, lift the toes. The brake at the front of the shin. The evidence here is thinner than the rest, but it is cheap.' }
+    ]}
+);
+
 /* ===========================================================
    TRAIN — the whole Train tab: six pages, each a few complete
    workouts. Every routine in the app sits on exactly one page.
@@ -5040,12 +5121,12 @@ const TRAIN_PAGES = [
   { id: 'grail', n: 'The Holy Grail', icon: 'grail', blurb: 'The best of everything. Start here.',
     intro: 'The Daily Six every day. Pick from the list when you want more of the best, and do the Room Circuit when you have twenty minutes.',
     groups: [{ n: 'The best', ids: ['grail-daily', 'grail-list', 'room-circuit'] }] },
-  { id: 'legs', n: 'Legs', icon: 'legs', blurb: 'Leg days, hamstrings and jumps.',
-    intro: 'Legs \u00b7 Full twice a week is the whole job. Legs \u00b7 Quick covers a busy day.',
+  { id: 'legs', n: 'Legs', icon: 'legs', blurb: 'Build them, and keep them on the field.',
+    intro: 'Legs \u00b7 Full twice a week builds them. Hip & Groin and Knee & Ankle Insurance keep them on the field \u2014 twice a week each, after practice or on a day off legs. Jumps once a week, fresh.',
     groups: [
-      { n: 'Workouts', ids: ['body-legs', 'legs-quick'] },
-      { n: 'Hamstrings', sub: 'Insurance daily while it is cranky. Strength twice a week once it is calm.', ids: ['ham-insurance', 'ham-strength'] },
-      { n: 'Spring', sub: 'Jumps and bounds. Fresh, never tired.', ids: ['plyo-ladder'] }
+      { n: 'Build', ids: ['body-legs', 'legs-quick'] },
+      { n: 'Insurance', sub: 'Short and specific. Hamstring Insurance is the daily one only while the hamstring is cranky.', ids: ['hip-groin', 'knee-ankle', 'ham-insurance'] },
+      { n: 'Strength & spring', sub: 'Hamstring Strength twice a week once it is calm. Jumps once a week, never tired.', ids: ['ham-strength', 'plyo-ladder'] }
     ] },
   { id: 'upper', n: 'Upper & Core', icon: 'upper', blurb: 'Push, pull, and a trunk that holds.',
     intro: 'Upper Body \u00b7 Quick twice a week, or Push and Pull once each. Core & Trunk once or twice.',

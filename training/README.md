@@ -14,13 +14,13 @@ fonts load.
 |---|---|
 | **Today** | Resolves the date against the annual plan and renders that session — every block, dose and coaching note — plus a readiness check-in that auto-regulates the day, the Daily Armor, and a notes field. |
 | **Train** | Six pages, a few complete workouts on each: **The Holy Grail** (the Daily Six, the best-of list, the Room Circuit), **Legs**, **Upper & Core**, **Fascia & Flow**, **Stretch** and **Frisbee**. |
-| **Library** | 138 exercises, filterable to the 115 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
+| **Library** | 140 exercises, filterable to the 117 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
 | **More** | Your plan — this week's microcycle with CNS-cost meters, the periodised year against the UFA calendar, and the 10-week Copenhagen ladder — then the 22-test battery on a 4-week cycle, fourteen essays (the training model, isometrics, an honest read on fascia, training without a gym, injury dossiers for the hip labrum / adductor / hamstring, the throwing shoulder, fuelling, the UFA numbers, sources), and backup. |
 
 ## The lean cut
 
 The app had grown to six tabs, thirteen Program tiles, 65 workouts and 201 exercises, and the best of
-it was hard to find. It is now four tabs, six Train pages, 29 workouts and 138 exercises. What stayed
+it was hard to find. The cut left four tabs, six Train pages, 29 workouts and 138 exercises. What stayed
 is what gets used: the Holy Grail, complete leg and upper-body workouts at sensible lengths, the
 hamstring work, the plyometric ladder, the stretching, game day, and a new **Fascia & Flow** page.
 
@@ -36,6 +36,9 @@ What went, and where its best parts landed:
 - **Tests** and the **Method** essays moved under **More**, with the week, the year, the Copenhagen
   ladder and backup — which, until now, was only reachable from the desktop sidebar.
 - Every exercise nothing used any more — 63 of them — left the Library.
+
+The leg work was then built back out on purpose, not as the old one-area blocks but as two short
+insurance blocks and a stronger leg day — see **Legs: build it, insure it** below.
 
 Rows got lighter too. An exercise row is its name, its dose and the one note that explains the dose;
 what it targets, what it costs and the full how-to are one tap away. A card's targets line moved into
@@ -139,7 +142,7 @@ Rows in Home mode now show the home note when the exercise is not swapped and it
 a bench, a bar, a band — on Today and inside every picker; "Floor only" on a bodyweight row was noise. The Passive Hang was the one genuine hole, needing a pull-up bar with
 no home story at all, so it gained one (including the no-bar version: kneel, hold a table edge, lean
 back for the same traction). A test now walks every reachable exercise and fails if any of them needs
-equipment while offering neither a swap nor a note — currently 125 reachable, 0 without a home path.
+equipment while offering neither a swap nor a note — currently 128 reachable, 0 without a home path.
 
 ### Home mode lists what you will do
 
@@ -248,18 +251,14 @@ or if a page grows past eight workouts.
 | page | workouts (minutes, at home) |
 |---|---|
 | The Holy Grail | The Daily Six (14) · the Holy Grail list (pick any) · the Room Circuit (21) |
-| Legs | Legs · Full (36) · Legs · Quick (16) · Hamstring Insurance (17) · Hamstring Strength (25) · Plyometric Ladder (36) |
+| Legs | Legs · Full (45) · Legs · Quick (16) · Hip & Groin Insurance (16) · Knee & Ankle Insurance (16) · Hamstring Insurance (17) · Hamstring Strength (25) · Plyometric Ladder (36) |
 | Upper & Core | Upper Body · Quick (16) · Chest, Shoulders & Push (29) · Back & Pull (22) · Core & Trunk (18) |
 | Fascia & Flow | Fascia Flow (10) · Ball Work · Legs & Hips (12) · Groundwork (6) |
 | Stretch | Range Block (18) · Tight Hamstrings, Hips, Hip Flexors, Groin, Calves & Ankles, Back & Shoulders (8–24) |
 | Frisbee | Frisbee Warm-Up (41) · Warm-Up · Short (25) · Sprint-Ready · Minimum (12) · Half-Time Top-Up (5) · Between Games (18) · Post-Game Flush (17) · Tournament Night (22) |
 
-**Legs · Full** is eight moves for everything from the hips down, twice a week: the deep squat hold,
-one-leg quads and glutes (split squat, hip thrust), the hamstring's two jobs (the Nordic, then the
-single-leg RDL — the single-leg hamstring bridge at home), and a finish of Copenhagen hold, wall sit
-and calf raise. The heavy two-leg lifts stay on the weekly plan's strength days, where they are
-programmed against the rest of the week. **Legs · Quick** is six bodyweight moves for two rounds, the
-same in both modes, for a busy day. **Upper Body · Quick** is five moves for three rounds with a
+**Legs · Quick** is six bodyweight moves for two rounds, the same in both modes, for a busy day.
+**Upper Body · Quick** is five moves for three rounds with a
 pull-up bar and the floor — two pushes, two pulls and a trunk move.
 
 **Hamstring Strength** is the step after Hamstring Insurance: the Nordic for lengthening strength
@@ -275,6 +274,41 @@ about what it is — the effect on the tissue is short-lived, so it works becaus
 Work** is the same rolling trick further up the leg, after training, and **Groundwork** is Andrew
 Blake's (GOATA) floor warm-up — crawl, rock back, walk in to a squat, sit in it — as an opener before
 anything.
+
+### Legs: build it, insure it
+
+The Legs page is three groups, each with one job, and every block names the evidence it rests on.
+
+**Build — Legs · Full** (~45 min at home, twice a week). Two quad movements (heels-elevated squats,
+then the split squat), the glutes (hip thrust), the hamstring's two jobs (the Nordic through the knee,
+then hip extension with the hamstring long), the Copenhagen, a real wall sit (3 × 60 s, thighs
+parallel, progressing to 90 s and then one leg) and calf raises with the last set knee-bent for the
+soleus. Single-leg work carries it on purpose: split squats matched back squats for strength, sprint
+and agility in academy rugby players (Speirs 2016), and lighter loads taken close to failure build as
+much muscle as heavy ones (Schoenfeld 2017) — so every set stops one to three reps short of failure,
+and the backpack or a slower lowering is the progression.
+
+**Insurance** (~16 min each, twice a week, after practice or on a day off legs):
+
+- **Hip & Groin Insurance** — the four places labral hips test weakest (adduction, hip flexion,
+  external rotation, abduction; Casartelli 2011): the adductor squeeze ladder, which doubles as the
+  Copenhagen five-second squeeze elite football uses to track groin readiness (Thorborg 2017); Cossack
+  squats for adductor strength at length; side-lying abduction, the highest glute-medius activation
+  of the exercises it was tested against (Distefano 2009); hip rotation isometrics and hip airplanes;
+  and the standing hip-flexor hold, since hip-flexor training made athletes faster (Deane 2005). The
+  Copenhagen stays in Legs · Full, so the groin gets it twice a week without doubling up.
+- **Knee & Ankle Insurance** — the neuromuscular core of FIFA 11+-style programmes, which cut football
+  injuries by about a third (Thorborg 2017), with balance training on its own cutting ankle sprains by
+  35–40% (McGuine 2006; Hupperets 2009): a single-leg balance progression, single-leg and lateral
+  landings you freeze, a bent-knee soleus hold (the soleus does more of the work of holding you up
+  when you run than any other muscle; Dorn 2012) and tibialis raises, labelled as the thinnest evidence
+  in the block.
+- **Hamstring Insurance** — daily only while the hamstring is cranky.
+
+**Strength & spring** — Hamstring Strength twice a week once the hamstring is calm (in those weeks the
+Nordic comes out of Legs · Full, so it is never more than twice a week), and the Plyometric Ladder once,
+fresh. `check-ui.js` fails if the Legs page loses the Copenhagen, the adductor squeeze, the side-lying
+abduction, the balance work or the wall sits, or if a Build workout runs past 50 minutes at home.
 
 ### The Holy Grail
 
@@ -384,14 +418,14 @@ is overwhelmingly non-contact: decelerating, cutting and landing under accumulat
 
 The thigh is covered by the Nordics, the Askling protocol and the long-length isometrics — Hamstring
 Insurance and Hamstring Strength on the Legs page, and the long hold in the Daily Six. The knee and
-ankle get their landing work from the Plyometric Ladder's stuck landings, the single-leg hop and stick
-in the Holy Grail, and the wall sit and calf raises in Legs · Full, and the end of every warm-up
-rehearses deceleration with build-ups and cutting build-ups.
+ankle have **Knee & Ankle Insurance** — balance, landings you freeze, the soleus and the shin — on top
+of the Plyometric Ladder's stuck landings and the wall sit and calf raises in Legs · Full, and the end
+of every warm-up rehearses deceleration with build-ups and cutting build-ups.
 
 The hip flexor needs both halves and usually gets one. It is a sprint muscle — flexion above 90°
 drives knee lift and stride frequency — and a short one caps hip extension, which is where sprint
-force comes from. Its strength comes from the standing hip-flexor hold in the warm-ups and its length
-from Tight Hip Flexors. The couch stretch takes the hip into *extension* — the opposite end from the
+force comes from. Its strength comes from the standing hip-flexor hold in the warm-ups and in Hip &
+Groin Insurance, and its length from Tight Hip Flexors. The couch stretch takes the hip into *extension* — the opposite end from the
 flexion-adduction-internal-rotation position a labrum objects to — so it needs no caution.
 
 **Sprint-Ready · Minimum** (~12 min) is the fourth warm-up: what survives when the warm-up is

@@ -171,13 +171,17 @@ const DATA = require('./data.js');
       swaps += await card.locator('.pick-dose .chip.swap').count();
       if (pg.groups[0].ids.includes(id)) {
         const mins = +(((await card.locator('.spread > .num').first().innerText()).match(/(\d+)\s*min/) || [])[1] || 0);
-        ck(mins > 0 && mins <= 40, r.n + ' should be a complete workout of 40 minutes or less at home, got ' + mins);
+        ck(mins > 0 && mins <= 50, r.n + ' should be a complete workout of 50 minutes or less at home, got ' + mins);
       }
     }
     const gymNames = Object.keys(DATA.HOME_SUB).map(k => DATA.EX[k].n).filter(n => names.has(n));
     ck(!gymNames.length, 'the ' + pg.n + ' page lists gym exercises in Home mode: ' + gymNames.join(', '));
     ck(swaps > 0, 'a swapped row on ' + pg.n + ' should say HOME');
-    if (pgId === 'legs') ck(names.has('Wall Sit'), 'the Legs page should have wall sits');
+    if (pgId === 'legs') {
+      ck(names.has('Wall Sit'), 'the Legs page should have wall sits');
+      ['Copenhagen Hold (Short Lever)', 'Adductor Squeeze Isometric Ladder', 'Side-Lying Abduction Hold', 'Single-Leg Balance Progression']
+        .forEach(n => ck(names.has(n), 'the Legs page should carry ' + n));
+    }
     console.log(pg.n + ' at home:', names.size, 'exercises,', swaps, 'swapped, gym ones listed:', gymNames.length);
   }
   await p.evaluate(() => { const s = JSON.parse(localStorage.getItem('groundcontact.v1') || '{}');
