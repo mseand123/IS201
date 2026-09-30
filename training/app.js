@@ -54,6 +54,9 @@ const ICONS = {
   room: 'M3 11l9-7 9 7|M5 10v10h14V10|M10 20v-5h4v5',
   grail: 'M7 3h10v4a5 5 0 0 1-10 0z|M12 12v5|M8 21h8|M10 17h4v4h-4z|M7 5H4a3 3 0 0 0 3 4|M17 5h3a3 3 0 0 1-3 4',
   goata: 'M8 3c1.7 0 2.5 2 2.5 4.5S9.7 12 8 12 5.5 10 5.5 7.5 6.3 3 8 3|M6.5 14.5h3v2.5h-3z|M16 7c1.7 0 2.5 2 2.5 4.5S17.7 16 16 16s-2.5-2-2.5-4.5S14.3 7 16 7|M14.5 18.5h3V21h-3z',
+  legs: 'M7 3h10|M9 3l-1 8 1 9|M15 3l1 8-1 9|M6 20h3|M15 20h3',
+  upper: 'M3 3h18|M7 3l3 6h4l3-6|M12 5.4a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2|M12 9v6|M12 15l-2 6|M12 15l2 6',
+  core: 'M8 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z|M12 3v18|M6 9h12|M6 15h12',
   check: 'M4 12l6 6L20 6'
 };
 
@@ -153,7 +156,9 @@ function toggleDone(date, exId) {
 const isHome = () => S.settings.mode === 'home';
 function resolve(it) {
   const dose = /Copenhagen week/i.test(it.d || '') ? copenDose(it.d) : it.d;
-  const sb = isHome() && HOME_SUB[it.x];
+  // A block can say what its own item becomes at home (`atHome`), for when the general swap
+  // would land on something the block already does — five presses all becoming the same push-up.
+  const sb = isHome() && (it.atHome || HOME_SUB[it.x]);
   if (!sb) return { x: it.x, d: dose, note: it.note, swapped: false };
   // the gym item's note belongs to the gym exercise — a swap only carries a note the map supplies
   return { x: sb.x, d: sb.d || dose, note: sb.note, swapped: true, from: it.x };
@@ -412,6 +417,7 @@ function stepsFromItems(items, blockName) {
 
 // A routine with \`rounds\` is a circuit: the card lists each move once, and the player runs
 // the whole list, rests, and goes again — labelled "Round 2 of 3" so you know where you are.
+const CIRCUIT_MOVE = 15;   // seconds to move from one exercise to the next inside a circuit round
 function routineSteps(r, items) {
   const n = r.rounds || 1;
   const list = items || r.items;
@@ -419,6 +425,10 @@ function routineSteps(r, items) {
   const out = [];
   for (let k = 1; k <= n; k++) {
     const round = stepsFromItems(list, 'Round ' + k + ' of ' + n);
+    // Inside a round you move straight on — the rest belongs at the end of the round. A hand-counted
+    // move used to carry its full category rest (45 s for strength) into the next move, which is
+    // sets with extra steps, not a circuit.
+    round.slice(0, -1).forEach(st => { if (st.mode === 'manual') st.restAfter = Math.min(st.restAfter, CIRCUIT_MOVE); });
     if (k < n && round.length) {
       const last = round[round.length - 1];
       last.after = r.roundRest || 60;
@@ -1479,18 +1489,13 @@ function viewProgram() {
       body: () => el('div', { class: 'stack stack-xl' }, PLAY_GROUPS.map(g =>
         sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
     },
-    body: {
-      n: 'By body part', blurb: 'Pick what you want to train and get the session.',
-      body: () => el('div', { class: 'stack stack-xl' }, BODY_GROUPS.map(g =>
-        sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
-    },
     range: {
       n: 'Stretching & range', blurb: 'The whole pass, or just the bit that feels tight.',
       body: () => el('div', { class: 'stack stack-xl' }, RANGE_GROUPS.map(g =>
         sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
     },
     grail: {
-      n: 'The Holy Grail', blurb: 'Just the best. Two per body part, and a Daily Six.',
+      n: 'The Holy Grail', blurb: 'Just the best. One to three per body part, and a Daily Six.',
       body: () => sec('The Holy Grail',
         'Out of everything in the app, the ones worth doing. Run the Daily Six every day, and tick anything from the list on top of it.',
         grid(byTag('GRAIL')))
@@ -1577,12 +1582,6 @@ function viewProgram() {
       body: () => el('div', { class: 'stack stack-xl' }, TRAIL_GROUPS.map(g =>
         sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
     },
-    blocks: {
-      n: 'Weak-link blocks', blurb: 'One thing, done properly, rather than fitted around a session.',
-      body: () => sec('Weak-link blocks',
-        'The rehab and prevention tracks as standalone blocks. Knee & Ankle Insurance is written to be run tired.',
-        grid(byTag('ARMOR')))
-    },
     power: {
       n: 'Elastic & isometric', blurb: 'Plyometrics with a gate at the top, and the isometric pairings.',
       body: () => sec('Elastic & isometric',
@@ -1593,62 +1592,68 @@ function viewProgram() {
       n: 'When time is short', blurb: 'Not the whole session — the part with the highest return.',
       body: () => sec('When time is short', 'Not the whole session — the part of it with the highest return.', grid(byTag('SHORT')))
     },
-    week: {
-      n: 'This week', blurb: 'The plan, and how the load balances across it.',
-      body: () => sec('This week',
-        'Week of ' + fmtShort(mon) + ' · ' + cur.n + '. Bars show CNS cost: one bar is a low day, three is a high day. Never two threes back to back.',
-        el('div', { class: 'stack stack-md' }, [
-          balancePanel(mon),
-          el('div', { class: 'row' }, [
-            el('button', { class: 'btn btn-sm', onclick: () => { viewDate = addDays(mon, -7); render(); } }, '\u2039 Previous week'),
-            el('button', { class: 'btn btn-sm', onclick: () => { viewDate = new Date(); render(); } }, 'This week'),
-            el('button', { class: 'btn btn-sm', onclick: () => { viewDate = addDays(mon, 7); render(); } }, 'Next week \u203a')
-          ]),
-          weekGrid
-        ]))
-    },
-    year: {
-      n: 'The year', blurb: 'Phases, anchored to the UFA calendar.',
-      body: () => sec('The year',
-        'Anchored to the UFA calendar: the 2026 season closed at Championship Weekend on August 28, and the 2027 season opens in late April. Everything counts backward from there.',
-        el('div', { class: 'stack stack-md' }, [
-          timeline,
-          el('div', { class: 'stack stack-sm' }, PHASES.map(p => el('div', {
-            class: 'card', style: p.id === cur.id ? 'border-color:var(--hi-fill)' : ''
-          }, [
-            el('div', { class: 'spread' }, [
-              el('div', { class: 'row' }, [
-                el('span', { class: 'eyebrow' }, p.tag),
-                el('h3', { class: 'display', style: 'font-size:var(--t-md)' }, p.n),
-                p.id === cur.id ? el('span', { class: 'chip solid' }, 'Current') : null
-              ]),
-              el('span', { class: 'num xs muted' }, fmtShort(parse(p.start)) + ' \u2192 ' + fmtShort(parse(p.end)))
+    plan: {
+      n: 'This week', blurb: 'The week\u2019s sessions, the year\u2019s phases, and the Copenhagen ladder.',
+      body: () => el('div', { class: 'stack stack-xl' }, [
+        sec('This week',
+          'Week of ' + fmtShort(mon) + ' · ' + cur.n + '. Bars show CNS cost: one bar is a low day, three is a high day. Never two threes back to back.',
+          el('div', { class: 'stack stack-md' }, [
+            balancePanel(mon),
+            el('div', { class: 'row' }, [
+              el('button', { class: 'btn btn-sm', onclick: () => { viewDate = addDays(mon, -7); render(); } }, '\u2039 Previous week'),
+              el('button', { class: 'btn btn-sm', onclick: () => { viewDate = new Date(); render(); } }, 'This week'),
+              el('button', { class: 'btn btn-sm', onclick: () => { viewDate = addDays(mon, 7); render(); } }, 'Next week \u203a')
             ]),
-            el('p', { class: 'small', style: 'margin-top:.4rem;max-width:70ch' }, p.focus),
-            el('ul', { class: 'small muted', style: 'margin-top:.4rem' }, p.keys.map(k => el('li', null, k))),
-            el('div', { class: 'row', style: 'margin-top:.5rem' }, p.micro.map((sid, i) =>
-              el('span', { class: 'chip', title: SESSIONS[sid].n }, DOW[i] + ' \u00b7 ' + SESSIONS[sid].n)))
-          ])))
-        ]))
-    },
-    copen: {
-      n: 'Copenhagen ladder', blurb: 'Ten weeks to rebuild the adductor.',
-      body: () => sec('Copenhagen ladder',
-        'Volume drives the outcome, so the jumps are deliberately small — most people who fail this exercise failed the progression, not the exercise.',
-        el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
-          el('thead', null, [el('tr', null, [el('th', null, 'Wk'), el('th', null, 'Exercise'), el('th', null, 'Dose'), el('th', null, 'Freq'), el('th', null, 'Note')])]),
-          el('tbody', null, COPEN.map(c => {
-            const now = copenWeekFor(new Date());
-            return el('tr', { style: now && now.w === c.w ? 'background:var(--warn-bg)' : '' }, [
-              el('td', { class: 'n' }, String(c.w)),
-              el('td', null, [exLink(c.ex)]),
-              el('td', null, c.d), el('td', null, c.f),
-              el('td', { class: 'small muted' }, c.note)
-            ]);
-          }))
-        ])]))
+            weekGrid
+          ])),
+        sec('The year',
+          'Anchored to the UFA calendar: the 2026 season closed at Championship Weekend on August 28, and the 2027 season opens in late April. Everything counts backward from there.',
+          el('div', { class: 'stack stack-md' }, [
+            timeline,
+            el('div', { class: 'stack stack-sm' }, PHASES.map(p => el('div', {
+              class: 'card', style: p.id === cur.id ? 'border-color:var(--hi-fill)' : ''
+            }, [
+              el('div', { class: 'spread' }, [
+                el('div', { class: 'row' }, [
+                  el('span', { class: 'eyebrow' }, p.tag),
+                  el('h3', { class: 'display', style: 'font-size:var(--t-md)' }, p.n),
+                  p.id === cur.id ? el('span', { class: 'chip solid' }, 'Current') : null
+                ]),
+                el('span', { class: 'num xs muted' }, fmtShort(parse(p.start)) + ' \u2192 ' + fmtShort(parse(p.end)))
+              ]),
+              el('p', { class: 'small', style: 'margin-top:.4rem;max-width:70ch' }, p.focus),
+              el('ul', { class: 'small muted', style: 'margin-top:.4rem' }, p.keys.map(k => el('li', null, k))),
+              el('div', { class: 'row', style: 'margin-top:.5rem' }, p.micro.map((sid, i) =>
+                el('span', { class: 'chip', title: SESSIONS[sid].n }, DOW[i] + ' \u00b7 ' + SESSIONS[sid].n)))
+            ])))
+          ])),
+        sec('Copenhagen ladder',
+          'Volume drives the outcome, so the jumps are deliberately small — most people who fail this exercise failed the progression, not the exercise.',
+          el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
+            el('thead', null, [el('tr', null, [el('th', null, 'Wk'), el('th', null, 'Exercise'), el('th', null, 'Dose'), el('th', null, 'Freq'), el('th', null, 'Note')])]),
+            el('tbody', null, COPEN.map(c => {
+              const now = copenWeekFor(new Date());
+              return el('tr', { style: now && now.w === c.w ? 'background:var(--warn-bg)' : '' }, [
+                el('td', { class: 'n' }, String(c.w)),
+                el('td', null, [exLink(c.ex)]),
+                el('td', null, c.d), el('td', null, c.f),
+                el('td', { class: 'small muted' }, c.note)
+              ]);
+            }))
+          ])]))
+      ])
     }
   };
+  // Legs, Upper Body and Core: each page's complete workouts first, then the targeted blocks.
+  // A page with a single group needs no second heading.
+  BODY_PAGES.forEach(pg => {
+    const part = g => grid(g.ids.map(byId).filter(Boolean));
+    SECTIONS[pg.id] = {
+      n: pg.n, blurb: pg.blurb,
+      body: () => sec(pg.n, pg.intro || pg.blurb, pg.groups.length === 1 ? part(pg.groups[0])
+        : el('div', { class: 'stack stack-xl' }, pg.groups.map(g => sec(g.n, g.sub, part(g)))))
+    };
+  });
 
   // A section is open: show it with a way back.
   if (sub && SECTIONS[sub]) {
@@ -1661,20 +1666,17 @@ function viewProgram() {
   // The hub.
   const counts = {
     play: PLAY_GROUPS.reduce((a, g) => a + g.ids.length, 0) + ' blocks',
-    body: BODY_GROUPS.reduce((x, g) => x + g.ids.length, 0) + ' blocks',
     range: RANGE_GROUPS.reduce((x, g) => x + g.ids.length, 0) + ' blocks',
     trail: ROUTINES.filter(r => r.tag === 'TRAIL').length + ' blocks',
     boss: ROUTINES.filter(r => r.tag === 'BOSS').length + ' blocks',
     room: '~' + Math.round(runSeconds(routineSteps(byId('room-circuit'))) / 60) + ' min',
     grail: byId('grail-list').items.length + ' + 6',
     goata: ROUTINES.filter(r => r.tag === 'GOATA').length + ' blocks',
-    blocks: byTag('ARMOR').length + ' blocks',
     power: byTag('POWER').length + ' blocks',
     short: byTag('SHORT').length + ' blocks',
-    week: fmtShort(mon),
-    year: PHASES.length + ' phases',
-    copen: COPEN.length + ' weeks'
+    plan: fmtShort(mon)
   };
+  BODY_PAGES.forEach(pg => { counts[pg.id] = pg.groups.reduce((x, g) => x + g.ids.length, 0) + ' blocks'; });
   const tile = (key, icon, hi) => el('button', {
     class: 'tile' + (hi ? ' tile-hi' : ''), onclick: () => goSub(key)
   }, [
@@ -1686,29 +1688,26 @@ function viewProgram() {
     el('span', { class: 'tile-meta num' }, counts[key])
   ]);
 
+  // Grouped by what you came to do, training by body part first.
+  const HUB = [
+    { h: 'Train', tiles: [['grail', ICONS.grail], ['legs', ICONS.legs], ['upper', ICONS.upper], ['core', ICONS.core],
+      ['room', ICONS.room], ['power', ICONS.bolt], ['short', ICONS.clock]] },
+    { h: 'Play & recover', tiles: [['play', ICONS.play], ['trail', ICONS.trail], ['range', ICONS.range]] },
+    { h: 'Programs', tiles: [['boss', ICONS.boss], ['goata', ICONS.goata]] },
+    { h: 'Your plan', tiles: [['plan', ICONS.today]] }
+  ];
+
   return el('div', { class: 'stack stack-lg' }, [
     el('div', { class: 'sec-head' }, [
       el('h2', null, 'Program'),
       el('div', { class: 'trace' }),
       el('p', { class: 'small muted', style: 'max-width:72ch' },
-        'Everything that is not today\u2019s session. The daily and range work carries any sport; Frisbee is the game-day layer on top of it.')
+        'Everything that is not today\u2019s session, grouped by what you came to do.')
     ]),
-    el('div', { class: 'hub' }, [
-      tile('grail', ICONS.grail),
-      tile('room', ICONS.room),
-      tile('play', ICONS.play),
-      tile('body', ICONS.body),
-      tile('blocks', ICONS.armor),
-      tile('range', ICONS.range),
-      tile('boss', ICONS.boss),
-      tile('goata', ICONS.goata),
-      tile('trail', ICONS.trail),
-      tile('power', ICONS.bolt),
-      tile('short', ICONS.clock),
-      tile('week', ICONS.today),
-      tile('year', ICONS.program),
-      tile('copen', ICONS.tests)
-    ])
+    ...HUB.map(g => el('section', { class: 'hub-group' }, [
+      el('h3', { class: 'eyebrow' }, g.h),
+      el('div', { class: 'hub' }, g.tiles.map(t => tile(t[0], t[1])))
+    ]))
   ]);
 }
 
@@ -1806,22 +1805,26 @@ function routineCard(r, date) {
   const picker = el('div', { class: 'routine-pick' + (open ? ' open' : '') }, [
     el('div', { class: 'pick-list' }, r.items.flatMap((it, i) => {
       const on = sel.has(i);
-      const ex = EX[it.x];
+      // The list shows what you will actually do. In Home mode that is the home exercise, with
+      // its own dose and how-to — it used to show the gym lift and swap it only once you ran it.
+      const rr = resolve(it);
+      const ex = EX[rr.x];
       const row = el('div', { class: 'pick-row' + (on ? ' on' : '') }, [
         el('button', {
           class: 'tick pick', 'aria-pressed': on ? 'true' : 'false', 'aria-label': 'Select ' + ex.n,
           onclick: () => { on ? sel.delete(i) : sel.add(i); qmark(r.id); render(); }
         }, [(() => { const g = svgEl('svg', { viewBox: '0 0 24 24' });
               g.appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' })); return g; })()]),
-        el('button', { class: 'pick-body pick-open', onclick: () => openEx(it.x), 'aria-label': ex.n + ' \u2014 how-to' }, [
+        el('button', { class: 'pick-body pick-open', onclick: () => openEx(rr.x), 'aria-label': ex.n + ' \u2014 how-to' }, [
           el('span', { class: 'pick-name' }, ex.n),
-          el('span', { class: 'pick-dose num' }, it.d + ' \u00b7 tap for how-to'),
+          rr.swapped ? el('span', { class: 'pick-swap' }, [el('span', { class: 'chip swap' }, 'HOME'), ' instead of ' + EX[rr.from].n]) : null,
+          el('span', { class: 'pick-dose num' }, rr.d + ' \u00b7 tap for how-to'),
           costChip(ex),
           ex.targets ? el('span', { class: 'pick-targets' }, ex.targets) : null,
           // The note is where the dose is explained — whose number it is, what to change, when
           // to stop. It rendered on a session row and nowhere else, so the picker never showed it.
-          it.note ? el('span', { class: 'pick-note' }, it.note) : null,
-          isHome() && ex.home ? el('span', { class: 'pick-home' }, 'At home: ' + ex.home) : null
+          rr.note ? el('span', { class: 'pick-note' }, rr.note) : null,
+          isHome() && !rr.swapped && ex.home ? el('span', { class: 'pick-home' }, 'At home: ' + ex.home) : null
         ]),
         el('button', {
           class: 'btn btn-sm row-start',
@@ -1852,7 +1855,7 @@ function routineCard(r, date) {
         timesToday ? el('span', { class: 'chip good' }, '✓ ' + (timesToday > 1 ? timesToday + '×' : '') + ' today') : null
       ]),
       // a menu has no "whole thing" to time: it shows the picks, or says to pick
-      el('span', { class: 'num xs muted' }, r.open && !n ? 'pick any' : '≈ ' + fmtMins(runSeconds(routineSteps(r, chosen))))
+      el('span', { class: 'num xs muted', style: 'white-space:nowrap' }, r.open && !n ? 'pick any' : '≈ ' + fmtMins(runSeconds(routineSteps(r, chosen))))
     ]),
     el('p', { class: 'small muted' }, r.sub),
     // A short, authored line saying what the block is for. check-data.js verifies every term

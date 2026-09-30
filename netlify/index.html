@@ -731,6 +731,9 @@ body.running { overflow: hidden; }
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: .55rem;
 }
+/* A heading and its tiles: what you came to do, then where it is. */
+.hub-group { display: flex; flex-direction: column; gap: .5rem; }
+.hub-group > .eyebrow { margin: 0; }
 .tile {
   display: flex;
   align-items: center;
@@ -994,6 +997,10 @@ body.running .queuebar { display: none; }
 /* A menu's Run waits for a pick, and should look like it is waiting. */
 .btn[disabled], .btn[disabled]:hover { opacity: .55; cursor: default; }
 .btn-primary[disabled]:hover { background: var(--brand-2); border-color: var(--brand-2); color: var(--on-brand); }
+
+/* In Home mode a list row says it is the home version, and of what. */
+.pick-swap { display: flex; align-items: center; gap: .35rem; font-size: var(--t-xs); color: var(--ink-2); margin: .1rem 0; }
+.pick-swap .chip.swap { margin-left: 0; padding: .05rem .4rem; }
 
 </style>
 <link rel="manifest" href="/manifest.webmanifest" />
@@ -1995,6 +2002,19 @@ const EX = {
   prog: 'Two-leg → single-leg → single-leg lateral → pogos for height with the same contact time.',
   regr: 'Lower amplitude, fewer contacts.'
 },
+'sl-pogo': {
+  n: 'Single-Leg Pogos', cat: 'plyo', tags: ['elastic','speed','foot'],
+  cost: 2,
+  targets: 'Achilles & calves · one ankle at a time',
+  why: 'The step up from two-leg pogos, and closer to the game: every sprint stride and every cut lands on one foot. One ankle now takes the whole load, so a weaker side shows up straight away — in the rhythm, the noise, or a heel that starts touching down.',
+  setup: 'Shoes or barefoot, on a firm surface with some give. Fingertips on a wall for balance is fine.',
+  steps: ['Stand on one foot, knee almost straight, the other foot off the floor behind you.','Bounce off the ball of the foot, small and fast.','Hip level, knee over the toes.','Finish the contacts on one side, then switch.'],
+  cues: ['Quiet, fast, minimum ground time.','Toes pulled up before contact.','The ankle springs; the knee stays quiet.'],
+  faults: ['The knee caving in.','Heel touching down.','The hip dropping on the free-leg side.','Going on after the rhythm slows.'],
+  dose: '2 × 10–15 contacts per side.',
+  prog: 'More contacts, then side to side over a line, then forward and back.',
+  regr: 'Two-leg pogos, or more weight on the wall.'
+},
 'depth-jump': {
   n: 'Depth Jump', cat: 'plyo', tags: ['elastic','power','high-intensity'],
   why: 'The highest-intensity plyometric, and it only pays once you have earned it. Athletes with an RSI of 2.0–3.0 should use depth jumps from their individually tested optimal drop height. Using the height that maximises YOUR reactive strength index is what makes the difference — most people just pick a box.',
@@ -2608,7 +2628,7 @@ const SESSIONS = {
     ]},
     { n: 'ROTATE + THROW', why: 'Hip-led rotation, then the disc', items: [
       { x: 'medball-rotational', d: '4 × 5 per side, max intent' },
-      { x: 'medball-slam-rot', d: '2 × 6 per side' },
+      { x: 'medball-slam-rot', d: '2 × 6 per side', atHome: { x: 'russian-twist', d: '2 × 20, fast', note: 'No ball: fast rotations in place of the slam. The chop above already covers the throw.' } },
       { x: 'throw-volume', d: 'Full session — count hard throws, cap at 30' }
     ]},
     { n: 'FINISH', why: '', items: [
@@ -2714,7 +2734,7 @@ const SESSIONS = {
     ]},
     { n: 'ELASTIC', why: 'Reactive strength, short contacts', items: [
       { x: 'pogo-jumps', d: '3 × 25 contacts', note: 'Both feet. Stiff ankles, minimal ground time.' },
-      { x: 'pogo-jumps', d: '2 × 15 contacts per side', note: 'Now single-leg. The app will call the switch.' },
+      { x: 'sl-pogo', d: '2 × 15 contacts per side', note: 'The app will call the switch.' },
       { x: 'hurdle-hops', d: '3 × 5 hurdles' },
       { x: 'bounds', d: '3 × 30 m' }
     ]},
@@ -2868,7 +2888,7 @@ const SESSIONS = {
       { x: 'pogo-jumps', d: '2 × 20 contacts' }
     ]},
     { n: 'MAIN', why: 'Three heavy sets, high bar speed, stop while it is fast', items: [
-      { x: 'trap-bar-deadlift', d: '3 × 3 @ 82–85%' },
+      { x: 'trap-bar-deadlift', d: '3 × 3 @ 82–85%', atHome: { x: 'backpack-hinge', d: '3 × 6, backpack loaded, drive up fast', note: 'The strap pull below already takes the iso slot, so the deadlift becomes a loaded hinge.' } },
       { x: 'rfess', d: '2 × 5 per side' },
       { x: 'weighted-pullup', d: '3 × 4' }
     ]},
@@ -3856,21 +3876,21 @@ const HOME_SUB = {
   'front-squat':              { x: 'heels-elevated-squat',      d: '4 × 10, backpack loaded, 1 s pause' },
   'rfess':                    { x: 'backpack-rfess',            d: '4 × 8–10 per side, backpack loaded' },
   'reverse-lunge-slider':     { x: 'shrimp-squat',              d: '3 × 5–8 per side' },
-  'hip-thrust':               { x: 'couch-hip-thrust-iso',      d: '3 × 25 s per side, or 3 × 12 with 3 s holds' },
+  'hip-thrust':               { x: 'sl-hip-thrust', d: '3 \u00d7 12 per side' },
   'calf-iso-soleus':          { x: 'stair-calf-iso',            d: '3 × 40 s bent-knee per side' },
-  'calf-raise-loaded':        { x: 'stair-calf-iso',            d: '3 × 12 straight + 3 × 15 bent-knee per side' },
+  'calf-raise-loaded':        { x: 'sl-calf-raise', d: '3 \u00d7 15 per side, 15 s rest' },
   'single-leg-rdl':           { x: 'backpack-hinge',            d: '3 × 8 per side, single-leg, backpack loaded' },
-  'weighted-pullup':          { x: 'table-row-iso',             d: '4 × 8–10 with 3 s holds, feet elevated' },
-  'landmine-press':           { x: 'pushup-scap',               d: '2 × 10 scapular + 3 × 10 push-up plus' },
-  'bottoms-up-carry':         { x: 'pushup-scap',               d: '3 × 8 slow push-up plus', note: 'The closest home stand-in for reflexive cuff control is slow, scapula-led pressing.' },
-  'suitcase-carry':           { x: 'side-plank-iso',            d: '3 × 35 s per side' },
+  'weighted-pullup':          { x: 'pullup', d: '4 \u00d7 5\u20138, bodyweight' },
+  'landmine-press':           { x: 'pushup-bottom-iso', d: '3 \u00d7 30 s' },
+  'bottoms-up-carry':         { x: 'plank-walkup', d: '3 \u00d7 10' },
+  'suitcase-carry':           { x: 'bear-crawl', d: '3 \u00d7 30 s' },
   'pallof-press':             { x: 'bird-dog-iso',              d: '3 × 18 s per side' },
   'back-extension-iso':       { x: 'superman-iso',              d: '3 × 40 s' },
   'medball-rotational':       { x: 'rotational-chop',           d: '4 × 6 per side, max intent' },
   'medball-slam-rot':         { x: 'rotational-chop',           d: '3 × 8 per side' },
   'depth-jump':               { x: 'curb-depth-jump',           d: '4 × 4 from your tested optimal stair count, 90 s rest' },
-  'hurdle-hops':              { x: 'pogo-jumps',                d: '4 × 20 contacts, maximum height, minimum ground time' },
-  'foam-roll-post':           { x: 'ball-roll-foot',            d: '90 s per foot, then a ball on the glutes and quads for 45 s each', note: 'A lacrosse ball against a wall covers most of what a roller does.' }
+  'hurdle-hops':              { x: 'lateral-bench-hop', d: '4 \u00d7 15 contacts, as high and quick as you can' },
+  'foam-roll-post':           { x: 'ball-glute', d: '90 s per side, then the calves on the ball' },
 };
 
 
@@ -4190,15 +4210,15 @@ const ROUTINES = [
     items:[ { x:'desk-breath', d:'5 min' } ]},
 
   { id:'ham-insurance', n:'Hamstring Insurance', tag:'ARMOR',
-    sub:'Prevention, not rehab — the L-protocol plus the long-length isometric',
-    why:'A previous strain is the strongest predictor of a future one, and it stays true long after the tissue has healed — because short fascicles and a long-length strength deficit do not fix themselves. Every exercise here loads the position where hamstrings actually fail. Weekly, forever, whether or not anything hurts.',
+    sub:'Daily while it is cranky, weekly for good · the Askling set and the long hold',
+    why:'A previous strain is the strongest predictor of a future one, and it stays true long after the tissue has healed, because short fibres and a strength deficit at length do not fix themselves. Everything here loads the hamstring in the lengthened position where it actually fails, gently: the long-length hold, and the three Askling exercises, which are the best-evidenced way back from exactly the strain you have had. Run it every day while the hamstring is cranky, then once a week for good. When it is calm and a full-effort long hold is pain-free, Hamstring Strength is the next step.',
     items:[
-      { x:'ball-roll-foot', d:'60 s per foot', note:'Before hamstring loading, every time. It buys range in the posterior chain without stretching the hamstring, which is exactly what you want before loading it at length.' },
-      { x:'ham-iso-long', d:'3 × 25 s per side' },
-      { x:'askling-extender', d:'2 × 12 per side' },
-      { x:'askling-diver', d:'3 × 6 per side' },
-      { x:'askling-glider', d:'3 × 4 per side' },
-      { x:'nerve-glide-sciatic', d:'2 × 10 per side' }
+      { x:'ball-roll-foot', d:'60 s per foot', note:'Before hamstring loading, every time. It buys range in the back of the legs without stretching the hamstring itself.' },
+      { x:'ham-iso-long', d:'2 × 30 s per side', t:{ r: 20 }, note:'Heel on the couch, knee nearly straight. Build to full effort only as it allows.' },
+      { x:'askling-extender', d:'2 × 10 per side' },
+      { x:'askling-diver', d:'2 × 6 per side' },
+      { x:'askling-glider', d:'2 × 4 per side' },
+      { x:'nerve-glide-sciatic', d:'2 × 10 per side', note:'If this changes how the hamstring feels, tell your physio — it points to the nerve rather than the muscle.' }
     ]},
   { id:'groin-block', n:'Groin Block', tag:'ARMOR',
     sub:'Squeeze ladder, Copenhagen, long-length loading',
@@ -4329,7 +4349,7 @@ const ROUTINES = [
       { x:'elastic-rebound-flow', g:'PRIME · load the spring gently', d:'3 min', note:'Rhythmic and submaximal. This is teaching the tissue what is coming.' },
       { x:'cmj', d:'3 singles', note:'Your gate. Note the best of three against your logged baseline under Tests. Within 10%: the whole ladder. Below it: stop after the bounds today.' },
       { x:'pogo-jumps', g:'EXTENSIVE · short contacts, low height', d:'3 × 20 contacts', note:'Both feet. Ankles stiff, knees quiet, ground time as short as you can make it.' },
-      { x:'pogo-jumps', d:'2 × 10 contacts per side', note:'Single leg. If the contact audibly slows, that is the end of the set.' },
+      { x:'sl-pogo', d:'2 × 10 contacts per side', note:'If the contact audibly slows, that is the end of the set.' },
       { x:'hurdle-hops', d:'3 × 5 hurdles', note:'Low hurdles. Rebound, do not reset between them.' },
       { x:'skater-bound', g:'HORIZONTAL · the sprint-specific rung', d:'3 × 5 per side', note:'Cover distance, land quietly, straight back out. This is the plane the sport lives in.' },
       { x:'bounds', d:'3 × 20 m', note:'Long, floating contacts. Bounding is the most sprint-specific thing in this block.' },
@@ -4814,8 +4834,8 @@ Object.assign(EX, {
 });
 
 Object.assign(HOME_SUB, {
-  'db-incline-press':    { x: 'pushup-scap',      d: '3 × 10–15 push-up plus, feet elevated' },
-  'overhead-press':      { x: 'pushup-scap',      d: '3 × 10 slow push-up plus' },
+  'db-incline-press':    { x: 'pushup', d: '3 \u00d7 12\u201315, feet up on the couch' },
+  'overhead-press':      { x: 'pike-pushup', d: '3 \u00d7 8\u201310' },
   'chest-supported-row': { x: 'table-row-iso',    d: '4 × 8–10 with 3 s holds, feet elevated' }
 });
 
@@ -5242,35 +5262,37 @@ const PLAY_GROUPS = [
    entered by what you want to train rather than by what the plan says.
    ----------------------------------------------------------- */
 ROUTINES.push(
-  { id:'body-legs', n:'Legs', tag:'BODY',
-    sub:'Hinge, squat, one leg at a time, then the calves',
-    why:'A full lower body session, ordered the way the rest of the program is ordered: the ankle and the foot get opened first because dorsiflexion is what lets you squat with your heels down, then the two heavy bilateral lifts while you are fresh, then single leg work where the asymmetries actually live, then the hamstring. The trap bar comes before the squat because it is the heavier pull and the one that most rewards a clean nervous system. Single leg work is not an accessory here: it is the closest thing in the gym to how you actually run, and it is the only way to find a left-right difference before it finds you. In Home mode every barbell lift swaps for a backpack or doorway version automatically \u2014 the flag on each row tells you which.',
+  { id:'body-legs', n:'Legs · Full', tag:'BODY',
+    sub:'8 moves · everything from the hips down · twice a week',
+    targets:'Quads · glutes · hamstrings · groin · knees · calves',
+    why:'One session that trains everything below the waist, in the order that makes sense: open the hips, the single-leg strength work while you are fresh, the glutes, the hamstrings twice — once as the Nordic and once as a hip-extension move, because they train different hamstrings — then the groin, a wall sit for the knees, and the calves. In Home mode every row shows its home version, all bodyweight or a backpack. The heavy two-leg lifts, the trap bar and the front squat, live on the strength days of your weekly plan, which is why they are not repeated here. If your hamstring is cranky, skip the Nordic and run Hamstring Insurance until it settles.',
     items:[
-      { x:'ball-roll-foot', g:'PRIME \u00b7 open the ankle before you load it', d:'60 s per foot' },
-      { x:'knee-to-wall', d:'10 reps + 20 s hold per side', t:{ w: 50, r: 8, rounds: 2, label: 'Knee to wall \u2014 switch sides' }, note:'Heels down in a squat starts here. If you are under about ten centimetres, this is your limiter.' },
-      { x:'deep-squat-hold', d:'60 s', t:{ r: 15 } },
-      { x:'trap-bar-deadlift', g:'HEAVY \u00b7 while the nervous system is clean', d:'4 \u00d7 5 @ 80\u201385%', note:'Push the floor away rather than pulling the bar up. Stop the set if bar speed visibly drops.' },
-      { x:'front-squat', d:'3 \u00d7 5', note:'Elbows up. Safety-squat bar or a goblet squat if the front rack bothers the shoulder.' },
-      { x:'rfess', g:'ONE LEG \u00b7 where the asymmetries live', d:'3 \u00d7 8 per side' },
-      { x:'step-up', d:'3 \u00d7 8 per side', note:'Knee height at most. The trailing leg is a passenger \u2014 if it is pushing off the floor, lower the step.' },
-      { x:'single-leg-rdl', d:'3 \u00d7 8 per side', note:'Hips level. A glass of water on the sacrum would not spill.' },
-      { x:'nordic-curl', g:'HAMSTRING \u00b7 low volume, high quality', d:'2 \u00d7 5', note:'Hips locked in line with the torso. The moment you break at the hip the exercise is over.' },
-      { x:'calf-raise-loaded', d:'3 \u00d7 10 straight-knee + 3 \u00d7 14 bent-knee' },
-      { x:'ham-iso-long', d:'3 \u00d7 25 s per side', t:{ r: 20 } }
+      { x:'deep-squat-hold', g:'OPEN UP', d:'60 s', note:'Sit into it. Hips, ankles and groin ready before anything loads them.' },
+      { x:'rfess', g:'QUADS & GLUTES · one leg at a time', d:'3 × 8 per side', note:'Back foot on a bench. The best single-leg strength builder there is.',
+        atHome: { x:'backpack-rfess', d:'3 × 10 per side', note:'Back foot on the bed. Bodyweight until 10 a side is easy, then a backpack.' } },
+      { x:'hip-thrust', d:'4 × 20 s at lockout, heavy', note:'Ribs down, glutes squeezed hard at the top.',
+        atHome: { x:'sl-hip-thrust', d:'3 × 12 per side, 30 s rest', note:'Shoulders on the couch, one leg, two-second squeeze at the top. Alternate legs.' } },
+      { x:'nordic-curl', g:'HAMSTRINGS · two different jobs', d:'3 × 5, slow', note:'Lengthening strength through the knee. Skip it while the hamstring is cranky.' },
+      { x:'single-leg-rdl', d:'3 × 8 per side', note:'Hip extension with the hamstring long — where the biceps femoris does its work.',
+        atHome: { x:'sl-ham-bridge', d:'3 × 10 per side, 30 s rest', note:'Heel on the couch, knee barely bent: hip extension with the hamstring long, without weights. Alternate legs.' } },
+      { x:'copenhagen-hold', g:'GROIN, KNEES & CALVES', d:'3 × 20 s per side', t:{ r: 15 }, note:'Top knee on the bench or the bed edge. Your weakest link.' },
+      { x:'wall-sit-iso', d:'2 × 45 s', t:{ r: 30 }, note:'Thighs parallel, back flat on the wall. Quads and knees.' },
+      { x:'calf-raise-loaded', d:'2 × 12 per side, 15 s rest', note:'One leg at a time off a step, alternating, slow on the way down.',
+        atHome: { x:'sl-calf-raise', d:'2 × 15 per side, 15 s rest', note:'Off a stair, alternate legs, heel below the step.' } }
     ]},
 
   { id:'body-push', n:'Chest, Shoulders & Push', tag:'BODY',
     sub:'Pressing, with the shoulder looked after first',
-    why:'Pressing days go wrong at the shoulder, not the chest, so this one warms the cuff and the scapula before anything heavy happens and puts a pull in front of the first press. At 6\u20191" and 150 lb, upper body mass is one of the largest untapped levers you have, which is the honest case for an incline press sitting alongside all the athletic work. The landmine press is in here because its arc is comfortable and it forces a ribs-down, glute-on trunk position, not because you are avoiding anything: overhead barbell pressing is fine for you, since your labral tear is in the hip. The Pallof press at the end is not filler. Pressing is a trunk job, and the trunk is what stops force leaking between your hips and your hands.',
+    targets:'Chest · shoulders · triceps · cuff · trunk',
+    why:'Pressing days go wrong at the shoulder, not the chest, so this one warms the cuff and the shoulder blade before anything heavy happens. At 6’1" and 150 lb, upper-body mass is one of the largest untapped levers you have, which is the honest case for an incline press and an overhead press sitting alongside all the athletic work. The loaded carry trains the cuff through the grip, and the Pallof at the end is not filler: pressing is a trunk job, and the trunk is what stops force leaking between your hips and your hands. At home the presses become push-ups with your feet up and pike push-ups, and the carry becomes a plank walk-up.',
     items:[
-      { x:'band-pull-apart', g:'PRIME \u00b7 pull before you push', d:'2 \u00d7 15' },
-      { x:'cuff-iso-er', d:'2 \u00d7 25 s each direction', t:{ r: 12 }, note:'Elbow pinned to the ribs, 60\u201370%. Submaximal and pain-free beats maximal and provocative.' },
-      { x:'pushup-scap', d:'2 \u00d7 10 scapular push-ups', note:'Arms stay straight. Push the floor away so the upper back rounds; that range is the whole drill.' },
-      { x:'db-incline-press', g:'PRESS \u00b7 the heavy work', d:'3 \u00d7 8\u201310', note:'Blades set into the bench before the first rep and kept there. Control the eccentric.' },
-      { x:'overhead-press', d:'3 \u00d7 5\u20138', note:'Ribs down, glutes on. If the low back arches, the weight is too heavy.' },
-      { x:'landmine-press', d:'3 \u00d7 8 per side', note:'Press along the arc rather than straight up. Half-kneeling keeps the trunk honest.' },
-      { x:'bottoms-up-carry', g:'FINISH \u00b7 cuff and trunk', d:'3 \u00d7 25 m per side', note:'Crush the handle. The cuff follows the grip.' },
-      { x:'pallof-press', d:'3 \u00d7 5 with 5 s holds per side' }
+      { x:'band-pull-apart', g:'PRIME · pull before you push', d:'2 × 15' },
+      { x:'cuff-iso-er', d:'2 × 25 s each direction', t:{ r: 12 }, note:'Elbow pinned to the ribs, 60–70%. Submaximal and pain-free beats maximal and provocative.' },
+      { x:'pushup-scap', d:'2 × 10 scapular push-ups', note:'Arms stay straight. Push the floor away so the upper back rounds; that range is the whole drill.' },
+      { x:'db-incline-press', g:'PRESS · the heavy work', d:'3 × 8–10', note:'Blades set into the bench before the first rep and kept there. Control the lowering.' },
+      { x:'overhead-press', d:'3 × 5–8', note:'Ribs down, glutes on. If the low back arches, the weight is too heavy.' },
+      { x:'bottoms-up-carry', g:'FINISH · cuff and trunk', d:'3 × 25 m per side', note:'Crush the handle. The cuff follows the grip.' },
+      { x:'pallof-press', d:'3 × 5 with 5 s holds per side' }
     ]},
 
   { id:'body-pull', n:'Back & Pull', tag:'BODY',
@@ -5287,33 +5309,33 @@ ROUTINES.push(
 
   { id:'body-core', n:'Core & Trunk', tag:'BODY',
     sub:'A trunk that resists rotation, not one that produces it',
-    why:'Ultimate and every other cutting sport is full of one-sided, rotational, decelerating loads, and the trunk\u2019s actual job in all of them is to not leak force between the hips and the shoulders. So there are no sit-ups here. Everything is anti-extension, anti-rotation or anti-lateral-flexion, held rather than repped. There is a second reason for that choice which is specific to you: unlike hanging knee raises or sit-ups, none of these drive the hip into deep flexion, which is the position an acetabular labrum objects to. The dead bug leads because a pelvis that tips forward under load closes the front of the hip, so lumbopelvic control is joint protection here rather than core aesthetics.',
+    targets:'Deep trunk · anti-extension · anti-rotation · side of the trunk · back',
+    why:'Ultimate and every other cutting sport is full of one-sided, rotational, decelerating loads, and the trunk’s actual job in all of them is to not leak force between the hips and the shoulders. So everything here resists movement — extension, rotation, bending sideways — and is held rather than repped. Two sets each, because a trunk trained this way does not need volume to get strong; it needs quality. The dead bug leads because a pelvis that stays level under load is what everything else is built on.',
     items:[
-      { x:'deadbug', g:'CONTROL \u00b7 the pelvis stays still', d:'3 \u00d7 6 per side, slow', note:'Stop the moment the low back lifts off the floor. That point is your current range.' },
-      { x:'bird-dog-iso', d:'3 \u00d7 18 s per side', note:'Reach long rather than lifting high. Hips square to the floor.' },
-      { x:'hollow-hold', g:'ANTI-EXTENSION', d:'3 \u00d7 25 s', note:'Low back glued to the floor. The moment it lifts, raise the legs.' },
-      { x:'rkc-plank', d:'3 \u00d7 20 s', note:'Maximum contraction of everything. If you can hold it a minute you are not doing it right.' },
-      { x:'pallof-press', g:'ANTI-ROTATION', d:'3 \u00d7 5 with 5 s holds per side' },
-      { x:'side-plank-iso', d:'3 \u00d7 35 s per side' },
-      { x:'suitcase-carry', d:'3 \u00d7 30 m per side' },
-      { x:'back-extension-iso', g:'POSTERIOR \u00b7 endurance, not peak force', d:'3 \u00d7 40 s' }
+      { x:'deadbug', g:'CONTROL', d:'2 × 6 per side, slow', note:'Stop the moment the low back lifts off the floor. That point is your current limit.' },
+      { x:'bird-dog-iso', d:'2 × 18 s per side', note:'Reach long rather than lifting high. Hips square to the floor.' },
+      { x:'hollow-hold', g:'ANTI-EXTENSION', d:'2 × 25 s', note:'Low back glued to the floor. The moment it lifts, raise the legs.' },
+      { x:'pallof-press', g:'ANTI-ROTATION', d:'2 × 5 with 5 s holds per side', t:{ r: 20, rounds: 4 },
+        atHome: { x:'bear-shoulder-tap', d:'2 × 20', note:'No band: anti-rotation on all fours. The bird dog above already covers the usual swap.' } },
+      { x:'side-plank-iso', d:'2 × 30 s per side' },
+      { x:'suitcase-carry', g:'SIDE AND BACK', d:'2 × 30 m per side' },
+      { x:'back-extension-iso', d:'2 × 40 s' }
     ]},
 
   { id:'body-lowerleg', n:'Calves, Feet & Ankles', tag:'BODY',
     sub:'The first spring in the chain, and the least trained',
-    why:'Everything you do on a field passes through a foot, and almost nobody trains one. The arch is the first spring: if it collapses passively, elastic energy leaks into the ground instead of coming back to you, and an eight-week intrinsic foot protocol measurably raises vertical propulsive force in running. Above it, the soleus takes six to eight times bodyweight per stride and is the biggest single contributor to propulsion, which is why the bent-knee isometric is in here and why it is held at mid-range where tendon load peaks rather than at the top where the joint locks out. The peroneals and the tibialis are the two nobody touches: one resists a rolling ankle, the other brakes the shin over the foot forty-seven times a game. Run this on a low day \u2014 none of it is CNS-expensive and all of it compounds.',
+    targets:'Feet · arch · shins · peroneals · calves & Achilles',
+    why:'Everything you do on a field passes through a foot, and almost nobody trains one. The arch is the first spring: if it collapses passively, elastic energy leaks into the ground instead of coming back to you, and an eight-week foot-strength program measurably raises propulsive force in running. Above it, the soleus takes six to eight times bodyweight per stride, which is why the bent-knee hold is in here, held at mid-range where tendon load peaks. The peroneals and the tibialis are the two nobody touches: one resists a rolling ankle, the other brakes the shin over the foot forty-seven times a game. Run this on a low day — none of it is expensive, and all of it compounds.',
     items:[
-      { x:'ball-roll-foot', g:'TISSUE', d:'90 s per foot', note:'Toe-touch test before and after. The range it buys runs up the whole back of the leg.' },
-      { x:'ball-calf-peroneal', d:'60 s per side', note:'Pump the ankle while parked. Do not skip the peroneal strip on the outside.' },
-      { x:'short-foot', g:'INTRINSIC \u00b7 the arch as a spring', d:'3 \u00d7 10 s per foot', note:'Toes stay long and flat. If they claw, you are cheating with the long flexors.' },
-      { x:'big-toe-iso', d:'5 \u00d7 10 s per foot', note:'The hallux is the last thing to leave the ground on every sprint step and every cut.' },
-      { x:'toe-yoga', d:'10 alternations per foot' },
-      { x:'tib-raise', g:'BRAKE \u00b7 the front of the shin', d:'3 \u00d7 20', note:'Slow on the way down. The eccentric is the part that has to catch you.' },
-      { x:'ankle-eversion', d:'2 \u00d7 15 each direction, per side', note:'The muscles that actively resist a rolled ankle. Compare sides honestly.' },
-      { x:'calf-iso-soleus', g:'CALF \u00b7 mid-range, where tendon load peaks', d:'3 \u00d7 40 s' },
-      { x:'calf-raise-loaded', d:'3 \u00d7 10 straight-knee + 3 \u00d7 14 bent-knee', note:'Full range at both ends, and pause at the bottom to kill the tendon bounce.' },
-      { x:'knee-to-wall', d:'10 reps + 3 \u00d7 20 s per side' },
-      { x:'barefoot-pogo-grass', g:'ELASTIC \u00b7 put the spring to work', d:'3 \u00d7 20 contacts, 45 s rest', note:'Quiet feet. Listen rather than watch.' }
+      { x:'ball-roll-foot', g:'TISSUE', d:'60 s per foot', note:'Toe-touch test before and after.' },
+      { x:'short-foot', g:'FOOT', d:'3 × 10 s per foot', note:'Toes stay long and flat. If they claw, you are cheating with the long flexors.' },
+      { x:'big-toe-iso', d:'3 × 10 s per foot', note:'The big toe is the last thing to leave the ground on every sprint stride.' },
+      { x:'tib-raise', g:'SHIN & ANKLE', d:'2 × 20', note:'Slow on the way down. The lowering is the part that has to hold up at game speed.' },
+      { x:'ankle-eversion', d:'2 × 12 each direction, per side', note:'The muscles that actively resist a rolled ankle. Compare sides.' },
+      { x:'calf-iso-soleus', g:'CALF', d:'3 × 40 s', t:{ r: 20 },
+        atHome: { x:'stair-calf-iso', d:'2 × 40 s per side', note:'Bent knee, front of the foot on a stair, heel dropped slightly.' } },
+      { x:'calf-raise-loaded', d:'3 × 12 per side', note:'One leg, full range at both ends, pause at the bottom.' },
+      { x:'barefoot-pogo-grass', g:'SPRING', d:'3 × 20 contacts, 45 s rest', note:'Quiet feet. Listen rather than watch.' }
     ]}
 );
 
@@ -5321,17 +5343,7 @@ ROUTINES.push(
    BODY GROUPS — the other door in: pick the part, get the session.
    Existing blocks are listed rather than duplicated.
    =========================================================== */
-const BODY_GROUPS = [
-  { n: 'Lower body',
-    sub: 'The big one first, then the parts that carry your weak links.',
-    ids: ['body-legs', 'body-lowerleg', 'hip-block', 'hip-strength', 'hipflexor-block', 'groin-block', 'ham-insurance'] },
-  { n: 'Upper body',
-    sub: 'Pull-dominant on purpose: a throwing shoulder wants twice as much pulling as pressing.',
-    ids: ['body-pull', 'body-push', 'shoulder-block'] },
-  { n: 'Middle',
-    sub: 'Held rather than repped, and nothing that drives the hip into deep flexion.',
-    ids: ['body-core'] }
-];
+/* BODY_GROUPS became BODY_PAGES: Legs, Upper Body and Core, each its own page. */
 
 /* -----------------------------------------------------------
    FREE WINS — the daily deposits. Not a workout, and not the Armor.
@@ -6691,6 +6703,70 @@ ROUTINES.push(
 );
 
 
+/* -----------------------------------------------------------
+   BODY PAGES — Legs, Upper Body and Core as the front door. Each page opens
+   with complete workouts at a sensible length, then the targeted blocks.
+   ----------------------------------------------------------- */
+ROUTINES.push(
+  { id:'legs-quick', n:'Legs · Quick', tag:'BODY', rounds: 2, roundRest: 45,
+    sub:'6 moves · 2 rounds · no weights · a busy day',
+    targets:'Quads · glutes · hamstrings · groin · calves',
+    why:'Every part of the leg once, then again, in about fifteen minutes. All bodyweight, so it is the same in the gym and at home. It will not build as much strength as Legs · Full, but two rounds done beats a full session skipped.',
+    items:[
+      { x:'backpack-rfess', d:'8 per side', note:'Back foot on the bed or a bench.' },
+      { x:'sl-hip-thrust', d:'8 per side', note:'Shoulders on the couch, squeeze at the top.' },
+      { x:'sl-ham-bridge', d:'6 per side', note:'Heel on the couch, knee barely bent.' },
+      { x:'wall-sit-iso', d:'40 s', t:{ r: 0 } },
+      { x:'copenhagen-hold', d:'15 s per side', t:{ r: 8 } },
+      { x:'sl-calf-raise', d:'10 per side', note:'Off a stair, alternate legs.' }
+    ]},
+
+  { id:'ham-strength', n:'Hamstring Strength', tag:'BODY',
+    sub:'Twice a week once it is calm · the biceps femoris, from both ends',
+    targets:'Hamstrings · biceps femoris · glutes',
+    why:'The step after Hamstring Insurance. The biceps femoris — the hamstring that strains in sprinters, and yours — needs two kinds of strength: lengthening strength through the knee, which is the Nordic, and hip-extension strength with the knee nearly straight, which is the Diver and the single-leg bridge. Research suggests the Nordic builds the other hamstrings more and hip-extension work builds the biceps femoris more, which is why both are here. Coming back from a flare-up: Hamstring Insurance daily until jogging and a full-effort long hold are pain-free, then this twice a week, starting the Nordic at 2 × 4 and building to 3 × 6. Up to about 3/10 during is fine if it is gone by the next morning; worse the next morning means drop back for a few days. Go back to full-speed sprinting when your single-leg bridge reps are within about 10% side to side.',
+    items:[
+      { x:'nordic-curl', g:'LENGTHENING · through the knee', d:'3 × 5, slow', note:'Coming back from a flare-up: 2 × 4, then build. Hips locked in line with the trunk.' },
+      { x:'askling-diver', g:'HIP EXTENSION · the biceps femoris end', d:'3 × 6 per side', note:'A single-leg hinge, arms reaching forward. Slow and controlled.' },
+      { x:'sl-ham-bridge', d:'3 × 10 per side', note:'Count the clean reps each side — this is also your readiness test.' },
+      { x:'bridge-walkout', d:'3 × 6', note:'Hips up the whole time, walk the heels out and back.' },
+      { x:'ham-iso-long', g:'FINISH · strength at length', d:'2 × 30 s per side', t:{ r: 20 } }
+    ]},
+
+  { id:'upper-quick', n:'Upper Body · Quick', tag:'BODY', rounds: 3, roundRest: 45,
+    sub:'5 moves · 3 rounds · a pull-up bar and the floor',
+    targets:'Chest · back · shoulders · arms · trunk',
+    why:'Push, pull, overhead, row and trunk, three times through, in about fifteen minutes. Bodyweight and your pull-up bar, so it is the same anywhere. Two pulling moves to two pushing ones, which is the balance a throwing shoulder wants.',
+    items:[
+      { x:'pushup', d:'12', note:'On the pull-up bar on the floor for extra depth.' },
+      { x:'pullup', d:'5', note:'Stop two short of failing.' },
+      { x:'pike-pushup', d:'8', note:'Hips high, head to a spot in front of the hands.' },
+      { x:'table-row-iso', d:'10', t:{ w: 35, r: 0, label: 'Rows, 10 reps' }, note:'Under a sturdy table, body straight.' },
+      { x:'plank-walkup', d:'8', note:'Hips still. Alternate the lead arm.' }
+    ]}
+);
+
+const BODY_PAGES = [
+  { id: 'legs', n: 'Legs', blurb: 'Every leg workout worth doing, in one place.',
+    intro: 'Legs \u00b7 Full twice a week is the whole job. Legs \u00b7 Quick covers a busy day.', groups: [
+    { n: 'Full workouts', sub: 'Everything from the hips down. Pick by the time you have.', ids: ['body-legs', 'legs-quick'] },
+    { n: 'Hamstrings', sub: 'Insurance every day while it is cranky. Strength twice a week once it is calm.', ids: ['ham-insurance', 'ham-strength'] },
+    { n: 'One area', sub: 'When one part needs the extra work.', ids: ['hip-strength', 'groin-block', 'body-lowerleg', 'knee-ankle', 'hipflexor-block', 'hip-block'] },
+    { n: 'Spring', sub: 'Elastic, reactive legs. Do them fresh, never tired.', ids: ['micro-elastic', 'plyo-ladder'] }
+  ]},
+  { id: 'upper', n: 'Upper Body', blurb: 'Push, pull, and the throwing shoulder.',
+    intro: 'Push and Pull once a week each, or Upper Body \u00b7 Quick twice when time is short.', groups: [
+    { n: 'Full workouts', sub: 'At least as much pulling as pushing over a week keeps a thrower’s shoulder healthy.', ids: ['body-push', 'body-pull', 'upper-quick'] },
+    { n: 'Throwing shoulder', sub: 'The cuff and the shoulder blade, on their own.', ids: ['shoulder-block'] },
+    { n: 'Upper body and trunk together', sub: 'The long one: push, pull and core in a single session.', ids: ['upper-core'] }
+  ]},
+  { id: 'core', n: 'Core', blurb: 'A trunk that holds, resists and turns.',
+    intro: 'Core & Trunk is the complete one. The two circuits are Boss Your Game\u2019s, about fifteen minutes each.', groups: [
+    { n: 'Workouts', sub: 'Core & Trunk is the complete one. The two circuits are Boss Your Game’s, about fifteen minutes each.', ids: ['body-core', 'boss-core', 'boss-core-hip'] }
+  ]}
+];
+
+
 </script>
 <script>
 /* ===========================================================
@@ -6749,6 +6825,9 @@ const ICONS = {
   room: 'M3 11l9-7 9 7|M5 10v10h14V10|M10 20v-5h4v5',
   grail: 'M7 3h10v4a5 5 0 0 1-10 0z|M12 12v5|M8 21h8|M10 17h4v4h-4z|M7 5H4a3 3 0 0 0 3 4|M17 5h3a3 3 0 0 1-3 4',
   goata: 'M8 3c1.7 0 2.5 2 2.5 4.5S9.7 12 8 12 5.5 10 5.5 7.5 6.3 3 8 3|M6.5 14.5h3v2.5h-3z|M16 7c1.7 0 2.5 2 2.5 4.5S17.7 16 16 16s-2.5-2-2.5-4.5S14.3 7 16 7|M14.5 18.5h3V21h-3z',
+  legs: 'M7 3h10|M9 3l-1 8 1 9|M15 3l1 8-1 9|M6 20h3|M15 20h3',
+  upper: 'M3 3h18|M7 3l3 6h4l3-6|M12 5.4a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2|M12 9v6|M12 15l-2 6|M12 15l2 6',
+  core: 'M8 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z|M12 3v18|M6 9h12|M6 15h12',
   check: 'M4 12l6 6L20 6'
 };
 
@@ -6848,7 +6927,9 @@ function toggleDone(date, exId) {
 const isHome = () => S.settings.mode === 'home';
 function resolve(it) {
   const dose = /Copenhagen week/i.test(it.d || '') ? copenDose(it.d) : it.d;
-  const sb = isHome() && HOME_SUB[it.x];
+  // A block can say what its own item becomes at home (`atHome`), for when the general swap
+  // would land on something the block already does — five presses all becoming the same push-up.
+  const sb = isHome() && (it.atHome || HOME_SUB[it.x]);
   if (!sb) return { x: it.x, d: dose, note: it.note, swapped: false };
   // the gym item's note belongs to the gym exercise — a swap only carries a note the map supplies
   return { x: sb.x, d: sb.d || dose, note: sb.note, swapped: true, from: it.x };
@@ -7107,6 +7188,7 @@ function stepsFromItems(items, blockName) {
 
 // A routine with \`rounds\` is a circuit: the card lists each move once, and the player runs
 // the whole list, rests, and goes again — labelled "Round 2 of 3" so you know where you are.
+const CIRCUIT_MOVE = 15;   // seconds to move from one exercise to the next inside a circuit round
 function routineSteps(r, items) {
   const n = r.rounds || 1;
   const list = items || r.items;
@@ -7114,6 +7196,10 @@ function routineSteps(r, items) {
   const out = [];
   for (let k = 1; k <= n; k++) {
     const round = stepsFromItems(list, 'Round ' + k + ' of ' + n);
+    // Inside a round you move straight on — the rest belongs at the end of the round. A hand-counted
+    // move used to carry its full category rest (45 s for strength) into the next move, which is
+    // sets with extra steps, not a circuit.
+    round.slice(0, -1).forEach(st => { if (st.mode === 'manual') st.restAfter = Math.min(st.restAfter, CIRCUIT_MOVE); });
     if (k < n && round.length) {
       const last = round[round.length - 1];
       last.after = r.roundRest || 60;
@@ -8174,18 +8260,13 @@ function viewProgram() {
       body: () => el('div', { class: 'stack stack-xl' }, PLAY_GROUPS.map(g =>
         sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
     },
-    body: {
-      n: 'By body part', blurb: 'Pick what you want to train and get the session.',
-      body: () => el('div', { class: 'stack stack-xl' }, BODY_GROUPS.map(g =>
-        sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
-    },
     range: {
       n: 'Stretching & range', blurb: 'The whole pass, or just the bit that feels tight.',
       body: () => el('div', { class: 'stack stack-xl' }, RANGE_GROUPS.map(g =>
         sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
     },
     grail: {
-      n: 'The Holy Grail', blurb: 'Just the best. Two per body part, and a Daily Six.',
+      n: 'The Holy Grail', blurb: 'Just the best. One to three per body part, and a Daily Six.',
       body: () => sec('The Holy Grail',
         'Out of everything in the app, the ones worth doing. Run the Daily Six every day, and tick anything from the list on top of it.',
         grid(byTag('GRAIL')))
@@ -8272,12 +8353,6 @@ function viewProgram() {
       body: () => el('div', { class: 'stack stack-xl' }, TRAIL_GROUPS.map(g =>
         sec(g.n, g.sub, grid(g.ids.map(byId).filter(Boolean)))))
     },
-    blocks: {
-      n: 'Weak-link blocks', blurb: 'One thing, done properly, rather than fitted around a session.',
-      body: () => sec('Weak-link blocks',
-        'The rehab and prevention tracks as standalone blocks. Knee & Ankle Insurance is written to be run tired.',
-        grid(byTag('ARMOR')))
-    },
     power: {
       n: 'Elastic & isometric', blurb: 'Plyometrics with a gate at the top, and the isometric pairings.',
       body: () => sec('Elastic & isometric',
@@ -8288,62 +8363,68 @@ function viewProgram() {
       n: 'When time is short', blurb: 'Not the whole session — the part with the highest return.',
       body: () => sec('When time is short', 'Not the whole session — the part of it with the highest return.', grid(byTag('SHORT')))
     },
-    week: {
-      n: 'This week', blurb: 'The plan, and how the load balances across it.',
-      body: () => sec('This week',
-        'Week of ' + fmtShort(mon) + ' · ' + cur.n + '. Bars show CNS cost: one bar is a low day, three is a high day. Never two threes back to back.',
-        el('div', { class: 'stack stack-md' }, [
-          balancePanel(mon),
-          el('div', { class: 'row' }, [
-            el('button', { class: 'btn btn-sm', onclick: () => { viewDate = addDays(mon, -7); render(); } }, '\u2039 Previous week'),
-            el('button', { class: 'btn btn-sm', onclick: () => { viewDate = new Date(); render(); } }, 'This week'),
-            el('button', { class: 'btn btn-sm', onclick: () => { viewDate = addDays(mon, 7); render(); } }, 'Next week \u203a')
-          ]),
-          weekGrid
-        ]))
-    },
-    year: {
-      n: 'The year', blurb: 'Phases, anchored to the UFA calendar.',
-      body: () => sec('The year',
-        'Anchored to the UFA calendar: the 2026 season closed at Championship Weekend on August 28, and the 2027 season opens in late April. Everything counts backward from there.',
-        el('div', { class: 'stack stack-md' }, [
-          timeline,
-          el('div', { class: 'stack stack-sm' }, PHASES.map(p => el('div', {
-            class: 'card', style: p.id === cur.id ? 'border-color:var(--hi-fill)' : ''
-          }, [
-            el('div', { class: 'spread' }, [
-              el('div', { class: 'row' }, [
-                el('span', { class: 'eyebrow' }, p.tag),
-                el('h3', { class: 'display', style: 'font-size:var(--t-md)' }, p.n),
-                p.id === cur.id ? el('span', { class: 'chip solid' }, 'Current') : null
-              ]),
-              el('span', { class: 'num xs muted' }, fmtShort(parse(p.start)) + ' \u2192 ' + fmtShort(parse(p.end)))
+    plan: {
+      n: 'This week', blurb: 'The week\u2019s sessions, the year\u2019s phases, and the Copenhagen ladder.',
+      body: () => el('div', { class: 'stack stack-xl' }, [
+        sec('This week',
+          'Week of ' + fmtShort(mon) + ' · ' + cur.n + '. Bars show CNS cost: one bar is a low day, three is a high day. Never two threes back to back.',
+          el('div', { class: 'stack stack-md' }, [
+            balancePanel(mon),
+            el('div', { class: 'row' }, [
+              el('button', { class: 'btn btn-sm', onclick: () => { viewDate = addDays(mon, -7); render(); } }, '\u2039 Previous week'),
+              el('button', { class: 'btn btn-sm', onclick: () => { viewDate = new Date(); render(); } }, 'This week'),
+              el('button', { class: 'btn btn-sm', onclick: () => { viewDate = addDays(mon, 7); render(); } }, 'Next week \u203a')
             ]),
-            el('p', { class: 'small', style: 'margin-top:.4rem;max-width:70ch' }, p.focus),
-            el('ul', { class: 'small muted', style: 'margin-top:.4rem' }, p.keys.map(k => el('li', null, k))),
-            el('div', { class: 'row', style: 'margin-top:.5rem' }, p.micro.map((sid, i) =>
-              el('span', { class: 'chip', title: SESSIONS[sid].n }, DOW[i] + ' \u00b7 ' + SESSIONS[sid].n)))
-          ])))
-        ]))
-    },
-    copen: {
-      n: 'Copenhagen ladder', blurb: 'Ten weeks to rebuild the adductor.',
-      body: () => sec('Copenhagen ladder',
-        'Volume drives the outcome, so the jumps are deliberately small — most people who fail this exercise failed the progression, not the exercise.',
-        el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
-          el('thead', null, [el('tr', null, [el('th', null, 'Wk'), el('th', null, 'Exercise'), el('th', null, 'Dose'), el('th', null, 'Freq'), el('th', null, 'Note')])]),
-          el('tbody', null, COPEN.map(c => {
-            const now = copenWeekFor(new Date());
-            return el('tr', { style: now && now.w === c.w ? 'background:var(--warn-bg)' : '' }, [
-              el('td', { class: 'n' }, String(c.w)),
-              el('td', null, [exLink(c.ex)]),
-              el('td', null, c.d), el('td', null, c.f),
-              el('td', { class: 'small muted' }, c.note)
-            ]);
-          }))
-        ])]))
+            weekGrid
+          ])),
+        sec('The year',
+          'Anchored to the UFA calendar: the 2026 season closed at Championship Weekend on August 28, and the 2027 season opens in late April. Everything counts backward from there.',
+          el('div', { class: 'stack stack-md' }, [
+            timeline,
+            el('div', { class: 'stack stack-sm' }, PHASES.map(p => el('div', {
+              class: 'card', style: p.id === cur.id ? 'border-color:var(--hi-fill)' : ''
+            }, [
+              el('div', { class: 'spread' }, [
+                el('div', { class: 'row' }, [
+                  el('span', { class: 'eyebrow' }, p.tag),
+                  el('h3', { class: 'display', style: 'font-size:var(--t-md)' }, p.n),
+                  p.id === cur.id ? el('span', { class: 'chip solid' }, 'Current') : null
+                ]),
+                el('span', { class: 'num xs muted' }, fmtShort(parse(p.start)) + ' \u2192 ' + fmtShort(parse(p.end)))
+              ]),
+              el('p', { class: 'small', style: 'margin-top:.4rem;max-width:70ch' }, p.focus),
+              el('ul', { class: 'small muted', style: 'margin-top:.4rem' }, p.keys.map(k => el('li', null, k))),
+              el('div', { class: 'row', style: 'margin-top:.5rem' }, p.micro.map((sid, i) =>
+                el('span', { class: 'chip', title: SESSIONS[sid].n }, DOW[i] + ' \u00b7 ' + SESSIONS[sid].n)))
+            ])))
+          ])),
+        sec('Copenhagen ladder',
+          'Volume drives the outcome, so the jumps are deliberately small — most people who fail this exercise failed the progression, not the exercise.',
+          el('div', { class: 'table-scroll' }, [el('table', { class: 'data' }, [
+            el('thead', null, [el('tr', null, [el('th', null, 'Wk'), el('th', null, 'Exercise'), el('th', null, 'Dose'), el('th', null, 'Freq'), el('th', null, 'Note')])]),
+            el('tbody', null, COPEN.map(c => {
+              const now = copenWeekFor(new Date());
+              return el('tr', { style: now && now.w === c.w ? 'background:var(--warn-bg)' : '' }, [
+                el('td', { class: 'n' }, String(c.w)),
+                el('td', null, [exLink(c.ex)]),
+                el('td', null, c.d), el('td', null, c.f),
+                el('td', { class: 'small muted' }, c.note)
+              ]);
+            }))
+          ])]))
+      ])
     }
   };
+  // Legs, Upper Body and Core: each page's complete workouts first, then the targeted blocks.
+  // A page with a single group needs no second heading.
+  BODY_PAGES.forEach(pg => {
+    const part = g => grid(g.ids.map(byId).filter(Boolean));
+    SECTIONS[pg.id] = {
+      n: pg.n, blurb: pg.blurb,
+      body: () => sec(pg.n, pg.intro || pg.blurb, pg.groups.length === 1 ? part(pg.groups[0])
+        : el('div', { class: 'stack stack-xl' }, pg.groups.map(g => sec(g.n, g.sub, part(g)))))
+    };
+  });
 
   // A section is open: show it with a way back.
   if (sub && SECTIONS[sub]) {
@@ -8356,20 +8437,17 @@ function viewProgram() {
   // The hub.
   const counts = {
     play: PLAY_GROUPS.reduce((a, g) => a + g.ids.length, 0) + ' blocks',
-    body: BODY_GROUPS.reduce((x, g) => x + g.ids.length, 0) + ' blocks',
     range: RANGE_GROUPS.reduce((x, g) => x + g.ids.length, 0) + ' blocks',
     trail: ROUTINES.filter(r => r.tag === 'TRAIL').length + ' blocks',
     boss: ROUTINES.filter(r => r.tag === 'BOSS').length + ' blocks',
     room: '~' + Math.round(runSeconds(routineSteps(byId('room-circuit'))) / 60) + ' min',
     grail: byId('grail-list').items.length + ' + 6',
     goata: ROUTINES.filter(r => r.tag === 'GOATA').length + ' blocks',
-    blocks: byTag('ARMOR').length + ' blocks',
     power: byTag('POWER').length + ' blocks',
     short: byTag('SHORT').length + ' blocks',
-    week: fmtShort(mon),
-    year: PHASES.length + ' phases',
-    copen: COPEN.length + ' weeks'
+    plan: fmtShort(mon)
   };
+  BODY_PAGES.forEach(pg => { counts[pg.id] = pg.groups.reduce((x, g) => x + g.ids.length, 0) + ' blocks'; });
   const tile = (key, icon, hi) => el('button', {
     class: 'tile' + (hi ? ' tile-hi' : ''), onclick: () => goSub(key)
   }, [
@@ -8381,29 +8459,26 @@ function viewProgram() {
     el('span', { class: 'tile-meta num' }, counts[key])
   ]);
 
+  // Grouped by what you came to do, training by body part first.
+  const HUB = [
+    { h: 'Train', tiles: [['grail', ICONS.grail], ['legs', ICONS.legs], ['upper', ICONS.upper], ['core', ICONS.core],
+      ['room', ICONS.room], ['power', ICONS.bolt], ['short', ICONS.clock]] },
+    { h: 'Play & recover', tiles: [['play', ICONS.play], ['trail', ICONS.trail], ['range', ICONS.range]] },
+    { h: 'Programs', tiles: [['boss', ICONS.boss], ['goata', ICONS.goata]] },
+    { h: 'Your plan', tiles: [['plan', ICONS.today]] }
+  ];
+
   return el('div', { class: 'stack stack-lg' }, [
     el('div', { class: 'sec-head' }, [
       el('h2', null, 'Program'),
       el('div', { class: 'trace' }),
       el('p', { class: 'small muted', style: 'max-width:72ch' },
-        'Everything that is not today\u2019s session. The daily and range work carries any sport; Frisbee is the game-day layer on top of it.')
+        'Everything that is not today\u2019s session, grouped by what you came to do.')
     ]),
-    el('div', { class: 'hub' }, [
-      tile('grail', ICONS.grail),
-      tile('room', ICONS.room),
-      tile('play', ICONS.play),
-      tile('body', ICONS.body),
-      tile('blocks', ICONS.armor),
-      tile('range', ICONS.range),
-      tile('boss', ICONS.boss),
-      tile('goata', ICONS.goata),
-      tile('trail', ICONS.trail),
-      tile('power', ICONS.bolt),
-      tile('short', ICONS.clock),
-      tile('week', ICONS.today),
-      tile('year', ICONS.program),
-      tile('copen', ICONS.tests)
-    ])
+    ...HUB.map(g => el('section', { class: 'hub-group' }, [
+      el('h3', { class: 'eyebrow' }, g.h),
+      el('div', { class: 'hub' }, g.tiles.map(t => tile(t[0], t[1])))
+    ]))
   ]);
 }
 
@@ -8501,22 +8576,26 @@ function routineCard(r, date) {
   const picker = el('div', { class: 'routine-pick' + (open ? ' open' : '') }, [
     el('div', { class: 'pick-list' }, r.items.flatMap((it, i) => {
       const on = sel.has(i);
-      const ex = EX[it.x];
+      // The list shows what you will actually do. In Home mode that is the home exercise, with
+      // its own dose and how-to — it used to show the gym lift and swap it only once you ran it.
+      const rr = resolve(it);
+      const ex = EX[rr.x];
       const row = el('div', { class: 'pick-row' + (on ? ' on' : '') }, [
         el('button', {
           class: 'tick pick', 'aria-pressed': on ? 'true' : 'false', 'aria-label': 'Select ' + ex.n,
           onclick: () => { on ? sel.delete(i) : sel.add(i); qmark(r.id); render(); }
         }, [(() => { const g = svgEl('svg', { viewBox: '0 0 24 24' });
               g.appendChild(svgEl('path', { d: 'M4 12l6 6L20 6', fill: 'none', stroke: 'currentColor' })); return g; })()]),
-        el('button', { class: 'pick-body pick-open', onclick: () => openEx(it.x), 'aria-label': ex.n + ' \u2014 how-to' }, [
+        el('button', { class: 'pick-body pick-open', onclick: () => openEx(rr.x), 'aria-label': ex.n + ' \u2014 how-to' }, [
           el('span', { class: 'pick-name' }, ex.n),
-          el('span', { class: 'pick-dose num' }, it.d + ' \u00b7 tap for how-to'),
+          rr.swapped ? el('span', { class: 'pick-swap' }, [el('span', { class: 'chip swap' }, 'HOME'), ' instead of ' + EX[rr.from].n]) : null,
+          el('span', { class: 'pick-dose num' }, rr.d + ' \u00b7 tap for how-to'),
           costChip(ex),
           ex.targets ? el('span', { class: 'pick-targets' }, ex.targets) : null,
           // The note is where the dose is explained — whose number it is, what to change, when
           // to stop. It rendered on a session row and nowhere else, so the picker never showed it.
-          it.note ? el('span', { class: 'pick-note' }, it.note) : null,
-          isHome() && ex.home ? el('span', { class: 'pick-home' }, 'At home: ' + ex.home) : null
+          rr.note ? el('span', { class: 'pick-note' }, rr.note) : null,
+          isHome() && !rr.swapped && ex.home ? el('span', { class: 'pick-home' }, 'At home: ' + ex.home) : null
         ]),
         el('button', {
           class: 'btn btn-sm row-start',
@@ -8547,7 +8626,7 @@ function routineCard(r, date) {
         timesToday ? el('span', { class: 'chip good' }, '✓ ' + (timesToday > 1 ? timesToday + '×' : '') + ' today') : null
       ]),
       // a menu has no "whole thing" to time: it shows the picks, or says to pick
-      el('span', { class: 'num xs muted' }, r.open && !n ? 'pick any' : '≈ ' + fmtMins(runSeconds(routineSteps(r, chosen))))
+      el('span', { class: 'num xs muted', style: 'white-space:nowrap' }, r.open && !n ? 'pick any' : '≈ ' + fmtMins(runSeconds(routineSteps(r, chosen))))
     ]),
     el('p', { class: 'small muted' }, r.sub),
     // A short, authored line saying what the block is for. check-data.js verifies every term

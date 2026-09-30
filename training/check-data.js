@@ -91,13 +91,23 @@ d.GOATA_CHECK.forEach((x, i) => ck(typeof x === 'string' && x.length, 'GOATA_CHE
 d.BOSS_OFF.forEach((x, i) => ck(typeof x.h === 'string' && typeof x.t === 'string' && typeof x.his === 'boolean',
   'BOSS_OFF[' + i + '] needs a heading, text, and whether it is his'));
 
-d.BODY_GROUPS.forEach(g => {
-  ck(typeof g.n === 'string' && typeof g.sub === 'string', 'body group needs a name and a subtitle');
-  g.ids.forEach(id => ck(byId.has(id), 'body group "' + g.n + '" references a missing routine: ' + id));
+// Legs, Upper Body and Core are the front door: every page and group is well-formed, every body
+// block and every weak-link block has a home on one of them (the Weak-link tile is gone), and each
+// page opens with complete workouts short enough to be the obvious choice.
+d.BODY_PAGES.forEach(pg => {
+  ck(typeof pg.id === 'string' && typeof pg.n === 'string' && typeof pg.blurb === 'string', 'a body page needs an id, a name and a blurb');
+  ck(pg.intro === undefined || typeof pg.intro === 'string', pg.id + ' intro should be text');
+  ck(pg.groups.length > 1 || typeof pg.intro === 'string', pg.id + ' has one group, so its intro stands in for the group subtitle and must be set');
+  (pg.groups || []).forEach(g => {
+    ck(typeof g.n === 'string' && typeof g.sub === 'string', pg.id + ' group needs a name and a subtitle');
+    g.ids.forEach(id => ck(byId.has(id), pg.id + ' group "' + g.n + '" references a missing routine: ' + id));
+  });
 });
-// a body-part block only exists to be found by body part
-d.ROUTINES.filter(r => r.tag === 'BODY').forEach(r =>
-  ck(d.BODY_GROUPS.some(g => g.ids.includes(r.id)), r.id + ' is a body block but appears in no body group'));
+{
+  const onPages = new Set(d.BODY_PAGES.flatMap(pg => pg.groups.flatMap(g => g.ids)));
+  d.ROUTINES.filter(r => ['BODY', 'ARMOR'].includes(r.tag)).forEach(r =>
+    ck(onPages.has(r.id), r.id + ' is a ' + r.tag + ' block but is on none of the Legs, Upper Body or Core pages'));
+}
 // nothing game-day or range should be unreachable from the hub it belongs to
 const grouped = new Set(d.PLAY_GROUPS.flatMap(g => g.ids).concat(d.RANGE_GROUPS.flatMap(g => g.ids)));
 d.ROUTINES.filter(r => ['WARMUP', 'RECOVERY', 'RANGE'].includes(r.tag))
@@ -123,12 +133,20 @@ d.ROUTINES.filter(r => ['WARMUP','TRAIL','BOSS','ROOM','GOATA','GRAIL'].includes
 });
 
 // A gym->home swap replaces the exercise, so two gym items that share a home stand-in turn one
-// block into the same exercise twice. Boss and Trail blocks are built for home and must never do it.
-d.ROUTINES.filter(r => ['BOSS', 'TRAIL', 'ROOM', 'GOATA', 'GRAIL'].includes(r.tag)).forEach(r => {
-  const xs = r.items.map(i => d.HOME_SUB[i.x] ? d.HOME_SUB[i.x].x : i.x);
-  const dup = [...new Set(xs.filter((x, i) => xs.indexOf(x) !== i))];
-  ck(!dup.length, r.id + ' runs ' + dup.join(', ') + ' twice in Home mode');
-});
+// block into the same exercise twice. It happened in seven blocks before this check covered them all:
+// Chest, Shoulders & Push became Push-Up Plus five times. Only duplicates Home mode CREATES count —
+// a block that repeats an exercise on purpose in Gym mode is left alone.
+{
+  const home = i => (i.atHome || d.HOME_SUB[i.x] || {}).x || i.x;
+  const dup = xs => [...new Set(xs.filter((x, k) => xs.indexOf(x) !== k))];
+  const check = (where, items) => {
+    const gym = dup(items.map(i => i.x));
+    dup(items.map(home)).filter(x => !gym.includes(x))
+      .forEach(x => ck(false, where + ' runs ' + x + ' twice in Home mode (from ' + items.filter(i => home(i) === x).map(i => i.x).join(' + ') + ')'));
+  };
+  d.ROUTINES.forEach(r => check(r.id, r.items));
+  Object.entries(d.SESSIONS).forEach(([k, s]) => check('session ' + k, (s.blocks || []).flatMap(b => b.items)));
+}
 
 // a circuit says how many rounds and how long to rest between them, as whole numbers
 d.ROUTINES.filter(r => r.rounds !== undefined).forEach(r => {
@@ -160,6 +178,14 @@ d.ROUTINES.filter(r => r.rounds !== undefined).forEach(r => {
     groups.forEach(x => ck(x.k >= 1 && x.k <= 3, 'the Holy Grail group ' + x.n + ' has ' + x.k + ' picks; the point is one to three'));
   }
 }
+
+// A per-item home override names a real exercise, and says it as a string.
+const allItems = d.ROUTINES.flatMap(r => r.items.map(i => [r.id, i]))
+  .concat(Object.entries(d.SESSIONS).flatMap(([k, s]) => (s.blocks || []).flatMap(b => b.items.map(i => ['session ' + k, i]))));
+allItems.filter(([, i]) => i.atHome !== undefined).forEach(([where, i]) => {
+  ck(i.atHome && typeof i.atHome === 'object' && d.EX[i.atHome.x], where + ' › ' + i.x + '.atHome must name an exercise');
+  ['d', 'note'].forEach(f => ck(i.atHome[f] === undefined || typeof i.atHome[f] === 'string', where + ' › ' + i.x + '.atHome.' + f + ' should be a string'));
+});
 
 // routine ids unique
 const ids = d.ROUTINES.map(r => r.id);

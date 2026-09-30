@@ -13,8 +13,8 @@ fonts load.
 | View | What it does |
 |---|---|
 | **Today** | Resolves the date against the annual plan and renders that session — every block, dose and coaching note — plus a readiness check-in that auto-regulates the day, the Daily Armor, and a notes field. |
-| **Program** | This week's microcycle with CNS-cost meters, the periodised year against the UFA calendar, standalone weak-link blocks, short sessions, and the 10-week Copenhagen ladder. |
-| **Library** | 200 exercises, filterable to the 175 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
+| **Program** | Grouped by what you came to do. **Train**: the Holy Grail, Legs, Upper Body, Core, the Room Circuit, elastic work and short sessions. **Play & recover**: Frisbee, Hiking, Stretching & range. **Programs**: Boss Your Game and GOATA. **Your plan**: this week's microcycle with CNS-cost meters, the periodised year against the UFA calendar, and the 10-week Copenhagen ladder. |
+| **Library** | 201 exercises, filterable to the 176 that need no gym. Each has set-up, step-by-step execution, coaching cues, the faults that ruin it, dose, progression/regression, and why it is in the program. |
 | **Tests** | 22-test battery on a 4-week cycle, with trend charts, targets and protocols. Hip internal rotation and the FADIR score lead it. |
 | **Method** | Fourteen essays: the training model, isometric taxonomy, an honest read on fascia, training without a gym, injury dossiers for the hip labrum / adductor / hamstring, throwing-shoulder load management, fuelling, the UFA game-model numbers, and sources. |
 
@@ -106,7 +106,7 @@ and doubling as a daily read on the hip.
 
 ### Home mode has to be honest
 
-Home mode swaps 24 gym lifts for backpack, doorway and furniture versions, marked HOME. What it did
+Home mode swaps 25 gym lifts for backpack, doorway and furniture versions, marked HOME. What it did
 *not* do was say anything about the exercises it left alone — and several of those read as gym work.
 On a Strength A day in Home mode you would see **Yielding Split Squat Isometric** (setup: dumbbells
 or a barbell), **Nordic Hamstring Curl** (ankles under a bar or a Nordic bench) and **Copenhagen
@@ -118,6 +118,29 @@ lists and inside every picker. The Passive Hang was the one genuine hole, needin
 no home story at all, so it gained one (including the no-bar version: kneel, hold a table edge, lean
 back for the same traction). A test now walks every reachable exercise and fails if any of them needs
 equipment while offering neither a swap nor a note — currently 140 reachable, 0 without a home path.
+
+### Home mode lists what you will do
+
+The lists still showed the gym. A block's picker named the gym lift — **Trap Bar Deadlift** on a
+Home-mode leg page — and swapped it only once you pressed Run. Every list now goes through the same
+`resolve()` as the player, so it names the exercise you will actually do, with its own dose, note and
+how-to, and a swapped row says so: *HOME instead of Rear-Foot Elevated Split Squat*.
+
+Showing the real names exposed the next problem: swaps landing on something the block already did —
+five presses all becoming the same push-up. Ten `HOME_SUB` entries now point somewhere better: the
+incline press becomes feet-up push-ups, the overhead press pike push-ups, the landmine press a push-up
+bottom hold, the weighted pull-up a bodyweight one, the bottoms-up carry plank walk-ups, the hip
+thrust the single-leg couch thrust, the loaded calf raise the single-leg one off a step, the suitcase
+carry a bear crawl, hurdle hops lateral bench hops and the post-session foam roll a ball on the glute.
+Where the general swap is right almost everywhere but wrong in one block, the item carries its own
+`atHome: { x, d, note }`, which `resolve()` applies before `HOME_SUB` — the trap bar in the Power &
+Lift session becomes a backpack hinge, the Pallof press in Core & Trunk bear-plank shoulder taps.
+
+`check-data.js` fails any routine or session that Home mode gives a duplicate row (one that is already
+a duplicate in Gym mode is the block's own business). `check-ui.js` opens the Legs page in Home mode and
+fails if a gym exercise with a swap is listed, if any row appears twice, or if the wall sits are
+missing. Its first run caught one more: the Plyometric Ladder listed Pogo Jumps twice, the second
+being the single-leg version, which is now its own exercise, **Single-Leg Pogos**.
 
 ### The hip flexor toolkit, finished
 
@@ -202,33 +225,37 @@ names the blocks they came from, and gives the running estimate — then **Run t
 `queueBlocks()` / `queueCount()` / `queueSteps()` are the whole API; `renderQueue()` draws the bar
 on every render, and the per-card **Run N selected** button still works exactly as it did.
 
-### By body part, the other door in
+### Legs, Upper Body and Core
 
-The library was only reachable by the plan's logic: what today's session says, or which weak link
-you are feeding. That is the right default and a bad only-option, because sometimes the question is
-just "I want to train legs". **By body part** is a Program tile answering that directly, driven by
-`BODY_GROUPS` in the same shape as `PLAY_GROUPS` and `RANGE_GROUPS`:
+The question is usually "I want to train legs", so that is the front door. **Legs**, **Upper Body**
+and **Core** are the first tiles under Train after the Holy Grail, driven by `BODY_PAGES` in
+`data.js`. Each page opens with complete workouts at a sensible length, then the targeted blocks:
 
-- **Lower body** — Legs, Calves/Feet/Ankles, plus the Hip, Hip Flexor, Groin and Hamstring blocks.
-- **Upper body** — Back & Pull, Chest/Shoulders/Push, plus the Throwing Shoulder Block.
-- **Middle** — Core & Trunk.
+| page | complete workouts first (time at home) | then |
+|---|---|---|
+| Legs | Legs · Full (~36 min) · Legs · Quick (~16 min) | Hamstrings · One area · Spring |
+| Upper Body | Chest, Shoulders & Push (~29 min) · Back & Pull (~22 min) · Upper Body · Quick (~16 min) | Throwing shoulder · Upper & Trunk |
+| Core | Core & Trunk (~18 min) · Boss Your Game's two core circuits (~13–15 min) | — |
 
-Five blocks are new (`tag: 'BODY'`); the rest are existing blocks *listed* rather than duplicated, so
-there is one copy of the Hip Block and it shows up wherever it is relevant. Every card carries the
-standard picker, so "Legs" gives you a 45-minute session or any two exercises out of it.
+**Legs · Full** is eight moves for everything from the hips down, twice a week: the deep squat hold,
+one-leg quads and glutes (split squat, hip thrust), the hamstring's two jobs (the Nordic, then the
+single-leg RDL — the single-leg hamstring bridge at home), and a finish of Copenhagen hold, wall sit
+and calf raise. The heavy two-leg lifts stay on the weekly plan's strength days, where they are
+programmed against the rest of the week. **Legs · Quick** is six bodyweight moves for two rounds, the
+same in both modes, for a busy day. **Upper Body · Quick** is five moves for three rounds with a
+pull-up bar and the floor — two pushes, two pulls and a trunk move.
 
-They are built to the same order of operations as the rest of the program rather than as exercise
-dumps. **Legs** opens the ankle before it loads it, puts the trap bar before the squat because it is
-the heavier pull, and treats single-leg work as a main course rather than an accessory since that is
-where asymmetries live. **Push** warms the cuff and scapula and puts a pull in front of the first
-press. **Pull** exists because a throwing shoulder wants at least a 2:1 pull-to-push ratio and most
-athletes run the opposite. **Core** is entirely anti-extension, anti-rotation and anti-lateral-flexion
-with no sit-ups, which is both the right training choice and the labrum-safe one, since nothing in it
-drives the hip into deep flexion.
+**Hamstring Strength** is the step after Hamstring Insurance: the Nordic for lengthening strength
+through the knee, and the Askling Diver, single-leg bridge and walkout for hip extension with the knee
+nearly straight — the job the biceps femoris does, and where it strains. Insurance daily while the
+hamstring is cranky; Strength twice a week once it is calm; full-speed sprinting again once the
+single-leg bridge reps are within about 10% side to side.
 
-`check-data.js` gained two rules with this: `BODY` is a recognised tag, and a block tagged `BODY` must
-appear in a body group, because a body-part block that cannot be found by body part has no reason to
-exist.
+The **Weak-link blocks** tile is gone: each of its blocks now lives on the page for its body part — the
+Hip, Hip Flexor, Groin and Knee & Ankle blocks under Legs → One area, the Throwing Shoulder Block under
+Upper Body — listed rather than copied. `check-data.js` fails the build if a `BODY` or `ARMOR` block is
+on none of the three pages. **This week**, **The year** and the **Copenhagen ladder** became one tile
+under Your plan.
 
 ### Stretching & range, as its own screen
 
@@ -289,7 +316,7 @@ its own items' targets.
 
 The answer to "there is too much in here": the first tile on the hub, and two cards.
 
-**The Daily Six** — six moves, two rounds, about 16 minutes, at home with no weights, and safe to
+**The Daily Six** — six moves, two rounds, about 14 minutes, at home with no weights, and safe to
 repeat every day because none of them needs two days to recover from. The validator enforces that: nothing rated Taxing is allowed in.
 
 | move | each round | for |
@@ -335,7 +362,7 @@ Six of exactly six.
 
 ### Room Circuit
 
-The simple one, and the first tile on the hub. Six moves that need a floor, a bed and a pull-up bar,
+The simple one, under Train on the hub. Six moves that need a floor, a bed and a pull-up bar,
 run as a real circuit — every move once, a rest, then again:
 
 | move | per round | for |
@@ -347,7 +374,7 @@ run as a real circuit — every move once, a rest, then again:
 | Bear plank | 40 s | trunk |
 | Copenhagen hold, off the bed | 20 s per side | groin — the weakest link |
 
-Three rounds is about 24 minutes; the *Short* card is the same six moves for two rounds, about 15.
+Three rounds is about 21 minutes; the *Short* card is the same six moves for two rounds, about 13.
 Nothing in it takes the hip into deep flexion under load, so it works on a day the hip is grumbling.
 The push-up row says what a pull-up bar laid on the floor buys you — straight wrists, and a chest
 that can sink below the hands for extra range at the stretched end — and to wedge it so it can't roll.
@@ -359,7 +386,9 @@ but the final one, announced as *Round 1 done. Rest.* A timed step can now carry
 (`after`), which the player, the estimator and the remaining-time maths all honour. Every place a
 whole routine is run or timed goes through `routineSteps()`, so the card, the queue and the Boss
 week all agree. `check-timing.js` walks circuits as the player runs them — 659 steps — and
-`check-data.js` bounds `rounds` to 2–6 and `roundRest` to 15–240 s.
+`check-data.js` bounds `rounds` to 2–6 and `roundRest` to 15–240 s. Inside a round the rest between
+moves is only the changeover, capped at 15 s (`CIRCUIT_MOVE`), because moving on to a different
+exercise *is* the rest; the real rest comes at the end of the round.
 
 ### GOATA Movement
 
@@ -493,13 +522,13 @@ The published epidemiology for ultimate points at the knee first (19.5–39.7% o
 injuries), the thigh second (11.9–31.9%) and the ankle third (15.5–30.1%), with a mechanism that
 is overwhelmingly non-contact: decelerating, cutting and landing under accumulated fatigue. The
 thigh was already covered by the Nordics, the Askling L-protocol and the long-length isometrics.
-**Knee & Ankle Insurance** (Program → Weak-link blocks, ~23 min) covers the other two — a
+**Knee & Ankle Insurance** (Program → Legs → One area, ~25 min) covers the other two — a
 single-leg balance progression, banded ankle eversion for the peroneals, lateral bound-and-stick
 for frontal-plane landing control, deceleration mechanics, single-leg RDLs and tibialis raises.
 It is written to be run *tired* rather than fresh, because fatigue is the condition the injury
 happens in.
 
-**Hip Flexor Block** (Program → Weak-link blocks, ~20 min) exists because the hip flexor is the one
+**Hip Flexor Block** (Program → Legs → One area, ~27 min) exists because the hip flexor is the one
 group that needs both halves and usually gets one. It is a sprint muscle — flexion above 90° drives
 knee lift and stride frequency, and that is exactly where it is weakest, because almost nothing
 trains it past the range a leg raise reaches. It is also what a desk shortens, and a short hip flexor
@@ -750,9 +779,8 @@ section is untouched: the five warm-ups, the play groups, the UFA-anchored phase
 conditioning all stay exactly as they were. The change is framing, not content.
 
 
-The Program screen is a hub, not a scroll. Six tiles — **Frisbee**, **Weak-link blocks**, **When
-time is short**, **This week**, **The year**, **Copenhagen ladder** — each opening one section with
-a way back. Frisbee is the game-day entry point and groups everything by when you reach for it:
+The Program screen is a hub, not a scroll: tiles grouped under **Train**, **Play & recover**,
+**Programs** and **Your plan**, each opening one section with a way back. Frisbee is the game-day entry point and groups everything by when you reach for it:
 **Before you play**, **Between games**, **After you play**. That last group is where the cool-down,
 the ball work, the stretching and the tournament-evening block all live, which is where they were
 impossible to find before. `PLAY_GROUPS` in `data.js` defines the grouping, and `check-data.js`

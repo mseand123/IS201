@@ -39,12 +39,21 @@ const DATA = require('./data.js');
   await p.goto(base, { waitUntil: 'load' });
   await p.waitForTimeout(800);
 
-  // --- the hub shows every section, and each one opens ---
+  // --- the hub: grouped by what you came to do, the body parts first, and each section opens ---
   await p.keyboard.press('3'); await p.waitForTimeout(500);
   const tiles = (await p.locator('.tile-n').allInnerTexts()).map(t => t.trim());
-  ['Frisbee', 'By body part', 'Stretching & range', 'Boss Your Game', 'Hiking', 'Weak-link blocks']
-    .forEach(n => ck(tiles.includes(n), 'the hub is missing the ' + n + ' tile'));
-  console.log('hub tiles:', tiles.length);
+  ['The Holy Grail', 'Legs', 'Upper Body', 'Core', 'Room Circuit', 'Frisbee', 'Stretching & range', 'Boss Your Game',
+   'GOATA Movement', 'Hiking', 'This week'].forEach(n => ck(tiles.includes(n), 'the hub is missing the ' + n + ' tile'));
+  ['By body part', 'Weak-link blocks', 'The year', 'Copenhagen ladder'].forEach(n =>
+    ck(!tiles.includes(n), 'the ' + n + ' tile should have folded into another section'));
+  const heads = (await p.locator('.hub-group > .eyebrow').allInnerTexts()).map(t => t.trim().toLowerCase());
+  ck(heads.join('|') === 'train|play & recover|programs|your plan',
+     'the hub headings should be Train, Play & recover, Programs, Your plan; got ' + heads.join(', '));
+  const train = (await p.locator('.hub-group').first().locator('.tile-n').allInnerTexts()).map(t => t.trim());
+  ck(train.slice(0, 4).join('|') === 'The Holy Grail|Legs|Upper Body|Core',
+     'Train should open with the Holy Grail and the three body pages, got ' + train.join(', '));
+  ck(train.includes('Room Circuit'), 'the Room Circuit should be under Train');
+  console.log('hub:', heads.join(' / '), '|', tiles.length, 'tiles');
 
   // every routine the hub can reach, against the data
   const reachable = new Set();
@@ -128,7 +137,6 @@ const DATA = require('./data.js');
 
   // --- the Room Circuit runs as a real circuit: every move, every round, labelled ---
   await p.keyboard.press('3'); await p.waitForTimeout(400);
-  ck((await p.locator('.tile-n').nth(1).innerText()).trim() === 'Room Circuit', 'the Room Circuit should be the second tile');
   await p.locator('.tile').filter({ hasText: 'Room Circuit' }).first().click(); await p.waitForTimeout(400);
   const room = DATA.ROUTINES.find(r => r.id === 'room-circuit');
   await p.locator('.routine').filter({ hasText: room.n }).first().locator('.btn-run').click(); await p.waitForTimeout(600);
@@ -182,6 +190,37 @@ const DATA = require('./data.js');
     ck(new Set(names).size === names.length, id + ' in Home mode lists a row twice: ' + names.join(', '));
     if (id === 'boss-pull') ck(names.includes('Pull-Up'), 'Home mode should keep the pull-ups, got ' + names.join(', '));
   }
+  await p.locator('.back-link').click(); await p.waitForTimeout(250);
+
+  // --- the Legs page at home: it lists what you will do, wall sits are on it, no gym lift survives,
+  // and it opens with complete workouts at a sensible length ---
+  const esc = t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  await p.locator('.tile').filter({ has: p.locator('.tile-n', { hasText: /^Legs$/ }) }).first().click(); await p.waitForTimeout(500);
+  const legs = DATA.BODY_PAGES.find(pg => pg.id === 'legs');
+  const legTxt = await p.locator('.view').innerText();
+  ck(legTxt.indexOf(legs.groups[0].n) >= 0 && legTxt.indexOf(legs.groups[0].n) < legTxt.indexOf(legs.groups[1].n),
+     'the Legs page should open with ' + legs.groups[0].n);
+  const legNames = new Set(); let swaps = 0;
+  for (const id of legs.groups.flatMap(g => g.ids)) {
+    const r = DATA.ROUTINES.find(x => x.id === id);
+    const card = p.locator('.routine').filter({ has: p.locator('h3', { hasText: new RegExp('^' + esc(r.n) + '$') }) }).first();
+    if (!(await card.locator('.pick-row').count())) { await card.locator('.btn-pick').click(); await p.waitForTimeout(250); }
+    const names = (await card.locator('.pick-name').allInnerTexts()).map(t => t.trim());
+    ck(names.length === r.items.length, id + ' should list ' + r.items.length + ' rows at home, got ' + names.length);
+    ck(new Set(names).size === names.length, id + ' lists a row twice at home: ' + names.join(', '));
+    names.forEach(n => legNames.add(n));
+    swaps += await card.locator('.pick-swap').count();
+    if (legs.groups[0].ids.includes(id)) {
+      const mins = +(((await card.locator('.spread > .num').first().innerText()).match(/(\d+)\s*min/) || [])[1] || 0);
+      ck(mins > 0 && mins <= 40, r.n + ' should be a complete workout of 40 minutes or less at home, got ' + mins);
+    }
+  }
+  const gymNames = Object.keys(DATA.HOME_SUB).map(k => DATA.EX[k].n).filter(n => legNames.has(n));
+  ck(!gymNames.length, 'the Legs page lists gym exercises in Home mode: ' + gymNames.join(', '));
+  ck(legNames.has('Wall Sit'), 'the Legs page should have wall sits');
+  ck(swaps > 0, 'a swapped row should say HOME and what it replaced');
+  console.log('Legs page at home:', legNames.size, 'exercises,', swaps, 'swapped, gym ones listed:', gymNames.length);
+
   await p.evaluate(() => { const s = JSON.parse(localStorage.getItem('groundcontact.v1') || '{}');
     s.settings.mode = 'gym'; localStorage.setItem('groundcontact.v1', JSON.stringify(s)); });
   await p.reload({ waitUntil: 'load' }); await p.waitForTimeout(600);
