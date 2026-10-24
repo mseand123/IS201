@@ -1,0 +1,232 @@
+/* Milford Sound page - fiord themed styles (deep water, mist, and mountain stone) */
+
+/* Body and overall layout adjustments */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(160deg, #0b2b3c 0%, #14506b 45%, #2f7f8a 100%); /* deep fiord water to misty teal */
+    min-height: 100vh;
+    color: #22313a;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Header styles */
+header {
+    background-color: rgba(8, 31, 44, 0.92);
+    color: #fff;
+    padding: 28px 16px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    border-bottom: 3px solid #7fd1c8;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #bfe9e4;
+    font-style: italic;
+}
+
+/* Main content area */
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+/* Section styling */
+section {
+    background-color: rgba(255, 255, 255, 0.92);
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+    width: 80%;
+    max-width: 1000px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+section:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45);
+}
+
+/* Styling for headings */
+h2 {
+    color: #0f4c5c;
+    text-shadow: 1px 1px 0px #fff;
+    margin-top: 0;
+}
+
+/* List styling */
+ol, ul {
+    text-align: left;
+    display: inline-block;
+}
+
+li {
+    line-height: 1.75;
+}
+
+/* Image styling */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
+    border: 4px solid rgba(255, 255, 255, 0.85);
+}
+
+figure {
+    margin: 20px auto;
+    width: 80%;
+    max-width: 1000px;
+}
+
+figcaption {
+    display: inline-block;
+    color: #ffffff;
+    background-color: rgba(8, 31, 44, 0.85);
+    font-size: 0.95rem;
+    margin-top: 10px;
+    padding: 8px 16px;
+    border-radius: 20px;
+}
+
+figcaption a {
+    color: #9fe3db;
+    font-size: 0.95rem;
+    text-decoration: underline;
+}
+
+/* Embedding content */
+iframe {
+    width: 80%;
+    max-width: 800px;
+    height: 450px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
+}
+
+/* Link styling */
+a {
+    color: #0f4c5c;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #1b7f8c;
+}
+
+/* Back to top link sits on the dark background, so give it its own button */
+main > a {
+    display: inline-block;
+    margin: 10px 0 20px;
+    padding: 10px 22px;
+    color: #ffffff;
+    background-color: rgba(8, 31, 44, 0.85);
+    border: 2px solid #7fd1c8;
+    border-radius: 24px;
+}
+
+main > a:hover {
+    background-color: #1b7f8c;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* Footer styles */
+footer {
+    background-color: #081f2c;
+    color: #fff;
+    text-align: center;
+    padding: 14px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    border-top: 3px solid #7fd1c8;
+}
+
+footer a {
+    color: #7fd1c8;
+}
+
+/* Tableau embed stays inside its card */
+.tableauPlaceholder {
+    max-width: 100%;
+    overflow-x: auto;
+    margin: 0 auto;
+}
+
+.tableauPlaceholder iframe,
+.tableauPlaceholder object {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+/* Fact list section */
+#facts {
+    background: #eef7f8; /* pale mist */
+    border: 1px solid #7fd1c8; /* teal border to match the water */
+    padding: 20px;
+    margin: 20px auto; /* Center the section */
+    border-radius: 10px; /* Rounded corners */
+    max-width: 800px; /* Maximum width for the content area */
+}
+
+#facts h2 {
+    text-align: center;
+    color: #0f4c5c;
+}
+
+#facts ol {
+    padding-left: 40px; /* Space for the ordered list */
+    counter-reset: item; /* Reset counter for the list */
+    list-style: none;
+}
+
+#facts ol > li {
+    counter-increment: item; /* Increment counter for each list item */
+    margin-bottom: 15px; /* Space between list items */
+    font-weight: 600;
+}
+
+#facts ol > li::before {
+    content: counter(item) ". "; /* Add counter before content */
+    font-weight: bold; /* Make the numbers bold */
+    color: #1b7f8c; /* Teal color for the numbers */
+}
+
+#facts ul {
+    list-style-type: circle; /* Circle bullets for the unordered list */
+    padding-left: 20px; /* Indent for the unordered list */
+    display: block;
+}
+
+#facts ul li {
+    line-height: 1.5; /* Line height for list items */
+    font-weight: 400;
+}
+
+/* Small screens */
+@media (max-width: 600px) {
+    section, figure, iframe {
+        width: 95%;
+    }
+    h1 {
+        font-size: 1.9rem;
+    }
+    iframe {
+        height: 240px;
+    }
+}
